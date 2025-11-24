@@ -46,7 +46,7 @@
     "href": "slides/lec20.html#what-is-an-api",
     "title": "APIs",
     "section": "What is an API?",
-    "text": "What is an API?\nAn API is a messenger that takes requests and returns responses. It allows for interaction between applications, databases, and devices.\n\nIf you want to\n\nembed a map on your website, you’ll probably use Google’s API\nembed a tweet on your website, you’ll use Twitter’s API\ntrade stocks in Python or R, you’ll probably use your broker’s API\npull genetic sequence data from GenBank, you’ll use GenBank’s API\ncreate 54 repositories named lab07-[github_team_name], you’ll probably use GitHub’s API"
+    "text": "What is an API?\nAn API is a messenger that takes requests and returns responses. It allows for interaction between applications, databases, and devices.\n\nIf you want to\n\nembed a map on your website, you’ll probably use Google’s API\nembed a tweet on your website, you’ll use Twitter’s API\ntrade stocks in Python or R, you’ll probably use your broker’s API\npull genetic sequence data from GenBank, you’ll use GenBank’s API\ncreate 40 repositories named lab07-[github_team_name], you’ll probably use GitHub’s API"
   },
   {
     "objectID": "slides/lec20.html#client-server-framework-with-an-api",
@@ -123,7 +123,7 @@
     "href": "slides/lec20.html#exercise",
     "title": "APIs",
     "section": "Exercise",
-    "text": "Exercise\n\nHow many characters are included in this API?\nWhat percentage of the characters are alive?\n\n\nDownload the in-class solution and example API code from 04/19 here:\n\ndownload.file(url = \"https://sta323-sp23.github.io/scripts/apiDemo.R\",\n              destfile = \"apiDemo.R\")"
+    "text": "Exercise\n\nHow many characters are included in this API?\nWhat percentage of the characters are alive?\n\nHint: use jsonlite::read_json()"
   },
   {
     "objectID": "slides/lec20.html#further-reading",
@@ -1691,7 +1691,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Week\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 26\nwelcome\n💻\nlab 0\n\n\n\n\nThu Aug 28\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 02\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 04\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 09\ntidy data and dplyr\n💻\nlab 2\n\n\n\n\nThu Sep 11\nsubsetting\n💻\n\n\n\n\n4\nTue Sep 16\nggplot2\n💻\nlab 3\n\n\n\n\nThu Sep 18\nfunctional programming and purrr\n💻\n\n\n\n\n5\nTue Sep 23\nregular expressions\n💻\nlab 4\n\n\n\n\nThu Sep 25\nreview\n\n\n\n\n\n6\nTue Sep 30\nexam 1\n\n\n\n\n\n\nThu Oct 02\nintro to optimization\n💻\n\n\n\n\n7\nTue Oct 07\nNewton-Raphson\n💻\nlab 5\n\n\n\n\nThu Oct 09\nNewton-Raphson examples\n\n\n\n\n\n8\nTue Oct 14\nNO CLASS\n\n\n\n\n\n\nThu Oct 16\nMM principles\n💻\n\nproject instructions\n\n\n9\nTue Oct 21\nMM example\n💻\nlab 6\n\n\n\n\nThu Oct 23\nEM algorithm\n💻\n\n\n\n\n10\nTue Oct 28\nMonte Carlo integration\n💻\nproject workday\n\n\n\n\nThu Oct 30\nimportance sampling\n💻\n\n\n\n\n11\nTue Nov 04\ncomplexity and parallelization\n💻\n\n\n\n\n\nThu Nov 06\nexam 2\n\n\n\n\n\n12\nTue Nov 11\nshiny I\n💻\non GitHub\n\n\n\n\nThu Nov 13\nshiny II\n\n\n\n\n\n13\nTue Nov 18\nSQL + databases\n💻\nfinish lab 7\n\n\n\n\nThu Nov 20\nproject tips\n\n\n\n\n\n14\nTue Nov 25\nAPIs\n\nproject workday\n\n\n\n\nThu Nov 27\nNO CLASS\n\n\n\n\n\n15\nTue Dec 02\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 04\nspecial topic"
+    "text": "Week\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 26\nwelcome\n💻\nlab 0\n\n\n\n\nThu Aug 28\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 02\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 04\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 09\ntidy data and dplyr\n💻\nlab 2\n\n\n\n\nThu Sep 11\nsubsetting\n💻\n\n\n\n\n4\nTue Sep 16\nggplot2\n💻\nlab 3\n\n\n\n\nThu Sep 18\nfunctional programming and purrr\n💻\n\n\n\n\n5\nTue Sep 23\nregular expressions\n💻\nlab 4\n\n\n\n\nThu Sep 25\nreview\n\n\n\n\n\n6\nTue Sep 30\nexam 1\n\n\n\n\n\n\nThu Oct 02\nintro to optimization\n💻\n\n\n\n\n7\nTue Oct 07\nNewton-Raphson\n💻\nlab 5\n\n\n\n\nThu Oct 09\nNewton-Raphson examples\n\n\n\n\n\n8\nTue Oct 14\nNO CLASS\n\n\n\n\n\n\nThu Oct 16\nMM principles\n💻\n\nproject instructions\n\n\n9\nTue Oct 21\nMM example\n💻\nlab 6\n\n\n\n\nThu Oct 23\nEM algorithm\n💻\n\n\n\n\n10\nTue Oct 28\nMonte Carlo integration\n💻\nproject workday\n\n\n\n\nThu Oct 30\nimportance sampling\n💻\n\n\n\n\n11\nTue Nov 04\ncomplexity and parallelization\n💻\n\n\n\n\n\nThu Nov 06\nexam 2\n\n\n\n\n\n12\nTue Nov 11\nshiny I\n💻\non GitHub\n\n\n\n\nThu Nov 13\nshiny II\n\n\n\n\n\n13\nTue Nov 18\nSQL + databases\n💻\nfinish lab 7\n\n\n\n\nThu Nov 20\nproject tips\n\n\n\n\n\n14\nTue Nov 25\nAPIs\n💻\nproject workday\n\n\n\n\nThu Nov 27\nNO CLASS\n\n\n\n\n\n15\nTue Dec 02\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 04\nR packages"
   },
   {
     "objectID": "slides/01-welcome.html#contact-info",

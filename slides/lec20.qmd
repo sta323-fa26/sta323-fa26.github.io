@@ -10,10 +10,8 @@ format:
 
 # Announcements
 
-Reminder:
 
--   Lab 7 due today at 5:00pm.
--   Final project presentations during lab Tuesday, April 25.
+-   Final project presentations during class and lab next Tuesday, December 2.
 
 # Application Programming Interfaces (APIs)
 
@@ -33,7 +31,7 @@ If you want to
 
 -   pull genetic sequence data from GenBank, you'll use GenBank's API
 
--   create 54 repositories named lab07-\[github_team_name\], you'll probably use GitHub's API
+-   create 40 repositories named lab07-\[github_team_name\], you'll probably use GitHub's API
 
 ## Client-server framework with an API
 
@@ -174,15 +172,17 @@ An API of Ice And Fire provides a lot of data about the world of Westeros. To pr
 
 - What percentage of the characters are alive?
 
-. . . 
+Hint: use `jsonlite::read_json()`
 
-Download the in-class solution and example API code from 04/19 here:
+<!-- . . .  -->
 
-```{r}
-#| eval: false
-download.file(url = "https://sta323-sp23.github.io/scripts/apiDemo.R",
-              destfile = "apiDemo.R")
-```
+<!-- Download the in-class solution and example API code from 04/19 here: -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- download.file(url = "https://sta323-fa25.github.io/scripts/apiDemo.R", -->
+<!--               destfile = "apiDemo.R") -->
+<!-- ``` -->
 
 
 

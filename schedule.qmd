@@ -70,10 +70,10 @@ schedule %>%
 |  | Thu Nov 13 | shiny II |  |  |  |
 | 13 | Tue Nov 18 | SQL +  databases | [💻](/slides/lec19.html) | finish lab 7 |  |
 |  | Thu Nov 20 | project tips |  |  |  |
-| 14 | Tue Nov 25 | APIs |  | project workday |  |
+| 14 | Tue Nov 25 | APIs | [💻](/slides/lec20.html)  | project workday |  |
 |  | Thu Nov 27 | NO CLASS |  |  |  |
 | 15 | Tue Dec 02 | project presentations |  |  | presentations |
-|  | Thu Dec 04 | special topic |  |  |  |
+|  | Thu Dec 04 | R packages |  |  |  |
 
 <!-- | Week | Date       | Topic                                  |              Notes              | Lab                      | Exam                                  | Project | -->
 
