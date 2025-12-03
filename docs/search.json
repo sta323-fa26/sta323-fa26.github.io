@@ -1691,7 +1691,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Week\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 26\nwelcome\n💻\nlab 0\n\n\n\n\nThu Aug 28\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 02\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 04\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 09\ntidy data and dplyr\n💻\nlab 2\n\n\n\n\nThu Sep 11\nsubsetting\n💻\n\n\n\n\n4\nTue Sep 16\nggplot2\n💻\nlab 3\n\n\n\n\nThu Sep 18\nfunctional programming and purrr\n💻\n\n\n\n\n5\nTue Sep 23\nregular expressions\n💻\nlab 4\n\n\n\n\nThu Sep 25\nreview\n\n\n\n\n\n6\nTue Sep 30\nexam 1\n\n\n\n\n\n\nThu Oct 02\nintro to optimization\n💻\n\n\n\n\n7\nTue Oct 07\nNewton-Raphson\n💻\nlab 5\n\n\n\n\nThu Oct 09\nNewton-Raphson examples\n\n\n\n\n\n8\nTue Oct 14\nNO CLASS\n\n\n\n\n\n\nThu Oct 16\nMM principles\n💻\n\nproject instructions\n\n\n9\nTue Oct 21\nMM example\n💻\nlab 6\n\n\n\n\nThu Oct 23\nEM algorithm\n💻\n\n\n\n\n10\nTue Oct 28\nMonte Carlo integration\n💻\nproject workday\n\n\n\n\nThu Oct 30\nimportance sampling\n💻\n\n\n\n\n11\nTue Nov 04\ncomplexity and parallelization\n💻\n\n\n\n\n\nThu Nov 06\nexam 2\n\n\n\n\n\n12\nTue Nov 11\nshiny I\n💻\non GitHub\n\n\n\n\nThu Nov 13\nshiny II\n\n\n\n\n\n13\nTue Nov 18\nSQL + databases\n💻\nfinish lab 7\n\n\n\n\nThu Nov 20\nproject tips\n\n\n\n\n\n14\nTue Nov 25\nAPIs\n💻\nproject workday\n\n\n\n\nThu Nov 27\nNO CLASS\n\n\n\n\n\n15\nTue Dec 02\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 04\nR packages"
+    "text": "Week\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 26\nwelcome\n💻\nlab 0\n\n\n\n\nThu Aug 28\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 02\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 04\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 09\ntidy data and dplyr\n💻\nlab 2\n\n\n\n\nThu Sep 11\nsubsetting\n💻\n\n\n\n\n4\nTue Sep 16\nggplot2\n💻\nlab 3\n\n\n\n\nThu Sep 18\nfunctional programming and purrr\n💻\n\n\n\n\n5\nTue Sep 23\nregular expressions\n💻\nlab 4\n\n\n\n\nThu Sep 25\nreview\n\n\n\n\n\n6\nTue Sep 30\nexam 1\n\n\n\n\n\n\nThu Oct 02\nintro to optimization\n💻\n\n\n\n\n7\nTue Oct 07\nNewton-Raphson\n💻\nlab 5\n\n\n\n\nThu Oct 09\nNewton-Raphson examples\n\n\n\n\n\n8\nTue Oct 14\nNO CLASS\n\n\n\n\n\n\nThu Oct 16\nMM principles\n💻\n\nproject instructions\n\n\n9\nTue Oct 21\nMM example\n💻\nlab 6\n\n\n\n\nThu Oct 23\nEM algorithm\n💻\n\n\n\n\n10\nTue Oct 28\nMonte Carlo integration\n💻\nproject workday\n\n\n\n\nThu Oct 30\nimportance sampling\n💻\n\n\n\n\n11\nTue Nov 04\ncomplexity and parallelization\n💻\n\n\n\n\n\nThu Nov 06\nexam 2\n\n\n\n\n\n12\nTue Nov 11\nshiny I\n💻\non GitHub\n\n\n\n\nThu Nov 13\nshiny II\n\n\n\n\n\n13\nTue Nov 18\nSQL + databases\n💻\nfinish lab 7\n\n\n\n\nThu Nov 20\nproject tips\n\n\n\n\n\n14\nTue Nov 25\nAPIs\n💻\nproject workday\n\n\n\n\nThu Nov 27\nNO CLASS\n\n\n\n\n\n15\nTue Dec 02\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 04\nR packages\n💻"
   },
   {
     "objectID": "slides/01-welcome.html#contact-info",
@@ -3442,5 +3442,222 @@
     "title": "Databases, SQL and dplyr",
     "section": "Recap",
     "text": "Recap\nWe’ve connected to a database. We can view the tables within the database:\n\ndbListTables(con)\n\n[1] \"employees\" \"iris\"     \n\n\nWe can even save the connnection to a specific table within the databse:\n\nemp &lt;- tbl(con, \"employees\")"
+  },
+  {
+    "objectID": "slides/lec23.html#what-are-packages",
+    "href": "slides/lec23.html#what-are-packages",
+    "title": "R Packages",
+    "section": "What are packages?",
+    "text": "What are packages?\nR packages are just a collection of files - R code, compiled code (C, C++, etc.), data, documentation, and others that live in your library path.\n\n.libPaths() # where all packages live\n\n[1] \"/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library\"\n\n\n\ndir(.libPaths()) # shows directories where individual packages live\n\n  [1] \"abind\"                \"airports\"             \"AnnotationDbi\"       \n  [4] \"ape\"                  \"AsioHeaders\"          \"askpass\"             \n  [7] \"backports\"            \"base\"                 \"base64enc\"           \n [10] \"bench\"                \"bestridge\"            \"BH\"                  \n [13] \"bigD\"                 \"Biobase\"              \"BiocGenerics\"        \n [16] \"BiocManager\"          \"BiocVersion\"          \"Biostrings\"          \n [19] \"bit\"                  \"bit64\"                \"bitops\"              \n [22] \"blob\"                 \"boot\"                 \"brew\"                \n [25] \"brio\"                 \"broom\"                \"bslib\"               \n [28] \"cachem\"               \"callr\"                \"car\"                 \n [31] \"carData\"              \"cards\"                \"cardx\"               \n [34] \"caret\"                \"castor\"               \"cellranger\"          \n [37] \"checkmate\"            \"cherryblossom\"        \"chromote\"            \n [40] \"chron\"                \"class\"                \"classInt\"            \n [43] \"cli\"                  \"clipr\"                \"clock\"               \n [46] \"cluster\"              \"clusterGeneration\"    \"coda\"                \n [49] \"codetools\"            \"colorspace\"           \"combinat\"            \n [52] \"commonmark\"           \"compiler\"             \"conflicted\"          \n [55] \"corrplot\"             \"countdown\"            \"cowplot\"             \n [58] \"cpp11\"                \"crayon\"               \"credentials\"         \n [61] \"crosstalk\"            \"curl\"                 \"data.table\"          \n [64] \"datasets\"             \"datawizard\"           \"DBI\"                 \n [67] \"dbplyr\"               \"DelayedArray\"         \"dendextend\"          \n [70] \"DEoptim\"              \"Deriv\"                \"desc\"                \n [73] \"deSolve\"              \"devEMF\"               \"devtools\"            \n [76] \"diagram\"              \"DiagrammeR\"           \"dials\"               \n [79] \"DiceDesign\"           \"diffobj\"              \"digest\"              \n [82] \"distr\"                \"distributional\"       \"doBy\"                \n [85] \"doParallel\"           \"dotCall64\"            \"downlit\"             \n [88] \"dplyr\"                \"DSA.CountData\"        \"DT\"                  \n [91] \"dtplyr\"               \"duckdb\"               \"e1071\"               \n [94] \"editData\"             \"ellipse\"              \"ellipsis\"            \n [97] \"emmeans\"              \"estimability\"         \"evaluate\"            \n[100] \"expm\"                 \"eyedata\"              \"factoextra\"          \n[103] \"FactoMineR\"           \"fansi\"                \"faraway\"             \n[106] \"farver\"               \"fastmap\"              \"fastmatch\"           \n[109] \"fftwtools\"            \"fields\"               \"flare\"               \n[112] \"flashClust\"           \"flextable\"            \"fontawesome\"         \n[115] \"fontBitstreamVera\"    \"fontLiberation\"       \"fontquiver\"          \n[118] \"forcats\"              \"foreach\"              \"foreign\"             \n[121] \"Formula\"              \"fs\"                   \"furrr\"               \n[124] \"future\"               \"future.apply\"         \"gapminder\"           \n[127] \"gargle\"               \"gdtools\"              \"geiger\"              \n[130] \"gender\"               \"generics\"             \"GenomeInfoDb\"        \n[133] \"GenomeInfoDbData\"     \"GenomicRanges\"        \"GEOquery\"            \n[136] \"gert\"                 \"GGally\"               \"gganimate\"           \n[139] \"ggforce\"              \"ggplot2\"              \"ggpubr\"              \n[142] \"ggrepel\"              \"ggridges\"             \"ggsci\"               \n[145] \"ggsignif\"             \"ggstats\"              \"gh\"                  \n[148] \"ghclass\"              \"gifski\"               \"gitcreds\"            \n[151] \"glmnet\"               \"globals\"              \"glue\"                \n[154] \"googledrive\"          \"googlesheets4\"        \"gower\"               \n[157] \"GPArotation\"          \"GPBayes\"              \"GPfit\"               \n[160] \"graphics\"             \"grDevices\"            \"grid\"                \n[163] \"gridExtra\"            \"gsubfn\"               \"gt\"                  \n[166] \"gtable\"               \"gtools\"               \"gtsummary\"           \n[169] \"hardhat\"              \"haven\"                \"here\"                \n[172] \"hgu133a.db\"           \"hgu95av2.db\"          \"highr\"               \n[175] \"Hmisc\"                \"hms\"                  \"htmlTable\"           \n[178] \"htmltools\"            \"htmlwidgets\"          \"httpuv\"              \n[181] \"httr\"                 \"httr2\"                \"ids\"                 \n[184] \"igraph\"               \"infer\"                \"ini\"                 \n[187] \"inline\"               \"insight\"              \"ipred\"               \n[190] \"IRanges\"              \"isoband\"              \"iterators\"           \n[193] \"janeaustenr\"          \"janitor\"              \"jquerylib\"           \n[196] \"jsonlite\"             \"juicyjuice\"           \"kableExtra\"          \n[199] \"keep\"                 \"KEGGREST\"             \"KernSmooth\"          \n[202] \"knitr\"                \"labeling\"             \"later\"               \n[205] \"latex2exp\"            \"lattice\"              \"lava\"                \n[208] \"lazyeval\"             \"leaps\"                \"lhs\"                 \n[211] \"lifecycle\"            \"limma\"                \"listenv\"             \n[214] \"litedown\"             \"lme4\"                 \"lmtest\"              \n[217] \"lobstr\"               \"loo\"                  \"lpSolve\"             \n[220] \"lubridate\"            \"magick\"               \"magrittr\"            \n[223] \"maps\"                 \"markdown\"             \"MASS\"                \n[226] \"Matrix\"               \"MatrixGenerics\"       \"MatrixModels\"        \n[229] \"matrixsampling\"       \"matrixStats\"          \"mcmcse\"              \n[232] \"memoise\"              \"methods\"              \"mgcv\"                \n[235] \"microbenchmark\"       \"mime\"                 \"miniUI\"              \n[238] \"minqa\"                \"mitools\"              \"mlbench\"             \n[241] \"mnormt\"               \"modeldata\"            \"modelenv\"            \n[244] \"ModelMetrics\"         \"modelr\"               \"moonBook\"            \n[247] \"multcomp\"             \"multcompView\"         \"mvtnorm\"             \n[250] \"naturalsort\"          \"ncbit\"                \"nlme\"                \n[253] \"nloptr\"               \"NLP\"                  \"nnet\"                \n[256] \"nortest\"              \"numDeriv\"             \"nycflights13\"        \n[259] \"officer\"              \"openintro\"            \"openNLP\"             \n[262] \"openNLPdata\"          \"openssl\"              \"openxlsx\"            \n[265] \"optimParallel\"        \"org.Hs.eg.db\"         \"org.Rn.eg.db\"        \n[268] \"otel\"                 \"ouch\"                 \"palmerpenguins\"      \n[271] \"parallel\"             \"parallelly\"           \"parsnip\"             \n[274] \"patchwork\"            \"pbkrtest\"             \"phangorn\"            \n[277] \"pheatmap\"             \"phytools\"             \"pillar\"              \n[280] \"pkgbuild\"             \"pkgconfig\"            \"pkgdown\"             \n[283] \"pkgload\"              \"plogr\"                \"plotly\"              \n[286] \"plotrix\"              \"plsgenomics\"          \"plyr\"                \n[289] \"png\"                  \"polspline\"            \"polyclip\"            \n[292] \"polynom\"              \"pomp\"                 \"posterior\"           \n[295] \"praise\"               \"prettyunits\"          \"prismatic\"           \n[298] \"pROC\"                 \"processx\"             \"prodlim\"             \n[301] \"profmem\"              \"profvis\"              \"progress\"            \n[304] \"progressr\"            \"promises\"             \"proto\"               \n[307] \"proxy\"                \"pryr\"                 \"ps\"                  \n[310] \"psych\"                \"purrr\"                \"qdap\"                \n[313] \"qdapDictionaries\"     \"qdapRegex\"            \"qdapTools\"           \n[316] \"quadprog\"             \"quantreg\"             \"queryparser\"         \n[319] \"QuickJSR\"             \"R.methodsS3\"          \"R.oo\"                \n[322] \"R.utils\"              \"R6\"                   \"ragg\"                \n[325] \"randomForest\"         \"rappdirs\"             \"rat2302.db\"          \n[328] \"rbibutils\"            \"rcmdcheck\"            \"RColorBrewer\"        \n[331] \"Rcpp\"                 \"RcppArmadillo\"        \"RcppEigen\"           \n[334] \"RcppParallel\"         \"RcppProgress\"         \"RcppTOML\"            \n[337] \"RCurl\"                \"Rdpack\"               \"reactable\"           \n[340] \"reactablefmtr\"        \"reactR\"               \"readr\"               \n[343] \"readxl\"               \"recipes\"              \"reformulas\"          \n[346] \"rematch\"              \"rematch2\"             \"remotes\"             \n[349] \"rentrez\"              \"reprex\"               \"repurrrsive\"         \n[352] \"reshape2\"             \"reticulate\"           \"rgl\"                 \n[355] \"RhpcBLASctl\"          \"ridge\"                \"rio\"                 \n[358] \"rJava\"                \"rlang\"                \"rmarkdown\"           \n[361] \"rms\"                  \"roxygen2\"             \"rpart\"               \n[364] \"rprojroot\"            \"RRphylo\"              \"rrtable\"             \n[367] \"rsample\"              \"RSpectra\"             \"RSQLite\"             \n[370] \"rstan\"                \"rstatix\"              \"rstudioapi\"          \n[373] \"rversions\"            \"rvest\"                \"rvg\"                 \n[376] \"s2\"                   \"S4Arrays\"             \"S4Vectors\"           \n[379] \"S7\"                   \"sandwich\"             \"sass\"                \n[382] \"scales\"               \"scatterplot3d\"        \"selectr\"             \n[385] \"sessioninfo\"          \"sf\"                   \"sfd\"                 \n[388] \"sfsmisc\"              \"shape\"                \"shiny\"               \n[391] \"shinycssloaders\"      \"shinyWidgets\"         \"sjlabelled\"          \n[394] \"sjmisc\"               \"slam\"                 \"slider\"              \n[397] \"sloop\"                \"snakecase\"            \"SnowballC\"           \n[400] \"sourcetools\"          \"spam\"                 \"SparseArray\"         \n[403] \"SparseM\"              \"sparsevctrs\"          \"spatial\"             \n[406] \"splines\"              \"sqldf\"                \"SQUAREM\"             \n[409] \"srvyr\"                \"srvyrexploR\"          \"StanHeaders\"         \n[412] \"startupmsg\"           \"statmod\"              \"stats\"               \n[415] \"stats4\"               \"stringdist\"           \"stringi\"             \n[418] \"stringr\"              \"subplex\"              \"SummarizedExperiment\"\n[421] \"survey\"               \"survival\"             \"svglite\"             \n[424] \"sys\"                  \"systemfonts\"          \"tailor\"              \n[427] \"tcltk\"                \"TeachingDemos\"        \"tensorA\"             \n[430] \"testthat\"             \"textshaping\"          \"TH.data\"             \n[433] \"tibble\"               \"tidymodels\"           \"tidyquery\"           \n[436] \"tidyr\"                \"tidyselect\"           \"tidytext\"            \n[439] \"tidyverse\"            \"timechange\"           \"timeDate\"            \n[442] \"tinytex\"              \"tippy\"                \"TiPS\"                \n[445] \"tm\"                   \"tokenizers\"           \"tools\"               \n[448] \"transformr\"           \"translations\"         \"tune\"                \n[451] \"tweenr\"               \"tzdb\"                 \"UCSC.utils\"          \n[454] \"umap\"                 \"units\"                \"urlchecker\"          \n[457] \"usa\"                  \"usdata\"               \"usethis\"             \n[460] \"utf8\"                 \"utils\"                \"uuid\"                \n[463] \"V8\"                   \"vcd\"                  \"vctrs\"               \n[466] \"venneuler\"            \"viridis\"              \"viridisLite\"         \n[469] \"visNetwork\"           \"vroom\"                \"waldo\"               \n[472] \"warp\"                 \"webr\"                 \"webshot\"             \n[475] \"webshot2\"             \"websocket\"            \"wesanderson\"         \n[478] \"whisker\"              \"withr\"                \"wk\"                  \n[481] \"wordcloud\"            \"workflows\"            \"workflowsets\"        \n[484] \"writexl\"              \"xfun\"                 \"XML\"                 \n[487] \"xml2\"                 \"xopen\"                \"xtable\"              \n[490] \"XVector\"              \"yaml\"                 \"yardstick\"           \n[493] \"zip\"                  \"zoo\"                  \"ztable\""
+  },
+  {
+    "objectID": "slides/lec23.html#copying-your-setup",
+    "href": "slides/lec23.html#copying-your-setup",
+    "title": "R Packages",
+    "section": "Copying your setup",
+    "text": "Copying your setup\ninstalled.packages() lists all installed packages\n\nmyFavoritePackages &lt;- installed.packages()\nwrite.csv(myFavoritePackages, \"myFavoritePackages.csv\")\n\n\nmyFavoritePackages &lt;- read.csv(\"myFavoritePackages.csv\")\ninstall.packages(myFavoritePackages[,1], dependencies = TRUE, ask = FALSE)"
+  },
+  {
+    "objectID": "slides/lec23.html#search-path",
+    "href": "slides/lec23.html#search-path",
+    "title": "R Packages",
+    "section": "Search path",
+    "text": "Search path\nWhen you run library(pkg), the functions (and objects) in the package’s namespace are attached to the global search path.\n\nsearch()\n\n[1] \".GlobalEnv\"        \"package:stats\"     \"package:graphics\" \n[4] \"package:grDevices\" \"package:utils\"     \"package:datasets\" \n[7] \"package:methods\"   \"Autoloads\"         \"package:base\"     \n\n\n\nlibrary(tidyverse)\nsearch()\n\n [1] \".GlobalEnv\"        \"package:lubridate\" \"package:forcats\"  \n [4] \"package:stringr\"   \"package:dplyr\"     \"package:purrr\"    \n [7] \"package:readr\"     \"package:tidyr\"     \"package:tibble\"   \n[10] \"package:ggplot2\"   \"package:tidyverse\" \"package:stats\"    \n[13] \"package:graphics\"  \"package:grDevices\" \"package:utils\"    \n[16] \"package:datasets\"  \"package:methods\"   \"Autoloads\"        \n[19] \"package:base\""
+  },
+  {
+    "objectID": "slides/lec23.html#loading-vs-attaching",
+    "href": "slides/lec23.html#loading-vs-attaching",
+    "title": "R Packages",
+    "section": "Loading vs attaching",
+    "text": "Loading vs attaching\nIf you do not want to attach a package you can directly use package functions via ::\n\nuseful for avoiding namespace conflicts with functions of the same name from different packages.\nrequireNamespace() returns TRUE or FALSE depending on if it succeeds - can be useful to test if a package is available.\n\n\nloadedNamespaces()\n\n [1] \"gtable\"       \"jsonlite\"     \"dplyr\"        \"compiler\"     \"stats\"       \n [6] \"tidyselect\"   \"tidyverse\"    \"stringr\"      \"tidyr\"        \"scales\"      \n[11] \"yaml\"         \"fastmap\"      \"base\"         \"ggplot2\"      \"readr\"       \n[16] \"R6\"           \"generics\"     \"knitr\"        \"datasets\"     \"methods\"     \n[21] \"forcats\"      \"tibble\"       \"lubridate\"    \"pillar\"       \"RColorBrewer\"\n[26] \"tzdb\"         \"rlang\"        \"stringi\"      \"xfun\"         \"utils\"       \n[31] \"S7\"           \"timechange\"   \"cli\"          \"withr\"        \"magrittr\"    \n[36] \"digest\"       \"grid\"         \"rstudioapi\"   \"graphics\"     \"hms\"         \n[41] \"lifecycle\"    \"vctrs\"        \"evaluate\"     \"glue\"         \"farver\"      \n[46] \"rmarkdown\"    \"purrr\"        \"grDevices\"    \"tools\"        \"pkgconfig\"   \n[51] \"htmltools\""
+  },
+  {
+    "objectID": "slides/lec23.html#where-do-r-packages-come-from",
+    "href": "slides/lec23.html#where-do-r-packages-come-from",
+    "title": "R Packages",
+    "section": "Where do R packages come from?",
+    "text": "Where do R packages come from?"
+  },
+  {
+    "objectID": "slides/lec23.html#where-do-r-packages-come-from-1",
+    "href": "slides/lec23.html#where-do-r-packages-come-from-1",
+    "title": "R Packages",
+    "section": "Where do R packages come from?",
+    "text": "Where do R packages come from?\n\nCRAN\n\n\ninstall.packages(\"TeachingDemos\")\n\n\nGitHub\n\n\nremotes::install_github(\"cran/TeachingDemos\")\n\n\nLocal installation\n\nFrom the terminal\n\nR CMD INSTALL TeachingDemos.tar.gz\n\nor from R\n\ninstall.packages(\"TeachingDemos.tar.gz\", repos = NULL, type = \"source\")\n\n\nWhy TeachingDemos? See TeachingDemos::stork"
+  },
+  {
+    "objectID": "slides/lec23.html#what-is-cran",
+    "href": "slides/lec23.html#what-is-cran",
+    "title": "R Packages",
+    "section": "What is CRAN?",
+    "text": "What is CRAN?\nThe Comprehensive R Archive Network which is the central repository of R packages.\n\nMaintained by the R Foundation and run by a team of volunteers, ~23k packages\nRetains all current versions of released packages as well as archives of previous versions\nSimilar in spirit to Perl’s CPAN, TeX’s CTAN, and Python’s PyPI\n\nSome important features:\n\nAll submissions are reviewed by humans + automated checks\nStrictly enforced submission policies and package requirements\nAll packages must be actively maintained and support upstream and downstream changes"
+  },
+  {
+    "objectID": "slides/lec23.html#structure-of-an-r-package",
+    "href": "slides/lec23.html#structure-of-an-r-package",
+    "title": "R Packages",
+    "section": "Structure of an R Package",
+    "text": "Structure of an R Package\n\n\nyellow is core, blue is optional (but very common)\n.Rd stands for “R documentation”"
+  },
+  {
+    "objectID": "slides/lec23.html#core-components",
+    "href": "slides/lec23.html#core-components",
+    "title": "R Packages",
+    "section": "Core components",
+    "text": "Core components\n\nDESCRIPTION - file containing package metadata (e.g. package name, description, version, license, and author details). Also specifies package dependencies.\nNAMESPACE - details which functions and objects are exported by your package.\nR/ - contains all R script files (.R) implementing package\nman/ - contains all R documentation files (.Rd)"
+  },
+  {
+    "objectID": "slides/lec23.html#optional-components",
+    "href": "slides/lec23.html#optional-components",
+    "title": "R Packages",
+    "section": "Optional components",
+    "text": "Optional components\nThe following components are optional, but quite common:\n\ntests/ - contains unit tests (.R scripts)\nsrc/ - contains code to be compiled (usually C / C++)\ndata/ - contains example data sets (.rds or .rda)\ninst/ - contains files that will be copied to the package’s top-level directory when it is installed (e.g. C/C++ headers, examples or data files that don’t belong in data/)\nvignettes/ - contains long form documentation, can be static (.pdf or .html) or literate documents (e.g. .qmd, .Rmd or .Rnw)"
+  },
+  {
+    "objectID": "slides/lec23.html#package-contents",
+    "href": "slides/lec23.html#package-contents",
+    "title": "R Packages",
+    "section": "Package contents",
+    "text": "Package contents\n\nInstalled Package\n\nfs::dir_tree(system.file(package=\"TeachingDemos\"))\n\n/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/TeachingDemos\n├── DESCRIPTION\n├── INDEX\n├── Meta\n│   ├── Rd.rds\n│   ├── data.rds\n│   ├── features.rds\n│   ├── hsearch.rds\n│   ├── links.rds\n│   ├── nsInfo.rds\n│   └── package.rds\n├── NAMESPACE\n├── NEWS\n├── R\n│   ├── TeachingDemos\n│   ├── TeachingDemos.rdb\n│   └── TeachingDemos.rdx\n├── data\n│   ├── Rdata.rdb\n│   ├── Rdata.rds\n│   └── Rdata.rdx\n├── help\n│   ├── AnIndex\n│   ├── TeachingDemos.rdb\n│   ├── TeachingDemos.rdx\n│   ├── aliases.rds\n│   └── paths.rds\n└── html\n    ├── 00Index.html\n    └── R.css"
+  },
+  {
+    "objectID": "slides/lec23.html#package-development",
+    "href": "slides/lec23.html#package-development",
+    "title": "R Packages",
+    "section": "Package development",
+    "text": "Package development\nWhat follows is an opinionated introduction to package development,\n\nthis is not the only way to make packages (none of the following are required)\nI would strongly recommend using:\n\nRStudio\nRStudio projects\nGitHub\nusethis\nroxygen2\n\nRead and follow along with R Packages (2e) - Chapter 1 - “The Whole Game”"
+  },
+  {
+    "objectID": "slides/lec23.html#usethis",
+    "href": "slides/lec23.html#usethis",
+    "title": "R Packages",
+    "section": "usethis",
+    "text": "usethis\nThis is an immensely useful package for automating all kinds of routine (and tedious) tasks within R\n\nTools for managing git and GitHub configuration\nTools for managing collaboration on GitHub via pull requests (see pr_*())\nTools for creating and configuring packages\nTools for configuring your R environment (e.g. .Rprofile and .Renviron)\nand much much more\n\nNote: the package also loads with devtools."
+  },
+  {
+    "objectID": "slides/lec23.html#start-your-package",
+    "href": "slides/lec23.html#start-your-package",
+    "title": "R Packages",
+    "section": "Start your package",
+    "text": "Start your package\nRather than having to remember all of the necessary pieces and their format, usethis can help you bootstrap your package development process.\n\nusethis::create_package()"
+  },
+  {
+    "objectID": "slides/lec23.html#choosing-a-license",
+    "href": "slides/lec23.html#choosing-a-license",
+    "title": "R Packages",
+    "section": "Choosing a license",
+    "text": "Choosing a license\nAn important early step in developing a package is choosing a license - this is not trivial but is important to do early on, particularly if collaborating with others.\nThere are many resources available to help you choose a license, including:\n\nhttps://choosealicense.com/"
+  },
+  {
+    "objectID": "slides/lec23.html#documentation",
+    "href": "slides/lec23.html#documentation",
+    "title": "R Packages",
+    "section": "Documentation",
+    "text": "Documentation\nAll R packages are expected to have documentation for all exported functions and data sets (this is a CRAN requirement). This documentation is stored as .Rd files in the man/ directory.\n\nThe Rd format is a markup language that is loosely based on LaTeX\nRd files are processed into LaTeX, HTML, and plain text when building the package\nAll packages need Rd files, that doesn’t mean you need to write Rd"
+  },
+  {
+    "objectID": "slides/lec23.html#roxygen2",
+    "href": "slides/lec23.html#roxygen2",
+    "title": "R Packages",
+    "section": "Roxygen2",
+    "text": "Roxygen2\n\nThe premise of roxygen2 is simple: describe your functions in comments next to their definitions and roxygen2 will process your source code and comments to automatically generate .Rd files in man/, NAMESPACE, and, if needed, the Collate field in DESCRIPTION.\n\n\nroxygen uses special comment lines prefixed with #'\nroxygen specific command have the format @cmd and mostly match Rd commands\ndevtools::document() or menu Build &gt; Document with reprocess all source files and rebuild all Rds\nusethis::create_package() with roxygen = TRUE will initialize your package to use roxygen (default behavior)"
+  },
+  {
+    "objectID": "slides/lec23.html#vignette",
+    "href": "slides/lec23.html#vignette",
+    "title": "R Packages",
+    "section": "Vignette",
+    "text": "Vignette\nLong form documentation for your package that live in vignette/, use browseVignette(pkg) to see a package’s vignettes.\n\nNot required, but adds a lot of value to a package\nGenerally these are literate documents (.Rmd, .Rnw) that are compiled to .html or .pdf when the package is built.\nBuilt packages retain the rendered document, the source document, and all source code\n\nvignette(\"colwise\", package = \"dplyr\") opens rendered version\nedit(vignette(\"colwise\", package = \"dplyr\")) opens code chunks\n\nUse usethis::use_vignette() to create a RMarkdown vignette template"
+  },
+  {
+    "objectID": "slides/lec23.html#articles",
+    "href": "slides/lec23.html#articles",
+    "title": "R Packages",
+    "section": "Articles",
+    "text": "Articles\nThese are un-official extensions to vignettes where package authors wish to include additional long form documentation that is included in their pkgdown site but not in the package (usually for space reasons).\n\nUse usethis::use_article() to create\nFiles are added to vignette/articles/ which is added to .Rbuildignore\n.Rbuildignore excludes certain files from the package build process # Package data"
+  },
+  {
+    "objectID": "slides/lec23.html#exported-data",
+    "href": "slides/lec23.html#exported-data",
+    "title": "R Packages",
+    "section": "Exported data",
+    "text": "Exported data\nMany packages contain sample data (e.g. nycflights13, babynames, etc.)\nGenerally these files are made available by saving a single data object as an .Rdata file (using save()) into the data/ directory of your package.\n\nAn easy option is to use usethis::use_data(obj) to create the necessary file(s)\nData is usually compressed, for large data sets it may be worth trying different options (there is a 5 Mb package size limit on CRAN)\nExported data must be documented (possible via roxygen)"
+  },
+  {
+    "objectID": "slides/lec23.html#lazy-data",
+    "href": "slides/lec23.html#lazy-data",
+    "title": "R Packages",
+    "section": "Lazy data",
+    "text": "Lazy data\nBy default when attaching a package all of that packages data is loaded - however if LazyData: true is set in the packages’ DESCRIPTION then data is only loaded when used.\n\n\n\npryr::mem_used()\n\n90.9 MB\n\n\n\n\n\n\n\nlibrary(nycflights13)\npryr::mem_used()\n\n90.9 MB\n\n\n\n\n\n\n\ninvisible(flights)\npryr::mem_used()\n\n132 MB\n\n\n\nIf you use usethis::use_data() this option will be set in DESCRIPTION automatically."
+  },
+  {
+    "objectID": "slides/lec23.html#raw-data",
+    "href": "slides/lec23.html#raw-data",
+    "title": "R Packages",
+    "section": "Raw data",
+    "text": "Raw data\nWhen published, a package should generally only contain the final data set, but it is important that the process to generate the data is documented as well as any necessary preliminary data.\n\nThese can live any where but the general suggestion is to create a data-raw/ directory which is ignored via .Rbuildignore\ndata-raw/ then contain scripts, data files, and anything else needed to generate the final object\nSee examples babynames or nycflights\nUse usethis::use_data_raw() to create and ignore the data-raw/ directory."
+  },
+  {
+    "objectID": "slides/lec23.html#internal-data",
+    "href": "slides/lec23.html#internal-data",
+    "title": "R Packages",
+    "section": "Internal data",
+    "text": "Internal data\nIf you have data that you want to have access to from within the package but not exported then it needs to live in a special Rdata object located at R/sysdata.rda.\n\nCan be created using usethis::use_data(obj1, obj2, internal = TRUE)\nEach call to the above will overwrite, so needs to include all objects\nNot necessary for small data frames and similar objects - just create in a script. Use when you want the object to be compressed.\nExample nflplotR which contains team logos and colors for NFL teams."
+  },
+  {
+    "objectID": "slides/lec23.html#raw-data-files",
+    "href": "slides/lec23.html#raw-data-files",
+    "title": "R Packages",
+    "section": "Raw data files",
+    "text": "Raw data files\nIf you want to include raw data files (e.g .csv, shapefiles, etc.) there are generally placed in inst/ (or a nested folder) so that they are installed with the package.\n\nAccessed using system.file(\"dir\", package = \"package\") after install\nUse folders to keep things organized, Hadley recommends and uses inst/extdata/\nExample sf"
+  },
+  {
+    "objectID": "slides/lec23.html#r-cmd-check",
+    "href": "slides/lec23.html#r-cmd-check",
+    "title": "R Packages",
+    "section": "R CMD check",
+    "text": "R CMD check\nLast time we saw the usage of R CMD check, or rather Build &gt; Check Package from within RStudio.\nThis is a good idea to run regularly to make sure nothing is broken and you are meeting the important package quality standards, but this only in the context of your machine, your version of R, your OS, and so on.\nIf using GitHub it is highly recommended that you run usethis::use_github_action_check_standard() to enable GitHub actions checks of the package each time it is pushed.\nOn each push this runs R CMD check on: * Latest R on MacOS, Windows, Linux (Ubuntu) * Previous and development version of R on Linux (Ubuntu)"
+  },
+  {
+    "objectID": "slides/lec23.html#basic-test-structure",
+    "href": "slides/lec23.html#basic-test-structure",
+    "title": "R Packages",
+    "section": "Basic test structure",
+    "text": "Basic test structure\nPackage tests live in tests/,\n\nAny R scripts found in the folder will be run when checking the package (not Building)\nGenerally tests fail on errors, but warnings are also tracked\nTesting is possible via base R, including comparison of output vs. a file but it is not recommended (See Writing R Extensions)\nNote that R CMD check also runs all documentation examples (unless explicitly tagged dont run) - which can be used for basic testing"
+  },
+  {
+    "objectID": "slides/lec23.html#testthat-basics",
+    "href": "slides/lec23.html#testthat-basics",
+    "title": "R Packages",
+    "section": "testthat basics",
+    "text": "testthat basics\nNot the only option but probably the most widely used and with the best integration into RStudio.\nCan be initialized in your project via usethis::use_testthat() which creates tests/testthat/ and some basic scaffolding.\n\ntest/testthat.R is what is run by R CMD Check and runs your other tests - handles some basic config like loading package(s)\nTest scripts go in tests/testthat/ and should start with test_, suffix is usually the file in R/ that is being tested.\n\n\n\n\n\n\n\nNote\n\n\nBuild &gt; Test Package to run the package tests. Example:\n\nf1 = function(x) {\n  x^2\n}\nfp1 = function(x) {\n  2 * x\n}\n\nstopifnot(\nnewton(f1, fp1, x = 1, tol = 0.00001) == 0.001953125\n)\n\n\n\n\n\n\nusethis::use_testthat() has an edition argument, this is a way of maintaining backwards compatibility, generally always use the latest edition if starting a new project"
+  },
+  {
+    "objectID": "slides/lec23.html#testthat-script-structure",
+    "href": "slides/lec23.html#testthat-script-structure",
+    "title": "R Packages",
+    "section": "testthat script structure",
+    "text": "testthat script structure\nFrom the bottom up,\n\na single test is written as an expectation (e.q. expect_equal(), expect_error(), etc.)\nmultiple related expectations are combined into a test group (test_that()), which provides\n\na human readable name and\nlocal scope to contain the expectations and any temporary objects\n\nmultiple test groups are combined into a file"
+  },
+  {
+    "objectID": "slides/lec23.html#creating-a-function-for-the-package",
+    "href": "slides/lec23.html#creating-a-function-for-the-package",
+    "title": "R Packages",
+    "section": "Creating a function for the package",
+    "text": "Creating a function for the package\nCreate a new .R file in the R folder with the function name as the title. E.g. use the Newton’s method code and call the file newton.\n\nnewton = function(f, fp, x, tol) {\n  for (i in 1:100) {\n    x = x - f(x) / fp(x)\n    if (abs(f(x)) &lt; tol) {\n      return(x)\n    }\n  }\n  return(x)\n}"
+  },
+  {
+    "objectID": "slides/lec23.html#example",
+    "href": "slides/lec23.html#example",
+    "title": "R Packages",
+    "section": "Example",
+    "text": "Example\n\n#' newton\n#'\n#' This function takes four arguments: f, fp, x, tol and returns the root a root of f. Note that this function is sensitive to the starting point x.\n#'\n#'\n#' @param f univariate function that you want to find the root of.\n#' @param fp first derivative of function f in closed form.\n#' @param x starting point\n#' @param tol The tolerance term, i.e. how close the function must be to zero in order to terminate.\n#' @return Returns an object of indeterminate type because the function is not robustly written.\n#' @export\n\nRun devtools::document().\n\nCheck out ?newton"
+  },
+  {
+    "objectID": "slides/lec23.html#how-to",
+    "href": "slides/lec23.html#how-to",
+    "title": "R Packages",
+    "section": "How to",
+    "text": "How to\nAfter building, you will see package_name_version.tar.gz appear in the parent directory.\nWe can install with\n\ninstall.packages(\"pkg_name_and_version.tar.gz\", repos = NULL, type = \"source\")"
   }
 ]
