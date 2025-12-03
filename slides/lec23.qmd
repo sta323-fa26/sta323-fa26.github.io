@@ -1,0 +1,130 @@
+---
+title: "R Packages"
+author: "Dr. Alexander Fisher"
+execute:
+  warning: true
+format: 
+    revealjs:
+      smaller: true
+---
+
+# Package logistics
+
+## What are packages?
+
+R packages are just a collection of files - R code, compiled code (C, C++, etc.), data, documentation, and others that live in your library path.
+
+```{r}
+.libPaths() # where all packages live
+```
+
+```{r}
+dir(.libPaths()) # shows directories where individual packages live
+```
+
+## Copying your setup
+
+`installed.packages()` lists all installed packages
+
+```{r}
+#| eval: false
+myFavoritePackages <- installed.packages()
+write.csv(myFavoritePackages, "myFavoritePackages.csv")
+```
+
+```{r}
+#| eval: false
+myFavoritePackages <- read.csv("myFavoritePackages.csv")
+install.packages(myFavoritePackages[,1], dependencies = TRUE, ask = FALSE)
+```
+
+## Search path
+
+When you run `library(pkg)`, the functions (and objects) in the package's namespace are attached to the global search path.
+
+```{r}
+search()
+```
+
+```{r}
+library(tidyverse)
+search()
+```
+
+## Loading vs attaching
+
+If you do not want to attach a package you can directly use package functions via `::`.
+
+-   useful for avoiding namespace conflicts with functions of the same name from different packages.
+
+-   `requireNamespace()` returns `TRUE` or `FALSE` depending on if it succeeds - can be useful to test if a package is available.
+
+```{r}
+loadedNamespaces()
+```
+
+## Where do R packages come from?
+
+![](images/clipboard-1168032376.png){width="1050"}
+
+## Where do R packages come from?
+
+-   CRAN
+
+```{r}
+#| eval: false
+install.packages("TeachingDemos")
+```
+
+-   GitHub
+
+```{r}
+#| eval: false
+remotes::install_github("cran/TeachingDemos")
+```
+
+
+
+-   Local installation
+
+From the terminal
+
+```
+R CMD install TeachingDemos.tar.gz
+```
+
+or from R
+
+```{r}
+#| eval: false
+devtools::install("TeachingDemos.tar.gz")
+```
+
+. . . 
+
+Why `TeachingDemos`? See `TeachingDemos::stork`
+
+
+## What is CRAN?
+
+The Comprehensive R Archive Network which is the central repository of R packages.
+
+- Maintained by the R Foundation and run by a team of volunteers, ~23k packages
+
+- Retains all current versions of released packages as well as archives of previous versions
+
+- Similar in spirit to Perl’s CPAN, TeX’s CTAN, and Python’s PyPI
+
+Some important features:
+
+- All submissions are reviewed by humans + automated checks
+
+- Strictly enforced submission policies and package requirements
+
+- All packages must be actively maintained and support upstream and downstream changes
+
+## Structure of an R package
+
+
+
+# Making a package
