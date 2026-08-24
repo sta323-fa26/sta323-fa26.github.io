@@ -36,7 +36,7 @@ There are no required textbooks for this course, the following textbooks are rec
 
 We will use the statistical software package R both in-class, and on take-home assignments in this course. R is freely available at <http://www.r-project.org/>. RStudio, the popular IDE for R, is freely available at <https://posit.co/downloads/>. Additionally, students may access R and RStudio through Docker containers provided by Duke Office of Information Technology. Containers can be accessed at <https://cmgr.oit.duke.edu/containers>.
 
-### Course objectives
+### Learning objectives
 
 By the end of this course you will be able to
 
@@ -52,8 +52,9 @@ By the end of this course you will be able to
 |---------------------|------------------------------------|
 | Labs (25%)          | Biweekly lab assignments.       |
 | Exams (50%)         | Two in-class exams.    |
+| Mini project (5%)   | Presentation in lab. |
 | Project (15%)       | Written report and presentation.   |
-| Quizzes (10%)       | In-class pop quizzes.         |
+| Quizzes (5%)       | In-class pop quizzes.         |
 
 A $>= 93$, A- $< 93$, B+ $< 90$, B $< 87$, B- $< 83$, C+ $<80$, C $< 77$, C- $< 73$, D+ $< 70$, D $< 67$, D- $< 63$, F $< 60$
 
@@ -64,6 +65,10 @@ In labs, you will apply the concepts discussed in lecture. Labs will focus on bo
 #### Exams
 
 There will be two in-class exams. Through these exams you have the opportunity to demonstrate what you've learned in the course thus far. Each exam will include exercises related to the content in labs. More details about the content and structure of the exams will be discussed during the semester.
+
+#### Mini project
+
+You and your team will choose from a list of topics to develop a short presentation for lab.
 
 #### Final project
 
@@ -100,7 +105,7 @@ Please abide by the following as you work on assignments in this course:
 You may discuss the assignment with other teams; however, you may not directly share (or copy) code or write up with another team. Unauthorized sharing (or copying) of the code or write up will be considered a violation for all students involved.
 
 - You may not discuss or otherwise work with others on the exams.
-Unauthorized collaboration or using unauthorized materials will be considered a violation for all students involved. More details will be given closer to the exam date.
+Unauthorized collaboration or using unauthorized materials will be considered a violation for all students involved.
 
 - Outside resources and generative AI statement: The use of online resources (including generative AI, as well as static webpages like Stack-Overflow, etc.) is strictly prohibited on in-class exercises. For take home assignments, you may make use of online resources for coding portions on assignments. If you directly use code from a source (or use it as inspiration), you must explicitly cite where you obtained the code. If you used generative AI to create the code, you should include your prompt(s) in your citation as well.
 Any code that is discovered to be recycled or created by AI and is not explicitly cited will be treated as plagiarism.

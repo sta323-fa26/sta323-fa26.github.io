@@ -17,7 +17,7 @@ library(countdown)
 :::::: columns
 ::: {.column width="50%"}
 -   [alexander.fisher\@duke.edu](alexander.fisher@duke.edu)
--   Office hours: Mo/Th: 2:00-3:00p in Old Chem 223B
+-   Office hours: Tu/Fr: 10:00-11:00a in Old Chem 223B
 -   A little bit about my research...
 :::
 
@@ -38,18 +38,41 @@ Broadly, it's turning data into knowledge using the computer.
 
 ###### Examples of things we'll do in this course:
 
+:::::: columns
+::: {.column width="50%"}
+#### Data 
+
 -   Tidy messy data sets
 
 -   Wrangle the written word with regular expressions
 
--   Interact with databases
+-   Visualize high dimensional data
+
+-   Source data from APIs
+
+#### Communicate
+
+-   Write about findings
+
+-   Give presentations
+
+-   Build shiny web apps
+:::
+
+::: {.column width="50%"}
+#### Computation and scaling
 
 -   Optimize code in R
 
--   Model data with complicated likelihood functions and then write algorithms to maximize the likelihood
+-   Parallelize computation 
 
--   Build shiny web apps
+-   Interact with databases
 
+-   Implement statistical algorithms
+
+
+:::
+:::::
 ::: {.fragment}
 
 and more!
@@ -58,22 +81,24 @@ and more!
 ##  {#slide3-id data-menu-title="Shiny App Example"}
 
 ![](images/01-welcome/NHLapp_demo.gif){.absolute bottom="2%"}
-
 ## Learning objectives
 
-By the end of this course you will be able to...
+By the end of this course you will be able to
 
-- write efficient R code to (1) wrangle, explore and analyze data, (2) program algorithms to make inference under a variety of data generative models
+1. write efficient R code to (1) wrangle, explore and analyze data, (2) implement statistical algorithms
 
--   conduct independent data analysis and subsequently write and present results effectively
+2. read unfamiliar code efficiently, develop unit tests, and debug
+
+3. conduct independent data analysis and present results effectively
 
 ## Assessments
 
 | Assignment          | Description                        |
 |---------------------|------------------------------------|
-| Labs (30%)          | Biweekly lab assignments.       |
-| Exams (50%)         | Two hybrid (both an in-class and take-home component) exams.    |
-| Final Project (15%) | Written report and presentation.   |
+| Labs (25%)          | Biweekly lab assignments.       |
+| Exams (50%)         | Two in-class exams.    |
+| Mini project (5%)   | Presentation in lab. |
+| Project (15%)       | Written report and presentation.   |
 | Quizzes (5%)       | In-class pop quizzes.         |
 
 # Course Policies
@@ -120,7 +145,7 @@ Extensive use of AI on take-home assessments will likely set you up for poor per
 
 | Resource | Description |
 |------------------------|-----------------------------------------------|
-| [course website](https://sta323-fa25.github.io/) | course notes, deadlines, assignments, office hours, syllabus |
+| [course website](https://sta323-fa26.github.io/) | course notes, deadlines, assignments, office hours, syllabus |
 | [Canvas](https://go.canvas.duke.edu) | class recordings, solutions, announcements, Ed Discussion |
 | [course organization](https://github.com/sta323-fa25) | assignments, collaboration |
 | [RStudio containers](https://cmgr.oit.duke.edu/containers)\* | online coding platform |
@@ -172,154 +197,4 @@ When you miss a class:
 
 countdown(minutes = 5, font_size = "1.5em",
           color_running_background = "#2774AE")
-```
-
-# R fundamentals
-
-## Vectors
-
-The fundamental building block of data in R is a vector (collections of related values, objects, other data structures, etc).
-
-R has two types of vectors:
-
--   atomic vectors
-    -   homogeneous collections of the same type (e.g. all logical values, all numbers, or all character strings).
--   generic vectors
-    -   heterogeneous collections of any type of R object, even other lists (meaning they can have a hierarchical/tree-like structure).
-
-I will use the term component or element when referring to a value inside a vector.
-
-## Vector relationships
-
-![](images/01-welcome/vectorRelationships.png){fig-align="center" width="900"}
-
-Source: <https://r4ds.had.co.nz/vectors.html>
-
-## Atomic vectors
-
-R has six atomic vector types:
-
-`logical, integer, double, character, complex, raw`
-
-In this course we will mostly work with the first four. You will rarely work with the last two types - complex and raw.
-
-. . .
-
-```{r}
-x <- c(T, F, TRUE, FALSE)
-typeof(x)
-```
-
-```{r}
-y <- c("a", "few", "more", "slides")
-typeof(y)
-```
-
-::: callout-note
-`c()` is a function that combines arguments to form a vector. It's a quick way to make small vectors for testing and experimentation. Later, we'll see better ways to create vectors.
-:::
-
-## Coercion hierarchy
-
-If you try to combine components of different types into a single atomic vector, R will try to coerce all elements so they can be represented as the simplest type. The ordering is `logical` \< `integer` \< `double` \< `character`, where `logical` is considered the "simplest".
-
-```{r}
-x <- c(T, 5, F, 0, 1)
-y <- c("a", 1, T)
-z <- c(3.0, 4L, 0L)
-```
-
-::::: columns
-::: {.column width="50%"}
-```{r}
-x
-y
-z
-```
-:::
-
-::: {.column width="50%"}
-```{r}
-typeof(x)
-typeof(y)
-typeof(z)
-```
-:::
-:::::
-
-## Logical operations
-
-### Boolean operations
-
-| Operator | Definition   | Vectorized? |
-|----------|--------------|-------------|
-| x \| y   | or           | yes         |
-| x & y    | and          | yes         |
-| !x       | not          | yes         |
-| x \|\| y | or           | no          |
-| x && y   | and          | no          |
-| xor(x,y) | exclusive or | yes         |
-
-## Logical operations 2
-
-### Comparison operations
-
-| Operator | Definition            | Vectorized?  |
-|----------|-----------------------|--------------|
-| x \< y   | less than             | yes          |
-| x \<= y  | less than or equal to | yes          |
-| x != y   | not equal to          | yes          |
-| x == y   | equal to              | yes          |
-| x %in% y | is x contained in y   | yes (over x) |
-
-## Length coercion (vector recycling)
-
-The shorter of two atomic vectors in an operation is recycled until it is the same length as the longer atomic vector.
-
-```{r}
-x <- c(2, 4, 6)
-y <- c(1, 1, 1, 2, 2)
-```
-
-```{r}
-x > y
-```
-
-```{r}
-x == y
-```
-
-```{r}
-10 / x
-```
-
-## Exercises
-
-What do each of the following return? Run the code to check your answer.
-
-Exercise 1.
-
-```{r}
-#| eval: false
-a = c(1,4)
-b = c(1,2,3,5)
-a + b
-```
-
-Exercise 2.
-
-```{r}
-#| eval: false
-x = c(1,2)
-y = c(5,10,15,20)
-z = c(2,4)
-(x * y) / z
-```
-
-Exercise 3.
-
-```{r}
-#| eval: false
-x = c(1, TRUE, 0)
-typeof(x)
 ```

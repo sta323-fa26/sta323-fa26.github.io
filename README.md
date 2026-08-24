@@ -1,10 +1,10 @@
 # sta323-fa25.github.io
 
-Source code for the course website for STA 323 - taught by Dr. Alexander Fisher in Fall 2025 at Duke University.
+Source code for the course website for STA 323 - taught by Dr. Alexander Fisher in Fall 2026 at Duke University.
 
 ## Website notes
 
-- Primary color: `#2774AE` (nice blue -- Spring 2023)
+- Primary color: `#2774AE` (nice blue)
 
 ## Attribution
 

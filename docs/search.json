@@ -1299,7 +1299,7 @@
     "href": "project.html",
     "title": "Project",
     "section": "",
-    "text": "Final project presentations will take place in-person in both lab and class Tuesday Dec 2\nThe report and completed GitHub repo is due Friday December 5 at 5:00pm\n\n\n\n\n\n\n\nImportant\n\n\n\nNo late work will be accepted."
+    "text": "Details will be released during the semester."
   },
   {
     "objectID": "project.html#dates",
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\ntypes\n\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n\n\n\n\n\n2\nTue Sep 01\n\n\nlab 1\n\n\n\n\nThu Sep 03\n\n\n\n\n\n\n3\nTue Sep 08\n\n\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\n\n4\nTue Sep 15\n\n\n\n\n\n\n\nThu Sep 17\n\n\n\n\n\n\n5\nTue Sep 22\n\n\n\n\n\n\n\nThu Sep 24\n\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\n\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\n\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻 💻\n\nlab 0\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n\n\n\n\n\n2\nTue Sep 01\n\n\nlab 1\n\n\n\n\nThu Sep 03\n\n\n\n\n\n\n3\nTue Sep 08\n\n\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\n\n4\nTue Sep 15\n\n\n\n\n\n\n\nThu Sep 17\n\n\n\n\n\n\n5\nTue Sep 22\n\n\n\n\n\n\n\nThu Sep 24\n\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\n\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\n\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -3841,5 +3841,208 @@
     "title": "Lab 0: Hello R; hi git.",
     "section": "Installing R and RStudio",
     "text": "Installing R and RStudio"
+  },
+  {
+    "objectID": "slides/welcome.html#contact-info",
+    "href": "slides/welcome.html#contact-info",
+    "title": "Welcome to STA 323",
+    "section": "Contact info",
+    "text": "Contact info\n\n\n\nalexander.fisher@duke.edu\nOffice hours: Tu/Fr: 10:00-11:00a in Old Chem 223B\nA little bit about my research…"
+  },
+  {
+    "objectID": "slides/welcome.html#what-is-statistical-computing",
+    "href": "slides/welcome.html#what-is-statistical-computing",
+    "title": "Welcome to STA 323",
+    "section": "What is statistical computing?",
+    "text": "What is statistical computing?\nBroadly, it’s turning data into knowledge using the computer.\n\nExamples of things we’ll do in this course:\n\n\nData\n\nTidy messy data sets\nWrangle the written word with regular expressions\nVisualize high dimensional data\nSource data from APIs\n\nCommunicate\n\nWrite about findings\nGive presentations\nBuild shiny web apps\n\n\nComputation and scaling\n\nOptimize code in R\nParallelize computation\nInteract with databases\nImplement statistical algorithms\n\n\n\nand more!"
+  },
+  {
+    "objectID": "slides/welcome.html#learning-objectives",
+    "href": "slides/welcome.html#learning-objectives",
+    "title": "Welcome to STA 323",
+    "section": "Learning objectives",
+    "text": "Learning objectives\nBy the end of this course you will be able to\n\nwrite efficient R code to (1) wrangle, explore and analyze data, (2) implement statistical algorithms\nread unfamiliar code efficiently, develop unit tests, and debug\nconduct independent data analysis and present results effectively"
+  },
+  {
+    "objectID": "slides/welcome.html#assessments",
+    "href": "slides/welcome.html#assessments",
+    "title": "Welcome to STA 323",
+    "section": "Assessments",
+    "text": "Assessments\n\n\n\nAssignment\nDescription\n\n\n\n\nLabs (25%)\nBiweekly lab assignments.\n\n\nExams (50%)\nTwo in-class exams.\n\n\nMini project (5%)\nPresentation in lab.\n\n\nProject (15%)\nWritten report and presentation.\n\n\nQuizzes (5%)\nIn-class pop quizzes."
+  },
+  {
+    "objectID": "slides/welcome.html#community",
+    "href": "slides/welcome.html#community",
+    "title": "Welcome to STA 323",
+    "section": "Community",
+    "text": "Community\nUphold the Duke Community Standard:\n\nI will not lie, cheat, or steal in my academic endeavors;\nI will conduct myself honorably in all my endeavors; and\nI will act if the Standard is compromised.\n\nAny violations in academic honesty standards as outlined in the Duke Community Standard and those specific to this course will automatically result in a 0 for the assignment and will be reported to the Office of Student Conduct for further action."
+  },
+  {
+    "objectID": "slides/welcome.html#team-work-policy",
+    "href": "slides/welcome.html#team-work-policy",
+    "title": "Welcome to STA 323",
+    "section": "Team work policy",
+    "text": "Team work policy\nThe final project and several labs will be completed in teams. All group members are expected to participate equally. Commit history may be used to give individual team members different grades. Your grade may differ from the rest of your group."
+  },
+  {
+    "objectID": "slides/welcome.html#sharing-reusing-code",
+    "href": "slides/welcome.html#sharing-reusing-code",
+    "title": "Welcome to STA 323",
+    "section": "Sharing / reusing code",
+    "text": "Sharing / reusing code\n\nThe use of online resources (including generative AI, as well as static webpages like Stack-Overflow, etc.) is strictly prohibited on in-class quizzes and exams. For take home assignments, you may make use of online resources for coding portions on assignments. If you directly use code from a source (or use it as inspiration), you must explicitly cite where you obtained the code. If you used generative AI to create the code, you should include your prompt(s) in your citation as well.\nAny recycled code that is discovered and is not explicitly cited will be treated as plagiarism, regardless of source.\nNarrative (non-code solutions) should always be entirely your own.\n\n\n\n\n\n\n\nWarning\n\n\nExtensive use of AI on take-home assessments will likely set you up for poor performance on graded in-class assignments."
+  },
+  {
+    "objectID": "slides/welcome.html#late-policy",
+    "href": "slides/welcome.html#late-policy",
+    "title": "Welcome to STA 323",
+    "section": "Late policy",
+    "text": "Late policy\n\nLabs can be turned in within 48 hours of the deadline for grade penalty (5% off per day).\nExams and the final project cannot be turned in late and can only be excused under exceptional circumstances.\nThe Duke policy for illness requires a short-term illness report or a letter from the Dean; except in emergencies, all other absenteeism must be approved in advance (e.g., an athlete who must miss class may be excused by prior arrangement for specific days). For emergencies, email notification is needed at the first reasonable time.\nLast minute coding/rendering issues will not be granted extensions."
+  },
+  {
+    "objectID": "slides/welcome.html#course-toolkit",
+    "href": "slides/welcome.html#course-toolkit",
+    "title": "Welcome to STA 323",
+    "section": "Course toolkit",
+    "text": "Course toolkit\n\n\n\nResource\nDescription\n\n\n\n\ncourse website\ncourse notes, deadlines, assignments, office hours, syllabus\n\n\nCanvas\nclass recordings, solutions, announcements, Ed Discussion\n\n\ncourse organization\nassignments, collaboration\n\n\nRStudio containers*\nonline coding platform\n\n\n\n*You are encouraged to install R and RStudio locally on your computer. If working locally you should make sure that your environment meets the following requirements:\n\nlatest R version\nlatest RStudio\nworking git installation\nability to create ssh keys (for GitHub authentication)\nAll R packages updated to their latest version from CRAN"
+  },
+  {
+    "objectID": "slides/welcome.html#communication-and-missing-class",
+    "href": "slides/welcome.html#communication-and-missing-class",
+    "title": "Welcome to STA 323",
+    "section": "Communication and missing class",
+    "text": "Communication and missing class\nIf you have questions about homework/lab exercises, debugging, or any question about course materials\n\ncome to office hours\nask on Ed Discussion\n\n\n\n\n\n\n\n\nWarning\n\n\nThe teaching team will not debug via email.\n\n\n\n\n\nWhen you miss a class:\n\nwatch the recorded lecture on Canvas\ncome to office hours / post on Ed Discussion / ask a friend about missed content"
+  },
+  {
+    "objectID": "slides/welcome.html#beginnings",
+    "href": "slides/welcome.html#beginnings",
+    "title": "Welcome to STA 323",
+    "section": "Beginnings",
+    "text": "Beginnings\n\nPost on Ed Discussion\nCreate a GitHub account (unless you already have one) on https://github.com/\n\none day you might want to show off your work, so choose a username you will be proud to show to a future employer.\n\nTell me your username by taking this survey. This is essential to receive credit on future assignments\n\n\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "slides/welcome.html#vectors",
+    "href": "slides/welcome.html#vectors",
+    "title": "Welcome to STA 323",
+    "section": "Vectors",
+    "text": "Vectors\nThe fundamental building block of data in R is a vector (collections of related values, objects, other data structures, etc).\nR has two types of vectors:\n\natomic vectors\n\nhomogeneous collections of the same type (e.g. all logical values, all numbers, or all character strings).\n\ngeneric vectors\n\nheterogeneous collections of any type of R object, even other lists (meaning they can have a hierarchical/tree-like structure).\n\n\nI will use the term component or element when referring to a value inside a vector."
+  },
+  {
+    "objectID": "slides/welcome.html#vector-relationships",
+    "href": "slides/welcome.html#vector-relationships",
+    "title": "Welcome to STA 323",
+    "section": "Vector relationships",
+    "text": "Vector relationships\n\n\n\n\n\nSource: https://r4ds.had.co.nz/vectors.html"
+  },
+  {
+    "objectID": "slides/welcome.html#atomic-vectors",
+    "href": "slides/welcome.html#atomic-vectors",
+    "title": "Welcome to STA 323",
+    "section": "Atomic vectors",
+    "text": "Atomic vectors\nR has six atomic vector types:\nlogical, integer, double, character, complex, raw\nIn this course we will mostly work with the first four. You will rarely work with the last two types - complex and raw.\n. . .\n\nx &lt;- c(T, F, TRUE, FALSE)\ntypeof(x)\n\n[1] \"logical\"\n\n\n\ny &lt;- c(\"a\", \"few\", \"more\", \"slides\")\ntypeof(y)\n\n[1] \"character\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nc() is a function that combines arguments to form a vector. It’s a quick way to make small vectors for testing and experimentation. Later, we’ll see better ways to create vectors."
+  },
+  {
+    "objectID": "slides/welcome.html#coercion-hierarchy",
+    "href": "slides/welcome.html#coercion-hierarchy",
+    "title": "Welcome to STA 323",
+    "section": "Coercion hierarchy",
+    "text": "Coercion hierarchy\nIf you try to combine components of different types into a single atomic vector, R will try to coerce all elements so they can be represented as the simplest type. The ordering is logical &lt; integer &lt; double &lt; character, where logical is considered the “simplest”.\n\nx &lt;- c(T, 5, F, 0, 1)\ny &lt;- c(\"a\", 1, T)\nz &lt;- c(3.0, 4L, 0L)\n\n\n\n\nx\n\n[1] 1 5 0 0 1\n\ny\n\n[1] \"a\"    \"1\"    \"TRUE\"\n\nz\n\n[1] 3 4 0\n\n\n\n\ntypeof(x)\n\n[1] \"double\"\n\ntypeof(y)\n\n[1] \"character\"\n\ntypeof(z)\n\n[1] \"double\""
+  },
+  {
+    "objectID": "slides/welcome.html#logical-operations",
+    "href": "slides/welcome.html#logical-operations",
+    "title": "Welcome to STA 323",
+    "section": "Logical operations",
+    "text": "Logical operations\n\nBoolean operations\n\n\n\nOperator\nDefinition\nVectorized?\n\n\n\n\nx | y\nor\nyes\n\n\nx & y\nand\nyes\n\n\n!x\nnot\nyes\n\n\nx || y\nor\nno\n\n\nx && y\nand\nno\n\n\nxor(x,y)\nexclusive or\nyes"
+  },
+  {
+    "objectID": "slides/welcome.html#logical-operations-2",
+    "href": "slides/welcome.html#logical-operations-2",
+    "title": "Welcome to STA 323",
+    "section": "Logical operations 2",
+    "text": "Logical operations 2\n\nComparison operations\n\n\n\nOperator\nDefinition\nVectorized?\n\n\n\n\nx &lt; y\nless than\nyes\n\n\nx &lt;= y\nless than or equal to\nyes\n\n\nx != y\nnot equal to\nyes\n\n\nx == y\nequal to\nyes\n\n\nx %in% y\nis x contained in y\nyes (over x)"
+  },
+  {
+    "objectID": "slides/welcome.html#length-coercion-vector-recycling",
+    "href": "slides/welcome.html#length-coercion-vector-recycling",
+    "title": "Welcome to STA 323",
+    "section": "Length coercion (vector recycling)",
+    "text": "Length coercion (vector recycling)\nThe shorter of two atomic vectors in an operation is recycled until it is the same length as the longer atomic vector.\n\nx &lt;- c(2, 4, 6)\ny &lt;- c(1, 1, 1, 2, 2)\n\n\nx &gt; y\n\nWarning in x &gt; y: longer object length is not a multiple of shorter object\nlength\n\n\n[1]  TRUE  TRUE  TRUE FALSE  TRUE\n\n\n\nx == y\n\nWarning in x == y: longer object length is not a multiple of shorter object\nlength\n\n\n[1] FALSE FALSE FALSE  TRUE FALSE\n\n\n\n10 / x\n\n[1] 5.000000 2.500000 1.666667"
+  },
+  {
+    "objectID": "slides/welcome.html#exercises",
+    "href": "slides/welcome.html#exercises",
+    "title": "Welcome to STA 323",
+    "section": "Exercises",
+    "text": "Exercises\nWhat do each of the following return? Run the code to check your answer.\nExercise 1.\n\na = c(1,4)\nb = c(1,2,3,5)\na + b\n\nExercise 2.\n\nx = c(1,2)\ny = c(5,10,15,20)\nz = c(2,4)\n(x * y) / z\n\nExercise 3.\n\nx = c(1, TRUE, 0)\ntypeof(x)"
+  },
+  {
+    "objectID": "slides/welcome.html",
+    "href": "slides/welcome.html",
+    "title": "Welcome to STA 323",
+    "section": "",
+    "text": "alexander.fisher@duke.edu\nOffice hours: Tu/Fr: 10:00-11:00a in Old Chem 223B\nA little bit about my research…"
+  },
+  {
+    "objectID": "slides/welcome.html#slide3-id",
+    "href": "slides/welcome.html#slide3-id",
+    "title": "Welcome to STA 323",
+    "section": "",
+    "text": "## Learning objectives\nBy the end of this course you will be able to\n\nwrite efficient R code to (1) wrangle, explore and analyze data, (2) implement statistical algorithms\nread unfamiliar code efficiently, develop unit tests, and debug\nconduct independent data analysis and present results effectively"
+  },
+  {
+    "objectID": "slides/lec01.html#vectors",
+    "href": "slides/lec01.html#vectors",
+    "title": "R fundamentals",
+    "section": "Vectors",
+    "text": "Vectors\nThe fundamental building block of data in R is a vector (collections of related values, objects, other data structures, etc).\nR has two types of vectors:\n\natomic vectors\n\nhomogeneous collections of the same type (e.g. all logical values, all numbers, or all character strings).\n\ngeneric vectors\n\nheterogeneous collections of any type of R object, even other lists (meaning they can have a hierarchical/tree-like structure).\n\n\nI will use the term component or element when referring to a value inside a vector."
+  },
+  {
+    "objectID": "slides/lec01.html#vector-relationships",
+    "href": "slides/lec01.html#vector-relationships",
+    "title": "R fundamentals",
+    "section": "Vector relationships",
+    "text": "Vector relationships\n\nSource: https://r4ds.had.co.nz/vectors.html"
+  },
+  {
+    "objectID": "slides/lec01.html#atomic-vectors",
+    "href": "slides/lec01.html#atomic-vectors",
+    "title": "R fundamentals",
+    "section": "Atomic vectors",
+    "text": "Atomic vectors\nR has six atomic vector types:\nlogical, integer, double, character, complex, raw\nIn this course we will mostly work with the first four. You will rarely work with the last two types - complex and raw.\n\n\nx &lt;- c(T, F, TRUE, FALSE)\ntypeof(x)\n\n[1] \"logical\"\n\n\n\ny &lt;- c(\"a\", \"few\", \"more\", \"slides\")\ntypeof(y)\n\n[1] \"character\"\n\n\n\n\n\n\n\n\nNote\n\n\nc() is a function that combines arguments to form a vector. It’s a quick way to make small vectors for testing and experimentation. Later, we’ll see better ways to create vectors."
+  },
+  {
+    "objectID": "slides/lec01.html#coercion-hierarchy",
+    "href": "slides/lec01.html#coercion-hierarchy",
+    "title": "R fundamentals",
+    "section": "Coercion hierarchy",
+    "text": "Coercion hierarchy\nIf you try to combine components of different types into a single atomic vector, R will try to coerce all elements so they can be represented as the simplest type. The ordering is logical &lt; integer &lt; double &lt; character, where logical is considered the “simplest”.\n\nx &lt;- c(T, 5, F, 0, 1)\ny &lt;- c(\"a\", 1, T)\nz &lt;- c(3.0, 4L, 0L)\n\n\n\n\nx\n\n[1] 1 5 0 0 1\n\ny\n\n[1] \"a\"    \"1\"    \"TRUE\"\n\nz\n\n[1] 3 4 0\n\n\n\n\ntypeof(x)\n\n[1] \"double\"\n\ntypeof(y)\n\n[1] \"character\"\n\ntypeof(z)\n\n[1] \"double\""
+  },
+  {
+    "objectID": "slides/lec01.html#logical-operations",
+    "href": "slides/lec01.html#logical-operations",
+    "title": "R fundamentals",
+    "section": "Logical operations",
+    "text": "Logical operations\nBoolean operations\n\n\n\nOperator\nDefinition\nVectorized?\n\n\n\n\nx | y\nor\nyes\n\n\nx & y\nand\nyes\n\n\n!x\nnot\nyes\n\n\nx || y\nor\nno\n\n\nx && y\nand\nno\n\n\nxor(x,y)\nexclusive or\nyes"
+  },
+  {
+    "objectID": "slides/lec01.html#logical-operations-2",
+    "href": "slides/lec01.html#logical-operations-2",
+    "title": "R fundamentals",
+    "section": "Logical operations 2",
+    "text": "Logical operations 2\nComparison operations\n\n\n\nOperator\nDefinition\nVectorized?\n\n\n\n\nx &lt; y\nless than\nyes\n\n\nx &lt;= y\nless than or equal to\nyes\n\n\nx != y\nnot equal to\nyes\n\n\nx == y\nequal to\nyes\n\n\nx %in% y\nis x contained in y\nyes (over x)"
+  },
+  {
+    "objectID": "slides/lec01.html#length-coercion-vector-recycling",
+    "href": "slides/lec01.html#length-coercion-vector-recycling",
+    "title": "R fundamentals",
+    "section": "Length coercion (vector recycling)",
+    "text": "Length coercion (vector recycling)\nThe shorter of two atomic vectors in an operation is recycled until it is the same length as the longer atomic vector.\n\nx &lt;- c(2, 4, 6)\ny &lt;- c(1, 1, 1, 2, 2)\n\n\nx &gt; y\n\n[1]  TRUE  TRUE  TRUE FALSE  TRUE\n\n\n\nx == y\n\n[1] FALSE FALSE FALSE  TRUE FALSE\n\n\n\n10 / x\n\n[1] 5.000000 2.500000 1.666667"
+  },
+  {
+    "objectID": "slides/lec01.html#exercises",
+    "href": "slides/lec01.html#exercises",
+    "title": "R fundamentals",
+    "section": "Exercises",
+    "text": "Exercises\nWhat do each of the following return? Run the code to check your answer.\nExercise 1.\n\na = c(1,4)\nb = c(1,2,3,5)\na + b\n\nExercise 2.\n\nx = c(1,2)\ny = c(5,10,15,20)\nz = c(2,4)\n(x * y) / z\n\nExercise 3.\n\nx = c(1, TRUE, 0)\ntypeof(x)"
   }
 ]
