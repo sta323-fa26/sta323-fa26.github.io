@@ -190,7 +190,7 @@ When you miss a class:
 
     -   one day you might want to show off your work, so choose a username you will be proud to show to a future employer.
 
--   Tell me your username by taking [this survey](https://forms.gle/TYQKNu9gJTE81ht8A). This is essential to receive credit on future assignments
+-   Tell me your username by taking [this survey](https://forms.gle/6KWM88hiAKx172hS8). This is essential to receive credit on future assignments
 
 ```{r}
 #| echo: false
