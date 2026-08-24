@@ -125,7 +125,7 @@ Extensive use of AI on take-home assessments will likely set you up for poor per
 | [course organization](https://github.com/sta323-fa25) | assignments, collaboration |
 | [RStudio containers](https://cmgr.oit.duke.edu/containers)\* | online coding platform |
 
-\*You are welcome to install R and RStudio locally on your computer. If working locally you should make sure that your environment meets the following requirements:
+\*You are encouraged to install R and RStudio locally on your computer. If working locally you should make sure that your environment meets the following requirements:
 
 -   latest R version
 

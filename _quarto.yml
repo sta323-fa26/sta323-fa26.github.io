@@ -15,7 +15,7 @@ website:
   navbar:
     background: "#2774AE" # nice blue -- Spring 2023
     left:
-    - href: schedule.qmd
+    - href: index.qmd
       text: schedule
     - href: syllabus.qmd
       text: syllabus

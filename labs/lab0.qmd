@@ -28,13 +28,18 @@ By the end of the lab, you will...
 Your lab TA will lead you through the Getting Started section.
 :::
 
+## Installing R and RStudio
+
+
+
+
 ## Log in to RStudio
 
 -   Go to <https://cmgr.oit.duke.edu/containers> and login with your Duke NetID and Password.
--   Click `STA323` to log into the Docker container. You should now see the RStudio environment.
+-   Click `STA313`(not a typo -- actual container name for fall 2026) to log into the Docker container. You should now see the RStudio environment.
 
 ::: callout-warning
-If you haven't yet done so, you will need to reserve a container for `STA323` first.
+If you haven't yet done so, you will need to reserve a container first.
 :::
 
 ## Set up your SSH key
@@ -66,17 +71,6 @@ devtools::install_github("r-lib/gert")
 usethis::use_git_config(
   user.name = "Your name", 
   user.email = "Email associated with your GitHub account"
-  )
-```
-
-For example, mine would be
-
-```{r}
-devtools::install_github("r-lib/gert")
-
-usethis::use_git_config(
-  user.name = "Alexander Fisher", 
-  user.email = "alexander.fisher@duke.edu"
   )
 ```
 

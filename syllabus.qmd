@@ -1,6 +1,6 @@
 ---
 title: "STA 323 Syllabus"
-subtitle: "Fall 2025"
+subtitle: "Fall 2026"
 fontsize: 12pt
 format: 
   html: default
@@ -25,7 +25,7 @@ format:
 
 {{< include _logistics.qmd >}}
 
-Course website: [sta323-fa25.github.io](https://sta323-fa25.github.io/)
+Course website: [sta323-fa26.github.io](https://sta323-fa26.github.io/)
 
 #### Course material
 
@@ -40,20 +40,20 @@ We will use the statistical software package R both in-class, and on take-home a
 
 By the end of this course you will be able to
 
-1. write efficient R code to (1) wrangle, explore and analyze data, (2) make inference under a variety of data generative models
+1. write efficient R code to (1) wrangle, explore and analyze data, (2) implement statistical algorithms
 
-<!-- 2. construct data-generative models -->
+2. read unfamiliar code efficiently, develop unit tests, and debug
 
-2. conduct independent data analysis and subsequently write and present results effectively
+3. conduct independent data analysis and present results effectively
 
 ### Grading policy
 
 | Assignment          | Description                        |
 |---------------------|------------------------------------|
-| Labs (30%)          | Biweekly lab assignments.       |
-| Exams (50%)         | Two hybrid (both an in-class and take-home component) exams.    |
-| Final Project (15%) | Written report and presentation.   |
-| Quizzes (5%)       | In-class pop quizzes.         |
+| Labs (25%)          | Biweekly lab assignments.       |
+| Exams (50%)         | Two in-class exams.    |
+| Project (15%)       | Written report and presentation.   |
+| Quizzes (10%)       | In-class pop quizzes.         |
 
 A $>= 93$, A- $< 93$, B+ $< 90$, B $< 87$, B- $< 83$, C+ $<80$, C $< 77$, C- $< 73$, D+ $< 70$, D $< 67$, D- $< 63$, F $< 60$
 
@@ -63,7 +63,7 @@ In labs, you will apply the concepts discussed in lecture. Labs will focus on bo
 
 #### Exams
 
-There will be two hybrid exams. There will be an in-class and take-home component to each. Through these exams you have the opportunity to demonstrate what you've learned in the course thus far. Each exam will include small analyses and computational tasks related to the content in labs. More details about the content and structure of the exams will be discussed during the semester.
+There will be two in-class exams. Through these exams you have the opportunity to demonstrate what you've learned in the course thus far. Each exam will include exercises related to the content in labs. More details about the content and structure of the exams will be discussed during the semester.
 
 #### Final project
 
@@ -78,7 +78,7 @@ On pseudo-random class days, there will be a brief quiz on the previous lectures
 
 #### Office hours
 
-Many questions are most effectively answered in-person, so office hours are a valuable resource. Please make use of them. A list of instructor and TA office hours can be found on the course website.
+Many questions are most effectively answered in-person, so office hours are a valuable resource. Please make use of them. See instructor and TA office hours above.
 
 ### Policies
 

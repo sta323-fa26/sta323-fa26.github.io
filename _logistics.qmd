@@ -2,16 +2,14 @@
 
 |   | Contact | Office Hours | Location |
 |------------------|------------------|------------------|------------------|
-| Dr. Alexander Fisher | [aaf29\@duke.edu](aaf29@duke.edu) | Mo/Th: 2-3pm | Old Chem 223B |
-| Devarpita Bag | [devarpita.bag\@duke.edu](devarpita.bag@duke.edu) | We: 1-3pm | Old Chem 203A |
-| Tully Cannon | [tully.cannon@duke.edu](tully.cannon@duke.edu)  | Th: 9:45-11:45am| Old Chem 203A  |
-| Lisa Zhang | [lisa.p.zhang@duke.edu](lisa.p.zhang@duke.edu) |We 11am-1pm  | Old Chem 203A  |
-| Sara Fernandez | [sara.fernandez@duke.edu](sara.fernandez@duke.edu)  | Tu/Th 1-2pm | Old Chem 203B  |
+| Dr. Alexander Fisher | [aaf29\@duke.edu](aaf29@duke.edu) | Tu/Fr: 10-11a | Old Chem 223B |
+| Carrie Cheng | [carrie.cheng@duke.edu](carrie.cheng@duke.edu) | We: 3-5pm | Old Chem 203A |
+| Liane Ma | [liane.ma@duke.edu](liane.ma@duke.edu)  | Th: 3-5pm | Old Chem 203A  |
 
 #### Lecture and lab
 
 |         |                     |                                |
 |---------|---------------------|--------------------------------|
 | Lecture | Tu/Th 8:30 - 9:45am | Old Chemistry 116              |
-| Lab 01  | Tu 3:05pm - 4:20pm  | Perkins LINK 087 (Classroom 3) |
-| Lab 02  | Tu 4:40pm - 5:55pm  | Old Chemistry 101              |
+| Lab 01  | Tu 3:05pm - 4:20pm  | Old Chemistry 201              |
+| Lab 02  | Tu 4:40pm - 5:55pm  | Old Chemistry 201              |
