@@ -12,7 +12,7 @@ Communication
 
 Collaboration
 
-- [course GitHub organization](https://github.com/sta323-fa25)
+- [course GitHub organization](https://github.com/sta323-fa26)
 
 Textbooks
 
