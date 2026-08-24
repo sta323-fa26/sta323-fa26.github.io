@@ -47,7 +47,7 @@ schedule %>%
 ```
 
 | Week | Date | Topic | Notes | Lab | Project |
-|:-----------|:------------|:-----------|:-----------|:-----------|:-----------|
+|:-----------|:------------|:-----------|:-----------:|:-----------|:-----------|
 | 1 | Tue Aug 25 | [welcome](/slides/welcome.html) & types | [💻](/slides/lec01.html)|[lab 0](/labs/lab0.html)  |  |  |
 |  | Thu Aug 27 | control flow, loops and functions | [💻](/slides/lec02.html) |  |  |
 | 2 | Tue Sep 01 |  |  | [lab 1]() |  |

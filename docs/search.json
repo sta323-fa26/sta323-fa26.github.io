@@ -1460,7 +1460,7 @@
     "href": "labs/lab0.html#clone-the-repo-start-new-rstudio-project",
     "title": "Lab 0: Hello R; hi git.",
     "section": "Clone the repo & start new RStudio project",
-    "text": "Clone the repo & start new RStudio project\n\n\n\n\n\n\nCLICK HERE\n\n\n\nClick here to create your lab-0 repo\n\n\n\nGo to the course organization at github.com/sta323-fa25 organization on GitHub.\nClick on the repo with the prefix lab-0. It contains the starter documents you need to complete the lab.\nClick on the green CODE button, select Use SSH (this might already be selected by default, and if it is, you’ll see the text Clone with SSH). Click on the clipboard icon to copy the repo URL.\nIn RStudio, go to Project in the upper-right. Click New Project -&gt; Version Control -&gt; Git and paste the SSH URL under “Repository URL”. Select Create Project.\nThe R Project will open by default. In the future, you can open the project manually by clicking in the upper right, Open Project, and navigate to lab-0.Rproj from the drop-down menu.\nClick lab-0.qmd to open the template Quarto file. This is where you will write up your code and narrative for the lab."
+    "text": "Clone the repo & start new RStudio project\n\n\n\n\n\n\nCLICK HERE\n\n\n\nClick here to create your lab-0 repo\n\n\n\nGo to the course organization at github.com/sta323-fa26 organization on GitHub.\nClick on the repo with the prefix lab-0. It contains the starter documents you need to complete the lab.\nClick on the green CODE button, select Use SSH (this might already be selected by default, and if it is, you’ll see the text Clone with SSH). Click on the clipboard icon to copy the repo URL.\nIn RStudio, go to Project in the upper-right. Click New Project -&gt; Version Control -&gt; Git and paste the SSH URL under “Repository URL”. Select Create Project.\nThe R Project will open by default. In the future, you can open the project manually by clicking in the upper right, Open Project, and navigate to lab-0.Rproj from the drop-down menu.\nClick lab-0.qmd to open the template Quarto file. This is where you will write up your code and narrative for the lab."
   },
   {
     "objectID": "labs/lab0.html#r-and-r-studio",
@@ -4044,5 +4044,19 @@
     "title": "R fundamentals",
     "section": "Exercises",
     "text": "Exercises\nWhat do each of the following return? Run the code to check your answer.\nExercise 1.\n\na = c(1,4)\nb = c(1,2,3,5)\na + b\n\nExercise 2.\n\nx = c(1,2)\ny = c(5,10,15,20)\nz = c(2,4)\n(x * y) / z\n\nExercise 3.\n\nx = c(1, TRUE, 0)\ntypeof(x)"
+  },
+  {
+    "objectID": "labs/lab0.html#option-1-recommended-install-r-and-rstudio",
+    "href": "labs/lab0.html#option-1-recommended-install-r-and-rstudio",
+    "title": "Lab 0: Hello R; hi git.",
+    "section": "Option 1 (recommended): install R and Rstudio",
+    "text": "Option 1 (recommended): install R and Rstudio\n\nSelect a mirror to install R: https://cran.r-project.org/mirrors.html\nDownload the integrated development environment Rstudio here: https://posit.co/downloads"
+  },
+  {
+    "objectID": "labs/lab0.html#option-2-online-container",
+    "href": "labs/lab0.html#option-2-online-container",
+    "title": "Lab 0: Hello R; hi git.",
+    "section": "Option 2: online container",
+    "text": "Option 2: online container\n\nGo to https://cmgr.oit.duke.edu/containers and login with your Duke NetID and Password.\nClick STA313(not a typo – actual container name for fall 2026) to log into the Docker container. You should now see the RStudio environment.\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you haven’t yet done so, you will need to click “reserve” on a container first."
   }
 ]

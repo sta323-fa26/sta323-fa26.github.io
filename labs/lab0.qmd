@@ -28,18 +28,18 @@ By the end of the lab, you will...
 Your lab TA will lead you through the Getting Started section.
 :::
 
-## Installing R and RStudio
+## Option 1 (recommended): install R and Rstudio
 
+- Select a mirror to install R: [https://cran.r-project.org/mirrors.html](https://cran.r-project.org/mirrors.html)
+- Download the integrated development environment Rstudio here: [https://posit.co/downloads](https://posit.co/downloads)
 
-
-
-## Log in to RStudio
+## Option 2: online container
 
 -   Go to <https://cmgr.oit.duke.edu/containers> and login with your Duke NetID and Password.
 -   Click `STA313`(not a typo -- actual container name for fall 2026) to log into the Docker container. You should now see the RStudio environment.
 
 ::: callout-warning
-If you haven't yet done so, you will need to reserve a container first.
+If you haven't yet done so, you will need to click "reserve" on a container first.
 :::
 
 ## Set up your SSH key
@@ -85,7 +85,7 @@ You are now ready interact with GitHub via RStudio!
 
 :::
 
--   Go to the course organization at [github.com/sta323-fa25](https://github.com/sta323-fa25) organization on GitHub. 
+-   Go to the course organization at [github.com/sta323-fa26](https://github.com/sta323-fa26) organization on GitHub. 
 
 - Click on the repo with the prefix **lab-0**. It contains the starter documents you need to complete the lab.
 
