@@ -81,7 +81,11 @@ You are now ready interact with GitHub via RStudio!
 ::: callout-important
 ## CLICK HERE
 
-[Click here to create your lab-0 repo]()
+Check if you have a `lab-0` repo here: [https://github.com/sta323-fa26](https://github.com/sta323-fa26). If you do, you are all set. **If not, follow steps 1-2 below.**
+
+1. Fill out [the survey](https://forms.gle/6KWM88hiAKx172hS8) if you did not already and accept the invite to the course organization (check your email).
+
+2. [Click here to create your lab-0 repo](https://classroom.github.com/a/9XUeUL6K)
 
 :::
 
