@@ -81,7 +81,7 @@ You are now ready interact with GitHub via RStudio!
 ::: callout-important
 ## CLICK HERE
 
-[Click here to create your lab-0 repo](https://classroom.github.com/a/17qRKAwY)
+[Click here to create your lab-0 repo]()
 
 :::
 
