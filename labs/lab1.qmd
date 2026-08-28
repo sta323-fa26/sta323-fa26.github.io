@@ -1,6 +1,6 @@
 ---
 title: "Lab 1: if it's a function, fix it"
-subtitle: "Due Monday September 8 at 5:00pm"  
+subtitle: "Due Tuesday September 8 at 5:00pm"  
 editor: source
 execute:
   eval: false
@@ -14,7 +14,7 @@ By the end of the lab, you will...
 
 -   If you did not complete [lab 0](/labs/lab0.html), then go back and do so to set up your SSH key, git, and find instructions on how to clone a project.
 
--   Next in the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa25/lab-1-username.git` where `username` is replaced with your username (this is the copied SSH URL from your lab-1 GitHub repo).
+-   Next in the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa26/lab-1-username.git` where `username` is replaced with your username (this is the copied SSH URL from your lab-1 GitHub repo).
 
 -   Navigate to your `lab-1` folder and open the `.Rproj` file.
 
@@ -25,6 +25,8 @@ By the end of the lab, you will...
 For all exercises, you should respond in the space provided in the template `lab-1.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
 
 ### 1.  **Robust quadratic root finding**
+
+*The goal of this exercise is to avoid numerical instability by re-working the problem analytically.*
 
 The [quadratic formula](https://en.wikipedia.org/wiki/Quadratic_formula) finds $x$ that satisfy the following equation:
 
@@ -58,6 +60,7 @@ robustQuadraticRoots(a = 0, b = 5, c = 0)
 
 ::: callout-tip
 ## Hint
+- a robust implementation can be derived by multiplying the quadratic formula by "1" in a fancy way.
 - for case (ii) you should return an error. Since errors will stop your `.qmd` from rendering, you should include in your code chunk `#| error: true`. Read [quarto docs here](https://quarto.org/docs/computations/execution-options.html) for a full list of code chunk execution options.
 - for case (iii) you need to deal with complex numbers [read here](https://www.r-tutor.com/r-introduction/basic-data-types/complex)
 - for case (iv) the correct answer is $x_1 = -2.4e16$ and $x_2 = .44$ when rounded to two significant figures.
@@ -67,6 +70,8 @@ robustQuadraticRoots(a = 0, b = 5, c = 0)
 In each case above, describe why `quadraticRoots()` from the lecture fails.
 
 ### 2. **Stirling numbers of the second kind**
+
+*The goal of this exercise is to write a recursive function.* Definition: a **recursive function** is a function that calls itself.
 
 Stirling numbers of the second kind count the number of possible partitions of a set of $n$ objects into $k$ disjoint blocks. For example, the number of ways to partition a set of 3 objects in 2 disjoint blocks is $S(3, 2) = 3$ because the set $\{1, 2, 3\}$ can be partitioned into two disjoint blocks in 3 ways:
 
@@ -85,7 +90,7 @@ $$
 
 where we start the sequence with $S(n, 1) = 1$ and the boundary condition $S(n, k) = 0$ for $k>n$.
 
-Create a function `ssk()` with arguments `n` and `k` that computes **S**tirling numbers of the **s**econd **k**ind. Print the result of your function for the following inputs:
+Create a recursive function `ssk()` with arguments `n` and `k` that computes **S**tirling numbers of the **s**econd **k**ind. Print the result of your function for the following inputs:
 
 ```{r} 
 #| eval: false
@@ -128,7 +133,7 @@ for a list of probability distributions in the `Base` R package.
 
 The [Pareto distribution](https://en.wikipedia.org/wiki/Pareto_distribution) 
 is not available in base R, so we're going to code it ourselves. For this 
-lab, we'll just code the quantile function, i.e., `qpareto()`. 
+lab, we'll just code the quantile function, i.e., `qpareto()`. The quantile function takes as input
 Here's a bit of background on deriving the Pareto's quantile function. 
 
 The Pareto family of distributions is parameterized by $\alpha$ and $x_0$, and 
@@ -246,7 +251,7 @@ qpareto(p = 0.5, alpha = 0.5, x0 = -4)
 qpareto(p = 0.5, alpha = 2, x0 = -4)
 ```
 
-*Is your function vectorized? For which parameters is it vectorized?*
+Question: *Is your function vectorized? For which parameters is it vectorized?*
 
 ## Style guidelines
 
