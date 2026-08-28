@@ -90,7 +90,7 @@ $$
 
 where we start the sequence with $S(n, 1) = 1$ and the boundary condition $S(n, k) = 0$ for $k>n$.
 
-Create a recursive function `ssk()` that **only accepts** numeric arguments `n` and `k`, checks that they are whole numbers, and computes **S**tirling numbers of the **s**econd **k**ind. Print the result of your function for the following inputs:
+Create a recursive function `ssk()`that computes **S**tirling numbers of the **s**econd **k**ind. Print the result of your function for the following inputs:
 
 ```{r} 
 #| eval: false
@@ -221,41 +221,64 @@ Your task is write a function `decrypt()` that takes two inputs `message` and `k
 Show your result for the following:
 
 ```{r}
-secret_message_1 <- 
+secret_message_1 <- c(0,1,1,1,1,0,0,0,0,1,1,1,0,1,0,1,1,0,1,0,1,0,1,
+                      1,0,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,1,0,1,0,0,0,
+                      1,1,0,1,1,1,1,0,0,0)
 key <- c(1, 0, 1) 
 decrypt(message = secret_message_1, key = key)
 ```
 
 Note: the original message was converted to bits and then XORed with a short binary key to create `secret_message`
 
+Importantly, in your final solution:
+
+- Remove the generation of any warnings in your code. Hint: read about the function `rep` using `?rep`.
+- Make sure only appropriate keys and messages can be passed in to your function `decrypt()`, i.e. both the key and message must be comprised exclusively of 0s and 1s.
+
+
 ::: callout-tip
 ## Hint
 - the binary key gets vector recycled to match the length of the message
-- you can convert from bits to an integer vector by coercion: `as.int()`, e.g. try `as.int()` on `message_bits` defined in the introduction above.
-- you can go back from integers to bits using via coercion using `as.raw()`
+- you can convert from one type to an integer vector by coercion using `as.integer()`, e.g. try  `as.integer(TRUE)`.
+- you can go back from integers to bits using via coercion as well using `as.raw()`
 :::
 
 
 
 #### Part 2
 
-Decrypt the following message, using your function from part 1 and an appropriate loop. 
+Decrypt the following message, using your function from part 1 and appropriate loops to brute force the solution.
+
 
 ```{r}
-secret_message_2 <- 
+secret_message_2 <- c(1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,
+                      1,1,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,1,0,0,0,0,1,0,0,1,
+                      1,0,0,0,0,0,1,1,0,0,1,1,0,1,0,1,0,0,0,1,1,0,1,1,0,0,0,
+                      0,0,0,1,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,1,1,0,0,1,0,0,0,
+                      0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,1,1,0,1,0,
+                      0,1,0,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,1,0,0,1,0,
+                      1,0,0,1,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,
+                      1,1,0,0,0,0,1,0,1,0,0,1,1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,
+                      1,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,0,0,0,1,0,0,0,1,0,
+                      1,0,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,1,0,0,1,1,0,0,0,1,
+                      0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,0,0,1,0,0,1,1,0,1,
+                      0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,1,1,0,1,1,0,0,
+                      1,1,0,0,1,0,1,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,1,0,
+                      0,0,0,1,0,0,1,1,0,1,1,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,1,
+                      0,1,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,1,0,1,
+                      1,0,0,1,1,1,0,1,1,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,1,0,0,
+                      1,1,0,1,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,0,0,1,0,0,0,1,0,
+                      1,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,1,
+                      0,0,1,0,1,1,0,1,0,0,0,1,0,1,0,1,0,0,1,1,0,0,0,1,0,0,0,
+                      1,0,1,0,1,1,0)
 ```
 
 
 You know only the following:
 
 * the key consists entirely of 0s and 1s,
-* the key is short and has length 2, 3, or 4,
+* the key is short and has length of either 2, 3 or 4,
 * the short key was **vector recycled** across the entire message.
-
-
-
-
-
 
 ## Style guidelines
 
