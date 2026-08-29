@@ -422,7 +422,7 @@ S(n,k) = S(n-1, k-1) + kS(n-1, k)
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">decrypt</span>(<span class="at">message =</span> <span class="st">"hi"</span>, <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span> ,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note: the original message was converted to bits and then XORed with a short binary key to create <code>secret_message</code></p>
+<p>Note: the original message was converted to bits and then XORed with a short binary key (which was vector recycled) to create <code>secret_message</code></p>
 <p>Importantly, in your final solution:</p>
 <ul>
 <li>Remove the generation of any warnings in your code. Hint: read about the function <code>rep</code> using <code>?rep</code>.</li>
@@ -447,7 +447,7 @@ Hint
 </section>
 <section id="part-2" class="level4">
 <h4 class="anchored" data-anchor-id="part-2">Part 2</h4>
-<p>Decrypt the following message, using your function from part 1 and appropriate loops to brute force the solution.</p>
+<p>The following message has been encrypted using XOR with a vector-recycled key of length 4. Decrypt the following message, using your function from part 1 and appropriate loops to brute force the solution.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>secret_message_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</span>
@@ -470,12 +470,6 @@ Hint
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You know only the following:</p>
-<ul>
-<li>the key consists entirely of 0s and 1s,</li>
-<li>the key is short and has length of either 2, 3 or 4,</li>
-<li>the short key was <strong>vector recycled</strong> across the entire message.</li>
-</ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -486,9 +480,7 @@ Hint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li>check out the function <code>intToBin()</code> in the package <code>Rutils</code>, which can be installed with <code>install.packages("Rutils")</code></li>
-</ul>
+<p>As you brute-force, you will likely run into errors since some bytes cannot be converted back into proper R strings. You should enable <code>error: true</code> for the code chunk.</p>
 </div>
 </div>
 </section>

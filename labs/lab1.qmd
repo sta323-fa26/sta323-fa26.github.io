@@ -233,7 +233,7 @@ decrypt(message = secret_message_1, key = c(1,0,2))
 decrypt(message = "hi", key = c(1, 0 ,1))
 ```
 
-Note: the original message was converted to bits and then XORed with a short binary key to create `secret_message`
+Note: the original message was converted to bits and then XORed with a short binary key (which was vector recycled) to create `secret_message`
 
 Importantly, in your final solution:
 
@@ -251,7 +251,7 @@ Importantly, in your final solution:
 
 #### Part 2
 
-Decrypt the following message, using your function from part 1 and appropriate loops to brute force the solution.
+The following message has been encrypted using XOR with a vector-recycled key of length 4. Decrypt the following message, using your function from part 1 and appropriate loops to brute force the solution.
 
 
 ```{r}
@@ -277,16 +277,9 @@ secret_message_2 <- c(1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,
                       1,0,1,0,1,1,0)
 ```
 
-
-You know only the following:
-
-* the key consists entirely of 0s and 1s,
-* the key is short and has length of either 2, 3 or 4,
-* the short key was **vector recycled** across the entire message.
-
-::: callout-tip 
-## Hint 
-- check out the function `intToBin()` in the package `Rutils`, which can be installed with `install.packages("Rutils")` 
+:::callout-tip
+## Hint
+As you brute-force, you will likely run into errors since some bytes cannot be converted back into proper R strings. You should enable `error: true` for the code chunk.
 :::
 
 ## Style guidelines
