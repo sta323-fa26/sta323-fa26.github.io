@@ -12,7 +12,7 @@ By the end of the lab, you will...
 
 # Getting started
 
--   If you did not complete [lab 0](/labs/lab0.html), then go back and do so to set up your SSH key, git, and find instructions on how to clone a project.
+<!-- -   If you did not complete [lab 0](/labs/lab0.html), then go back and do so to set up your SSH key, git, and find instructions on how to clone a project. -->
 
 -   Next in the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa26/lab-1-username.git` where `username` is replaced with your username (this is the copied SSH URL from your lab-1 GitHub repo).
 
@@ -117,19 +117,19 @@ ssk(n = 6, k = 7)
 
 Computers store information using only two values: **0** and **1**.
 
-A single 0 or 1 is called a **bit**. Eight bits grouped together make a **byte**. A byte can represent 256 different values, because
+A single 0 or 1 is called a **bit**. Eight bits grouped together make a **byte**. A byte can represent 256 different values, since
 
 $$
 2^8 = 256.
 $$
 
-Text, images, and every other type of file stored on a computer is represented using long sequences of these bits. For example, consider the message,
+Text, images, and every other type of file on your computer is represented using long sequences of bits. For example, consider the message,
 
 ```{r}
 message <- "statistics is the best major"
 ```
 
-R stores each character in the message as a numeric byte. We can look underneath the usual text representation using
+R stores each character in the message as a numeric byte. We can look at these bytes using the function
 
 ```{r}
 charToRaw(message)
@@ -225,7 +225,12 @@ secret_message_1 <- c(0,1,1,1,1,0,0,0,0,1,1,1,0,1,0,1,1,0,1,0,1,0,1,
                       1,0,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,1,0,1,0,0,0,
                       1,1,0,1,1,1,1,0,0,0)
 key <- c(1, 0, 1) 
+
 decrypt(message = secret_message_1, key = key)
+
+decrypt(message = secret_message_1, key = c(1,0,2))
+
+decrypt(message = "hi", key = c(1, 0 ,1))
 ```
 
 Note: the original message was converted to bits and then XORed with a short binary key to create `secret_message`
@@ -240,7 +245,6 @@ Importantly, in your final solution:
 ## Hint
 - the binary key gets vector recycled to match the length of the message
 - you can convert from one type to an integer vector by coercion using `as.integer()`, e.g. try  `as.integer(TRUE)`.
-- you can go back from integers to bits using via coercion as well using `as.raw()`
 :::
 
 
@@ -279,6 +283,11 @@ You know only the following:
 * the key consists entirely of 0s and 1s,
 * the key is short and has length of either 2, 3 or 4,
 * the short key was **vector recycled** across the entire message.
+
+::: callout-tip 
+## Hint 
+- check out the function `intToBin()` in the package `Rutils`, which can be installed with `install.packages("Rutils")` 
+:::
 
 ## Style guidelines
 
