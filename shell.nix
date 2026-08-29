@@ -44,9 +44,10 @@ let
 
   # Packages specific to THIS project, layered on top of the base set.
   # Duplicates in the list are harmless.
-  projectPackages = with pkgs.rPackages; [
-    countdown
-  ];
+projectPackages = [
+  pkgs.rPackages.countdown
+  pkgs.rPackages.R_utils
+];
 
   rEnv = pkgs.rstudioWrapper.override {
     packages = basePackages ++ projectPackages ++ [ weatherStats ];
