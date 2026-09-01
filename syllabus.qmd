@@ -1,5 +1,5 @@
 ---
-title: "STA 323 Syllabus"
+title: "STA 323: Statistical Computing"
 subtitle: "Fall 2026"
 fontsize: 12pt
 format: 
