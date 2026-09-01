@@ -885,43 +885,43 @@
     "objectID": "slides/lec04.html#rs-type-hierarchy",
     "href": "slides/lec04.html#rs-type-hierarchy",
     "title": "Object oriented programming",
-    "section": "",
-    "text": "from most to least complex: class \\(\\rightarrow\\) mode \\(\\rightarrow\\) type\n\n\n\n\n\n\n\n\n\n\nvalue\ntypeof()\nmode()\nclass()\n\n\n\n\nTRUE\nlogical\nlogical\nlogical\n\n\n1\ndouble\nnumeric\nnumeric\n\n\n1L\ninteger\nnumeric\ninteger\n\n\n\"A\"\ncharacter\ncharacter\ncharacter\n\n\nNULL\nNULL\nNULL\nNULL\n\n\nlist(1, \"A\")\nlist\nlist\nlist\n\n\nfactor(\"A\")\ninteger\nnumeric\nfactor\n\n\nfunction(x) x^2\nclosure\nfunction\nfunction\n\n\n\\+\nbuiltin\nfunction\nfunction\n\n\n\\[\nspecial\nfunction\nfunction\n\n\n\n. . .\nobjects have class even if no formal class attribute (seen with attributes())"
+    "section": "R’s type hierarchy",
+    "text": "R’s type hierarchy\n\nfrom most to least complex: class \\(\\rightarrow\\) mode \\(\\rightarrow\\) type\n\n\n\n\n\n\n\n\n\n\nvalue\ntypeof()\nmode()\nclass()\n\n\n\n\nTRUE\nlogical\nlogical\nlogical\n\n\n1\ndouble\nnumeric\nnumeric\n\n\n1L\ninteger\nnumeric\ninteger\n\n\n\"A\"\ncharacter\ncharacter\ncharacter\n\n\nNULL\nNULL\nNULL\nNULL\n\n\nlist(1, \"A\")\nlist\nlist\nlist\n\n\nfactor(\"A\")\ninteger\nnumeric\nfactor\n\n\nfunction(x) x^2\nclosure\nfunction\nfunction\n\n\n\\+\nbuiltin\nfunction\nfunction\n\n\n\\[\nspecial\nfunction\nfunction\n\n\n\n\nobjects have class even if no formal class attribute (seen with attributes())"
   },
   {
     "objectID": "slides/lec04.html#what-is-s3",
     "href": "slides/lec04.html#what-is-s3",
     "title": "Object oriented programming",
     "section": "What is S3?",
-    "text": "What is S3?\n\nS3 is R’s core object oriented implementation\nS3 is the only OO system used in the base and stats packages, and it’s the most commonly used system in CRAN packages.\nS3 is more flexible (read also: easier to break) than traditional object oriented programming you may have seen before (e.g. Java).\n\n. . .\nWorking model: S3 is a system where we attach metadata to an object via the class attribute.\n. . .\nOne of the most compelling reasons to use object oriented programming (OOP) is polymorphism. Polymorphism means that a developer can consider a function’s interface separately from its implementation."
+    "text": "What is S3?\n\nS3 is R’s core object oriented implementation\nS3 is the only OO system used in the base and stats packages, and it’s the most commonly used system in CRAN packages.\nS3 is more flexible (read also: easier to break) than traditional object oriented programming you may have seen before (e.g. Java).\n\n\nWorking model: S3 is a system where we attach metadata to an object via the class attribute.\n\n\nOne of the most compelling reasons to use object oriented programming (OOP) is polymorphism. Polymorphism means that a developer can consider a function’s interface separately from its implementation."
   },
   {
     "objectID": "slides/lec04.html#s3-class-specialization",
     "href": "slides/lec04.html#s3-class-specialization",
     "title": "Object oriented programming",
     "section": "S3 class specialization",
-    "text": "S3 class specialization\n\nx = c(\"A\",\"B\",\"A\",\"C\")\n\n. . .\n\nprint( x )\n\n[1] \"A\" \"B\" \"A\" \"C\"\n\n\n. . .\n\nprint( factor(x) )\n\n[1] A B A C\nLevels: A B C\n\n\n. . .\n\nprint( unclass( factor(x) ) ) # unclass strips the class attribute\n\n[1] 1 2 1 3\nattr(,\"levels\")\n[1] \"A\" \"B\" \"C\"\n\n\n. . .\n\nprint.default( factor(x) )\n\n[1] 1 2 1 3\n\n\n. . ."
+    "text": "S3 class specialization\n\nx = c(\"A\",\"B\",\"A\",\"C\")\n\n\n\nprint( x )\n\n[1] \"A\" \"B\" \"A\" \"C\"\n\n\n\n\n\nprint( factor(x) )\n\n[1] A B A C\nLevels: A B C\n\n\n\n\n\nprint( unclass( factor(x) ) ) # unclass strips the class attribute\n\n[1] 1 2 1 3\nattr(,\"levels\")\n[1] \"A\" \"B\" \"C\"\n\n\n\n\n\nprint.default( factor(x) )\n\n[1] 1 2 1 3"
   },
   {
     "objectID": "slides/lec04.html#other-examples",
     "href": "slides/lec04.html#other-examples",
     "title": "Object oriented programming",
     "section": "Other examples",
-    "text": "Other examples\n\n\n\nmean\n\nfunction (x, ...) \nUseMethod(\"mean\")\n&lt;bytecode: 0x10a527c00&gt;\n&lt;environment: namespace:base&gt;\n\n\n\n\nt.test\n\nfunction (x, ...) \nUseMethod(\"t.test\")\n&lt;bytecode: 0x11f69bef0&gt;\n&lt;environment: namespace:stats&gt;\n\n\n\n\n. . .\nNot all base functions use this approach,\n\nsum\n\nfunction (..., na.rm = FALSE)  .Primitive(\"sum\")\n\n\n. . .\n\nNoteExample\n\n\nThe ... (dot-dot-dot) argument means the function can take any number of additional arguments. This is called a “variable argument” and it is commonly used so you pass variables to additional nested functions. For example:\n\n\n\nf1 =  function(y = 0, z = 0) {\n  return(y + z)\n}\n\nf2 &lt;- function(x, ...) {\n  return(x + f1(...))\n}\n\nf2(x = 1, y = 2, z = 3)"
+    "text": "Other examples\n\n\n\nmean\n\nfunction (x, ...) \nUseMethod(\"mean\")\n&lt;bytecode: 0x111bf4408&gt;\n&lt;environment: namespace:base&gt;\n\n\n\n\nt.test\n\nfunction (x, ...) \nUseMethod(\"t.test\")\n&lt;bytecode: 0x1078866f0&gt;\n&lt;environment: namespace:stats&gt;\n\n\n\n\nNot all base functions use this approach,\n\nsum\n\nfunction (..., na.rm = FALSE)  .Primitive(\"sum\")\n\n\n\n\n\nNoteExample\n\n\nThe ... (dot-dot-dot) argument means the function can take any number of additional arguments. This is called a “variable argument” and it is commonly used so you pass variables to additional nested functions. For example:\n\n\n\nf1 =  function(y = 0, z = 0) {\n  return(y + z)\n}\n\nf2 &lt;- function(x, ...) {\n  return(x + f1(...))\n}\n\nf2(x = 1, y = 2, z = 3)"
   },
   {
     "objectID": "slides/lec04.html#generics-whats-going-on",
     "href": "slides/lec04.html#generics-whats-going-on",
     "title": "Object oriented programming",
     "section": "Generics (what’s going on!?)",
-    "text": "Generics (what’s going on!?)\n\nAn S3 object behaves differently from its underlying base type whenever it’s passed to a generic function\n\nThe easiest way to tell if a function is a generic is to use sloop::ftype() and look for “generic” in the output, e.g.\n\nlibrary(sloop)\nftype(print)\n\n[1] \"S3\"      \"generic\"\n\n\n. . .\nFundamentally, the generic function dispatches to a specialized version of the function depending on the class of its input. UseMethod() tells a generic to look for the specialized version.\nThe syntax for specialized functions is: &lt;generic&gt;.&lt;class&gt;"
+    "text": "Generics (what’s going on!?)\n\nAn S3 object behaves differently from its underlying base type whenever it’s passed to a generic function\n\nThe easiest way to tell if a function is a generic is to use sloop::ftype() and look for “generic” in the output, e.g.\n\nlibrary(sloop)\nftype(print)\n\n[1] \"S3\"      \"generic\"\n\n\n\nFundamentally, the generic function dispatches to a specialized version of the function depending on the class of its input. UseMethod() tells a generic to look for the specialized version.\nThe syntax for specialized functions is: &lt;generic&gt;.&lt;class&gt;"
   },
   {
     "objectID": "slides/lec04.html#generics-whats-going-on-1",
     "href": "slides/lec04.html#generics-whats-going-on-1",
     "title": "Object oriented programming",
     "section": "Generics (what’s going on!?)",
-    "text": "Generics (what’s going on!?)\n\nExamples\nWe can see all the specialized versions of the generic using the methods() function.\n\nmethods(\"plot\") |&gt;\n  head(n = 15)\n\n [1] \"plot.acf\"           \"plot.data.frame\"    \"plot.decomposed.ts\"\n [4] \"plot.default\"       \"plot.dendrogram\"    \"plot.density\"      \n [7] \"plot.ecdf\"          \"plot.factor\"        \"plot.formula\"      \n[10] \"plot.function\"      \"plot.hclust\"        \"plot.histogram\"    \n[13] \"plot.HoltWinters\"   \"plot.isoreg\"        \"plot.lm\""
+    "text": "Generics (what’s going on!?)\nExamples\nWe can see all the specialized versions of the generic using the methods() function.\n\nmethods(\"plot\") |&gt;\n  head(n = 15)\n\n [1] \"plot.acf\"           \"plot.data.frame\"    \"plot.decomposed.ts\"\n [4] \"plot.default\"       \"plot.dendrogram\"    \"plot.density\"      \n [7] \"plot.ecdf\"          \"plot.factor\"        \"plot.formula\"      \n[10] \"plot.function\"      \"plot.hclust\"        \"plot.histogram\"    \n[13] \"plot.HoltWinters\"   \"plot.isoreg\"        \"plot.lm\""
   },
   {
     "objectID": "slides/lec04.html#methods-of-print",
@@ -935,14 +935,14 @@
     "href": "slides/lec04.html#find-the-documentation",
     "title": "Object oriented programming",
     "section": "Find the documentation",
-    "text": "Find the documentation\nWrite the name of the function to see its definition.\n\nprint.factor\n\nfunction (x, quote = FALSE, max.levels = NULL, width = getOption(\"width\"), \n    ...) \n{\n    ord &lt;- is.ordered(x)\n    if (length(x) == 0L) \n        cat(if (ord) \n            \"ordered\"\n        else \"factor\", \"()\\n\", sep = \"\")\n    else {\n        xx &lt;- character(length(x))\n        xx[] &lt;- as.character(x)\n        keepAttrs &lt;- setdiff(names(attributes(x)), c(\"levels\", \n            \"class\"))\n        attributes(xx)[keepAttrs] &lt;- attributes(x)[keepAttrs]\n        print(xx, quote = quote, ...)\n    }\n    maxl &lt;- max.levels %||% TRUE\n    if (maxl) {\n        n &lt;- length(lev &lt;- encodeString(levels(x), quote = ifelse(quote, \n            \"\\\"\", \"\")))\n        colsep &lt;- if (ord) \n            \" &lt; \"\n        else \" \"\n        T0 &lt;- \"Levels: \"\n        if (is.logical(maxl)) \n            maxl &lt;- {\n                width &lt;- width - (nchar(T0, \"w\") + 3L + 1L + \n                  3L)\n                lenl &lt;- cumsum(nchar(lev, \"w\") + nchar(colsep, \n                  \"w\"))\n                if (n &lt;= 1L || lenl[n] &lt;= width) \n                  n\n                else max(1L, which.max(lenl &gt; width) - 1L)\n            }\n        drop &lt;- n &gt; maxl\n        cat(if (drop) \n            paste(format(n), \"\"), T0, paste(if (drop) \n            c(lev[1L:max(1, maxl - 1)], \"...\", if (maxl &gt; 1) lev[n])\n        else lev, collapse = colsep), \"\\n\", sep = \"\")\n    }\n    if (!isTRUE(val &lt;- .valid.factor(x))) \n        warning(val)\n    invisible(x)\n}\n&lt;bytecode: 0x10ac7f538&gt;\n&lt;environment: namespace:base&gt;"
+    "text": "Find the documentation\nWrite the name of the function to see its definition.\n\nprint.factor\n\nfunction (x, quote = FALSE, max.levels = NULL, width = getOption(\"width\"), \n    ...) \n{\n    ord &lt;- is.ordered(x)\n    if (length(x) == 0L) \n        cat(if (ord) \n            \"ordered\"\n        else \"factor\", \"()\\n\", sep = \"\")\n    else {\n        xx &lt;- character(length(x))\n        xx[] &lt;- as.character(x)\n        keepAttrs &lt;- setdiff(names(attributes(x)), c(\"levels\", \n            \"class\"))\n        attributes(xx)[keepAttrs] &lt;- attributes(x)[keepAttrs]\n        print(xx, quote = quote, ...)\n    }\n    maxl &lt;- max.levels %||% TRUE\n    if (maxl) {\n        n &lt;- length(lev &lt;- encodeString(levels(x), quote = ifelse(quote, \n            \"\\\"\", \"\")))\n        colsep &lt;- if (ord) \n            \" &lt; \"\n        else \" \"\n        T0 &lt;- \"Levels: \"\n        if (is.logical(maxl)) \n            maxl &lt;- {\n                width &lt;- width - (nchar(T0, \"w\") + 3L + 1L + \n                  3L)\n                lenl &lt;- cumsum(nchar(lev, \"w\") + nchar(colsep, \n                  \"w\"))\n                if (n &lt;= 1L || lenl[n] &lt;= width) \n                  n\n                else max(1L, which.max(lenl &gt; width) - 1L)\n            }\n        drop &lt;- n &gt; maxl\n        cat(if (drop) \n            paste(format(n), \"\"), T0, paste(if (drop) \n            c(lev[1L:max(1, maxl - 1)], \"...\", if (maxl &gt; 1) lev[n])\n        else lev, collapse = colsep), \"\\n\", sep = \"\")\n    }\n    if (!isTRUE(val &lt;- .valid.factor(x))) \n        warning(val)\n    invisible(x)\n}\n&lt;bytecode: 0x1235d6b38&gt;\n&lt;environment: namespace:base&gt;"
   },
   {
     "objectID": "slides/lec04.html#missing-print-functions",
     "href": "slides/lec04.html#missing-print-functions",
     "title": "Object oriented programming",
     "section": "Missing print functions?",
-    "text": "Missing print functions?\nThere is no method to print integers specifically:\n\nprint.integer\n\nError: object 'print.integer' not found\n\n\n. . .\n\nWhen a method for a specific class is not found, the default will be called:\n\n\nprint.default\n\nfunction (x, digits = NULL, quote = TRUE, na.print = NULL, print.gap = NULL, \n    right = FALSE, max = NULL, width = NULL, useSource = TRUE, \n    ...) \n{\n    args &lt;- pairlist(digits = digits, quote = quote, na.print = na.print, \n        print.gap = print.gap, right = right, max = max, width = width, \n        useSource = useSource, ...)\n    missings &lt;- c(missing(digits), missing(quote), missing(na.print), \n        missing(print.gap), missing(right), missing(max), missing(width), \n        missing(useSource))\n    .Internal(print.default(x, args, missings))\n}\n&lt;bytecode: 0x10b2696d0&gt;\n&lt;environment: namespace:base&gt;"
+    "text": "Missing print functions?\nThere is no method to print integers specifically:\n\nprint.integer\n\nError: object 'print.integer' not found\n\n\n\n\nWhen a method for a specific class is not found, the default will be called:\n\n\nprint.default\n\nfunction (x, digits = NULL, quote = TRUE, na.print = NULL, print.gap = NULL, \n    right = FALSE, max = NULL, width = NULL, useSource = TRUE, \n    ...) \n{\n    args &lt;- pairlist(digits = digits, quote = quote, na.print = na.print, \n        print.gap = print.gap, right = right, max = max, width = width, \n        useSource = useSource, ...)\n    missings &lt;- c(missing(digits), missing(quote), missing(na.print), \n        missing(print.gap), missing(right), missing(max), missing(width), \n        missing(useSource))\n    .Internal(print.default(x, args, missings))\n}\n&lt;bytecode: 0x122a656d0&gt;\n&lt;environment: namespace:base&gt;"
   },
   {
     "objectID": "slides/lec04.html#what-methods-are-specialized-for-a-class",
@@ -956,7 +956,7 @@
     "href": "slides/lec04.html#make-your-own-class-and-class-specific-methods",
     "title": "Object oriented programming",
     "section": "Make your own class and class-specific methods",
-    "text": "Make your own class and class-specific methods\n\nCreate an object of a new class\n\ncloud = structure(c(1, 2, 3), # object called cloud with some values\n              class = \"first_class\") # new class type\ncloud\n\n[1] 1 2 3\nattr(,\"class\")\n[1] \"first_class\"\n\n\n\n\n\nCreate a new method for first_class objects\n\nprint.first_class = function(x) {\n  cat(\"Soldier, first class.\\n\")\n  print.default(unclass(x))\n}\n\n\nprint(cloud)\n\nSoldier, first class.\n[1] 1 2 3\n\n\n\n\n. . .\n\nclass(cloud) = \"double\"\nprint(cloud)\n\n[1] 1 2 3"
+    "text": "Make your own class and class-specific methods\nCreate an object of a new class\n\ncloud = structure(c(1, 2, 3), # object called cloud with some values\n              class = \"first_class\") # new class type\ncloud\n\n[1] 1 2 3\nattr(,\"class\")\n[1] \"first_class\"\n\n\n\nCreate a new method for first_class objects\n\nprint.first_class = function(x) {\n  cat(\"Soldier, first class.\\n\")\n  print.default(unclass(x))\n}\n\n\nprint(cloud)\n\nSoldier, first class.\n[1] 1 2 3\n\n\n\n\n\nclass(cloud) = \"double\"\nprint(cloud)\n\n[1] 1 2 3"
   },
   {
     "objectID": "slides/lec04.html#exercise-1",
@@ -970,14 +970,14 @@
     "href": "slides/lec04.html#defining-a-new-s3-generic",
     "title": "Object oriented programming",
     "section": "Defining a new S3 Generic",
-    "text": "Defining a new S3 Generic\n\nshuffle = function(x) {\n  UseMethod(\"shuffle\")\n}\n\n. . .\n\nshuffle.default = function(x) {\n  stop(\"Class \", class(x), \" is not supported by shuffle. \\n\", call. = FALSE)\n}\n\n. . .\n\nshuffle.factor = function(f) {\n  factor( sample(as.character(f)), levels = sample(levels(f)) )\n}\nshuffle.integer = function(x) {\n  sample(x)\n}\n\n. . .\n\n\n\nshuffle( 1:10 )\n\n [1]  8  7  4 10  6  1  3  5  9  2\n\nshuffle( factor(c(\"A\",\"B\",\"C\",\"A\")) )\n\n[1] C A A B\nLevels: C B A\n\n\n\n\nshuffle( c(1, 2, 3, 4, 5) )\n\nError: Class numeric is not supported by shuffle. \n\nshuffle( letters[1:5] )\n\nError: Class character is not supported by shuffle."
+    "text": "Defining a new S3 Generic\n\nshuffle = function(x) {\n  UseMethod(\"shuffle\")\n}\n\n\n\nshuffle.default = function(x) {\n  stop(\"Class \", class(x), \" is not supported by shuffle. \\n\", call. = FALSE)\n}\n\n\n\n\nshuffle.factor = function(f) {\n  factor( sample(as.character(f)), levels = sample(levels(f)) )\n}\nshuffle.integer = function(x) {\n  sample(x)\n}\n\n\n\n\n\n\nshuffle( 1:10 )\n\n [1]  1  4 10  8  5  7  2  9  6  3\n\nshuffle( factor(c(\"A\",\"B\",\"C\",\"A\")) )\n\n[1] C B A A\nLevels: A B C\n\n\n\n\nshuffle( c(1, 2, 3, 4, 5) )\n\nError: Class numeric is not supported by shuffle. \n\nshuffle( letters[1:5] )\n\nError: Class character is not supported by shuffle."
   },
   {
     "objectID": "slides/lec04.html#exercise-2",
     "href": "slides/lec04.html#exercise-2",
     "title": "Object oriented programming",
     "section": "Exercise 2",
-    "text": "Exercise 2\nBelow is an S3 method called report, it is designed to return a message about the type/mode/class of an object passed to it.\n\nreport = function(x) {\n  UseMethod(\"report\")\n}\nreport.default = function(x) {\n  \"This class does not have a method defined.\"\n}\n\nCreate an implementation for classes integer, double and numeric. The functions should print to the screen “I’m an integer”, “I’m a double”, and “I’m a numeric” respectively.\nNext,\n\nrun report(1) and report(1L).\nrun rm(\"report.integer\") and re-run the functions. What has changed?\nlook at class(1), mode(1), typeof(1). Does this surprise you?\n\n. . .\n\nIntegers and doubles violate the typical class searching rule."
+    "text": "Exercise 2\nBelow is an S3 method called report, it is designed to return a message about the type/mode/class of an object passed to it.\n\nreport = function(x) {\n  UseMethod(\"report\")\n}\nreport.default = function(x) {\n  \"This class does not have a method defined.\"\n}\n\nCreate an implementation for classes integer, double and numeric. The functions should print to the screen “I’m an integer”, “I’m a double”, and “I’m a numeric” respectively.\nNext,\n\nrun report(1) and report(1L).\nrun rm(\"report.integer\") and re-run the functions. What has changed?\nlook at class(1), mode(1), typeof(1). Does this surprise you?\n\n\n\nIntegers and doubles violate the typical class searching rule."
   },
   {
     "objectID": "slides/lec04.html#date-class",
@@ -991,7 +991,7 @@
     "href": "slides/lec04.html#the-dawn-of-time",
     "title": "Object oriented programming",
     "section": "The dawn of time",
-    "text": "The dawn of time\nThe date is measured in unix time, that is, the number of days that have passed since January 1st, 1970. Seconds are counted similarly, startin from the beginning of time, 1970 00:00:00 UTC.\n\n\nExamples\n\n\n\nas.double(today)\n\n[1] 20340\n\nunclass(today)\n\n[1] 20340\n\n\n\n\ndate = as.Date(\"1970-01-11\")\n\nunclass(date)\n\n[1] 10"
+    "text": "The dawn of time\nThe date is measured in unix time, that is, the number of days that have passed since January 1st, 1970. Seconds are counted similarly, startin from the beginning of time, 1970 00:00:00 UTC.\n\nExamples\n\n\n\nas.double(today)\n\n[1] 20697\n\nunclass(today)\n\n[1] 20697\n\n\n\n\ndate = as.Date(\"1970-01-11\")\n\nunclass(date)\n\n[1] 10"
   },
   {
     "objectID": "slides/lec04.html#date-times",
@@ -1012,14 +1012,14 @@
     "href": "slides/lec04.html#matrices",
     "title": "Object oriented programming",
     "section": "Matrices",
-    "text": "Matrices\nR supports the creation of 2d data structures (rows and columns) of atomic vector types. Generally these are formed via a call to matrix().\n\n\n\nmatrix(1:4, nrow=2, ncol=2)\n\n     [,1] [,2]\n[1,]    1    3\n[2,]    2    4\n\n\n\n\nmatrix(LETTERS[1:6], 2)\n\n     [,1] [,2] [,3]\n[1,] \"A\"  \"C\"  \"E\" \n[2,] \"B\"  \"D\"  \"F\" \n\n\n\n\n. . .\nMatrices in R use column major ordering (data is sorted in column order not row order).\n\n\n\n(m = matrix(1:6, nrow=2, ncol=3))\n\n     [,1] [,2] [,3]\n[1,]    1    3    5\n[2,]    2    4    6\n\nc(m)\n\n[1] 1 2 3 4 5 6\n\n\n\n\n(n = matrix(1:6, nrow=3,\n            ncol=2, byrow=TRUE))\n\n     [,1] [,2]\n[1,]    1    2\n[2,]    3    4\n[3,]    5    6\n\nc(n)\n\n[1] 1 3 5 2 4 6"
+    "text": "Matrices\nR supports the creation of 2d data structures (rows and columns) of atomic vector types. Generally these are formed via a call to matrix().\n\n\n\nmatrix(1:4, nrow=2, ncol=2)\n\n     [,1] [,2]\n[1,]    1    3\n[2,]    2    4\n\n\n\n\nmatrix(LETTERS[1:6], 2)\n\n     [,1] [,2] [,3]\n[1,] \"A\"  \"C\"  \"E\" \n[2,] \"B\"  \"D\"  \"F\" \n\n\n\n\nMatrices in R use column major ordering (data is sorted in column order not row order).\n\n\n\n(m = matrix(1:6, nrow=2, ncol=3))\n\n     [,1] [,2] [,3]\n[1,]    1    3    5\n[2,]    2    4    6\n\nc(m)\n\n[1] 1 2 3 4 5 6\n\n\n\n\n(n = matrix(1:6, nrow=3,\n            ncol=2, byrow=TRUE))\n\n     [,1] [,2]\n[1,]    1    2\n[2,]    3    4\n[3,]    5    6\n\nc(n)\n\n[1] 1 3 5 2 4 6"
   },
   {
     "objectID": "slides/lec04.html#matrix-structure",
     "href": "slides/lec04.html#matrix-structure",
     "title": "Object oriented programming",
     "section": "Matrix structure",
-    "text": "Matrix structure\nMatrices (and arrays) are just atomic vectors with a dim attribute attached (they do not have a class attribute, but they do have a class).\n\nm = matrix(1:4, ncol=2, nrow=2)\n\n\n\n\ntypeof(m)\n\n[1] \"integer\"\n\nmode(m)\n\n[1] \"numeric\"\n\n\n\n\nclass(m)\n\n[1] \"matrix\" \"array\" \n\nattributes(m)\n\n$dim\n[1] 2 2\n\n\n\n\n\nn = letters[1:6]\ndim(n) = c(2L, 3L)\nn\n\n     [,1] [,2] [,3]\n[1,] \"a\"  \"c\"  \"e\" \n[2,] \"b\"  \"d\"  \"f\" \n\nclass(n)\n\n[1] \"matrix\" \"array\""
+    "text": "Matrix structure\nMatrices (and arrays) are just atomic vectors with a dim attribute attached (they do not have a class attribute, but they do have a class).\n\nm = matrix(1:4, ncol=2, nrow=2)\n\n\n\n\ntypeof(m)\n\n[1] \"integer\"\n\nmode(m)\n\n[1] \"numeric\"\n\n\n\n\nclass(m)\n\n[1] \"matrix\" \"array\" \n\nattributes(m)\n\n$dim\n[1] 2 2\n\n\n\n\nn = letters[1:6]\ndim(n) = c(2L, 3L)\nn\n\n     [,1] [,2] [,3]\n[1,] \"a\"  \"c\"  \"e\" \n[2,] \"b\"  \"d\"  \"f\" \n\nclass(n)\n\n[1] \"matrix\" \"array\""
   },
   {
     "objectID": "slides/lec04.html#arrays",
