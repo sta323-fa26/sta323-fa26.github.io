@@ -12,7 +12,7 @@ format:
 
 ## Missing values
 
-R uses `NA` to represent missing values in its data structures.`NA` is a logical type. What may not be obvious is that `NA` may be treated as a different type thanks to coercion.
+R uses `NA` to represent missing values in its data structures. `NA` is a logical type. What may not be obvious is that `NA` may be treated as a different type thanks to coercion.
 
 ::: columns
 ::: {.column width="50%"}

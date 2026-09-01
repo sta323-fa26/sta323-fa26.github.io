@@ -50,9 +50,9 @@ schedule %>%
 |:-----------|:------------|:-----------|:-----------:|:-----------|:-----------|
 | 1 | Tue Aug 25 | [welcome](/slides/welcome.html) & types | [💻](/slides/lec01.html)|[lab 0](/labs/lab0.html)  |  |  |
 |  | Thu Aug 27 | control flow, loops and functions | [💻](/slides/lec02.html) |  |  |
-| 2 | Tue Sep 01 |  |  | [lab 1]() |  |
-|  | Thu Sep 03 |  |  |  |  |
-| 3 | Tue Sep 08 |  |  |  |  |
+| 2 | Tue Sep 01 | NAs, lists, NULL and attributes | [💻](/slides/lec03.html) | [lab 1](/labs/lab1.html) |  |
+|  | Thu Sep 03 | object oriented programming |  [💻](/slides/lec04.html) |  |  |
+| 3 | Tue Sep 08 | subsetting  |  |  |  |
 |  | Thu Sep 10 |  |  |  |  |
 | 4 | Tue Sep 15 |  |  |  |  |
 |  | Thu Sep 17 |  |  |  |  |
