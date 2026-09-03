@@ -52,7 +52,7 @@ schedule %>%
 |  | Thu Aug 27 | control flow, loops and functions | [💻](/slides/lec02.html) |  |  |
 | 2 | Tue Sep 01 | NAs, lists, NULL and attributes | [💻](/slides/lec03.html) | [lab 1](/labs/lab1.html) |  |
 |  | Thu Sep 03 | object oriented programming |  [💻](/slides/lec04.html) |  |  |
-| 3 | Tue Sep 08 | subsetting  |  |  |  |
+| 3 | Tue Sep 08 | subsetting  | [💻](/slides/lec06.html) |  |  |
 |  | Thu Sep 10 |  |  |  |  |
 | 4 | Tue Sep 15 |  |  |  |  |
 |  | Thu Sep 17 |  |  |  |  |

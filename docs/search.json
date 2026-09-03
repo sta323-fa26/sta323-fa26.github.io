@@ -766,57 +766,57 @@
     "objectID": "slides/lec06.html#subsetting-in-general",
     "href": "slides/lec06.html#subsetting-in-general",
     "title": "Subsetting",
-    "section": "",
-    "text": "R has three subsetting operators ([, [[, and $). The behavior of these operators will depend on the object (class) they are being used with.\n. . .\nIn general there are 6 different types of subsetting that can be performed:\n\n\n\nPositive integer\nNegative integer\nLogical value\n\n\n\nEmpty\nZero valued / NULL\nCharacter value (names)"
+    "section": "Subsetting in general",
+    "text": "Subsetting in general\nR has three subsetting operators ([, [[, and $). The behavior of these operators will depend on the object (class) they are being used with.\n\nIn general there are 6 different types of subsetting that can be performed:\n\n\n\nPositive integer\nNegative integer\nLogical value\n\n\n\nEmpty\nZero valued / NULL\nCharacter value (names)"
   },
   {
     "objectID": "slides/lec06.html#integer-subsetting-values-by-index",
     "href": "slides/lec06.html#integer-subsetting-values-by-index",
     "title": "Subsetting",
     "section": "Integer subsetting: values by index",
-    "text": "Integer subsetting: values by index\n\nx = c(1,4,7); y = list(1,4,7)\n\n\n\n\nPositive subsetting\n\nx[1] # subset a vector get a vector\n\n[1] 1\n\nx[c(1,3)]\n\n[1] 1 7\n\nx[c(1.9, 2.1)] # coercion\n\n[1] 1 4\n\n\n\nstr(y[1]) # subset a list get a list\n\nList of 1\n $ : num 1\n\n\n\nstr(y[c(1.9, 2.1)]) # coercion\n\nList of 2\n $ : num 1\n $ : num 4\n\n\n\n\n\n\nNegative (exclusionary) subsetting\n\nx[-1]\n\n[1] 4 7\n\n\n\nstr(y[-c(1,2)])\n\nList of 1\n $ : num 7\n\n\n\nx[c(-1,2)]\n\nError in x[c(-1, 2)]: only 0's may be mixed with negative subscripts\n\n\nYou can’t mix positive and negative values!\n\n\n\n\nNote that R starts indexing at 1."
+    "text": "Integer subsetting: values by index\n\nx = c(1,4,7); y = list(1,4,7)\n\n\n\nPositive subsetting\n\nx[1] # subset a vector get a vector\n\n[1] 1\n\nx[c(1,3)]\n\n[1] 1 7\n\nx[c(1.9, 2.1)] # coercion\n\n[1] 1 4\n\n\n\nstr(y[1]) # subset a list get a list\n\nList of 1\n $ : num 1\n\n\n\nstr(y[c(1.9, 2.1)]) # coercion\n\nList of 2\n $ : num 1\n $ : num 4\n\n\n\n\nNegative (exclusionary) subsetting\n\nx[-1]\n\n[1] 4 7\n\n\n\nstr(y[-c(1,2)])\n\nList of 1\n $ : num 7\n\n\n\nx[c(-1,2)]\n\nError in x[c(-1, 2)]: only 0's may be mixed with negative subscripts\n\n\nYou can’t mix positive and negative values!\n\n\nNote that R starts indexing at 1."
   },
   {
     "objectID": "slides/lec06.html#logical-subsetting",
     "href": "slides/lec06.html#logical-subsetting",
     "title": "Subsetting",
     "section": "Logical subsetting",
-    "text": "Logical subsetting\nReturns values that correspond to TRUE in the logical vector.\n\nx = c(1, 4, 7, 12)\n\n\nx[c(TRUE, FALSE, TRUE, FALSE)]\n\n[1] 1 7\n\n\n\nx[c(TRUE, FALSE)]\n\n[1] 1 7\n\n\n. . .\n\nUtility of this\n\nx[x %% 2 == 0]\n\n[1]  4 12\n\n\n\ndplyr::glimpse(cars)\n\nRows: 50\nColumns: 2\n$ speed &lt;dbl&gt; 4, 4, 7, 7, 8, 9, 10, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13…\n$ dist  &lt;dbl&gt; 2, 10, 4, 22, 16, 10, 18, 26, 34, 17, 28, 14, 20, 24, 28, 26, 34…\n\n\n\ncars_with_high_speed = \n  cars[cars$speed &gt; 9,]"
+    "text": "Logical subsetting\nReturns values that correspond to TRUE in the logical vector.\n\nx = c(1, 4, 7, 12)\n\n\nx[c(TRUE, FALSE, TRUE, FALSE)]\n\n[1] 1 7\n\n\n\nx[c(TRUE, FALSE)]\n\n[1] 1 7\n\n\n\nUtility of this\n\nx[x %% 2 == 0]\n\n[1]  4 12\n\n\n\ndplyr::glimpse(cars)\n\nRows: 50\nColumns: 2\n$ speed &lt;dbl&gt; 4, 4, 7, 7, 8, 9, 10, 10, 10, 11, 11, 12, 12, 12, 12, 13, 13, 13…\n$ dist  &lt;dbl&gt; 2, 10, 4, 22, 16, 10, 18, 26, 34, 17, 28, 14, 20, 24, 28, 26, 34…\n\n\n\ncars_with_high_speed = \n  cars[cars$speed &gt; 9,]"
   },
   {
     "objectID": "slides/lec06.html#empty-and-zero-subsetting",
     "href": "slides/lec06.html#empty-and-zero-subsetting",
     "title": "Subsetting",
     "section": "Empty and zero subsetting",
-    "text": "Empty and zero subsetting\n\nx = c(1, 4, 7); y = list(1, 4, 7)\n\n\n\n\nEmpty\nReturns the original vector, this is not the same thing as subsetting with NULL.\n\nx[]\n\n[1] 1 4 7\n\n\n\nstr(y[])\n\nList of 3\n $ : num 1\n $ : num 4\n $ : num 7\n\n\n\n\n\nZero subsetting\nSame as subsetting with NULL\n\nx[NULL]\n\nnumeric(0)\n\nx[0]\n\nnumeric(0)\n\nstr(y[NULL])\n\n list()\n\nstr(y[0])\n\n list()"
+    "text": "Empty and zero subsetting\n\nx = c(1, 4, 7); y = list(1, 4, 7)\n\n\n\nEmpty\nReturns the original vector, this is not the same thing as subsetting with NULL.\n\nx[]\n\n[1] 1 4 7\n\n\n\nstr(y[])\n\nList of 3\n $ : num 1\n $ : num 4\n $ : num 7\n\n\n\nZero subsetting\nSame as subsetting with NULL\n\nx[NULL]\n\nnumeric(0)\n\nx[0]\n\nnumeric(0)\n\nstr(y[NULL])\n\n list()\n\nstr(y[0])\n\n list()"
   },
   {
     "objectID": "slides/lec06.html#character-value-subsetting",
     "href": "slides/lec06.html#character-value-subsetting",
     "title": "Subsetting",
     "section": "Character value subsetting",
-    "text": "Character value subsetting\nIf the vector has names, selects elements whose names correspond to the values in the character vector.\n\n\n\nx = c(a = 1, b = 4, c = 7)\n\nx[\"a\"]\n\na \n1 \n\nx[c(\"a\", \"a\")]\n\na a \n1 1 \n\n\n\n\ny = list(a = 1, b = 4, c = 7)\nstr(y[c(\"b\", \"c\")])\n\nList of 2\n $ b: num 4\n $ c: num 7\n\n\n\n\nThis is a great way to subset because position is fragile, but the name is usually more robust as we manipulate our object."
+    "text": "Character value subsetting\nIf the vector has names, selects elements whose names correspond to the values in the character vector.\n\n\n\nx = c(a = 1, b = 4, c = 7)\n\nx[\"a\"]\n\na \n1 \n\nx[c(\"a\", \"a\")]\n\na a \n1 1 \n\n\n\n\ny = list(a = 1, b = 4, c = 7)\nstr(y[c(\"b\", \"c\")])\n\nList of 2\n $ b: num 4\n $ c: num 7\n\n\n\nThis is a great way to subset because position is fragile, but the name is usually more robust as we manipulate our object."
   },
   {
     "objectID": "slides/lec06.html#breaking-subsetting",
     "href": "slides/lec06.html#breaking-subsetting",
     "title": "Subsetting",
     "section": "Breaking subsetting",
-    "text": "Breaking subsetting\n\nx = c(1, 4, 7); y = list(1, 4, 7)\n\n\n\n\nOut of bounds\n\nreturns NA for atomic vector\nreturns NULL for generic vector (list)\nno warning!\n\n\nx[4]\n\n[1] NA\n\nx[-4]\n\n[1] 1 4 7\n\nstr(y[4])\n\nList of 1\n $ : NULL\n\n\n\n\n\n\nMissing\nSubset with a missing value, we will get back a missing value (atomic vector) or NULL (list).\n\nx[NA] # logical subsetting with length coercion\n\n[1] NA NA NA\n\nx[c(1,NA)] # integer subsetting\n\n[1]  1 NA\n\nstr(y[NA])\n\nList of 3\n $ : NULL\n $ : NULL\n $ : NULL"
+    "text": "Breaking subsetting\n\nx = c(1, 4, 7); y = list(1, 4, 7)\n\n\n\nOut of bounds\n\nreturns NA for atomic vector\nreturns NULL for generic vector (list)\nno warning!\n\n\nx[4]\n\n[1] NA\n\nx[-4]\n\n[1] 1 4 7\n\nstr(y[4])\n\nList of 1\n $ : NULL\n\n\n\n\nMissing\nSubset with a missing value, we will get back a missing value (atomic vector) or NULL (list).\n\nx[NA] # logical subsetting with length coercion\n\n[1] NA NA NA\n\nx[c(1,NA)] # integer subsetting\n\n[1]  1 NA\n\nstr(y[NA])\n\nList of 3\n $ : NULL\n $ : NULL\n $ : NULL"
   },
   {
     "objectID": "slides/lec06.html#section-1",
     "href": "slides/lec06.html#section-1",
     "title": "Subsetting",
     "section": "[[",
-    "text": "[[\n\n\n\nAtomic vectors\n[[ subsets like [ except it can only subset for a single value\n\nx = c(a = 1, b = 4, c = 7)\n\nx[1]\n\na \n1 \n\nx[[1]]\n\n[1] 1\n\nx[[TRUE]]\n\n[1] 1\n\nx[[1:2]]\n\nError in x[[1:2]]: attempt to select more than one element in vectorIndex\n\n\n\n\n\n\nGeneric vectors\n[[ subsets a single value, but returns the value - not a list containing that value like [.\n\ny = list(a = 1, b = 4, c = 7:9)\ny[2]\n\n$b\n[1] 4\n\ny[[2]]\n\n[1] 4\n\ny[[1:2]]\n\nError in y[[1:2]]: subscript out of bounds\n\ny[[c(2,1)]]\n\n[1] 4"
+    "text": "[[\n\n\nAtomic vectors\n[[ subsets like [ except it can only subset for a single value\n\nx = c(a = 1, b = 4, c = 7)\n\nx[1]\n\na \n1 \n\nx[[1]]\n\n[1] 1\n\nx[[TRUE]]\n\n[1] 1\n\nx[[1:2]]\n\nError in x[[1:2]]: attempt to select more than one element in vectorIndex\n\n\n\n\nGeneric vectors\n[[ subsets a single value, but returns the value - not a list containing that value like [.\n\ny = list(a = 1, b = 4, c = 7:9)\ny[2]\n\n$b\n[1] 4\n\ny[[2]]\n\n[1] 4\n\ny[[1:2]]\n\nError in y[[1:2]]: subscript out of bounds\n\ny[[c(2,1)]]\n\n[1] 4"
   },
   {
     "objectID": "slides/lec06.html#hadleys-analogy-1",
     "href": "slides/lec06.html#hadleys-analogy-1",
     "title": "Subsetting",
     "section": "Hadley’s analogy 1",
-    "text": "Hadley’s analogy 1\n\n\n\n\n\n. . .\n\n\n\n\n\n. . ."
+    "text": "Hadley’s analogy 1"
   },
   {
     "objectID": "slides/lec06.html#hadleys-analogy-2",
@@ -830,14 +830,14 @@
     "href": "slides/lec06.html#vs",
     "title": "Subsetting",
     "section": "[[ vs $",
-    "text": "[[ vs $\n$ is equivalent to [[ but it only works for named lists and it uses partial matching for names.\n\nx = c(\"abc\" = 1, \"def\" = 5)\nx$abc\n\nError in x$abc: $ operator is invalid for atomic vectors\n\n\n. . .\n$ is only for generic vectors\n\ny = list(\"abc\" = 1, \"def\" = 5)\ny[[\"abc\"]]\n\n[1] 1\n\ny$abc\n\n[1] 1\n\ny$d \n\n[1] 5\n\n\n. . .\nBe careful of the last one!"
+    "text": "[[ vs $\n$ is equivalent to [[ but it only works for named lists and it uses partial matching for names.\n\nx = c(\"abc\" = 1, \"def\" = 5)\nx$abc\n\nError in x$abc: $ operator is invalid for atomic vectors\n\n\n\n$ is only for generic vectors\n\ny = list(\"abc\" = 1, \"def\" = 5)\ny[[\"abc\"]]\n\n[1] 1\n\ny$abc\n\n[1] 1\n\ny$d \n\n[1] 5\n\n\n\n\nBe careful of the last one!"
   },
   {
     "objectID": "slides/lec06.html#a-common-error",
     "href": "slides/lec06.html#a-common-error",
     "title": "Subsetting",
     "section": "A common error",
-    "text": "A common error\nWhy does the following code not work?\n\nx = list(abc = 1:10, def = 10:1)\ny = \"abc\"\n\n\n\n\nx[[y]]\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\nx$y\n\nNULL\n\n\n\n\n. . .\nThe expression x$y gets directly interpreted as x[[\"y\"]] by R, note the inclusion of the \"s, this is not the same as the expression x[[y]]."
+    "text": "A common error\nWhy does the following code not work?\n\nx = list(abc = 1:10, def = 10:1)\ny = \"abc\"\n\n\n\n\nx[[y]]\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\nx$y\n\nNULL\n\n\n\n\nThe expression x$y gets directly interpreted as x[[\"y\"]] by R, note the inclusion of the \"s, this is not the same as the expression x[[y]]."
   },
   {
     "objectID": "slides/lec06.html#exercise",
@@ -851,14 +851,14 @@
     "href": "slides/lec06.html#subsetting-data-frames",
     "title": "Subsetting",
     "section": "Subsetting data frames",
-    "text": "Subsetting data frames\nSince data frames have two dimensions, we can subset either rows, columns or both.\n\n(df = data.frame(x = 1:3, y = c(\"A\",\"B\",\"C\"), z = TRUE))\n\n  x y    z\n1 1 A TRUE\n2 2 B TRUE\n3 3 C TRUE\n\n\n\n\n\nSubset rows\n\ndf[1, ] # first row\n\n  x y    z\n1 1 A TRUE\n\ndf[c(1,3), ] # first and third row\n\n  x y    z\n1 1 A TRUE\n3 3 C TRUE\n\n\n\n\n\nSubset columns\n\ndf[, 1] # first column\n\n[1] 1 2 3\n\ndf[, 1:2] # first through second column\n\n  x y\n1 1 A\n2 2 B\n3 3 C\n\n\n\n\n\n. . .\n\nSubset both\n\ndf[1:2,1:2]\n\n  x y\n1 1 A\n2 2 B"
+    "text": "Subsetting data frames\nSince data frames have two dimensions, we can subset either rows, columns or both.\n\n(df = data.frame(x = 1:3, y = c(\"A\",\"B\",\"C\"), z = TRUE))\n\n  x y    z\n1 1 A TRUE\n2 2 B TRUE\n3 3 C TRUE\n\n\n\n\nSubset rows\n\ndf[1, ] # first row\n\n  x y    z\n1 1 A TRUE\n\ndf[c(1,3), ] # first and third row\n\n  x y    z\n1 1 A TRUE\n3 3 C TRUE\n\n\n\nSubset columns\n\ndf[, 1] # first column\n\n[1] 1 2 3\n\ndf[, 1:2] # first through second column\n\n  x y\n1 1 A\n2 2 B\n3 3 C\n\n\n\n\nSubset both\n\ndf[1:2,1:2]\n\n  x y\n1 1 A\n2 2 B"
   },
   {
     "objectID": "slides/lec06.html#preserving-vs-simplifying",
     "href": "slides/lec06.html#preserving-vs-simplifying",
     "title": "Subsetting",
     "section": "Preserving vs simplifying",
-    "text": "Preserving vs simplifying\nMost of the time, R’s [ is a preserving operator, in that the returned object will always have the same type/class as the object being subset.\nConfusingly, when used with some classes (e.g. data frame, matrix or array) [ becomes a simplifying operator (does not preserve type) - this behavior is instead controlled by the drop argument.\n. . .\n\ncars |&gt;\n  head(3)\n\n  speed dist\n1     4    2\n2     4   10\n3     7    4\n\n\n\n\nfor columns:\n\nstr(cars[, 1])\n\n num [1:50] 4 4 7 7 8 9 10 10 10 11 ...\n\nstr(cars[, 1, drop = FALSE])\n\n'data.frame':   50 obs. of  1 variable:\n $ speed: num  4 4 7 7 8 9 10 10 10 11 ...\n\n\n\n\nfor rows it’s the opposite:\n\nstr(cars[1, ])\n\n'data.frame':   1 obs. of  2 variables:\n $ speed: num 4\n $ dist : num 2\n\nstr(cars[1, , drop = TRUE])\n\nList of 2\n $ speed: num 4\n $ dist : num 2"
+    "text": "Preserving vs simplifying\nMost of the time, R’s [ is a preserving operator, in that the returned object will always have the same type/class as the object being subset.\nConfusingly, when used with some classes (e.g. data frame, matrix or array) [ becomes a simplifying operator (does not preserve type) - this behavior is instead controlled by the drop argument.\n\n\ncars |&gt;\n  head(3)\n\n  speed dist\n1     4    2\n2     4   10\n3     7    4\n\n\n\n\nfor columns:\n\nstr(cars[, 1])\n\n num [1:50] 4 4 7 7 8 9 10 10 10 11 ...\n\nstr(cars[, 1, drop = FALSE])\n\n'data.frame':   50 obs. of  1 variable:\n $ speed: num  4 4 7 7 8 9 10 10 10 11 ...\n\n\n\n\nfor rows it’s the opposite:\n\nstr(cars[1, ])\n\n'data.frame':   1 obs. of  2 variables:\n $ speed: num 4\n $ dist : num 2\n\nstr(cars[1, , drop = TRUE])\n\nList of 2\n $ speed: num 4\n $ dist : num 2"
   },
   {
     "objectID": "slides/lec06.html#preserving-vs-simplifying-summary",
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\n\n4\nTue Sep 15\n\n\n\n\n\n\n\nThu Sep 17\n\n\n\n\n\n\n5\nTue Sep 22\n\n\n\n\n\n\n\nThu Sep 24\n\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\n\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\n\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\n\n4\nTue Sep 15\n\n\n\n\n\n\n\nThu Sep 17\n\n\n\n\n\n\n5\nTue Sep 22\n\n\n\n\n\n\n\nThu Sep 24\n\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\n\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\n\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
