@@ -279,7 +279,7 @@ secret_message_2 <- c(1,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,1,0,1,
 
 :::callout-tip
 ## Hint
-As you brute-force, you will likely run into errors since some bytes cannot be converted back into proper R strings. You should enable `error: true` for the code chunk.
+As you brute-force, you will likely run into errors since some bytes cannot be converted back into proper R strings. You can wrap the expression generating an error with `try()` to avoid the error halting your code.
 :::
 
 ## Style guidelines
