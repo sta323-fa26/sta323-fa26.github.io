@@ -46,6 +46,15 @@ schedule %>%
   kable(format = "markdown")
 ```
 
+<!-- PLAN -->
+<!-- Unit 1: R basics: 5 lectures --> 
+<!-- Unit 2: Data wrangling, visualization & Collection (APIs): 7 lectures-->
+<!-- Unit 3: Software engineering & reproducibility: advanced git & unit tests testthat; R scripts & make; packages: 3 lectures-->
+<!-- Unit 4: Scalability: hardware, profiling and benchmarking; parallelization; SQL; duckDB; bigLM: 5 lectures -->
+<!-- Unit 5: Computational statistics (mini unit): Newton-Raphson; MM; simulation; Monte Carlo: 3 lectures-->
+
+<!-- Total lectures in semester: 25 broken down as follows: 11 before exam 1, 22 before exam 2, 3 after exam 2 -->
+
 | Week | Date | Topic | Notes | Lab | Project |
 |:-----------|:------------|:-----------|:-----------:|:-----------|:-----------|
 | 1 | Tue Aug 25 | [welcome](/slides/welcome.html) & types | [💻](/slides/lec01.html)|[lab 0](/labs/lab0.html)  |  |  |
@@ -53,14 +62,14 @@ schedule %>%
 | 2 | Tue Sep 01 | NAs, lists, NULL and attributes | [💻](/slides/lec03.html) | [lab 1](/labs/lab1.html) |  |
 |  | Thu Sep 03 | object oriented programming |  [💻](/slides/lec04.html) |  |  |
 | 3 | Tue Sep 08 | subsetting  |  |  |  |
-|  | Thu Sep 10 |  |  |  |  |
-| 4 | Tue Sep 15 |  |  |  |  |
-|  | Thu Sep 17 |  |  |  |  |
-| 5 | Tue Sep 22 |  |  |  |  |
-|  | Thu Sep 24 |  |  |  |  |
-| 6 | Tue Sep 29 |  |  |  |  |
+|  | Thu Sep 10 | regular expressions |  |  |  |
+| 4 | Tue Sep 15 | tidy data & dplyr |  |  |  |
+|  | Thu Sep 17 | visualization with ggplot2 |  |  |  |
+| 5 | Tue Sep 22 | dimension reduction |  |  |  |
+|  | Thu Sep 24 | geographical data |  |  |  |
+| 6 | Tue Sep 29 | shiny  |  |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
-| 7 | Tue Oct 06 |  |  |  |  |
+| 7 | Tue Oct 06 |   |  |  |  |
 |  | Thu Oct 08 |  |  |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |  |  |
 |  | Thu Oct 15 |  |  |  |  |

@@ -47,6 +47,9 @@ let
 projectPackages = [
   pkgs.rPackages.countdown
   pkgs.rPackages.R_utils
+  pkgs.rPackages.sloop
+  pkgs.rPackages.BEDMatrix
+  pkgs.rPackages.plotly
 ];
 
   rEnv = pkgs.rstudioWrapper.override {
