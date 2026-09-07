@@ -139,14 +139,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting started</a>
-  <ul class="collapse">
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting started</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#file-systems" id="toc-file-systems" class="nav-link" data-scroll-target="#file-systems">1. File systems</a></li>
   <li><a href="#earthquakes" id="toc-earthquakes" class="nav-link" data-scroll-target="#earthquakes">2. Earthquakes</a></li>
   <li><a href="#style-guidelines" id="toc-style-guidelines" class="nav-link" data-scroll-target="#style-guidelines">Style guidelines</a></li>
   <li><a href="#submitting-your-lab" id="toc-submitting-your-lab" class="nav-link" data-scroll-target="#submitting-your-lab">Submitting your lab</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -179,14 +177,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>construct, and wrangle nested lists</li>
 <li>work with S3 objects and write S3 methods</li>
 </ul>
-<section id="getting-started" class="level1">
-<h1>Getting started</h1>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting started</h2>
 <ul>
 <li><p>If you did not complete <a href="../labs/lab0.html">lab 0</a>, then go back and do so to set up your SSH key, git, and find instructions on how to clone a project.</p></li>
 <li><p>Next in the <em>terminal</em> tab, type <code>cd ~</code> to navigate to your home directory. Next <code>git clone git@github.com:sta323-fa26/lab-2-username.git</code> where <code>username</code> is replaced with your username (this is the copied SSH URL from your lab-2 GitHub repo).</p></li>
 <li><p>Navigate to your <code>lab-2</code> folder and open the <code>.Rproj</code> file.</p></li>
 <li><p>Open the Quarto (<code>.qmd</code>) file, change the author name to your name.</p></li>
 </ul>
+</section>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <p>For all exercises, you should respond in the space provided in the template <code>lab-2.qmd</code> and show all your work.</p>
@@ -214,6 +213,7 @@ Hint
 <ul>
 <li><code>list.files()</code></li>
 <li><code>file.info()</code></li>
+<li><code>basename()</code></li>
 </ul>
 <p>To start, try running <code>list.files(".")</code> to examine the contents of the current directory.</p>
 </div>
@@ -256,53 +256,37 @@ Hint
 └── data
     ├── raw.csv
     └── clean.csv</code></pre>
-<p>Your function should ignore hidden (“dot”) files. Also, your function should work for directories of <strong>arbitrary depth</strong>. To achieve this, you’ll need to write a recursive function. Test your function on the directory containing this lab assignment by running the following (with the project open / in the directory of the project root).</p>
+<p>Your function should ignore hidden (“dot”) files. Also, your function should work for directories of <strong>arbitrary depth</strong>. To achieve this, you’ll need to write a recursive function (i.e.&nbsp;it will need to call itself, note: this does not mean it must return itself). Test your function on the directory containing this lab assignment by running the following (with the project open / in the directory of the project root).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">read_tree</span>(<span class="st">"."</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="part-2" class="level4">
 <h4 class="anchored" data-anchor-id="part-2">Part 2</h4>
-<p>Write a new function, <code>read_tree_2()</code> that calls <code>read_tree()</code> and returns an S3 object of class <code>fileTree</code>. Next, write an S3 <code>print</code> function to handle this class.</p>
-<p>The output of the <code>print</code> function, when applied to an object of class <code>fileTree</code> should be formatted as follows (actual values will be different):</p>
+<p>Write a new function, <code>read_tree_2()</code> that calls <code>read_tree()</code> and returns an S3 object of class <code>fileTree</code> with the following attributes:</p>
+<ul>
+<li><code>root</code>: the name of the root directory</li>
+<li><code>num_files</code>: the total number of files contained within root and all of its subdirectories</li>
+<li><code>total_size</code>: the total disk space (in megabytes) of all the files within root</li>
+<li><code>max_depth</code>: the maximum depth of a file from root (i.e.&nbsp;if <code>root</code> contains <code>lab-2.qmd</code> and there are no folders, the depth = 1. If <code>root</code> contains 1 subdirectory <code>data/</code> which contains <code>df.csv</code> and no other directories, the max depth is 2, etc.)</li>
+<li><code>largest_file</code>: the single largest file contained within root or any of is subdirectories</li>
+</ul>
+<p>Next, write an S3 <code>print</code> function to handle this class. The output of the <code>print</code> function, when applied to an object of class <code>fileTree</code> should be formatted as follows (actual values will be different):</p>
 <pre><code>File tree
 ---------
-Root:          lab-2
-Files:         10
-Directories:   3
-Total size:    14.2 MB
-Max depth:     4
+Root: lab-1 
+Files: 3 
+Total size: 0.03 MB
+Max depth: 1 
 
-Largest file:
-  data/dataset.csv
-  13.1 MB</code></pre>
+
+Largest file: lab-1.Rproj
+Largest file size: 0.02 MB</code></pre>
 <p>Report the output of</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">read_tree</span>(<span class="st">"."</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>where <code>"."</code> is the <code>lab-2-username</code> root directory.</p>
-</section>
-</section>
-<section id="earthquakes" class="level2">
-<h2 class="anchored" data-anchor-id="earthquakes">2. Earthquakes</h2>
-<p><em>The goal of this exercise is to wrangle raw, moderately sized data</em></p>
-<p>The data set <code>earthquakes.rds</code>, loaded via:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>earthquakes <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/earthquakes.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>contains all recorded earthquakes of magnitude greater than, or equal to 2.5 from the last thirty days (data sourced from <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">U.S. Geological Survey (USGS)</a> on September 6, 2026.</p>
-<p>The data set is of moderate size and might crash your R instance if you attempt to print the whole thing to the screen. Instead, peek at the structure with careful commands, e.g.&nbsp;</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(earthquakes, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(earthquakes<span class="sc">$</span>features[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="part-1-1" class="level4">
-<h4 class="anchored" data-anchor-id="part-1-1">Part 1</h4>
-<p>Produce a “tidy” data frame where each row is an earthquake, and each column describes its properties, id or location. Call your data frame <code>eq_df</code> and show the output of the following:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(eq_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Question</strong>: Which earthquake in the data has the largest magnitude? Report its magnitude, place, longitude, latitude, and depth.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -313,32 +297,73 @@ Hint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>See the <a href="https://sta323-fa26.github.io/slides/lec06.html#/unnest">notes</a> on <code>unnest</code> from the <code>tidyr</code> package.</p>
+<p><code>cat()</code> is a useful function for printing to the screen. <code>cat("\nHello")</code> will print a new line (due to <code>\n</code>) followed by “Hello”. Additionally, you can mix and match text with objects nicely, e.g.</p>
+<pre><code>x &lt;- 2
+cat("The value of x is ", x)</code></pre>
 </div>
 </div>
 </section>
-<section id="part-2-1" class="level4">
-<h4 class="anchored" data-anchor-id="part-2-1">Part 2</h4>
-<p>Write a function <code>missing_report()</code> that takes a data frame and returns a data frame containing three columns:</p>
-<ul>
-<li><code>variable</code>, name of the variable in the original data frame</li>
-<li><code>missing</code>, the number of <code>NA</code> values, and</li>
-<li><code>percent_missing</code>, the percentage of observations that are missing.</li>
-</ul>
-<p>Additionally, the rows of the data frame described above should be sorted from greatest to least number of missing observations.</p>
-<p>Print the output of</p>
+</section>
+<section id="earthquakes" class="level2">
+<h2 class="anchored" data-anchor-id="earthquakes">2. Earthquakes</h2>
+<p><em>The goal of this exercise is to wrangle raw, moderately sized data</em>.</p>
+<p>We’ll revisit the wrangled data set again, later in the semester.</p>
+<p>The data set <code>earthquakes.rds</code>, loaded via:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">missing_report</span>(eq_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>earthquakes <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/earthquakes.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>and discuss anything of interest.</p>
-<p><strong>Questions</strong>: The variable <code>felt</code> gives the number of responses submitted to the USGS “Did You Feel It?” system when that information is available.</p>
+<p>contains all recorded earthquakes of magnitude greater than, or equal to 2.5 from the last thirty days (data sourced from <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php">U.S. Geological Survey (USGS)</a> on September 6, 2026.</p>
+<p>The data set is of moderate size and might crash your R instance if you attempt to print the whole thing to the screen. Instead, peek at the structure with careful commands, e.g.&nbsp;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(earthquakes, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(earthquakes<span class="sc">$</span>features[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- #### Part 1 -->
+<p>Produce a “tidy” data frame where each row is an earthquake, and each column describes its properties, id or location (place, longitude, latitude). Next, write a function <code>remove_redundant()</code> that deletes any columns from the data frame that either (1) contain all the same value or (2) contain all missing values and prints to the screen which columns are being deleted. Call your final data frame <code>eq_df</code> and show the output of the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(eq_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Questions</strong>: use appropriate subsetting to address the following questions:</p>
 <ol type="1">
+<li>Which earthquake in the data has the largest magnitude? Report (only) its id, magnitude, place, longitude, latitude, and depth.</li>
 <li>What proportion of earthquakes have a non-missing <code>felt</code> value?</li>
-<li>Among earthquakes with a recorded <code>felt</code> value, which earthquake received the most reports? Report its magnitude, place, and number of reports.</li>
 </ol>
-<p>In the case of a tie, return all tied earthquakes.</p>
-<p>Explain briefly why replacing every missing <code>felt</code> value by zero would answer a different question.</p>
-</section>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>See the <a href="https://sta323-fa26.github.io/slides/lec06.html#/unnest">notes</a> on <code>unnest</code> from the <code>tidyr</code> package.</p></li>
+<li><p><code>which.max</code> can help with “question” 1</p></li>
+</ul>
+</div>
+</div>
+<!-- #### Part 2 -->
+<!-- Write a function `missing_report()` that takes a data frame and returns a data frame containing three columns: -->
+<!--   - `variable`, name of the variable in the original data frame -->
+<!--   - `missing`, the number of `NA` values, and -->
+<!--   - `percent_missing`, the percentage of observations that are missing. -->
+<!-- Additionally, the rows of the data frame described above should be sorted from greatest to least number of missing observations. -->
+<!-- Print the output of  -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- missing_report(eq_df) -->
+<!-- ``` -->
+<!-- and discuss anything of interest. -->
+<!-- **Questions**: The variable `felt` gives the number of responses submitted to the USGS "Did -->
+<!-- You Feel It?" system when that information is available. -->
+<!-- 1. What proportion of earthquakes have a non-missing `felt` value? -->
+<!-- 2. Among earthquakes with a recorded `felt` value, which earthquake received -->
+<!--    the most reports? Report its magnitude, place, and number of reports. -->
+<!-- In the case of a tie, return all tied earthquakes. -->
+<!-- Explain briefly why replacing every missing `felt` value by zero would answer -->
+<!-- a different question. -->
 </section>
 <section id="style-guidelines" class="level2">
 <h2 class="anchored" data-anchor-id="style-guidelines">Style guidelines</h2>
@@ -361,7 +386,6 @@ Hint
 <p>To submit your assignment, simply commit and push your completed <code>lab-x.qmd</code> to your GitHub repo. Your most recent commit 48 hours after the assignment deadline will be graded, and any applicable late penalty will be applied (see <a href="../syllabus.html">the syllabus</a>). For this reason, <strong>do not push commits</strong> after you are satisfied with your work, or a late penalty will be applied.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

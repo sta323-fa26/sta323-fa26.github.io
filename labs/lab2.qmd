@@ -12,7 +12,7 @@ By the end of the lab, you will...
 - construct, and wrangle nested lists
 - work with S3 objects and write S3 methods
 
-# Getting started
+## Getting started
 
 -   If you did not complete [lab 0](/labs/lab0.html), then go back and do so to set up your SSH key, git, and find instructions on how to clone a project.
 
@@ -48,6 +48,7 @@ You may find the following functions helpful:
 
 - `list.files()`
 - `file.info()`
+- `basename()`
 
 To start, try running `list.files(".")` to examine the contents of the current directory. 
 :::
@@ -107,7 +108,7 @@ project
     └── clean.csv
 ```
 
-Your function should ignore hidden ("dot") files. Also, your function should work for directories of **arbitrary depth**. To achieve this, you'll need to write a recursive function.
+Your function should ignore hidden ("dot") files. Also, your function should work for directories of **arbitrary depth**. To achieve this, you'll need to write a recursive function (i.e. it will need to call itself, note: this does not mean it must return itself).
 Test your function on the directory containing this lab assignment by running the following (with the project open / in the directory of the project root).
 
 ```r
@@ -117,22 +118,27 @@ str(tree)
 
 #### Part 2
 
-Write a new function, `read_tree_2()` that calls `read_tree()` and returns an S3 object of class `fileTree`. Next, write an S3 `print` function to handle this class.
+Write a new function, `read_tree_2()` that calls `read_tree()` and returns an S3 object of class `fileTree` with the following attributes:
 
-The output of the `print` function, when applied to an object of class `fileTree` should be formatted as follows (actual values will be different): 
+- `root`: the name of the root directory
+- `num_files`: the total number of files contained within root and all of its subdirectories
+- `total_size`: the total disk space (in megabytes) of all the files within root
+- `max_depth`: the maximum depth of a file from root (i.e. if `root` contains `lab-2.qmd` and there are no folders, the depth = 1. If `root` contains 1 subdirectory `data/` which contains `df.csv` and no other directories, the max depth is 2, etc.)
+- `largest_file`: the single largest file contained within root or any of is subdirectories
+
+Next, write an S3 `print` function to handle this class. The output of the `print` function, when applied to an object of class `fileTree` should be formatted as follows (actual values will be different): 
 
 ```
 File tree
 ---------
-Root:          lab-2
-Files:         10
-Directories:   3
-Total size:    14.2 MB
-Max depth:     4
+Root: lab-1 
+Files: 3 
+Total size: 0.03 MB
+Max depth: 1 
 
-Largest file:
-  data/dataset.csv
-  13.1 MB
+
+Largest file: lab-1.Rproj
+Largest file size: 0.02 MB
 ```
 
 Report the output of
@@ -146,9 +152,22 @@ print(tree)
 
 where `"."` is the `lab-2-username` root directory.
 
+::: callout-tip
+## Hint
+
+`cat()` is a useful function for printing to the screen. `cat("\nHello")` will print a new line (due to `\n`) followed by "Hello". Additionally, you can mix and match text with objects nicely, e.g.
+
+```
+x <- 2
+cat("The value of x is ", x)
+```
+:::
+
 ## 2. Earthquakes
 
-*The goal of this exercise is to wrangle raw, moderately sized data*
+*The goal of this exercise is to wrangle raw, moderately sized data*.
+
+We'll revisit the wrangled data set again, later in the semester.
 
 The data set `earthquakes.rds`, loaded via:
 
@@ -168,56 +187,60 @@ str(earthquakes$features[1])
 ```
 
 
-#### Part 1
+<!-- #### Part 1 -->
 
-Produce a "tidy" data frame where each row is an earthquake, and each column describes its properties, id or location. Call your data frame `eq_df` and show the output of the following:
+Produce a "tidy" data frame where each row is an earthquake, and each column describes its properties, id or location (place, longitude, latitude). Next, write a function `remove_redundant()` that deletes any columns from the data frame that either (1) contain all the same value or (2) contain all missing values and prints to the screen which columns are being deleted. Call your final data frame `eq_df` and show the output of the following:
 
 ```{r}
 #| eval: false
 dplyr::glimpse(eq_df)
 ```
 
-**Question**: Which earthquake in the data has the largest magnitude? Report its magnitude,
+**Questions**: use appropriate subsetting to address the following questions:
+
+1. Which earthquake in the data has the largest magnitude? Report (only) its id, magnitude,
 place, longitude, latitude, and depth.
+2. What proportion of earthquakes have a non-missing `felt` value?
 
 ::: callout-tip
 ## Hint
 
-See the [notes](https://sta323-fa26.github.io/slides/lec06.html#/unnest) on `unnest` from the `tidyr` package.
+- See the [notes](https://sta323-fa26.github.io/slides/lec06.html#/unnest) on `unnest` from the `tidyr` package.
 
+- `which.max` can help with "question" 1
 :::
 
 
-#### Part 2
+<!-- #### Part 2 -->
 
-Write a function `missing_report()` that takes a data frame and returns a data frame containing three columns:
+<!-- Write a function `missing_report()` that takes a data frame and returns a data frame containing three columns: -->
 
-  - `variable`, name of the variable in the original data frame
-  - `missing`, the number of `NA` values, and
-  - `percent_missing`, the percentage of observations that are missing.
-  
-Additionally, the rows of the data frame described above should be sorted from greatest to least number of missing observations.
+<!--   - `variable`, name of the variable in the original data frame -->
+<!--   - `missing`, the number of `NA` values, and -->
+<!--   - `percent_missing`, the percentage of observations that are missing. -->
 
-Print the output of 
+<!-- Additionally, the rows of the data frame described above should be sorted from greatest to least number of missing observations. -->
 
-```{r}
-#| eval: false
-missing_report(eq_df)
-```
+<!-- Print the output of  -->
 
-and discuss anything of interest.
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- missing_report(eq_df) -->
+<!-- ``` -->
 
-**Questions**: The variable `felt` gives the number of responses submitted to the USGS "Did
-You Feel It?" system when that information is available.
+<!-- and discuss anything of interest. -->
 
-1. What proportion of earthquakes have a non-missing `felt` value?
-2. Among earthquakes with a recorded `felt` value, which earthquake received
-   the most reports? Report its magnitude, place, and number of reports.
+<!-- **Questions**: The variable `felt` gives the number of responses submitted to the USGS "Did -->
+<!-- You Feel It?" system when that information is available. -->
 
-In the case of a tie, return all tied earthquakes.
+<!-- 1. What proportion of earthquakes have a non-missing `felt` value? -->
+<!-- 2. Among earthquakes with a recorded `felt` value, which earthquake received -->
+<!--    the most reports? Report its magnitude, place, and number of reports. -->
 
-Explain briefly why replacing every missing `felt` value by zero would answer
-a different question.
+<!-- In the case of a tie, return all tied earthquakes. -->
+
+<!-- Explain briefly why replacing every missing `felt` value by zero would answer -->
+<!-- a different question. -->
 
 
 ## Style guidelines
