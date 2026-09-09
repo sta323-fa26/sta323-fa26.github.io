@@ -146,7 +146,7 @@ Report the output of
 ```{r}
 #| eval: false
 
-tree <- read_tree(".")
+tree <- read_tree_2(".")
 print(tree)
 ```
 

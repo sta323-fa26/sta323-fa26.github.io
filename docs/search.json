@@ -1402,28 +1402,28 @@
   {
     "objectID": "labs/lab2.html",
     "href": "labs/lab2.html",
-    "title": "Lab 2: computational masonry",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
     "section": "",
     "text": "By the end of the lab, you will…"
   },
   {
     "objectID": "labs/lab2.html#exercises",
     "href": "labs/lab2.html#exercises",
-    "title": "Lab 2: computational masonry",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
     "section": "Exercises",
-    "text": "Exercises\nFor all exercises, you should respond in the space provided in the template lab-2.qmd and show all your work. In all answers of type double, three significant figures suffices.\n\n1. Mixture densities\nSometimes called an “admixture density”, a mixture density is a convex combination (i.e. a weighted sum, with non-negative weights that sum to 1) of other density functions. The general form is\n\\[\nf(x) = \\sum_{i = 1}^n w_i p_i(x)\n\\] where \\(p_i(x)\\) are density functions and \\(w_i\\) are weights such that \\(w_i \\geq 0\\) and \\(\\sum_i w_i = 1\\). To sample from \\(f(x)\\), one can simply sample from \\(p_i(x)\\) with probability \\(w_i\\).\nMixture densities are often used to model distinct subpopulations within a population.\nFor example, different species of lemurs have very different weights. Even when controlling for sex, age and pregnancy status of the lemurs, the distribution of weights across species still looks bimodal. In the plot below, approximately \\(\\frac{1}{3}\\) of lemurs weigh less than 500 grams, and approximately \\(\\frac{2}{3}\\) of all lemurs weigh more than 1000 grams.\n\n\n\n\n\n\n\n\n\n\nWrite a function called rNormalMixture1 that takes takes arguments w1, w2, mu1, mu2, sd1, sd2 and returns a single sample from a mixture of two Gaussians. Test your function on the following cases\n\n\n#case i\nrNormalMixture1(w1 = 1/3,\n                w2 = 2/3,\n                mu1 = 300,\n                mu2 = 2750,\n                sd1 = 10,\n                sd2 = 100)\n\n# case ii\nrNormalMixture1(w1 = 0.6,\n                w2 = 0.5,\n                mu1 = 1,\n                mu2 = 3,\n                sd1 = 1,\n                sd2 = 0.5)\n\n# case iii\nrNormalMixture1(w1 = -0.6,\n                w2 = 1.6,\n                mu1 = 1,\n                mu2 = 3,\n                sd1 = 1,\n                sd2 = 0.5)\n\n\n\n\n\n\n\nHint\n\n\n\nCheck that the arguments are numeric and that the weights obey the rules outlined above.\n\n\n\nWrite another function called rNormalMixture2 that takes argument n, w1, w2, mu1, mu2, sd1, sd2 and returns \\(n\\) samples from your mixture of two Gaussians by calling rNormalMixture1() \\(n\\) times.\n\nTest your function on the following case and then print out the first 10 entries of \\(x\\) to the screen.\n\n# case iv\nx = rNormalMixture2(n = 10000,\n                w1 = 1/3,\n                w2 = 2/3,\n                mu1 = 300,\n                mu2 = 2750,\n                sd1 = 10,\n                sd2 = 100)\n\nx[1:10]\n\n\nUse UnivarMixingDistribution within the distr package to replicate case (iv) above. You might need to install the package in the console with install.packages(\"distr\"). Read the help file on UnivarMixingDistribution for an example of how to create a univariate mixing distribution. Call your distribution myNormalMixture and then use the code below to test it out.\n\n\nrMyNormalMixture = r(myNormalMixture)\nrMyNormalMixture(n = 10000)\n\n\nTime (see system.time({}) from lab 0) how long rNormalMixture2 takes vs how long rMyNormalMixture takes to generate n = 10000 samples and report your findings.\n\n\n\n2. Skeleton of a graphical model\n\n\n\n\n\nWe might use the image above to visualize the conditional dependencies between random variables. For example,\n\\[\np(y_2 |y_1) = N(y_1, \\sigma_2^2).\n\\] In words, \\(y_2\\) is normally distributed with mean \\(y_1\\) and variance \\(\\sigma_2^2\\).\nWithin this context, we say \\(y_1\\) is a parent node to \\(y_2\\), or \\(y_2\\) is a child node of \\(y_1\\).\n\nCreate an object y1 that has class node and is a list with the following entries:\n\nid = “y1”,\nchildren = “y2”,\nparent = NULL,\nmean = 0\nsd = 1\n\n\nPrint y1 to the screen.\n\nNext create a function makeNode that takes arguments id, children, parent, mean, and sd and returns an object of class node. id should be of type character. Your function should check that the arguments are of appropriate type. Make the default argument for parent and children be NULL to represent nodes at the boundaries of your graph. Give a warning if the user tries to create an isolated node (a node with no parent/child nodes). Test your function on the cases below\n\n\n# case i\nmakeNode(id = \"y2\", children = NULL,\n         parent = \"y1\", mean = y1$mean,\n         sd = 2)\n\n# case ii\nmakdeNode(id = 0, children = \"y3\",\n          parent = \"y1\", mean = y1$mean, \n          sd = 2)\n\n# case iii\nmakdeNode(id = \"y3\", mean = y1$mean, \n          sd = 2)\n\n\nWrite a vectorized function getParent that takes a list of class node and returns the names of each node’s parents. It should return “No parent” in the case of no parent. Test your function on the code below\n\n\ny1 = makeNode(id = \"y1\", children = \"y2\",\n         parent = NULL, mean = 0,\n         sd = 1)\n\ny2 = makeNode(id = \"y2\", children = NULL,\n         parent = \"y1\", mean = y1$mean,\n         sd = 2)\n\ngetParent(list(y1, y2))\n\n\n\n\n\n\n\nHint\n\n\n\n\nThe length of NULL is 0.\nUse [[]] to access the object in the list.\n\n\n\n\n\n3. Lego Sales Data\n\nData\nFor this task you will be working with a synthetic data set of sales records for Lego construction sets. We will assume that the original data was stored in a JSON format but a colleague has managed to import it into R as a list of lists (of lists). The code below will load a copy of the object, called sales, into your environment.\nsales = readRDS(\"data/lego_sales.rds\")\nThe data is structured such that each entry in the top list represents a different purchaser. These list entries contain basic information about the purchaser (name, age, phone number, etc.) as well as their purchase history. Everyone in the data set has purchased at least one lego set but some many have made multiple purchases. The purchase histories are stored in the purchases element which is also a list of lists. Each entry within the purchases list reflects a different Lego set which the customer purchased. Note that the customer may have purchased more than one copy of any particular set, this number is stored as Quantity within the purchase record.\n\n\n\nPart 1 - Tidy the data\nYour job here is to covert the sales object into a tidy data frame. Tidy in this case means each row should represents a separate purchase of a lego set by an individual and the columns should correspond to the keys in the JSON data. Duplicate columns should be avoided as much as possible and no data should be lost / ignored in your conversion.\nSeveral guidelines / hints:\n\nBe careful about making assumptions about the data - it is not as messy as real world data, but it is also not pristine and you are meant to run into several hiccups along the way.\nPay attention to types - the data frame you create should have columns that are of a type that matches the original data.\nDon’t worry about duplicated data - since a customer can purchase multiple Lego sets that customer’s information may show up in multiple rows. This is fine and expected given the structure of the data. For the CS types: first normal form is ok in this case regardless of whatever your Databases professor may have told you.\nDealing with duplicate purchases - some customers purchased more than one copy of a particular lego set, for these individuals you can choose to code the purchase as multiple rows within the data frame or as a single row that also includes the quantity value. Either approach is fine, but your write up should discuss your choice.\nAvoid hard coding features of the data into your solutions (e.g. column names for your data frame should be determined at runtime as much as possible).\nDo not use magic numbers, always use column names whenever possible, similarly don’t assume a specific size for the data (e.g. number of columns or rows) - all of these should be determined at run time.\nMore generally, assume that the specific data could be changed at any time, and a new but identically structured data set could be provided. Make as few assumptions as possible about the data (some will be necessary, but should be stated explicitly in your write up).\nYou may assume that purchasers are uniquely identified by the first name, last name, and phone number.\nWhen answering questions, in the case of a tie - all equivalent rows should be returned.\n\n\n\n\nPart 2 - Questions\nThis task will involve answering a number of questions about that data that will involve manipulating and summarizing the data frame you created in part 1. You are also welcome to use the original sales object if you believe that approach is more efficient for any particular question.\nNo write up is needed for these questions as long as you include reasonably well documented code (using comments). Make sure that your code outputs your answer and only your answer.\n\n\nWhat are the three most common first names of purchasers?\nWhich Lego theme has made the most money for Lego?\nDo men or women buy more Lego sets (per person) on average?\nWhat are the five most popular hobbies of Lego purchasers?\nWhich area code has spent the most money on Legos? (In the US the area code is the first 3 digits of a phone number)"
+    "text": "Exercises\nFor all exercises, you should respond in the space provided in the template lab-2.qmd and show all your work."
   },
   {
     "objectID": "labs/lab2.html#style-guidelines",
     "href": "labs/lab2.html#style-guidelines",
-    "title": "Lab 2: computational masonry",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
     "section": "Style guidelines",
     "text": "Style guidelines\nAll assignments in this course must employ proper coding style, as outlined below:\n\nAll code should obey the 80 character limit per line (i.e. no code should run off the page when rendering or require scrolling). To enable a vertical line in the RStudio IDE that helps guide this, see the style guidelines from lab 0 or ask a member of the teaching team for help.\nAll commas should be followed by a space.\nAll binary operators should be surrounded by space. For example x + y is appropriate. x+y is not.\nAll pipes %&gt;% or |&gt; as well as ggplot layers + should be followed by a new line.\nYou should be consistent with stylistic choices, e.g. only use 1 of = vs &lt;- and %&gt;% vs |&gt;\nYour name should be at the top (in the YAML) of each document under “author:”\nAll code chunks should be named (with names that don’t have spaces, e.g. ex-1, ex-2 etc.)\nFile names in your GitHub repo such as lab-x.qmd must not be changed and left as provided. Additionally, your repo must pass certain basic checks. The results of these checks are visible on GitHub via the badges at the top of your README and the actions tab. These are meant to give you feedback around the structure and reproducibility of your repository and assignment - they do not assess the correctness of your work. You should consider them a necessary but not sufficient condition when turning in your work - passing all of the checks simply means your have met a minimum standard of reproducibility for the assignment.\n\nFundamentally, the check is making sure 1) you only have the files you should in your repository, 2) your .qmd renders.\nIf you have any questions about style, please ask a member of the teaching team."
   },
   {
     "objectID": "labs/lab2.html#submitting-your-lab",
     "href": "labs/lab2.html#submitting-your-lab",
-    "title": "Lab 2: computational masonry",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
     "section": "Submitting your lab",
     "text": "Submitting your lab\nTo submit your assignment, simply commit and push your completed lab-x.qmd to your GitHub repo. Your most recent commit 48 hours after the assignment deadline will be graded, and any applicable late penalty will be applied (see the syllabus). For this reason, do not push commits after you are satisfied with your work, or a late penalty will be applied."
   },
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\n\n4\nTue Sep 15\n\n\n\n\n\n\n\nThu Sep 17\n\n\n\n\n\n\n5\nTue Sep 22\n\n\n\n\n\n\n\nThu Sep 24\n\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\n\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\n\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\npresentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\nregular expressions\n\n\nmini project\n\n\n4\nTue Sep 15\ntidy data & dplyr\n\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n\n\n\n\n\n5\nTue Sep 22\ndimension reduction\n\n\n\n\n\n\nThu Sep 24\ngeographical data\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -2012,36 +2012,36 @@
     "objectID": "slides/lec05.html#tidy-data",
     "href": "slides/lec05.html#tidy-data",
     "title": "Tidyverse",
-    "section": "",
-    "text": "from R4DS tidy data"
+    "section": "Tidy data",
+    "text": "Tidy data\n\nfrom R4DS tidy data"
   },
   {
     "objectID": "slides/lec05.html#tidy-vs-untidy",
     "href": "slides/lec05.html#tidy-vs-untidy",
     "title": "Tidyverse",
-    "section": "",
-    "text": "List of 3\n $ :List of 8\n  ..$ name      : chr \"Luke Skywalker\"\n  ..$ height    : chr \"172\"\n  ..$ mass      : chr \"77\"\n  ..$ hair_color: chr \"blond\"\n  ..$ skin_color: chr \"fair\"\n  ..$ eye_color : chr \"blue\"\n  ..$ birth_year: chr \"19BBY\"\n  ..$ gender    : chr \"male\"\n $ :List of 8\n  ..$ name      : chr \"C-3PO\"\n  ..$ height    : chr \"167\"\n  ..$ mass      : chr \"75\"\n  ..$ hair_color: chr \"n/a\"\n  ..$ skin_color: chr \"gold\"\n  ..$ eye_color : chr \"yellow\"\n  ..$ birth_year: chr \"112BBY\"\n  ..$ gender    : chr \"n/a\"\n $ :List of 8\n  ..$ name      : chr \"R2-D2\"\n  ..$ height    : chr \"96\"\n  ..$ mass      : chr \"32\"\n  ..$ hair_color: chr \"n/a\"\n  ..$ skin_color: chr \"white, blue\"\n  ..$ eye_color : chr \"red\"\n  ..$ birth_year: chr \"33BBY\"\n  ..$ gender    : chr \"n/a\"\n\n\n. . .\nuntidy!"
+    "section": "Tidy vs untidy",
+    "text": "Tidy vs untidy\n\n\nList of 3\n $ :List of 8\n  ..$ name      : chr \"Luke Skywalker\"\n  ..$ height    : chr \"172\"\n  ..$ mass      : chr \"77\"\n  ..$ hair_color: chr \"blond\"\n  ..$ skin_color: chr \"fair\"\n  ..$ eye_color : chr \"blue\"\n  ..$ birth_year: chr \"19BBY\"\n  ..$ gender    : chr \"male\"\n $ :List of 8\n  ..$ name      : chr \"C-3PO\"\n  ..$ height    : chr \"167\"\n  ..$ mass      : chr \"75\"\n  ..$ hair_color: chr \"n/a\"\n  ..$ skin_color: chr \"gold\"\n  ..$ eye_color : chr \"yellow\"\n  ..$ birth_year: chr \"112BBY\"\n  ..$ gender    : chr \"n/a\"\n $ :List of 8\n  ..$ name      : chr \"R2-D2\"\n  ..$ height    : chr \"96\"\n  ..$ mass      : chr \"32\"\n  ..$ hair_color: chr \"n/a\"\n  ..$ skin_color: chr \"white, blue\"\n  ..$ eye_color : chr \"red\"\n  ..$ birth_year: chr \"33BBY\"\n  ..$ gender    : chr \"n/a\"\n\n\n\nuntidy!"
   },
   {
     "objectID": "slides/lec05.html#tidy-vs-untidy-1",
     "href": "slides/lec05.html#tidy-vs-untidy-1",
     "title": "Tidyverse",
-    "section": "",
-    "text": "# A tibble: 317 × 7\n   artist         track                   date.entered   wk1   wk2   wk3   wk4\n   &lt;chr&gt;          &lt;chr&gt;                   &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 2 Pac          Baby Don't Cry (Keep... 2000-02-26      87    82    72    77\n 2 2Ge+her        The Hardest Part Of ... 2000-09-02      91    87    92    NA\n 3 3 Doors Down   Kryptonite              2000-04-08      81    70    68    67\n 4 3 Doors Down   Loser                   2000-10-21      76    76    72    69\n 5 504 Boyz       Wobble Wobble           2000-04-15      57    34    25    17\n 6 98^0           Give Me Just One Nig... 2000-08-19      51    39    34    26\n 7 A*Teens        Dancing Queen           2000-07-08      97    97    96    95\n 8 Aaliyah        I Don't Wanna           2000-01-29      84    62    51    41\n 9 Aaliyah        Try Again               2000-03-18      59    53    38    28\n10 Adams, Yolanda Open My Heart           2000-08-26      76    76    74    69\n# ℹ 307 more rows\n\n\n. . .\nBasically tidy, but we have repeated measures."
+    "section": "Tidy vs untidy",
+    "text": "Tidy vs untidy\n\n\n# A tibble: 317 × 7\n   artist         track                   date.entered   wk1   wk2   wk3   wk4\n   &lt;chr&gt;          &lt;chr&gt;                   &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1 2 Pac          Baby Don't Cry (Keep... 2000-02-26      87    82    72    77\n 2 2Ge+her        The Hardest Part Of ... 2000-09-02      91    87    92    NA\n 3 3 Doors Down   Kryptonite              2000-04-08      81    70    68    67\n 4 3 Doors Down   Loser                   2000-10-21      76    76    72    69\n 5 504 Boyz       Wobble Wobble           2000-04-15      57    34    25    17\n 6 98^0           Give Me Just One Nig... 2000-08-19      51    39    34    26\n 7 A*Teens        Dancing Queen           2000-07-08      97    97    96    95\n 8 Aaliyah        I Don't Wanna           2000-01-29      84    62    51    41\n 9 Aaliyah        Try Again               2000-03-18      59    53    38    28\n10 Adams, Yolanda Open My Heart           2000-08-26      76    76    74    69\n# ℹ 307 more rows\n\n\n\nBasically tidy, but we have repeated measures."
   },
   {
     "objectID": "slides/lec05.html#pivot-longer",
     "href": "slides/lec05.html#pivot-longer",
     "title": "Tidyverse",
     "section": "Pivot longer",
-    "text": "Pivot longer\n\n\n\n\n\n. . .\n\nlibrary(tidyr)\ntable4a |&gt;\n  pivot_longer(2:3, names_to = \"year\", values_to = \"cases\")\n\n# A tibble: 6 × 3\n  country     year   cases\n  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;\n1 Afghanistan 1999     745\n2 Afghanistan 2000    2666\n3 Brazil      1999   37737\n4 Brazil      2000   80488\n5 China       1999  212258\n6 China       2000  213766\n\n\nFrom data import cheatsheet"
+    "text": "Pivot longer\n\n\n\nlibrary(tidyr)\ntable4a |&gt;\n  pivot_longer(2:3, names_to = \"year\", values_to = \"cases\")\n\n# A tibble: 6 × 3\n  country     year   cases\n  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;\n1 Afghanistan 1999     745\n2 Afghanistan 2000    2666\n3 Brazil      1999   37737\n4 Brazil      2000   80488\n5 China       1999  212258\n6 China       2000  213766\n\n\nFrom data import cheatsheet"
   },
   {
     "objectID": "slides/lec05.html#pivot-wider",
     "href": "slides/lec05.html#pivot-wider",
     "title": "Tidyverse",
     "section": "Pivot wider",
-    "text": "Pivot wider\n\n\n\n\n\n\n. . .\n\nlibrary(tidyr)\ntable2 |&gt;\n  pivot_wider(names_from = type, values_from = count)\n\n# A tibble: 6 × 4\n  country      year  cases population\n  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;\n1 Afghanistan  1999    745   19987071\n2 Afghanistan  2000   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil       2000  80488  174504898\n5 China        1999 212258 1272915272\n6 China        2000 213766 1280428583\n\n\nFrom data import cheatsheet"
+    "text": "Pivot wider\n\n\n\n\nlibrary(tidyr)\ntable2 |&gt;\n  pivot_wider(names_from = type, values_from = count)\n\n# A tibble: 6 × 4\n  country      year  cases population\n  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;\n1 Afghanistan  1999    745   19987071\n2 Afghanistan  2000   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil       2000  80488  174504898\n5 China        1999 212258 1272915272\n6 China        2000 213766 1280428583\n\n\nFrom data import cheatsheet"
   },
   {
     "objectID": "slides/lec05.html#exercise-1",
@@ -2055,21 +2055,21 @@
     "href": "slides/lec05.html#a-quick-note-on-pipes",
     "title": "Tidyverse",
     "section": "A quick note on pipes",
-    "text": "A quick note on pipes\nIn the previous examples, you saw the base R pipe |&gt;.\nThe pipe links functions and arguments together in an easy to read way.\nSpecifically, the pipe takes what comes before and makes it an argument to what comes after.\n\nExample\n\nnested functions\n\n\npark(drive(start_car(find(\"keys\")), to = \"campus\"))\n\n\npipeline\n\n\nfind(\"keys\") %&gt;%\n    start_car() %&gt;%\n    drive(to = \"campus\") %&gt;%\n    park()"
+    "text": "A quick note on pipes\nIn the previous examples, you saw the base R pipe |&gt;.\nThe pipe links functions and arguments together in an easy to read way.\nSpecifically, the pipe takes what comes before and makes it an argument to what comes after.\nExample\n\nnested functions\n\n\npark(drive(start_car(find(\"keys\")), to = \"campus\"))\n\n\npipeline\n\n\nfind(\"keys\") %&gt;%\n    start_car() %&gt;%\n    drive(to = \"campus\") %&gt;%\n    park()"
   },
   {
     "objectID": "slides/lec05.html#base-r-vs-magrittr",
     "href": "slides/lec05.html#base-r-vs-magrittr",
     "title": "Tidyverse",
     "section": "Base r vs magrittr",
-    "text": "Base r vs magrittr\nThere are two pipes we’ll encounter in R:\n\nthe base R pipe |&gt; added in R v4.1.0\nthe magrittr pipe %&gt;%\n\n. . .\nThe main differences are:\n\nthe base pipe doesn’t require loading the package magrittr (contained in the tidyverse)\nthe base pipe is negligibly faster in some cases\nthe base pipe doesn’t use . argument passing, but uses _ instead . . .\n\n\nExample\n\n\n\nx = c(1, 3, NA)\n\nTRUE %&gt;%\n  mean(x, na.rm = .)\n\n[1] 2\n\n\n\n\nTRUE |&gt;\n  mean(x, na.rm = _)\n\n[1] 2"
+    "text": "Base r vs magrittr\nThere are two pipes we’ll encounter in R:\n\nthe base R pipe |&gt; added in R v4.1.0\nthe magrittr pipe %&gt;%\n\n\nThe main differences are:\n\nthe base pipe doesn’t require loading the package magrittr (contained in the tidyverse)\nthe base pipe is negligibly faster in some cases\nthe base pipe doesn’t use . argument passing, but uses _ instead . . .\n\nExample\n\n\n\nx = c(1, 3, NA)\n\nTRUE %&gt;%\n  mean(x, na.rm = .)\n\n[1] 2\n\n\n\n\nTRUE |&gt;\n  mean(x, na.rm = _)\n\n[1] 2"
   },
   {
     "objectID": "slides/lec05.html#dplyr-verbs",
     "href": "slides/lec05.html#dplyr-verbs",
     "title": "Tidyverse",
     "section": "dplyr verbs",
-    "text": "dplyr verbs\ndplyr names functions as verbs that manipulate data frames\nQuick summary of key dplyr function from dplyr vignette:\n\n\nRows:\n\nfilter():chooses rows based on column values. See logical operations\nslice(): chooses rows based on location.\narrange(): changes the order of the rows\ndistinct(): filter for unique rows (.keep_all = TRUE is useful)\nsample_n(): take a random subset of the rows\n\n\nColumns:\n\nselect(): changes whether or not a column is included.\nrename(): changes the name of columns.\nmutate(): changes the values of columns and creates new columns.\npull(): grab column as a vector\nrelocate(): change column order\n\n\n\nGroups of rows:\n\nsummarise(): collapses a group into a single row.\ncount(): count unique values of one or more variables.\ngroup_by()/ungroup(): modify other verbs to act on subsets\n\n… and more"
+    "text": "dplyr verbs\ndplyr names functions as verbs that manipulate data frames\nQuick summary of key dplyr function from dplyr vignette:\n\n\nRows:\n\nfilter():chooses rows based on column values. See logical operations\nslice(): chooses rows based on location.\narrange(): changes the order of the rows\ndistinct(): filter for unique rows (.keep_all = TRUE is useful)\nsample_n(): take a random subset of the rows\n\n\nColumns:\n\nselect(): changes whether or not a column is included.\nrename(): changes the name of columns.\nmutate(): changes the values of columns and creates new columns.\npull(): grab column as a vector\nrelocate(): change column order\n\n\nGroups of rows:\n\nsummarise(): collapses a group into a single row.\ncount(): count unique values of one or more variables.\ngroup_by()/ungroup(): modify other verbs to act on subsets\n\n… and more"
   },
   {
     "objectID": "slides/lec05.html#dplyr-rules",
@@ -2090,7 +2090,7 @@
     "href": "slides/lec05.html#distinct",
     "title": "Tidyverse",
     "section": "distinct()",
-    "text": "distinct()\nHow many flights are in the data set?\n\nflights %&gt;%\n  distinct(tailnum) %&gt;%\n  nrow()\n\n[1] 4044\n\n\n. . .\nHow many distinct routes?\n\nflights %&gt;%\n  select(origin, dest) %&gt;%\n  distinct() %&gt;%\n  nrow()\n\n[1] 224"
+    "text": "distinct()\nHow many flights are in the data set?\n\nflights %&gt;%\n  distinct(tailnum) %&gt;%\n  nrow()\n\n[1] 4044\n\n\n\nHow many distinct routes?\n\nflights %&gt;%\n  select(origin, dest) %&gt;%\n  distinct() %&gt;%\n  nrow()\n\n[1] 224"
   },
   {
     "objectID": "slides/lec05.html#select-two-columns",
@@ -2125,7 +2125,7 @@
     "href": "slides/lec05.html#relocate",
     "title": "Tidyverse",
     "section": "relocate()",
-    "text": "relocate()\n\nflights %&gt;% \n  relocate(carrier, origin, dest) %&gt;% # to the front\n  names()\n\n [1] \"carrier\"        \"origin\"         \"dest\"           \"year\"          \n [5] \"month\"          \"day\"            \"dep_time\"       \"sched_dep_time\"\n [9] \"dep_delay\"      \"arr_time\"       \"sched_arr_time\" \"arr_delay\"     \n[13] \"flight\"         \"tailnum\"        \"air_time\"       \"distance\"      \n[17] \"hour\"           \"minute\"         \"time_hour\"     \n\n\n. . .\n\nflights %&gt;%\n  relocate(year, month, day, .after = last_col()) %&gt;% # to the end\n  names()\n\n [1] \"dep_time\"       \"sched_dep_time\" \"dep_delay\"      \"arr_time\"      \n [5] \"sched_arr_time\" \"arr_delay\"      \"carrier\"        \"flight\"        \n [9] \"tailnum\"        \"origin\"         \"dest\"           \"air_time\"      \n[13] \"distance\"       \"hour\"           \"minute\"         \"time_hour\"     \n[17] \"year\"           \"month\"          \"day\""
+    "text": "relocate()\n\nflights %&gt;% \n  relocate(carrier, origin, dest) %&gt;% # to the front\n  names()\n\n [1] \"carrier\"        \"origin\"         \"dest\"           \"year\"          \n [5] \"month\"          \"day\"            \"dep_time\"       \"sched_dep_time\"\n [9] \"dep_delay\"      \"arr_time\"       \"sched_arr_time\" \"arr_delay\"     \n[13] \"flight\"         \"tailnum\"        \"air_time\"       \"distance\"      \n[17] \"hour\"           \"minute\"         \"time_hour\"     \n\n\n\n\nflights %&gt;%\n  relocate(year, month, day, .after = last_col()) %&gt;% # to the end\n  names()\n\n [1] \"dep_time\"       \"sched_dep_time\" \"dep_delay\"      \"arr_time\"      \n [5] \"sched_arr_time\" \"arr_delay\"      \"carrier\"        \"flight\"        \n [9] \"tailnum\"        \"origin\"         \"dest\"           \"air_time\"      \n[13] \"distance\"       \"hour\"           \"minute\"         \"time_hour\"     \n[17] \"year\"           \"month\"          \"day\""
   },
   {
     "objectID": "slides/lec05.html#rename",
@@ -2146,7 +2146,7 @@
     "href": "slides/lec05.html#arrange",
     "title": "Tidyverse",
     "section": "arrange()",
-    "text": "arrange()\n\n\n\nset.seed(10)\nflights %&gt;% \n  slice_sample(n = 3) %&gt;% \n  select(tailnum, day) %&gt;% \n  arrange(day)\n\n# A tibble: 3 × 2\n  tailnum   day\n  &lt;chr&gt;   &lt;int&gt;\n1 N258JB     17\n2 N3CPAA     20\n3 N515MJ     31\n\n\n\n\nset.seed(10)\nflights %&gt;% \n  slice_sample(n = 3) %&gt;% \n  select(tailnum, day) %&gt;% \n  arrange(desc(day))\n\n# A tibble: 3 × 2\n  tailnum   day\n  &lt;chr&gt;   &lt;int&gt;\n1 N515MJ     31\n2 N3CPAA     20\n3 N258JB     17\n\n\n\n\n. . .\n\narrange() defaults to ascending order. Use desc() for descending order.\nyou can arrange by multiple columns"
+    "text": "arrange()\n\n\n\nset.seed(10)\nflights %&gt;% \n  slice_sample(n = 3) %&gt;% \n  select(tailnum, day) %&gt;% \n  arrange(day)\n\n# A tibble: 3 × 2\n  tailnum   day\n  &lt;chr&gt;   &lt;int&gt;\n1 N258JB     17\n2 N3CPAA     20\n3 N515MJ     31\n\n\n\n\nset.seed(10)\nflights %&gt;% \n  slice_sample(n = 3) %&gt;% \n  select(tailnum, day) %&gt;% \n  arrange(desc(day))\n\n# A tibble: 3 × 2\n  tailnum   day\n  &lt;chr&gt;   &lt;int&gt;\n1 N515MJ     31\n2 N3CPAA     20\n3 N258JB     17\n\n\n\n\n\narrange() defaults to ascending order. Use desc() for descending order.\nyou can arrange by multiple columns"
   },
   {
     "objectID": "slides/lec05.html#group_by",
@@ -2188,7 +2188,7 @@
     "href": "slides/lec05.html#combined-example",
     "title": "Tidyverse",
     "section": "combined example",
-    "text": "combined example\nWhat’s the average speed in miles per hour of flights traveling to Raleigh-Durham, Atlanta and Orlando airports?\n\nflights %&gt;% \n  filter(dest %in% c(\"RDU\", \"ATL\", \"MCO\")) %&gt;%\n  mutate(time_hours = air_time / 60) %&gt;%\n  mutate(mph = distance / time_hours) %&gt;%\n  group_by(dest) %&gt;%\n  summarize(mean_speed = mean(mph, na.rm = TRUE))\n\n# A tibble: 3 × 2\n  dest  mean_speed\n  &lt;chr&gt;      &lt;dbl&gt;\n1 ATL         405.\n2 MCO         422.\n3 RDU         364.\n\n\n. . .\nTake the flights data frame and then filter for destination airports: (RDU, ATL, MCO).\nNext mutate a new column time_hours that reports air time of the flight in hours.\nMutate a column mph that reports miles per hour.\nGroup by destination and then summarize the mean flight speed towards each destination."
+    "text": "combined example\nWhat’s the average speed in miles per hour of flights traveling to Raleigh-Durham, Atlanta and Orlando airports?\n\nflights %&gt;% \n  filter(dest %in% c(\"RDU\", \"ATL\", \"MCO\")) %&gt;%\n  mutate(time_hours = air_time / 60) %&gt;%\n  mutate(mph = distance / time_hours) %&gt;%\n  group_by(dest) %&gt;%\n  summarize(mean_speed = mean(mph, na.rm = TRUE))\n\n# A tibble: 3 × 2\n  dest  mean_speed\n  &lt;chr&gt;      &lt;dbl&gt;\n1 ATL         405.\n2 MCO         422.\n3 RDU         364.\n\n\n\nTake the flights data frame and then filter for destination airports: (RDU, ATL, MCO).\nNext mutate a new column time_hours that reports air time of the flight in hours.\nMutate a column mph that reports miles per hour.\nGroup by destination and then summarize the mean flight speed towards each destination."
   },
   {
     "objectID": "slides/lec05.html#exercise-2",
@@ -2376,22 +2376,22 @@
     "objectID": "slides/lec09.html#definition-and-utility",
     "href": "slides/lec09.html#definition-and-utility",
     "title": "Regular expressions",
-    "section": "",
-    "text": "A regular expression (aka regex or regexp) is a custom defined string matching pattern. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+    "section": "Definition and utility",
+    "text": "Definition and utility\nA regular expression (or regex / regexp) is a tool for identifying patterns in strings. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
   },
   {
     "objectID": "slides/lec09.html#quick-example",
     "href": "slides/lec09.html#quick-example",
     "title": "Regular expressions",
-    "section": "",
-    "text": "grep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nregular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
+    "section": "Quick example",
+    "text": "Quick example\ngrep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nNote: regular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
   },
   {
     "objectID": "slides/lec09.html#introducing-stringr",
     "href": "slides/lec09.html#introducing-stringr",
     "title": "Regular expressions",
     "section": "introducing stringr",
-    "text": "introducing stringr\nstringr hosts a convenient set of tools to manipulate strings and extract regular expressions. All functions begin with the prefix str.\nThe best summary of stringr functions is on this cheatsheet\nNotice below that the string comes first in these functions (in contrast with grep)\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\nstr_detect()str_extract()str_replace\n\n\n\nlike grepl\n\n\nstr_detect(txt, \":\")\n\n[1]  TRUE FALSE  TRUE\n\n\n\n\n\nreturn the match\n\n\nstr_extract(txt, \"\\\\s([A-Z]|[a-z])*ng\") # first instance\n\n[1] \" going\" NA       \" Going\"\n\nstr_extract_all(txt, \"\\\\s([A-Z]|[a-z])*ng\") %&gt;% str()\n\nList of 3\n $ : chr [1:2] \" going\" \" king\"\n $ : chr(0) \n $ : chr \" Going\"\n\n\n\n\n\nstr_replace(txt, \"Nami\", \"Zoro\") %&gt;%\n  str_replace(\"navigator\", \"swordsman\")\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"The straw hat crew set sail.\"                           \n[3] \"Zoro: 'I'm Going to be the world's greatest swordsman!'\""
+    "text": "introducing stringr\nstringr hosts a convenient set of tools to manipulate strings and extract regular expressions. All functions begin with the prefix str.\nSee this cheatsheet for a summary of stringr functions.\nNotice below that the string comes first in these functions (in contrast with grep)\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\nstr_detect()str_extract()str_replace\n\n\n\nlike grepl\n\n\nstr_detect(txt, \":\")\n\n[1]  TRUE FALSE  TRUE\n\n\n\n\n\nreturn the match\n\n\nstr_extract(txt, \"\\\\s([A-Z]|[a-z])*ng\") # first instance\n\n[1] \" going\" NA       \" Going\"\n\nstr_extract_all(txt, \"\\\\s([A-Z]|[a-z])*ng\") %&gt;% str()\n\nList of 3\n $ : chr [1:2] \" going\" \" king\"\n $ : chr(0) \n $ : chr \" Going\"\n\n\n\n\n\nstr_replace(txt, \"Nami\", \"Zoro\") %&gt;%\n  str_replace(\"navigator\", \"swordsman\")\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"The straw hat crew set sail.\"                           \n[3] \"Zoro: 'I'm Going to be the world's greatest swordsman!'\""
   },
   {
     "objectID": "slides/lec09.html#the-power-of-str_replace",
@@ -2426,7 +2426,7 @@
     "href": "slides/lec09.html#a-hierarchical-view-of-character-classes",
     "title": "Regular expressions",
     "section": "A hierarchical view of character classes",
-    "text": "A hierarchical view of character classes\n\n\n\n\n\n{citation: http://perso.ens-lyon.fr/lise.vaudor/strings-et-expressions-regulieres/}"
+    "text": "A hierarchical view of character classes\n\n{citation: http://perso.ens-lyon.fr/lise.vaudor/strings-et-expressions-regulieres/}"
   },
   {
     "objectID": "slides/lec09.html#ranges",
@@ -2447,35 +2447,35 @@
     "href": "slides/lec09.html#escape-classes",
     "title": "Regular expressions",
     "section": "Escape classes",
-    "text": "Escape classes\nIn order to access the presumed functionality of character classes, you need to use a double escape as well. Example:\n\ntxt = c(\"A1\", \"B2\", \"CC\", \"DD\", \"EE2\")\n\n\nWhich strings end with a digit?\n\n\nstr_detect(txt, \"\\d$\")\n\nError: '\\d' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\d$\")\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\n\n\nWhich strings contain 3 alphanumeric characters?\n\n\nstr_detect(txt, \"\\\\w{3}\")\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\n\n. . .\n\n\n\n\n\n\ntl;dr\n\n\n\nto match a symbol or character class, use double escapes"
+    "text": "Escape classes\nIn order to access the presumed functionality of character classes, you need to use a double escape as well. Example:\n\ntxt = c(\"A1\", \"B2\", \"CC\", \"DD\", \"EE2\")\n\n\nWhich strings end with a digit?\n\n\nstr_detect(txt, \"\\d$\")\n\nError: '\\d' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\d$\")\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\n\n\nWhich strings contain 3 alphanumeric characters?\n\n\nstr_detect(txt, \"\\\\w{3}\")\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\n\n\n\n\n\n\n\n\ntl;dr\n\n\nto match a symbol or character class, use double escapes"
   },
   {
     "objectID": "slides/lec09.html#exercise-1",
     "href": "slides/lec09.html#exercise-1",
     "title": "Regular expressions",
     "section": "Exercise 1",
-    "text": "Exercise 1\nDownload the files secret-message.txt and emails.txt using the command below in the console:\n\n\n\n\n\n\nWARNING\n\n\n\nDO NOT VIEW THE FILE – YOUR CONTAINER MAY CRASH!\n\n\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-message.txt\", \n              destfile = \"secret-message.txt\")\n\ndownload.file(\"https://sta323-fa25.github.io/data/emails.txt\", \n              destfile = \"emails.txt\")\n\nHint: read in the file as a string with read_lines()\n\npart 1\nIn secret-message.txt, find the secret message. It will be of the form sta323{secret-message} where secret-message is replaced by some other text.\n\n\npart 2\nIn emails.txt extract the unique part of the email address (part before the “@”) and count the number of each hosting domain, i.e. count how many emails are Duke emails and how many are gmail."
+    "text": "Exercise 1\nDownload the files secret-message.txt and emails.txt using the command below in the console:\n\n\n\n\n\n\nWARNING\n\n\nDO NOT VIEW THE FILE – YOUR CONTAINER MAY CRASH!\n\n\n\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-message.txt\", \n              destfile = \"secret-message.txt\")\n\ndownload.file(\"https://sta323-fa25.github.io/data/emails.txt\", \n              destfile = \"emails.txt\")\n\nHint: read in the file as a string with read_lines()\npart 1\nIn secret-message.txt, find the secret message. It will be of the form sta323{secret-message} where secret-message is replaced by some other text.\npart 2\nIn emails.txt extract the unique part of the email address (part before the “@”) and count the number of each hosting domain, i.e. count how many emails are Duke emails and how many are gmail."
   },
   {
     "objectID": "slides/lec09.html#examples",
     "href": "slides/lec09.html#examples",
     "title": "Regular expressions",
     "section": "Examples",
-    "text": "Examples\nIn the following example we will search through the text, line by line, and extract matches.\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\nYou can download the text file with\n\ndownload.file(\"https://sta323-fa25.github.io/data/pirate-phone.txt\",\ndestfile = \"pirate-phone.txt\")\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"123 456 7890\")\n\n\n\n123 456 7890\n\n\nexact match\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"[0-9]{3}\\\\-[0-9]{3}\\\\-[0-9]{4}\")\n\n\n\n012-345-6789\n\n\nmatching xxx-xxx-xxxx using ranges, repeaters, escaped characters"
+    "text": "Examples\nIn the following example we will search through the text, line by line, and extract matches.\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\nregex extraction\nYou can download the text file with\n\ndownload.file(\"https://sta323-fa25.github.io/data/pirate-phone.txt\",\ndestfile = \"pirate-phone.txt\")\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"123 456 7890\")\n\n\n\n123 456 7890\n\n\nexact match\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"[0-9]{3}\\\\-[0-9]{3}\\\\-[0-9]{4}\")\n\n\n\n012-345-6789\n\n\nmatching xxx-xxx-xxxx using ranges, repeaters, escaped characters"
   },
   {
     "objectID": "slides/lec09.html#examples-1",
     "href": "slides/lec09.html#examples-1",
     "title": "Regular expressions",
     "section": "Examples",
-    "text": "Examples\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\)\\\\d{3}\\\\s\\\\d{4}\")\n\n\n\n(919)000 0000\n\n\nmatching (xxx)xxx xxxx using character classes (\\d for digit, \\s for whitespace) and repeaters\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\).?\\\\d{3}\\\\s[0-9]{4}\")\n\n\n\n(919)000 0000\n(919) 123 4567\n\n\nmatching (xxx)*xxx xxxx using character classes, wildcard (.) and optional chracter (?)\n\n\n\n\n\nregexoutputprinciples\n\n\n\n# hidden exercise, code here!\n\n\n\n123 456 7890\n012-345-6789\n(919)000 0000\n(919) 123 4567\n0000000000\n\n\nMultiple optional matching"
+    "text": "Examples\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\nregex extraction\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\)\\\\d{3}\\\\s\\\\d{4}\")\n\n\n\n(919)000 0000\n\n\nmatching (xxx)xxx xxxx using character classes (\\d for digit, \\s for whitespace) and repeaters\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\).?\\\\d{3}\\\\s[0-9]{4}\")\n\n\n\n(919)000 0000\n(919) 123 4567\n\n\nmatching (xxx)*xxx xxxx using character classes, wildcard (.) and optional chracter (?)\n\n\n\n\n\nregexoutputprinciples\n\n\n\n# hidden exercise, code here!\n\n\n\n123 456 7890\n012-345-6789\n(919)000 0000\n(919) 123 4567\n0000000000\n\n\nMultiple optional matching"
   },
   {
     "objectID": "slides/lec09.html#greedy-vs-ungreedy-matching",
     "href": "slides/lec09.html#greedy-vs-ungreedy-matching",
     "title": "Regular expressions",
     "section": "Greedy vs ungreedy matching",
-    "text": "Greedy vs ungreedy matching\nWhat went wrong here?\n\ntext = \"&lt;div class='main'&gt; &lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\nstr_extract(text, \"&lt;div&gt;.*&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\n. . .\nIf you add ? after a repeater, the matching will be non-greedy (find the shortest possible match, not the longest).\n\nstr_extract(text, \"&lt;div&gt;.*?&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt;\""
+    "text": "Greedy vs ungreedy matching\nWhat went wrong here?\n\ntext = \"&lt;div class='main'&gt; &lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\nstr_extract(text, \"&lt;div&gt;.*&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\n\nIf you add ? after a repeater, the matching will be non-greedy (find the shortest possible match, not the longest).\n\nstr_extract(text, \"&lt;div&gt;.*?&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt;\""
   },
   {
     "objectID": "slides/lec09.html#base-r-string-toolkit",
@@ -2503,7 +2503,7 @@
     "href": "slides/lec09.html#base-r-regex",
     "title": "Regular expressions",
     "section": "base R regex",
-    "text": "base R regex\n\ngrep(), grepl() - regular expression pattern matching, “l” for return logical\nsub(), gsub() - regular expression pattern replacement (replace first, replace all)\nregmatches() - extract or replace matched strings\n\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\ngrep/greplsub/gsubregmatches\n\n\n\ngrep(\":\", txt)\n\n[1] 1 3\n\ngrepl(\":\", txt)\n\n[1]  TRUE FALSE  TRUE\n\ngrep(\":\", txt, value = TRUE)\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"Nami: 'I'm Going to be the world's greatest navigator!'\"\n\n\n\n\n\nsub(\"!\", \"!!!\", txt) # first ! in a string, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !'\"        \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\ngsub(\"!\", \"!!!\", txt) # all !, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !!!'\"      \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\n\n\n\n\nregmatches(txt, regexpr(\".*:\", txt))\n\n[1] \"Luffy:\" \"Nami:\" \n\nregmatches(txt, regexpr(\"\\\\s[a-z]*ng\", txt))\n\n[1] \" going\"\n\nregmatches(txt, regexpr(\"\\\\s[A-Z\\\\|a-z]*ng\", txt))\n\n[1] \" going\" \" Going\""
+    "text": "base R regex\n\ngrep(), grepl() - regular expression pattern matching, “l” for return logical\nsub(), gsub() - regular expression pattern replacement (replace first, replace all)\nregmatches() - extract or replace matched strings\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\ngrep/greplsub/gsubregmatches\n\n\n\ngrep(\":\", txt)\n\n[1] 1 3\n\ngrepl(\":\", txt)\n\n[1]  TRUE FALSE  TRUE\n\ngrep(\":\", txt, value = TRUE)\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"Nami: 'I'm Going to be the world's greatest navigator!'\"\n\n\n\n\n\nsub(\"!\", \"!!!\", txt) # first ! in a string, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !'\"        \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\ngsub(\"!\", \"!!!\", txt) # all !, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !!!'\"      \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\n\n\n\n\nregmatches(txt, regexpr(\".*:\", txt))\n\n[1] \"Luffy:\" \"Nami:\" \n\nregmatches(txt, regexpr(\"\\\\s[a-z]*ng\", txt))\n\n[1] \" going\"\n\nregmatches(txt, regexpr(\"\\\\s[A-Z\\\\|a-z]*ng\", txt))\n\n[1] \" going\" \" Going\""
   },
   {
     "objectID": "slides/lec09.html#basic-unix-toolkit",
@@ -3707,7 +3707,7 @@
     "href": "slides/lec09.html",
     "title": "Regular expressions",
     "section": "",
-    "text": "A regular expression (aka regex or regexp) is a custom defined string matching pattern. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!\n\n\n\ngrep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nregular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
+    "text": "A regular expression (or regex / regexp) is a pattern used to identify matching text. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!\n\n\n\ngrep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nNote: regular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
   },
   {
     "objectID": "slides/lec07.html",
@@ -4058,5 +4058,334 @@
     "title": "Lab 0: Hello R; hi git.",
     "section": "Option 2: online container",
     "text": "Option 2: online container\n\nGo to https://cmgr.oit.duke.edu/containers and login with your Duke NetID and Password.\nClick STA313(not a typo – actual container name for fall 2026) to log into the Docker container. You should now see the RStudio environment.\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you haven’t yet done so, you will need to click “reserve” on a container first."
+  },
+  {
+    "objectID": "labs/lab2.html#getting-started",
+    "href": "labs/lab2.html#getting-started",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
+    "section": "Getting started",
+    "text": "Getting started\n\nIf you did not complete lab 0, then go back and do so to set up your SSH key, git, and find instructions on how to clone a project.\nNext in the terminal tab, type cd ~ to navigate to your home directory. Next git clone git@github.com:sta323-fa26/lab-2-username.git where username is replaced with your username (this is the copied SSH URL from your lab-2 GitHub repo).\nNavigate to your lab-2 folder and open the .Rproj file.\nOpen the Quarto (.qmd) file, change the author name to your name."
+  },
+  {
+    "objectID": "labs/lab2.html#file-systems",
+    "href": "labs/lab2.html#file-systems",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
+    "section": "1. File systems",
+    "text": "1. File systems\nThe purpose of this exercise is to become well acquainted with filesystems, lists and recursion.\n\nExploring a directory recursively\nA computer’s file system has a naturally recursive structure: a directory can contain files, but it can also contain other directories, which can themselves contain files and directories.\nIn this exercise, you will write a function\nread_tree(path)\nthat converts the directory or file at path into a nested R list describing the file structure.\n\n\n\n\n\n\nHint\n\n\n\nYou may find the following functions helpful:\n\nlist.files()\nfile.info()\nbasename()\n\nTo start, try running list.files(\".\") to examine the contents of the current directory.\n\n\n\n\nPart 1\nWrite read_tree(path) according to the following rules.\nIf path refers to a file, return a named list with four elements:\nlist(\n  name = ...,       # name of the file\n  path = ...,       # original path\n  type = \"file\",\n  size = ...        # size in megabytes \n)\nFor example, the result might look like\n$name\n[1] \"analysis.R\"\n\n$path\n[1] \"R/analysis.R\"\n\n$type\n[1] \"file\"\n\n$size\n[1] .004\nNote: by default, file.info will not report megabytes.\nIf path refers to a directory, return a named list containing\nlist(\n  name = ...,\n  path = ...,\n  type = \"directory\",\n  size = NA_real_,\n  children = ...\n)\nHere, children should be a list containing the result of read_tree() for every file and directory immediately inside path. So, if a directory contains three items, its children element should be a list of length three. Importantly, one of those children might be a directory. In that case, the same procedure must be repeated for the directory. For example, calling read_tree(\"/path/to/project\") should return a list of nested lists that looks like:\nproject\n├── README.md\n└── data\n    ├── raw.csv\n    └── clean.csv\nYour function should ignore hidden (“dot”) files. Also, your function should work for directories of arbitrary depth. To achieve this, you’ll need to write a recursive function (i.e. it will need to call itself, note: this does not mean it must return itself). Test your function on the directory containing this lab assignment by running the following (with the project open / in the directory of the project root).\ntree &lt;- read_tree(\".\")\nstr(tree)\n\n\nPart 2\nWrite a new function, read_tree_2() that calls read_tree() and returns an S3 object of class fileTree with the following attributes:\n\nroot: the name of the root directory\nnum_files: the total number of files contained within root and all of its subdirectories\ntotal_size: the total disk space (in megabytes) of all the files within root\nmax_depth: the maximum depth of a file from root (i.e. if root contains lab-2.qmd and there are no folders, the depth = 1. If root contains 1 subdirectory data/ which contains df.csv and no other directories, the max depth is 2, etc.)\nlargest_file: the single largest file contained within root or any of is subdirectories\n\nNext, write an S3 print function to handle this class. The output of the print function, when applied to an object of class fileTree should be formatted as follows (actual values will be different):\nFile tree\n---------\nRoot: lab-1 \nFiles: 3 \nTotal size: 0.03 MB\nMax depth: 1 \n\n\nLargest file: lab-1.Rproj\nLargest file size: 0.02 MB\nReport the output of\n\ntree &lt;- read_tree_2(\".\")\nprint(tree)\n\nwhere \".\" is the lab-2-username root directory.\n\n\n\n\n\n\nHint\n\n\n\ncat() is a useful function for printing to the screen. cat(\"\\nHello\") will print a new line (due to \\n) followed by “Hello”. Additionally, you can mix and match text with objects nicely, e.g.\nx &lt;- 2\ncat(\"The value of x is \", x)"
+  },
+  {
+    "objectID": "labs/lab2.html#earthquakes",
+    "href": "labs/lab2.html#earthquakes",
+    "title": "Lab 2: walking paths, climbing trees, and finding nests",
+    "section": "2. Earthquakes",
+    "text": "2. Earthquakes\nThe goal of this exercise is to wrangle raw, moderately sized data.\nWe’ll revisit the wrangled data set again, later in the semester.\nThe data set earthquakes.rds, loaded via:\n\nearthquakes &lt;- readRDS(\"data/earthquakes.rds\")\n\ncontains all recorded earthquakes of magnitude greater than, or equal to 2.5 from the last thirty days (data sourced from U.S. Geological Survey (USGS) on September 6, 2026.\nThe data set is of moderate size and might crash your R instance if you attempt to print the whole thing to the screen. Instead, peek at the structure with careful commands, e.g. \n\nstr(earthquakes, max.level = 1)\nstr(earthquakes$features[1])\n\n\nProduce a “tidy” data frame where each row is an earthquake, and each column describes its properties, id or location (place, longitude, latitude). Next, write a function remove_redundant() that deletes any columns from the data frame that either (1) contain all the same value or (2) contain all missing values and prints to the screen which columns are being deleted. Call your final data frame eq_df and show the output of the following:\n\ndplyr::glimpse(eq_df)\n\nQuestions: use appropriate subsetting to address the following questions:\n\nWhich earthquake in the data has the largest magnitude? Report (only) its id, magnitude, place, longitude, latitude, and depth.\nWhat proportion of earthquakes have a non-missing felt value?\n\n\n\n\n\n\n\nHint\n\n\n\n\nSee the notes on unnest from the tidyr package.\nwhich.max can help with “question” 1"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html",
+    "href": "slides/regexp-lecture.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "A regular expression (or regex / regexp) is a pattern used to identify matching text. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!\n\n\n\ngrep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nNote: regular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#definition-and-utility",
+    "href": "slides/regexp-lecture.html#definition-and-utility",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "A regular expression (or regex / regexp) is a pattern used to identify matching text. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#quick-example",
+    "href": "slides/regexp-lecture.html#quick-example",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "grep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nNote: regular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#introducing-stringr",
+    "href": "slides/regexp-lecture.html#introducing-stringr",
+    "title": "Regular expressions",
+    "section": "introducing stringr",
+    "text": "introducing stringr\nstringr hosts a convenient set of tools to manipulate strings and extract regular expressions. All functions begin with the prefix str.\nSee this cheatsheet for a summary of stringr functions.\nNotice below that the string comes first in these functions (in contrast with grep)\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\nstr_detect()str_extract()str_replace\n\n\n\nlike grepl\n\n\nstr_detect(txt, \":\")\n\n[1]  TRUE FALSE  TRUE\n\n\n\n\n\nreturn the match\n\n\nstr_extract(txt, \"\\\\s([A-Z]|[a-z])*ng\") # first instance\n\n[1] \" going\" NA       \" Going\"\n\nstr_extract_all(txt, \"\\\\s([A-Z]|[a-z])*ng\") %&gt;% str()\n\nList of 3\n $ : chr [1:2] \" going\" \" king\"\n $ : chr(0) \n $ : chr \" Going\"\n\n\n\n\n\nstr_replace(txt, \"Nami\", \"Zoro\") %&gt;%\n  str_replace(\"navigator\", \"swordsman\")\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"The straw hat crew set sail.\"                           \n[3] \"Zoro: 'I'm Going to be the world's greatest swordsman!'\""
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#the-power-of-str_replace",
+    "href": "slides/regexp-lecture.html#the-power-of-str_replace",
+    "title": "Regular expressions",
+    "section": "The power of str_replace",
+    "text": "The power of str_replace\n\nno_bots = \"My number is one Two tHree 456 fOuR 3 2 1\"\n\n\nstr_to_lower(no_bots) %&gt;%\n  str_replace_all(c(\"one\" = \"1\", \"two\" = \"2\", \n                    \"three\" = \"3\", \"four\" = \"4\")) %&gt;%\n  str_extract_all(\"\\\\d\") %&gt;% # simplify arg here could change pipeline\n  unlist() %&gt;%\n  paste(collapse = \"\") # or use str_c(collapse = \"\")\n\n[1] \"1234564321\""
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#basic-principles",
+    "href": "slides/regexp-lecture.html#basic-principles",
+    "title": "Regular expressions",
+    "section": "Basic principles",
+    "text": "Basic principles\n\nTo match a string exactly, just write those characters.\nTo match a single character from a set of possibilities, use square brackets, e.g. [0123456789] matches any digit.\nTo group characters together into an expression, use parentheses, ()\n\n\nRepeaters: * , + and { }: the preceding character is to be used for more than once\n\n* match zero or more occurrences of the preceding expression.\n+ match one or more occurrences of the preceding expression.\n{} match the preceding expression for as many times as the value inside this bracket.\n\n\n\nSome repeater examples:\n\n\n\n\n\n\n\n\n\nregexp\nexplanation\n\n\n\n\na*\nmatch 0 or more occurences of “a”\n\n\na+\nmatch 1 more occurences of “a”\n\n\n(abc)+\nmatch 1 or more back-to-back occurence of the group “abc”\n\n\na{3}\nmatch a 3 times\n\n\na{3,}\nmatch a 3 or more times\n\n\na{3,5}\nmatch “a” 3, 4 or 5 times\n\n\n\n{citation: https://www.geeksforgeeks.org/write-regular-expressions/}"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#symbols",
+    "href": "slides/regexp-lecture.html#symbols",
+    "title": "Regular expressions",
+    "section": "Symbols",
+    "text": "Symbols\n\n. symbol for wildcard. The dot symbol can take place of any other symbol.\n? symbol for optional character. The preceding character may or may not be present in the string to be matched. Example: docx? will match both docx and doc\n$ symbol for position match end. Tells the computer that the match must occur at the end of the string or before \\n at the end of the line or string.\n\\ symbol for escaping characters. If you want to match for the actual + or ., etc. add a backslash \\ before that character.\n| symbol for “or”. Match any one element separated by the vertical bar | character. Example: th(e|is|at) will match words “the”, “this” and “that”.\n^ symbol has two meanings.\n\nBy itself, ^ sets the position of the match to the beginning of the string or line. Example: ^\\d{3} says to match the first three digits at the beginning of the string and will return 919 from 919-123-4567.\nTogether with brackets, [^set_of_characters] implies exclusion. Example: [^abc] will match any character except a, b, c."
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#character-classes",
+    "href": "slides/regexp-lecture.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\nCharacter classes: match a character by its class, for example: letter, digit, space, and symbols.\n\n\\s : matches any whitespace characters such as space and tab\n\\S : matches any non-whitespace characters\n\\d : matches any digit character\n\\D : matches any non-digit characters\n\\w : matches any word character (basically alpha-numeric)\n\\W : matches any non-word character\n\\b : matches any word boundary (this would include spaces, dashes, commas, semi-colons, etc)\n\n{citation: https://www.geeksforgeeks.org/write-regular-expressions/}"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#a-hierarchical-view-of-character-classes",
+    "href": "slides/regexp-lecture.html#a-hierarchical-view-of-character-classes",
+    "title": "Regular expressions",
+    "section": "A hierarchical view of character classes",
+    "text": "A hierarchical view of character classes\n\n\n\n\n\n{citation: http://perso.ens-lyon.fr/lise.vaudor/strings-et-expressions-regulieres/}"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#ranges",
+    "href": "slides/regexp-lecture.html#ranges",
+    "title": "Regular expressions",
+    "section": "Ranges",
+    "text": "Ranges\n- can be used to interpolate between first and last and grab consecutive values. Example: [A-Z] matches any capital letters from “A” to “Z”. [1-4] matches any integer digit from 1 to 4.\nTo match an alphabetical character (upper or lower case “A-Z” or “a-z”) but not numbers, you can use the regular expression ([A-Z]|[a-z])\nTo match everything but capital “F” through “N”, you can use the regular expression [^F-N]"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#escapism",
+    "href": "slides/regexp-lecture.html#escapism",
+    "title": "Regular expressions",
+    "section": "Escapism",
+    "text": "Escapism\nWhen to escape?\n. ^ $ * + ? { } [ ] \\ | ( )\nAre all special and perform as described on the previous slides by default. Therefore, these special characters must be escaped to match directly. You need to use two levels of escape to escape a special character. Example:\n\ntxt = \"To be, [or] not to be that is the question.\"\n\n\nstr_detect(txt, \"[\")\n\nError in stri_detect_regex(string, pattern, negate = negate, opts_regex = opts(pattern)): Missing closing bracket on a bracket expression. (U_REGEX_MISSING_CLOSE_BRACKET, context=`[`)\n\n\n\nstr_detect(txt, \"\\[\")\n\nError: '\\[' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\[\")\n\n[1] TRUE"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#escape-classes",
+    "href": "slides/regexp-lecture.html#escape-classes",
+    "title": "Regular expressions",
+    "section": "Escape classes",
+    "text": "Escape classes\nIn order to access the presumed functionality of character classes, you need to use a double escape as well. Example:\n\ntxt = c(\"A1\", \"B2\", \"CC\", \"DD\", \"EE2\")\n\n\nWhich strings end with a digit?\n\n\nstr_detect(txt, \"\\d$\")\n\nError: '\\d' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\d$\")\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\n\n\nWhich strings contain 3 alphanumeric characters?\n\n\nstr_detect(txt, \"\\\\w{3}\")\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\n\n. . .\n\n\n\n\n\n\ntl;dr\n\n\n\nto match a symbol or character class, use double escapes"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#exercise-1",
+    "href": "slides/regexp-lecture.html#exercise-1",
+    "title": "Regular expressions",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nDownload the files secret-message.txt and emails.txt using the command below in the console:\n\n\n\n\n\n\nWARNING\n\n\n\nDO NOT VIEW THE FILE – YOUR CONTAINER MAY CRASH!\n\n\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-message.txt\", \n              destfile = \"secret-message.txt\")\n\ndownload.file(\"https://sta323-fa25.github.io/data/emails.txt\", \n              destfile = \"emails.txt\")\n\nHint: read in the file as a string with read_lines()\n\npart 1\nIn secret-message.txt, find the secret message. It will be of the form sta323{secret-message} where secret-message is replaced by some other text.\n\n\npart 2\nIn emails.txt extract the unique part of the email address (part before the “@”) and count the number of each hosting domain, i.e. count how many emails are Duke emails and how many are gmail."
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#examples",
+    "href": "slides/regexp-lecture.html#examples",
+    "title": "Regular expressions",
+    "section": "Examples",
+    "text": "Examples\nIn the following example we will search through the text, line by line, and extract matches.\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\nYou can download the text file with\n\ndownload.file(\"https://sta323-fa25.github.io/data/pirate-phone.txt\",\ndestfile = \"pirate-phone.txt\")\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"123 456 7890\")\n\n\n\n123 456 7890\n\n\nexact match\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"[0-9]{3}\\\\-[0-9]{3}\\\\-[0-9]{4}\")\n\n\n\n012-345-6789\n\n\nmatching xxx-xxx-xxxx using ranges, repeaters, escaped characters"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#examples-1",
+    "href": "slides/regexp-lecture.html#examples-1",
+    "title": "Regular expressions",
+    "section": "Examples",
+    "text": "Examples\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\)\\\\d{3}\\\\s\\\\d{4}\")\n\n\n\n(919)000 0000\n\n\nmatching (xxx)xxx xxxx using character classes (\\d for digit, \\s for whitespace) and repeaters\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\).?\\\\d{3}\\\\s[0-9]{4}\")\n\n\n\n(919)000 0000\n(919) 123 4567\n\n\nmatching (xxx)*xxx xxxx using character classes, wildcard (.) and optional chracter (?)\n\n\n\n\n\nregexoutputprinciples\n\n\n\n# hidden exercise, code here!\n\n\n\n123 456 7890\n012-345-6789\n(919)000 0000\n(919) 123 4567\n0000000000\n\n\nMultiple optional matching"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#greedy-vs-ungreedy-matching",
+    "href": "slides/regexp-lecture.html#greedy-vs-ungreedy-matching",
+    "title": "Regular expressions",
+    "section": "Greedy vs ungreedy matching",
+    "text": "Greedy vs ungreedy matching\nWhat went wrong here?\n\ntext = \"&lt;div class='main'&gt; &lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\nstr_extract(text, \"&lt;div&gt;.*&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\n. . .\nIf you add ? after a repeater, the matching will be non-greedy (find the shortest possible match, not the longest).\n\nstr_extract(text, \"&lt;div&gt;.*?&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt;\""
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#base-r-string-toolkit",
+    "href": "slides/regexp-lecture.html#base-r-string-toolkit",
+    "title": "Regular expressions",
+    "section": "base R string toolkit",
+    "text": "base R string toolkit\nThe base language provides a number helper functions for additional manipulation of string objects:\n\npaste(), paste0() - concatenate strings\nsubstr(), substring() - extract or replace substrings\nsprintf() - C-like string construction\nnchar() - counts characters\nstrsplit() - split a string into substrings\ntolower() - make string all lowercase\ntoupper() - make string all uppercase\n\n…many more.\nthe “See Also” section of the the above functions’ documentation is a good place to discover additional functions."
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#on-the-commmand-line-grep",
+    "href": "slides/regexp-lecture.html#on-the-commmand-line-grep",
+    "title": "Regular expressions",
+    "section": "On the commmand line (grep)",
+    "text": "On the commmand line (grep)\nThere are three fundamental tools on unix systems to process text patterns: grep, sed and awk.\nThe simplest is grep. grep looks by default for lines of files that match the regex.\nCheck out the documentation with\n$ man grep\nThe basics are:\n$ grep -option path/to/file(s)\nCommon options include:\n\n\n\n\ngrep option\nwhat it does\n\n\n\n\n-c\ncount lines with a match\n\n\n-i\ncase insensitive search\n\n\n-l\nlist only names of matching files\n\n\n-n\neach output is preceded by its line number\n\n\n-o\nprint only the matching parts of lines\n\n\n-v\ninvert; list only lines that do not match pattern"
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#exercise-2",
+    "href": "slides/regexp-lecture.html#exercise-2",
+    "title": "Regular expressions",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nThe power and ease of the terminal…\nUsing an appropriate regex and the terminal grep, find the secret message hidden in some of the files in the zip folder:\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-messages.zip\", \n              destfile = \"secret-messages.zip\")\n\nunzip(\"secret-messages.zip\", exdir = \"secret-messages\")\n\nAgain, look for sta323{message-here}."
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#base-r-regex",
+    "href": "slides/regexp-lecture.html#base-r-regex",
+    "title": "Regular expressions",
+    "section": "base R regex",
+    "text": "base R regex\n\ngrep(), grepl() - regular expression pattern matching, “l” for return logical\nsub(), gsub() - regular expression pattern replacement (replace first, replace all)\nregmatches() - extract or replace matched strings\n\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\ngrep/greplsub/gsubregmatches\n\n\n\ngrep(\":\", txt)\n\n[1] 1 3\n\ngrepl(\":\", txt)\n\n[1]  TRUE FALSE  TRUE\n\ngrep(\":\", txt, value = TRUE)\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"Nami: 'I'm Going to be the world's greatest navigator!'\"\n\n\n\n\n\nsub(\"!\", \"!!!\", txt) # first ! in a string, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !'\"        \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\ngsub(\"!\", \"!!!\", txt) # all !, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !!!'\"      \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\n\n\n\n\nregmatches(txt, regexpr(\".*:\", txt))\n\n[1] \"Luffy:\" \"Nami:\" \n\nregmatches(txt, regexpr(\"\\\\s[a-z]*ng\", txt))\n\n[1] \" going\"\n\nregmatches(txt, regexpr(\"\\\\s[A-Z\\\\|a-z]*ng\", txt))\n\n[1] \" going\" \" Going\""
+  },
+  {
+    "objectID": "slides/regexp-lecture.html#basic-unix-toolkit",
+    "href": "slides/regexp-lecture.html#basic-unix-toolkit",
+    "title": "Regular expressions",
+    "section": "basic unix toolkit",
+    "text": "basic unix toolkit\nA “folder” aka a “directory” is a container. A “file* is an element of a container, e.g. lab-1.qmd is a file contained in a lab-1-username directory.\n\n\n\n\n\n\n\ncommand\naction\n\n\n\n\n$ ls\nlist files in current directory\n\n\n$ pwd\nprint working directory\n\n\n$ cd\nchange directory\nexample: $ cd .. to go to parent directory\n\n\n$ mkdir dname\nmake directory “dname”\n\n\n$ mkdir s{1..5}\noverpowered file creation\n\n\n$ rm /path/to/file\nremove a file\n\n\n$ rm -rf dname\nrecursively remove a directory and its contents\n\n\n$ rm core*\nremove all objects in the current working directory that begin with “core”\n\n\n$ wc -l\nshow # lines in a file\n\n\n$ y &gt; x.txt\npass printed output from command “y” on the left to file “x.txt” on the right\nexample: $ head -N file1.txt &gt; file2.txt creates a new file called “file2” that is a replica of the first N lines of file 1\n\n\n\n$ echo 'text here' &gt;&gt; filename\nadd text to the end of a file\n\n\n$ man x\npull up documentation for command x, example: $ man ls"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html",
+    "href": "notes/regexp-lecture.html",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Definition\n\n\n\nA regular expression (or regex / regexp) is a tool for identifying patterns in strings.\n\n\nA regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#definition-and-utility",
+    "href": "notes/regexp-lecture.html#definition-and-utility",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "A regular expression (or regex / regexp) is a pattern used to identify matching text. A regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#quick-example",
+    "href": "notes/regexp-lecture.html#quick-example",
+    "title": "Regular expressions",
+    "section": "Quick example",
+    "text": "Quick example\ngrep and grepl are base R functions that return the index of a match and the logical value of a match respectively.\n\ntext = c(\"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\",\n         \"everything this world has to offer.\")\ntext\n\n[1] \"Wealth, fame, power. Gold Roger, the King of the Pirates, attained\"\n[2] \"everything this world has to offer.\"                               \n\n\n\ngrep(\"Pirate\", text)\n\n[1] 1\n\ngrepl(\"Pirate\", text)\n\n[1]  TRUE FALSE\n\n\n\nNote: regular expressions are case-sensitive\n\ngrep(\"pirate\", text)\n\ninteger(0)\n\ngrepl(\"pirate\", text)\n\n[1] FALSE FALSE"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#introducing-stringr",
+    "href": "notes/regexp-lecture.html#introducing-stringr",
+    "title": "Regular expressions",
+    "section": "introducing stringr",
+    "text": "introducing stringr\nstringr hosts a convenient set of tools to manipulate strings and extract regular expressions. All functions begin with the prefix str.\nSee this cheatsheet for a summary of stringr functions.\nNotice below that the string comes first in these functions (in contrast with grep)\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\nstr_detect()str_extract()str_replace\n\n\n\nlike grepl\n\n\nstr_detect(txt, \":\")\n\n[1]  TRUE FALSE  TRUE\n\n\n\n\n\nreturn the match\n\n\nstr_extract(txt, \"\\\\s([A-Z]|[a-z])*ng\") # first instance\n\n[1] \" going\" NA       \" Going\"\n\nstr_extract_all(txt, \"\\\\s([A-Z]|[a-z])*ng\") %&gt;% str()\n\nList of 3\n $ : chr [1:2] \" going\" \" king\"\n $ : chr(0) \n $ : chr \" Going\"\n\n\n\n\n\nstr_replace(txt, \"Nami\", \"Zoro\") %&gt;%\n  str_replace(\"navigator\", \"swordsman\")\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"The straw hat crew set sail.\"                           \n[3] \"Zoro: 'I'm Going to be the world's greatest swordsman!'\""
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#the-power-of-str_replace",
+    "href": "notes/regexp-lecture.html#the-power-of-str_replace",
+    "title": "Regular expressions",
+    "section": "The power of str_replace",
+    "text": "The power of str_replace\n\nno_bots = \"My number is one Two tHree 456 fOuR 3 2 1\"\n\n\nstr_to_lower(no_bots) %&gt;%\n  str_replace_all(c(\"one\" = \"1\", \"two\" = \"2\", \n                    \"three\" = \"3\", \"four\" = \"4\")) %&gt;%\n  str_extract_all(\"\\\\d\") %&gt;% # simplify arg here could change pipeline\n  unlist() %&gt;%\n  paste(collapse = \"\") # or use str_c(collapse = \"\")\n\n[1] \"1234564321\""
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#basic-principles",
+    "href": "notes/regexp-lecture.html#basic-principles",
+    "title": "Regular expressions",
+    "section": "Basic principles",
+    "text": "Basic principles\n\nTo match a string exactly, just write those characters.\nTo match a single character from a set of possibilities, use square brackets, e.g. [0123456789] matches any digit.\nTo group characters together into an expression, use parentheses, ()\n\n\nRepeaters: * , + and { }: the preceding character is to be used for more than once\n\n* match zero or more occurrences of the preceding expression.\n+ match one or more occurrences of the preceding expression.\n{} match the preceding expression for as many times as the value inside this bracket.\n\n\n\nSome repeater examples:\n\n\n\n\n\n\n\n\n\nregexp\nexplanation\n\n\n\n\na*\nmatch 0 or more occurences of “a”\n\n\na+\nmatch 1 more occurences of “a”\n\n\n(abc)+\nmatch 1 or more back-to-back occurence of the group “abc”\n\n\na{3}\nmatch a 3 times\n\n\na{3,}\nmatch a 3 or more times\n\n\na{3,5}\nmatch “a” 3, 4 or 5 times\n\n\n\n{citation: https://www.geeksforgeeks.org/write-regular-expressions/}"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#symbols",
+    "href": "notes/regexp-lecture.html#symbols",
+    "title": "Regular expressions",
+    "section": "Symbols",
+    "text": "Symbols\n\n. symbol for wildcard. The dot symbol can take place of any other symbol.\n? symbol for optional character. The preceding character may or may not be present in the string to be matched. Example: docx? will match both docx and doc\n$ symbol for position match end. Tells the computer that the match must occur at the end of the string or before \\n at the end of the line or string.\n\\ symbol for escaping characters. If you want to match for the actual + or ., etc. add a backslash \\ before that character.\n| symbol for “or”. Match any one element separated by the vertical bar | character. Example: th(e|is|at) will match words “the”, “this” and “that”.\n^ symbol has two meanings.\n\nBy itself, ^ sets the position of the match to the beginning of the string or line. Example: ^\\d{3} says to match the first three digits at the beginning of the string and will return 919 from 919-123-4567.\nTogether with brackets, [^set_of_characters] implies exclusion. Example: [^abc] will match any character except a, b, c."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#character-classes",
+    "href": "notes/regexp-lecture.html#character-classes",
+    "title": "Regular expressions",
+    "section": "Character classes",
+    "text": "Character classes\nCharacter classes: match a character by its class, for example: letter, digit, space, and symbols.\n\n\\s : matches any whitespace characters such as space and tab\n\\S : matches any non-whitespace characters\n\\d : matches any digit character\n\\D : matches any non-digit characters\n\\w : matches any word character (basically alpha-numeric)\n\\W : matches any non-word character\n\\b : matches any word boundary (this would include spaces, dashes, commas, semi-colons, etc)\n\n{citation: https://www.geeksforgeeks.org/write-regular-expressions/}"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#a-hierarchical-view-of-character-classes",
+    "href": "notes/regexp-lecture.html#a-hierarchical-view-of-character-classes",
+    "title": "Regular expressions",
+    "section": "A hierarchical view of character classes",
+    "text": "A hierarchical view of character classes\n\n\n\n\n\n{citation: http://perso.ens-lyon.fr/lise.vaudor/strings-et-expressions-regulieres/}"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#ranges",
+    "href": "notes/regexp-lecture.html#ranges",
+    "title": "Regular expressions",
+    "section": "Ranges",
+    "text": "Ranges\n- can be used to interpolate between first and last and grab consecutive values. Example: [A-Z] matches any capital letters from “A” to “Z”. [1-4] matches any integer digit from 1 to 4.\nTo match an alphabetical character (upper or lower case “A-Z” or “a-z”) but not numbers, you can use the regular expression ([A-Z]|[a-z])\nTo match everything but capital “F” through “N”, you can use the regular expression [^F-N]"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#escapism",
+    "href": "notes/regexp-lecture.html#escapism",
+    "title": "Regular expressions",
+    "section": "Escapism",
+    "text": "Escapism\nWhen to escape?\n. ^ $ * + ? { } [ ] \\ | ( )\nAre all special and perform as described on the previous slides by default. Therefore, these special characters must be escaped to match directly. You need to use two levels of escape to escape a special character. Example:\n\ntxt = \"To be, [or] not to be that is the question.\"\n\n\nstr_detect(txt, \"[\")\n\nError in stri_detect_regex(string, pattern, negate = negate, opts_regex = opts(pattern)): Missing closing bracket on a bracket expression. (U_REGEX_MISSING_CLOSE_BRACKET, context=`[`)\n\n\n\nstr_detect(txt, \"\\[\")\n\nError: '\\[' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\[\")\n\n[1] TRUE"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#escape-classes",
+    "href": "notes/regexp-lecture.html#escape-classes",
+    "title": "Regular expressions",
+    "section": "Escape classes",
+    "text": "Escape classes\nIn order to access the presumed functionality of character classes, you need to use a double escape as well. Example:\n\ntxt = c(\"A1\", \"B2\", \"CC\", \"DD\", \"EE2\")\n\n\nWhich strings end with a digit?\n\n\nstr_detect(txt, \"\\d$\")\n\nError: '\\d' is an unrecognized escape in character string (&lt;input&gt;:1:19)\n\n\n\nstr_detect(txt, \"\\\\d$\")\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\n\n\nWhich strings contain 3 alphanumeric characters?\n\n\nstr_detect(txt, \"\\\\w{3}\")\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\n\n. . .\n\n\n\n\n\n\ntl;dr\n\n\n\nto match a symbol or character class, use double escapes"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#exercise-1",
+    "href": "notes/regexp-lecture.html#exercise-1",
+    "title": "Regular expressions",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nDownload the files secret-message.txt and emails.txt using the command below in the console:\n\n\n\n\n\n\nWARNING\n\n\n\nDO NOT VIEW THE FILE – YOUR CONTAINER MAY CRASH!\n\n\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-message.txt\", \n              destfile = \"secret-message.txt\")\n\ndownload.file(\"https://sta323-fa25.github.io/data/emails.txt\", \n              destfile = \"emails.txt\")\n\nHint: read in the file as a string with read_lines()\n\npart 1\nIn secret-message.txt, find the secret message. It will be of the form sta323{secret-message} where secret-message is replaced by some other text.\n\n\npart 2\nIn emails.txt extract the unique part of the email address (part before the “@”) and count the number of each hosting domain, i.e. count how many emails are Duke emails and how many are gmail."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#examples",
+    "href": "notes/regexp-lecture.html#examples",
+    "title": "Regular expressions",
+    "section": "Examples",
+    "text": "Examples\nIn the following example we will search through the text, line by line, and extract matches.\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\nYou can download the text file with\n\ndownload.file(\"https://sta323-fa25.github.io/data/pirate-phone.txt\",\ndestfile = \"pirate-phone.txt\")\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"123 456 7890\")\n\n\n\n123 456 7890\n\n\nexact match\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract(pirate_phone, \"[0-9]{3}\\\\-[0-9]{3}\\\\-[0-9]{4}\")\n\n\n\n012-345-6789\n\n\nmatching xxx-xxx-xxxx using ranges, repeaters, escaped characters"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#examples-1",
+    "href": "notes/regexp-lecture.html#examples-1",
+    "title": "Regular expressions",
+    "section": "Examples",
+    "text": "Examples\nLuffy's phone number is 123 456 7890\nZoro doesn't have a phone number\nNami's number is 012-345-6789\nUsopp's number is (919)000 0000\nSanji's telephone number is (919) 123 4567\n0000000000 is Robin's number.\nChopper doesn't have a phone number, but his lucky number is 1.\n\nregex extraction\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\)\\\\d{3}\\\\s\\\\d{4}\")\n\n\n\n(919)000 0000\n\n\nmatching (xxx)xxx xxxx using character classes (\\d for digit, \\s for whitespace) and repeaters\n\n\n\n\nregexoutputprinciples\n\n\n\nstr_extract_all(pirate_phone, \"\\\\(\\\\d{3}\\\\).?\\\\d{3}\\\\s[0-9]{4}\")\n\n\n\n(919)000 0000\n(919) 123 4567\n\n\nmatching (xxx)*xxx xxxx using character classes, wildcard (.) and optional chracter (?)\n\n\n\n\n\nregexoutputprinciples\n\n\n\n# hidden exercise, code here!\n\n\n\n123 456 7890\n012-345-6789\n(919)000 0000\n(919) 123 4567\n0000000000\n\n\nMultiple optional matching"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#greedy-vs-ungreedy-matching",
+    "href": "notes/regexp-lecture.html#greedy-vs-ungreedy-matching",
+    "title": "Regular expressions",
+    "section": "Greedy vs ungreedy matching",
+    "text": "Greedy vs ungreedy matching\nWhat went wrong here?\n\ntext = \"&lt;div class='main'&gt; &lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\nstr_extract(text, \"&lt;div&gt;.*&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt; &lt;/div&gt;\"\n\n\n. . .\nIf you add ? after a repeater, the matching will be non-greedy (find the shortest possible match, not the longest).\n\nstr_extract(text, \"&lt;div&gt;.*?&lt;/div&gt;\")\n\n[1] \"&lt;div&gt; &lt;a href='here.pdf'&gt;Here!&lt;/a&gt; &lt;/div&gt;\""
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#base-r-string-toolkit",
+    "href": "notes/regexp-lecture.html#base-r-string-toolkit",
+    "title": "Regular expressions",
+    "section": "base R string toolkit",
+    "text": "base R string toolkit\nThe base language provides a number helper functions for additional manipulation of string objects:\n\npaste(), paste0() - concatenate strings\nsubstr(), substring() - extract or replace substrings\nsprintf() - C-like string construction\nnchar() - counts characters\nstrsplit() - split a string into substrings\ntolower() - make string all lowercase\ntoupper() - make string all uppercase\n\n…many more.\nthe “See Also” section of the the above functions’ documentation is a good place to discover additional functions."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#on-the-commmand-line-grep",
+    "href": "notes/regexp-lecture.html#on-the-commmand-line-grep",
+    "title": "Regular expressions",
+    "section": "On the commmand line (grep)",
+    "text": "On the commmand line (grep)\nThere are three fundamental tools on unix systems to process text patterns: grep, sed and awk.\nThe simplest is grep. grep looks by default for lines of files that match the regex.\nCheck out the documentation with\n$ man grep\nThe basics are:\n$ grep -option path/to/file(s)\nCommon options include:\n\n\n\n\ngrep option\nwhat it does\n\n\n\n\n-c\ncount lines with a match\n\n\n-i\ncase insensitive search\n\n\n-l\nlist only names of matching files\n\n\n-n\neach output is preceded by its line number\n\n\n-o\nprint only the matching parts of lines\n\n\n-v\ninvert; list only lines that do not match pattern"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#exercise-2",
+    "href": "notes/regexp-lecture.html#exercise-2",
+    "title": "Regular expressions",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nThe power and ease of the terminal…\nUsing an appropriate regex and the terminal grep, find the secret message hidden in some of the files in the zip folder:\n\ndownload.file(\"https://sta323-fa25.github.io/data/secret-messages.zip\", \n              destfile = \"secret-messages.zip\")\n\nunzip(\"secret-messages.zip\", exdir = \"secret-messages\")\n\nAgain, look for sta323{message-here}."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#base-r-regex",
+    "href": "notes/regexp-lecture.html#base-r-regex",
+    "title": "Regular expressions",
+    "section": "base R regex",
+    "text": "base R regex\n\ngrep(), grepl() - regular expression pattern matching, “l” for return logical\nsub(), gsub() - regular expression pattern replacement (replace first, replace all)\nregmatches() - extract or replace matched strings\n\n\nExample\n\ntxt = c(\"Luffy: 'I'm going to be king of the pirates! !'\", \n        \"The straw hat crew set sail.\", \n        \"Nami: 'I'm Going to be the world's greatest navigator!'\")\n\n\ngrep/greplsub/gsubregmatches\n\n\n\ngrep(\":\", txt)\n\n[1] 1 3\n\ngrepl(\":\", txt)\n\n[1]  TRUE FALSE  TRUE\n\ngrep(\":\", txt, value = TRUE)\n\n[1] \"Luffy: 'I'm going to be king of the pirates! !'\"        \n[2] \"Nami: 'I'm Going to be the world's greatest navigator!'\"\n\n\n\n\n\nsub(\"!\", \"!!!\", txt) # first ! in a string, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !'\"        \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\ngsub(\"!\", \"!!!\", txt) # all !, vectorized\n\n[1] \"Luffy: 'I'm going to be king of the pirates!!! !!!'\"      \n[2] \"The straw hat crew set sail.\"                             \n[3] \"Nami: 'I'm Going to be the world's greatest navigator!!!'\"\n\n\n\n\n\nregmatches(txt, regexpr(\".*:\", txt))\n\n[1] \"Luffy:\" \"Nami:\" \n\nregmatches(txt, regexpr(\"\\\\s[a-z]*ng\", txt))\n\n[1] \" going\"\n\nregmatches(txt, regexpr(\"\\\\s[A-Z\\\\|a-z]*ng\", txt))\n\n[1] \" going\" \" Going\""
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#basic-unix-toolkit",
+    "href": "notes/regexp-lecture.html#basic-unix-toolkit",
+    "title": "Regular expressions",
+    "section": "basic unix toolkit",
+    "text": "basic unix toolkit\nA “folder” aka a “directory” is a container. A “file* is an element of a container, e.g. lab-1.qmd is a file contained in a lab-1-username directory.\n\n\n\n\n\n\n\ncommand\naction\n\n\n\n\n$ ls\nlist files in current directory\n\n\n$ pwd\nprint working directory\n\n\n$ cd\nchange directory\nexample: $ cd .. to go to parent directory\n\n\n$ mkdir dname\nmake directory “dname”\n\n\n$ mkdir s{1..5}\noverpowered file creation\n\n\n$ rm /path/to/file\nremove a file\n\n\n$ rm -rf dname\nrecursively remove a directory and its contents\n\n\n$ rm core*\nremove all objects in the current working directory that begin with “core”\n\n\n$ wc -l\nshow # lines in a file\n\n\n$ y &gt; x.txt\npass printed output from command “y” on the left to file “x.txt” on the right\nexample: $ head -N file1.txt &gt; file2.txt creates a new file called “file2” that is a replica of the first N lines of file 1\n\n\n\n$ echo 'text here' &gt;&gt; filename\nadd text to the end of a file\n\n\n$ man x\npull up documentation for command x, example: $ man ls"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#introduction",
+    "href": "notes/regexp-lecture.html#introduction",
+    "title": "Regular expressions",
+    "section": "",
+    "text": "Definition\n\n\n\nA regular expression (or regex / regexp) is a tool for identifying patterns in strings.\n\n\nA regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+  },
+  {
+    "objectID": "mini_project.html",
+    "href": "mini_project.html",
+    "title": "Mini project",
+    "section": "",
+    "text": "The goal of this project is to learn something new and communicate it well. More specifically, teaching yourself new topics is a necessary skill to avoid stagnation beyond the classroom. Communicating that knowledge to others by way of oral presentation will be supremely important in future interviews and jobs. The slide deck is the most common medium used in presentations and it is therefore required in this mini project.\nThe deliverable is a 6-10 minute presentation during lab together with a slide deck. There should be no more than 5 content slides (about 1 per 2 minutes of presentation time). You should also have an additional title slide & bibliography slide that do not contribute to your 5 slide limit.\nInstructions\n\nForm a team of 2 to 3 with the members of your lab section.\nPick 1 topic from the list of topics below. You cannot pick the same topic as another team in your lab section.\nCreate a 3 content slide presentation to teach the topic to the rest of your lab section.\nPresent in lab on presentation day.\n\nList of topics\nTopic 1: Image data. Consider the magick R package. How are images stored on the computer? What is kernel convolution? Optionally: how does the singular value decomposition facilitate image compression? See magick documentation as a starting point.\nTopic 2: Audio data. How is audio data stored? How can it be visualized? See the documentation for the tuneR package as a starting point. Optional additional reading: psychology music and tuneR package blog post.\nTopic 3: Constructing an API. Expose an R function through an HTTP endpoint using plumber. How do you send a GET or POST request? See the quickstart guide as a starting point.\nTopic 4: Interfacing R with other programming languages. Call Python through reticulate, or write a small C++ function with Rcpp. Discuss what crosses the language boundary and when the extra complexity is worthwhile. See Rstudio’s post on reticulate or Intro to Rcpp as a starting point.\nTopic 5: Graphs and networks. Represent relationships as edge lists; build, traverse, and visualize networks with igraph. Examples could include flight routes, or package dependencies, or interactions between people / characters on a show. See CRAN documentation as a starting point.\n\nTopic 6: Document term matrices. What is a document term matrix? How are collections of text summarized? Consider the tidytext package. Read this vignette as a starting point.\nTopic 7: Phylogenies. Consider the ape package. Inspect a phylo object, plot it. Explain how it is stored in R. What is Newick format? See the vignette on random topologies as a starting point.\nTopic 8: Programming with dplyr. Turn dplyr pipelines into reusable functions. Explain data masking, embracing arguments, name injection and tidyselect. See this tidyverse article as a starting point.\nTips\nYou need not follow these tips exactly, but they may help guide you to a successful presentation.\n\nBegin by motivating your topic, why should the audience care? What’s the real world application or downstream utility?\nEstablish an example (either minimally working or meaningfully complicated) that the audience can consider.\nRepeat the main point. Summarize or repeat what you want the audience to take away from your presentation.\nScript your presentation (or at least the first few sentences you say) to start your presentation with preparedness.\n\nEvaluation\nYou and your team will be evaluated on (1) the technical accuracy of your presentation, (2) the clarity of your presentation, (3) citation of your sources and (4) ability to answer questions about your topic."
   }
 ]
