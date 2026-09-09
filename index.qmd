@@ -48,7 +48,7 @@ schedule %>%
 
 <!-- PLAN -->
 <!-- Unit 1: R basics: 5 lectures --> 
-<!-- Unit 2: Data: wrangling, visualization & collection (APIs): 7 lectures-->
+<!-- Unit 2: Data: wrangling, visualization & collection (APIs): [8] lectures; add functionals to this-->
 <!-- Unit 3: Software engineering & reproducibility: advanced git & unit tests testthat; R scripts & make; packages: 3 lectures-->
 <!-- Unit 4: Scalability: hardware, profiling and benchmarking; parallelization; SQL; duckDB; bigLM: 5 lectures -->
 <!-- Unit 5: Computational statistics (mini unit): Newton-Raphson; MM; simulation; Monte Carlo: 3 lectures-->
@@ -62,20 +62,20 @@ schedule %>%
 | 2 | Tue Sep 01 | NAs, lists, NULL and attributes | [💻](/slides/lec03.html) | [lab 1](/labs/lab1.html) |  |
 |  | Thu Sep 03 | object oriented programming |  [💻](/slides/lec04.html) |  |  |
 | 3 | Tue Sep 08 | subsetting  | [💻](/slides/lec06.html)  | [lab 2](/labs/lab2.html)  |  |
-|  | Thu Sep 10 | regular expressions |  |  |  |
-| 4 | Tue Sep 15 | tidy data & dplyr |  |  |  |
+|  | Thu Sep 10 | regular expressions |   |  | [mini project](/mini_project.html) |
+| 4 | Tue Sep 15 | tidy data & dplyr |  | lab 3 |  |
 |  | Thu Sep 17 | visualization with ggplot2 |  |  |  |
 | 5 | Tue Sep 22 | dimension reduction |  |  |  |
 |  | Thu Sep 24 | geographical data |  |  |  |
-| 6 | Tue Sep 29 | shiny  |  |  |  |
+| 6 | Tue Sep 29 |   |  |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
-| 7 | Tue Oct 06 |   |  |  |  |
+| 7 | Tue Oct 06 |  shiny |  |  |  | <!-- project workday -->
 |  | Thu Oct 08 |  |  |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |  |  |
 |  | Thu Oct 15 |  |  |  |  |
-| 9 | Tue Oct 20 |  |  |  |  |
+| 9 | Tue Oct 20 |  |  |  | mp presentations |
 |  | Thu Oct 22 |  |  |  |  |
-| 10 | Tue Oct 27 |  |  |  |  |
+| 10 | Tue Oct 27 |  |  |  | |
 |  | Thu Oct 29 |  |  |  |  |
 | 11 | Tue Nov 03 |  |  |  |  |
 |  | Thu Nov 05 |  |  |  |  |
@@ -85,7 +85,7 @@ schedule %>%
 |  | Thu Nov 19 |  |  |  |  |
 | 14 | Tue Nov 24 |  |  |  |  |
 |  | Thu Nov 26 | NO CLASS |  |  |  |
-| 15 | Tue Dec 01 | project presentations |  |  | presentations |
+| 15 | Tue Dec 01 | project presentations |  |  | fp presentations |
 |  | Thu Dec 03 |  |  |  |  |
 
 <!-- | Week | Date | Topic | Notes | Lab | Project | -->

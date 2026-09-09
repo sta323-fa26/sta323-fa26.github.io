@@ -7,7 +7,7 @@ github_survey <- read_csv("~/Downloads/STA323_Fall2026_Responses - Form Response
   select(2, 3, 4)
 
 ###########################
-## wrangle GitHub survey ##
+## wrangle gitHub survey ##
 ###########################
 
 names(github_survey) = c("github", "netid", "email")
@@ -36,10 +36,31 @@ warn_email(github_survey)
 # SIS User ID on Canvas is the same as Duke ID on DukeHub # 
 
 ## get SIS ids:
-sis <- str_extract(duke_hub_roster$`Student ID`, "DUID: \\d*") |>
-  str_split(" ", simplify = TRUE) |>
-  (\(x) x[,2])()
-  
-duke_hub_roster |>
+duke_hub_roster <- duke_hub_roster |>
   select(1, 2, 4) |>
-  mutate(`SIS User ID` = sis) 
+  mutate(`SIS User ID` = as.double(str_extract(`Student ID`, "(?<=DUID: )\\d+"))) |>
+  select(2:4) |>
+  rename(email = `Email Address`)
+
+# explanation
+## (?<=DUID: ) look behind and match something only if it is immediately preceded by the literal text "DUID: "
+# () defines the group
+#? special 
+# < look to the left
+# = match exact
+#########################
+## combine data frames ## 
+#########################
+
+x <- left_join(duke_hub_roster, github_survey) |>
+  select("SIS User ID", "github")
+## fix:
+cat("FIX:\n") 
+x[which(is.na(x$github)),]
+
+box2 <- box |>
+  select(-"github") |>
+  left_join(x) |>
+  relocate(names(box))
+
+write_csv(box2, "~/Downloads/box2.csv")

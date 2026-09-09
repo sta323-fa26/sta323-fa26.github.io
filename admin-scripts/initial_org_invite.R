@@ -47,7 +47,7 @@ org_create_assignment(
 ######## LABS 
 
 this_org <- "sta323-fa26"
-assignment <- "lab-1"
+assignment <- "lab-2"
 
 
 usernames <- ghclass::org_members(org = this_org)

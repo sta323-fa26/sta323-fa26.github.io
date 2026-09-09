@@ -79,10 +79,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./syllabus.html"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./project.html"> 
-<span class="menu-text">project</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="./mini_project.html">
+ <span class="dropdown-text">mini project</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./project.html">
+ <span class="dropdown-text">final project</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="./links.html"> 
 <span class="menu-text">links</span></a>
@@ -126,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 <h1>Schedule</h1>
 <!-- PLAN -->
 <!-- Unit 1: R basics: 5 lectures -->
-<!-- Unit 2: Data: wrangling, visualization & collection (APIs): 7 lectures-->
+<!-- Unit 2: Data: wrangling, visualization & collection (APIs): [8] lectures; add functionals to this-->
 <!-- Unit 3: Software engineering & reproducibility: advanced git & unit tests testthat; R scripts & make; packages: 3 lectures-->
 <!-- Unit 4: Scalability: hardware, profiling and benchmarking; parallelization; SQL; duckDB; bigLM: 5 lectures -->
 <!-- Unit 5: Computational statistics (mini unit): Newton-Raphson; MM; simulation; Monte Carlo: 3 lectures-->
@@ -189,14 +200,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">regular expressions</td>
 <td style="text-align: center;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><a href="./mini_project.html">mini project</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">Tue Sep 15</td>
 <td style="text-align: left;">tidy data &amp; dplyr</td>
 <td style="text-align: center;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">lab 3</td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
@@ -226,7 +237,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">6</td>
 <td style="text-align: left;">Tue Sep 29</td>
-<td style="text-align: left;">shiny</td>
+<td style="text-align: left;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -242,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">7</td>
 <td style="text-align: left;">Tue Oct 06</td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">shiny</td>
 <td style="text-align: center;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -277,7 +288,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">mp presentations</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -373,7 +384,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">project presentations</td>
 <td style="text-align: center;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">presentations</td>
+<td style="text-align: left;">fp presentations</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>

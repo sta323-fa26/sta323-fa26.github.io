@@ -3,16 +3,18 @@ title: "Regular expressions"
 author: "Dr. Alexander Fisher"
 execute:
   warning: true
-format: 
-    revealjs:
-      smaller: true
+format: html
 ---
 
-# What is a regular expression?
 
-## Definition and utility
+## Introduction
 
-A regular expression (or regex / regexp) is a tool for identifying patterns in strings. A regular expression lets you:
+::: callout-note
+## Definition
+A regular expression (or regex / regexp) is a tool for identifying patterns in strings.
+:::
+
+A regular expression lets you:
 
 1.  extract *only* the phone number from this string: "My phone number is (123) 456-7890, not to be confused with my birth month which is 0"
 

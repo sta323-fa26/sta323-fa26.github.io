@@ -1,0 +1,49 @@
+---
+title: "Mini project"
+format: html
+---
+
+The goal of this project is to learn something new and communicate it well. More specifically, teaching yourself new topics is a necessary skill to avoid stagnation beyond the classroom. Communicating that knowledge to others by way of oral presentation will be supremely important in future interviews and jobs. The slide deck is the most common medium used in presentations and it is therefore required in this mini project.
+
+The deliverable is a 6-10 minute presentation during lab together with a slide deck. There should be no more than 5 content slides (about 1 per 2 minutes of presentation time). You should also have an additional title slide & bibliography slide that do not contribute to your 5 slide limit.
+
+**Instructions**
+
+1. Form a team of 2 to 3 with the members of your lab section.
+2. Pick 1 topic from the list of topics below. You cannot pick the same topic as another team in your lab section.
+3. Create a 3 content slide presentation to teach the topic to the rest of your lab section. 
+4. Present in lab on presentation day.
+
+**List of topics**
+
+Topic 1: *Image data*. Consider the `magick` R package. How are images stored on the computer? What is kernel convolution? Optionally: how does the singular value decomposition facilitate image compression? See [magick documentation](https://cran.r-project.org/web/packages/magick/vignettes/intro.html) as a starting point.
+
+Topic 2: *Audio data*. How is audio data stored? How can it be visualized? See [the documentation](https://cran.r-project.org/web/packages/tuneR/tuneR.pdf) for the `tuneR` package as a starting point. Optional additional reading: [psychology music and tuneR package blog post](https://www.r-bloggers.com/2011/10/the-psychology-of-music-and-the-%E2%80%98tuner%E2%80%99-package/).
+
+Topic 3: *Constructing an API*. Expose an R function through an HTTP endpoint using `plumber`. How do you send a GET or POST request? See the [quickstart guide](https://www.rplumber.io/articles/quickstart.html) as a starting point.
+
+Topic 4: *Interfacing R with other programming languages.* Call Python through `reticulate`, or write a small C++ function with Rcpp. Discuss what crosses the language boundary and when the extra complexity is worthwhile. See [Rstudio's post on reticulate](https://rstudio.github.io/reticulate/) or [Intro to Rcpp](https://cran.r-project.org/web/packages/Rcpp/vignettes/Rcpp-introduction.pdf) as a starting point.
+
+Topic 5: *Graphs and networks*. Represent relationships as edge lists; build, traverse, and visualize networks with `igraph`. Examples could include flight routes, or package dependencies, or interactions between people / characters on a show. See [CRAN documentation](https://cran.r-project.org/web/packages/igraph/vignettes/igraph.html) as a starting point.
+
+<!-- Topic 6: *Rasterized data*. Consider the `terra` package and how spatial data is stored and manipulated on the computer.   -->
+
+Topic 6: *Document term matrices*. What is a document term matrix? How are collections of text summarized? Consider the `tidytext` package. Read [this vignette](https://cran.r-project.org/web/packages/tidytext/vignettes/tf_idf.html) as a starting point.
+
+Topic 7: *Phylogenies*. Consider the `ape` package. Inspect a phylo object, plot it. Explain how it is stored in R. What is Newick format? See the vignette on [random topologies](https://cran.r-project.org/web/packages/ape/vignettes/RandomTopologies.pdf) as a starting point. 
+
+Topic 8: *Programming with dplyr*. Turn `dplyr` pipelines into reusable functions. Explain data masking, embracing arguments, name injection and tidyselect. See [this tidyverse article](https://dplyr.tidyverse.org/articles/programming.html?) as a starting point.
+
+
+**Tips** 
+
+You need not follow these tips exactly, but they may help guide you to a successful presentation. 
+
+- Begin by motivating your topic, why should the audience care? What's the real world application or downstream utility?
+- Establish an example (either minimally working or meaningfully complicated) that the audience can consider.
+- Repeat the main point. Summarize or repeat what you want the audience to take away from your presentation.
+- Script your presentation (or at least the first few sentences you say) to start your presentation with preparedness.
+
+**Evaluation**
+
+You and your team will be evaluated on (1) the technical accuracy of your presentation, (2) the clarity of your presentation, (3) citation of your sources and (4) ability to answer questions about your topic.

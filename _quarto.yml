@@ -15,14 +15,18 @@ website:
   navbar:
     background: "#2774AE" # nice blue -- Spring 2023
     left:
-    - href: index.qmd
-      text: schedule
-    - href: syllabus.qmd
-      text: syllabus
-    - href: project.qmd
-      text: project
-    - href: links.qmd
-      text: links
+      - href: index.qmd
+        text: schedule
+      - href: syllabus.qmd
+        text: syllabus
+      - text: projects
+        menu:
+          - href: mini_project.qmd
+            text: mini project
+          - href: project.qmd
+            text: final project
+      - href: links.qmd
+        text: links
     
       
 format:
