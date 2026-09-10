@@ -1,120 +1,224 @@
 ---
-title: "Lab 3: dream of plots"
-subtitle: "Due Monday September 22 at 5:00pm"  
+title: "Lab 3: wrangling the written word"
+subtitle: "Due Monday September 21 at 5:00pm"  
 editor: source
 execute:
   eval: false
 ---
 
-> "I dream of plots, and then I plot my dreams"\
-> Vincent van Gogh (loosely)
+> "A [computer keyboard] is to me as a beak is to a hen." 
+> — J. R. R. Tolkien (loosely)
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| eval: true
+library(tidyverse)
+```
 
 By the end of the lab, you will...
 
--   recreate plots starting from untidy data sets
--   create your own plotting tools
--   plot an admixture density
-
-::: callout-warning
-Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is "accidentally" pushed.
-:::
+-   use regular expressions to build a data frame summarizing thousands of emails for the purposes of text classification in a future lab
 
 # Getting started
 
--   In the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa25/lab-3-team_name.git` where `team_name` is replaced with your team name (see the excel signup sheet in box or your github).
+-   In the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa26/lab-3-username.git` where `username` is replaced with your username.
 
 -   Navigate to your `lab-3` folder and open the `.Rproj` file.
 
 -   Open the Quarto (`.qmd`) file, change the author name to your team name followed by a colon and then the names of the team members.
 
+## The data
+
+There are 4911 documents. Each document is an email from one of 5 email listservs (news groups), that, as far as I can tell, were all hosted at Carnegie Mellon University in the early 90s. The original data set (with a total of 20 news groups) can be found [here](http://qwone.com/~jason/20Newsgroups/). This data set is a popular choice for experiments in text classification and clustering. Please note the following warning: similar to many modern forums on the internet, the emails in this data set may contain profanity and offensive language. I do not condone, endorse nor promote language, views or content expressed within this data set.
+
+The five document classes (newsgroups) we will consider are as follows:
+
+1. `comp.graphics`
+2. `comp.sys.mac.hardware`
+3. `rec.autos`
+4. `rec.sport.baseball`
+5. `sci.space`
+
+
+
 ## Exercises
 
-For all exercises, you should respond in the space provided in the template `lab-3.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
+For all exercises, you should respond in the space provided in the template `lab-3.qmd`. Any task that says "print to the screen", or "show the output of" or "glimpse the data frame" etc. should be reproduced in your `qmd` and be visible upon rendering.
 
-### 1. Re-create the plot
+## 1. Examine two emails
 
-Using the untidy data set `us_rent_income`, from the package `tidyr` to re-create the plot below. Pay attention to re-creating exactly all aspects of the plot, e.g. axes, labels, capitalization etc.
+Read in the data from the file `37916` with `readLines`, e.g. `x <- readLines("path/to/file/37916")`. Also read in file `101554` and assign it to the variable `y`. Write a function `extract_newsgroup()` that takes in the text (`x`) and returns a character string containing the document class (or classes) using regular expressions. Show the output of the following:
 
-![](images/lab-3-plot.png){width="800"}
+```{r}
+extract_newsgroup(x)
+extract_newsgroup(y)
+```
+
+Note: if there are 2 or more classes (document types) then the output show be a vector of length 2 or more. Example: for document `y` above, the output should be a character vector of length 2.
+
+Why are regular expressions preferred to examining newsgroup by line number?
+
+
+## 2. Who sends emails?
+
+Information about who sends the email is usually printed at the top of the file. Examine emails `x` and `y` and then write a function `extract_sender()` that extracts only the email of the sender from a file. For example, the output should be `email@duke.edu` and **not** `email@duke.edu (name)`. Show the output of
+
+```{r}
+extract_sender(x)
+extract_sender(y)
+```
+
+## 3. Make a data frame
+
+Now using all 4911 documents together with your functions from exercise 1 and 2, construct a data frame called `emails_df` that contains the following 4 columns: 
+
+- `id`: the actual file name that uniquely identifies the email, e.g. `37916`.
+- `newsgroup1`: the first newsgroup class (e.g. `sci.space`)
+- `newsgroup2`: the second newsgroup class (if available) otherwise, NA
+- `sender`: email address of the sender
+
+Make it so that `newsgroup1` and `newsgroup2` **only** display newsgroups of the following 5 categories:
+
+1. `comp.graphics`
+2. `comp.sys.mac.hardware`
+3. `rec.autos`
+4. `rec.sport.baseball`
+5. `sci.space`
+
+Note: every single email in this data set has at least one of the category labels above.
+
+Show the output of
+
+```{r}
+glimpse(emails_df)
+```
+
+Answer the following questions:
+
+1. Are any of the "sender" in your data frame NA? If so, examine one of those emails and explain why.
+2. What total number of emails have only 1 newsgroup label (of the 5 categories above)?
+3. What proportion of emails originate from an academic "edu" sender address?
+4. What proportion of emails in each `newsgroup1`, originate from a Duke email address?
 
 ::: callout-tip
 ## Hint
 
--   Begin by making the data set tidy.
-
--   The color used is `steelblue`.
-
--   You will need to find an external data set that you can merge to group states by region.
-
--   Double check that your plot renders nicely. You might need to adjust `fig-width` and `fig-height` YAML options [read here](https://quarto.org/docs/computations/execution-options.html). The ratio is 6:4 (width:height)
+You might revisit `list.files` from a previous lab and construct a vector of paths you can loop over.
 :::
 
-### 2. Custom `ggplot` functionality
+### Task
 
-Create a new stat called `stat_outlier_encircle()` that encircles outliers in a set of bivariate data. Define an outlier as when both values in a data pair have a z-score greater than three in absolute value. Check out <https://ggplot2.tidyverse.org/articles/extending-ggplot2.html>.
+We will comb through 4911 documents and construct a single data frame from these documents for use in a future lab. Our goal is to create a data frame that looks like the following:
 
-Some examples of `stat_outlier_encircle()` in action are given below.
+![](img/document_example_df.png){fig-align="center"}
 
-A typical scatter plot with `ggplot()` and `geom_point()`:
+where the column `Document` contains the documents name or #, `Newsgroup` contains the category the document belongs to, `total_words` contains the total words in the document, `word_1`, `word_2` up to `word_v` contains every word in every document and the values represent the number of occurrences of each given word in the document.
+
+To make this task more manageable, let's break this into smaller tasks below:
+
+#### part 1
+
+Read in the data from the file `37916` with `readLines`, e.g. `x = readLines("pathToFile/37916")`. Write a regular expression to identify the "Newsgroup" from the text. Save the result as an object called `newsgroup_id`. Print `newsgroup_id` to the screen.
+
+::: callout-tip
+## Hint
+
+Some documents (emails) are featured in multiple newsgroups, separated by a comma `,`. You should return a character vector of the newsgroups and can handle this like below:
 
 ```{r}
-# copy this code chunk and use this data for the exercise
-library(tidyverse)
-set.seed(09567899)
-data_norm = tibble(x = c(rnorm(95, 100, 5), rnorm(5, 70, 5)), 
-                    y = c(rnorm(95, 100, 5), rnorm(5, 70, 5)))
+#| eval: true
+"rec.autos,rec.autos.tech" %>%
+  str_split(",") %>% 
+  unlist()
+```
+:::
 
-ggplot(data_norm, mapping = aes(x = x, y = y)) +
-  geom_point() +
-  theme_minimal()
+#### part 2
+
+Identify which part of the document is the body of the email. Write a regular expression to extract each word (alphanumeric) from the body of the email. Save a **character vector** of words in the email as an object called `words_in_email`. Print the first 10 `words_in_email` to the screen. The first three should be 
+
+```
+"I" "recently" "got"
 ```
 
-An added layer that marks outliers:
+::: callout-tip
+## Hint
+
+1.  Find which entry has "Lines:"
+2.  Subset the document `x` to only be what occurs after this entry.
+3.  Extract each word followed by a break.
+:::
+
+#### part 3
+
+Save your result from part 1 and 2 into a list like so:
 
 ```{r}
 #| eval: false
-ggplot(data_norm, mapping = aes(x = x, y = y)) +
-  geom_point() +
-  stat_outlier_encircle() +
-  theme_minimal()
+
+i = 37916
+
+doc_i = list(
+  "doc_id" = paste("doc", i, sep = "_"),
+  "Newsgroup" = newsgroup_id,
+  "words" = words_in_email
+)
 ```
 
-![](img/lab3-plot1.png)
+and then write a for loop, using the template code below as a starting point to make a list of lists for each document.
 
 ```{r}
 #| eval: false
-ggplot(data_norm, mapping = aes(x = x, y = y)) +
-  geom_point() +
-  stat_outlier_encircle(color = "purple", size = 14, 
-                        fill = "lightblue", alpha = .4) +
-  theme_minimal()
+
+all_docs = list.files("/data/newsgroups_5")
+  
+doc_words = list()
+# begin for loop over i in all_docs 
+
+  # read in doc i
+  # create newsgroup_id
+  # create words_in_email
+  # put both together in a list called doc_i
+
+  doc_words[[paste("doc", i, sep = "_")]] = doc_i
+  
+# end for loop
 ```
 
-![](img/lab3-plot2.png)
+Print the first three lists inside of `doc_words` using the code below:
 
-Create the new stat `stat_outlier_encircle()` so that the code chunks above give the output above.
+```{r}
+#| eval: false
+doc_words[1:3] %>% 
+  str()
+```
 
 ::: callout-tip
 ## Hint
 
-See [ggplot lecture](https://sta323-fa25.github.io/slides/lec07.html#/custom-ggplot-functions-with-ggproto) for a template and read the documentation [here](https://ggplot2.tidyverse.org/articles/extending-ggplot2.html) for help.
+Use `paste` or `paste0` to concatenate the filepath and filenames as you read them in.
 :::
 
-### 3. Admixture density plot
+#### part 4
 
-Plot the density of the admixture distribution you created in [lab 2](/labs/lab2.html) case (iv). Overlay your plot on the histogram of lemur weights (find `lemurs.csv` in the data folder).
+Using the appropriate lookup functions from `purrr` (see lecture on functional programming) turn your list of lists `doc_words` into a tibble called `doc_words_df` that looks like the data frame pictured below. While building your data frame, remove all documents for which there are **multiple newsgroups**.
 
-Create a second plot like you did above, but adjust $\mu_1$, $\mu_2$, $\sigma_1$ and $\sigma_2$ until your distribution fits the plot better. Report the values you choose for $\mu_1$, $\mu_2$, $\sigma_1$ and $\sigma_2$. An example of such a fit is provided below. Your plot does **not** need to look exactly like the one below. Explain why you choose the values you do for $\mu_1$, $\mu_2$, $\sigma_1$ and $\sigma_2$.\
-\
-\
-\
-![](images/mixturePlot.png)
+```
+  Document   Newsgroup          total_words words      
+  <chr>      <chr>                    <int> <list>     
+1 doc_100521 rec.sport.baseball         261 <chr [261]>
+2 doc_101551 rec.autos                  439 <chr [439]>
+3 doc_101552 rec.autos                  147 <chr [147]>
+```
 
-::: callout-tip
-## Hint
+- Print the first 10 rows to the screen **and** glimpse your resulting data frame. There should be **3922** rows and **4** columns.\
 
--   How can you make the y-axis of the histogram be on the "density" scale instead of the "count" scale?
--   Previously you created `rMyNormalMixture` function that randomly sampled from your distribution. Now you want to create a `dMyNormalMixture` function that returns the **density** of the function instead, see e.g. `dnorm` documentation.
+- Finally, print a count of how many observations of each Newsgroup is in the data set.
+
+::: callout-warning
+Do **not** unnest the `words` column. This operation is too expensive to play with and may freeze your container/computer.
 :::
 
 ## Style guidelines
