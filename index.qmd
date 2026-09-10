@@ -62,8 +62,8 @@ schedule %>%
 | 2 | Tue Sep 01 | NAs, lists, NULL and attributes | [💻](/slides/lec03.html) | [lab 1](/labs/lab1.html) |  |
 |  | Thu Sep 03 | object oriented programming |  [💻](/slides/lec04.html) |  |  |
 | 3 | Tue Sep 08 | subsetting  | [💻](/slides/lec06.html)  | [lab 2](/labs/lab2.html)  |  |
-|  | Thu Sep 10 | regular expressions |   |  | [mini project](/mini_project.html) |
-| 4 | Tue Sep 15 | tidy data & dplyr |  | lab 3 |  |
+|  | Thu Sep 10 | tidy data & dplyr | [💻](/slides/lec05.html)  |  | [mini project](/mini_project.html) |
+| 4 | Tue Sep 15 | regular expressions |  | lab 3 |  |
 |  | Thu Sep 17 | visualization with ggplot2 |  |  |  |
 | 5 | Tue Sep 22 | dimension reduction |  |  |  |
 |  | Thu Sep 24 | geographical data |  |  |  |
