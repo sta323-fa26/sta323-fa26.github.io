@@ -6,8 +6,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.34">
 
   <meta name="author" content="Dr.&nbsp;Alexander Fisher">
   <title>STA323 – Tidyverse</title>
@@ -29,8 +29,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -41,7 +42,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -94,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-73834d40664092e17859228d5cb258ce.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-bc923612c372f95fbc7924281b036ea0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -363,6 +364,608 @@ Dr.&nbsp;Alexander Fisher
 #   wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
+</section>
+<section id="modern-data-frames" class="slide level2">
+<h2>Modern data frames</h2>
+<p>The tidyverse includes the tibble package that extends data frames to be a bit more modern. The core features of tibbles are a nicer printing method as well as being “lazy”.</p>
+<div class="xsmall">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>iris</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length
+1            5.1         3.5          1.4
+2            4.9         3.0          1.4
+3            4.7         3.2          1.3
+4            4.6         3.1          1.5
+5            5.0         3.6          1.4
+6            5.4         3.9          1.7
+7            4.6         3.4          1.4
+8            5.0         3.4          1.5
+9            4.4         2.9          1.4
+10           4.9         3.1          1.5
+11           5.4         3.7          1.5
+12           4.8         3.4          1.6
+13           4.8         3.0          1.4
+14           4.3         3.0          1.1
+15           5.8         4.0          1.2
+16           5.7         4.4          1.5
+17           5.4         3.9          1.3
+18           5.1         3.5          1.4
+19           5.7         3.8          1.7
+20           5.1         3.8          1.5
+21           5.4         3.4          1.7
+22           5.1         3.7          1.5
+23           4.6         3.6          1.0
+24           5.1         3.3          1.7
+25           4.8         3.4          1.9
+26           5.0         3.0          1.6
+27           5.0         3.4          1.6
+28           5.2         3.5          1.5
+29           5.2         3.4          1.4
+30           4.7         3.2          1.6
+31           4.8         3.1          1.6
+32           5.4         3.4          1.5
+33           5.2         4.1          1.5
+34           5.5         4.2          1.4
+35           4.9         3.1          1.5
+36           5.0         3.2          1.2
+37           5.5         3.5          1.3
+38           4.9         3.6          1.4
+39           4.4         3.0          1.3
+40           5.1         3.4          1.5
+41           5.0         3.5          1.3
+42           4.5         2.3          1.3
+43           4.4         3.2          1.3
+44           5.0         3.5          1.6
+45           5.1         3.8          1.9
+46           4.8         3.0          1.4
+47           5.1         3.8          1.6
+48           4.6         3.2          1.4
+49           5.3         3.7          1.5
+50           5.0         3.3          1.4
+51           7.0         3.2          4.7
+52           6.4         3.2          4.5
+53           6.9         3.1          4.9
+54           5.5         2.3          4.0
+55           6.5         2.8          4.6
+56           5.7         2.8          4.5
+57           6.3         3.3          4.7
+58           4.9         2.4          3.3
+59           6.6         2.9          4.6
+60           5.2         2.7          3.9
+61           5.0         2.0          3.5
+62           5.9         3.0          4.2
+63           6.0         2.2          4.0
+64           6.1         2.9          4.7
+65           5.6         2.9          3.6
+66           6.7         3.1          4.4
+67           5.6         3.0          4.5
+68           5.8         2.7          4.1
+69           6.2         2.2          4.5
+70           5.6         2.5          3.9
+71           5.9         3.2          4.8
+72           6.1         2.8          4.0
+73           6.3         2.5          4.9
+74           6.1         2.8          4.7
+75           6.4         2.9          4.3
+76           6.6         3.0          4.4
+77           6.8         2.8          4.8
+78           6.7         3.0          5.0
+79           6.0         2.9          4.5
+80           5.7         2.6          3.5
+81           5.5         2.4          3.8
+82           5.5         2.4          3.7
+83           5.8         2.7          3.9
+84           6.0         2.7          5.1
+85           5.4         3.0          4.5
+86           6.0         3.4          4.5
+87           6.7         3.1          4.7
+88           6.3         2.3          4.4
+89           5.6         3.0          4.1
+90           5.5         2.5          4.0
+91           5.5         2.6          4.4
+92           6.1         3.0          4.6
+93           5.8         2.6          4.0
+94           5.0         2.3          3.3
+95           5.6         2.7          4.2
+96           5.7         3.0          4.2
+97           5.7         2.9          4.2
+98           6.2         2.9          4.3
+99           5.1         2.5          3.0
+100          5.7         2.8          4.1
+101          6.3         3.3          6.0
+102          5.8         2.7          5.1
+103          7.1         3.0          5.9
+104          6.3         2.9          5.6
+105          6.5         3.0          5.8
+106          7.6         3.0          6.6
+107          4.9         2.5          4.5
+108          7.3         2.9          6.3
+109          6.7         2.5          5.8
+110          7.2         3.6          6.1
+111          6.5         3.2          5.1
+112          6.4         2.7          5.3
+113          6.8         3.0          5.5
+114          5.7         2.5          5.0
+115          5.8         2.8          5.1
+116          6.4         3.2          5.3
+117          6.5         3.0          5.5
+118          7.7         3.8          6.7
+119          7.7         2.6          6.9
+120          6.0         2.2          5.0
+121          6.9         3.2          5.7
+122          5.6         2.8          4.9
+123          7.7         2.8          6.7
+124          6.3         2.7          4.9
+125          6.7         3.3          5.7
+126          7.2         3.2          6.0
+127          6.2         2.8          4.8
+128          6.1         3.0          4.9
+129          6.4         2.8          5.6
+130          7.2         3.0          5.8
+131          7.4         2.8          6.1
+132          7.9         3.8          6.4
+133          6.4         2.8          5.6
+134          6.3         2.8          5.1
+135          6.1         2.6          5.6
+136          7.7         3.0          6.1
+137          6.3         3.4          5.6
+138          6.4         3.1          5.5
+139          6.0         3.0          4.8
+140          6.9         3.1          5.4
+141          6.7         3.1          5.6
+142          6.9         3.1          5.1
+143          5.8         2.7          5.1
+144          6.8         3.2          5.9
+145          6.7         3.3          5.7
+146          6.7         3.0          5.2
+147          6.3         2.5          5.0
+148          6.5         3.0          5.2
+149          6.2         3.4          5.4
+150          5.9         3.0          5.1
+    Petal.Width    Species
+1           0.2     setosa
+2           0.2     setosa
+3           0.2     setosa
+4           0.2     setosa
+5           0.2     setosa
+6           0.4     setosa
+7           0.3     setosa
+8           0.2     setosa
+9           0.2     setosa
+10          0.1     setosa
+11          0.2     setosa
+12          0.2     setosa
+13          0.1     setosa
+14          0.1     setosa
+15          0.2     setosa
+16          0.4     setosa
+17          0.4     setosa
+18          0.3     setosa
+19          0.3     setosa
+20          0.3     setosa
+21          0.2     setosa
+22          0.4     setosa
+23          0.2     setosa
+24          0.5     setosa
+25          0.2     setosa
+26          0.2     setosa
+27          0.4     setosa
+28          0.2     setosa
+29          0.2     setosa
+30          0.2     setosa
+31          0.2     setosa
+32          0.4     setosa
+33          0.1     setosa
+34          0.2     setosa
+35          0.2     setosa
+36          0.2     setosa
+37          0.2     setosa
+38          0.1     setosa
+39          0.2     setosa
+40          0.2     setosa
+41          0.3     setosa
+42          0.3     setosa
+43          0.2     setosa
+44          0.6     setosa
+45          0.4     setosa
+46          0.3     setosa
+47          0.2     setosa
+48          0.2     setosa
+49          0.2     setosa
+50          0.2     setosa
+51          1.4 versicolor
+52          1.5 versicolor
+53          1.5 versicolor
+54          1.3 versicolor
+55          1.5 versicolor
+56          1.3 versicolor
+57          1.6 versicolor
+58          1.0 versicolor
+59          1.3 versicolor
+60          1.4 versicolor
+61          1.0 versicolor
+62          1.5 versicolor
+63          1.0 versicolor
+64          1.4 versicolor
+65          1.3 versicolor
+66          1.4 versicolor
+67          1.5 versicolor
+68          1.0 versicolor
+69          1.5 versicolor
+70          1.1 versicolor
+71          1.8 versicolor
+72          1.3 versicolor
+73          1.5 versicolor
+74          1.2 versicolor
+75          1.3 versicolor
+76          1.4 versicolor
+77          1.4 versicolor
+78          1.7 versicolor
+79          1.5 versicolor
+80          1.0 versicolor
+81          1.1 versicolor
+82          1.0 versicolor
+83          1.2 versicolor
+84          1.6 versicolor
+85          1.5 versicolor
+86          1.6 versicolor
+87          1.5 versicolor
+88          1.3 versicolor
+89          1.3 versicolor
+90          1.3 versicolor
+91          1.2 versicolor
+92          1.4 versicolor
+93          1.2 versicolor
+94          1.0 versicolor
+95          1.3 versicolor
+96          1.2 versicolor
+97          1.3 versicolor
+98          1.3 versicolor
+99          1.1 versicolor
+100         1.3 versicolor
+101         2.5  virginica
+102         1.9  virginica
+103         2.1  virginica
+104         1.8  virginica
+105         2.2  virginica
+106         2.1  virginica
+107         1.7  virginica
+108         1.8  virginica
+109         1.8  virginica
+110         2.5  virginica
+111         2.0  virginica
+112         1.9  virginica
+113         2.1  virginica
+114         2.0  virginica
+115         2.4  virginica
+116         2.3  virginica
+117         1.8  virginica
+118         2.2  virginica
+119         2.3  virginica
+120         1.5  virginica
+121         2.3  virginica
+122         2.0  virginica
+123         2.0  virginica
+124         1.8  virginica
+125         2.1  virginica
+126         1.8  virginica
+127         1.8  virginica
+128         1.8  virginica
+129         2.1  virginica
+130         1.6  virginica
+131         1.9  virginica
+132         2.0  virginica
+133         2.2  virginica
+134         1.5  virginica
+135         1.4  virginica
+136         2.3  virginica
+137         2.4  virginica
+138         1.8  virginica
+139         1.8  virginica
+140         2.1  virginica
+141         2.4  virginica
+142         2.3  virginica
+143         1.9  virginica
+144         2.3  virginica
+145         2.5  virginica
+146         2.3  virginica
+147         1.9  virginica
+148         2.0  virginica
+149         2.3  virginica
+150         1.8  virginica</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>(<span class="at">tbl_iris =</span> <span class="fu">as_tibble</span>(iris))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 150 × 5
+   Sepal.Length Sepal.Width Petal.Length
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+ 1          5.1         3.5          1.4
+ 2          4.9         3            1.4
+ 3          4.7         3.2          1.3
+ 4          4.6         3.1          1.5
+ 5          5           3.6          1.4
+ 6          5.4         3.9          1.7
+ 7          4.6         3.4          1.4
+ 8          5           3.4          1.5
+ 9          4.4         2.9          1.4
+10          4.9         3.1          1.5
+# ℹ 140 more rows
+# ℹ 2 more variables: Petal.Width &lt;dbl&gt;,
+#   Species &lt;fct&gt;</code></pre>
+</div>
+</div>
+</div></div>
+</div>
+</section>
+<section id="tibble-subsets-preserve-type" class="slide level2">
+<h2>Tibble[] subsets preserve type</h2>
+<p>By default, subsetting tibbles always results in another tibble (<code>$</code> or <code>[[</code> can still be used to subset for a specific column).</p>
+<div class="small">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>tbl_iris[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+1          5.1         3.5          1.4         0.2 setosa </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns small">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>tbl_iris[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 150 × 1
+   Sepal.Length
+          &lt;dbl&gt;
+ 1          5.1
+ 2          4.9
+ 3          4.7
+ 4          4.6
+ 5          5  
+ 6          5.4
+ 7          4.6
+ 8          5  
+ 9          4.4
+10          4.9
+# ℹ 140 more rows</code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">head</span>(tbl_iris[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.1 4.9 4.7 4.6 5.0 5.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">head</span>(tbl_iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica</code></pre>
+</div>
+</div>
+</div></div>
+</div>
+</section>
+<section id="tibbles-dont-do-partial-matching" class="slide level2">
+<h2>Tibbles don’t do partial matching</h2>
+<p>Tibbles do not use partial matching when the <code>$</code> operator is used.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">head</span>( iris<span class="sc">$</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">head</span>( tbl_iris<span class="sc">$</span>Species )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">head</span>( iris<span class="sc">$</span>Sp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">head</span>( tbl_iris<span class="sc">$</span>Sp )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `Sp`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+</div></div>
+</div>
+</section>
+<section id="tibble-vector-recycling" class="slide level2">
+<h2>Tibble vector recycling</h2>
+<p>Only vectors with length 1 will undergo length coercion / recycling - anything else throws an error.</p>
+<div class="columns small">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x y
+1 1 1
+2 2 1
+3 3 1
+4 4 1</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+      x     y
+  &lt;int&gt; &lt;dbl&gt;
+1     1     1
+2     2     1
+3     3     1
+4     4     1</code></pre>
+</div>
+</div>
+</div></div>
+
+<div class="fragment">
+<div class="columns medium">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  x y
+1 1 1
+2 2 2
+3 3 1
+4 4 2</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `tibble()`:
+! Tibble columns must have compatible sizes.
+• Size 4: Existing data.
+• Size 2: Column `y`.
+ℹ Only values of size one are recycled.</code></pre>
+</div>
+</div>
+</div></div>
+</div>
+<aside><div>
+<p>All of this <code>tibble</code> behavior helps prevent bugs!</p>
+</div></aside></section>
+<section id="tibbles-preserve-list-columns" class="slide level2">
+<h2>Tibbles preserve list columns</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">list</span>( </span>
+<span id="cb39-2"><a></a>  <span class="at">letter =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb39-3"><a></a>  <span class="at">is_vowel =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>] <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"a"</span>,<span class="st">"e"</span>,<span class="st">"i"</span>,<span class="st">"o"</span>,<span class="st">"u"</span>) ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">tibble</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  x               
+  &lt;list&gt;          
+1 &lt;named list [3]&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">data.frame</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  letter index is_vowel
+1      a     1     TRUE
+2      b     2    FALSE
+3      c     3    FALSE
+4      d     4    FALSE
+5      e     5     TRUE
+6      f     6    FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="tibbles-and-s3" class="slide level2">
+<h2>Tibbles and S3</h2>
+<div class="columns small">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>t <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb44-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb44-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
+<span id="cb44-4"><a></a>)</span>
+<span id="cb44-5"><a></a></span>
+<span id="cb44-6"><a></a><span class="fu">class</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>d <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb46-2"><a></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, </span>
+<span id="cb46-3"><a></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
+<span id="cb46-4"><a></a>)</span>
+<span id="cb46-5"><a></a></span>
+<span id="cb46-6"><a></a><span class="fu">class</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<div class="small">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">"tbl_df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] [             [[            [[&lt;-          [&lt;-           %within%     
+ [6] $             $&lt;-           arrange_      as.data.frame coerce       
+[11] distinct_     filter_       fortify       group_data    initialize   
+[16] mutate_       names&lt;-       nest_legacy   nest          Ops          
+[21] row.names&lt;-   show          slice_        slotsFromS3   str          
+[26] summarise_    tbl_sum      
+see '?methods' for accessing help and source code</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">"tbl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] [[&lt;-        [&lt;-         %within%    $&lt;-         as.tbl     
+ [6] coerce      format      fortify     glimpse     initialize 
+[11] Ops         print       show        slotsFromS3 tbl_sum    
+see '?methods' for accessing help and source code</code></pre>
+</div>
+</div>
+</div>
+<p>S3 checks class left to right.</p>
+</div>
+</section>
+<section id="tibble-support" class="slide level2">
+<h2>Tibble support?</h2>
+<p>Tibbles are just specialized data frames, and will fall back to base data frame methods when needed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>d <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb52-2"><a></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb52-3"><a></a>  <span class="at">y =</span> <span class="dv">3</span> <span class="sc">+</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="fl">0.1</span>) </span>
+<span id="cb52-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">lm</span>(y<span class="sc">~</span>x, <span class="at">data =</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = d)
+
+Coefficients:
+(Intercept)            x  
+     2.9757       0.9843  </code></pre>
+</div>
+</div>
+<div class="center large">
+<p>Why did this work?</p>
+</div>
 </section></section>
 <section>
 <section id="pipes" class="title-slide slide level1 center">
@@ -392,16 +995,16 @@ Dr.&nbsp;Alexander Fisher
 <li>nested functions</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">park</span>(<span class="fu">drive</span>(<span class="fu">start_car</span>(<span class="fu">find</span>(<span class="st">"keys"</span>)), <span class="at">to =</span> <span class="st">"campus"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">park</span>(<span class="fu">drive</span>(<span class="fu">start_car</span>(<span class="fu">find</span>(<span class="st">"keys"</span>)), <span class="at">to =</span> <span class="st">"campus"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>pipeline</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">find</span>(<span class="st">"keys"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a></a>    <span class="fu">start_car</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a></a>    <span class="fu">drive</span>(<span class="at">to =</span> <span class="st">"campus"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a></a>    <span class="fu">park</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">find</span>(<span class="st">"keys"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a></a>    <span class="fu">start_car</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a></a>    <span class="fu">drive</span>(<span class="at">to =</span> <span class="st">"campus"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a></a>    <span class="fu">park</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="base-r-vs-magrittr" class="slide level2">
@@ -422,18 +1025,18 @@ Dr.&nbsp;Alexander Fisher
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="cn">NA</span>)</span>
-<span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a><span class="cn">TRUE</span> <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">mean</span>(x, <span class="at">na.rm =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="cn">NA</span>)</span>
+<span id="cb57-2"><a></a></span>
+<span id="cb57-3"><a></a><span class="cn">TRUE</span> <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a></a>  <span class="fu">mean</span>(x, <span class="at">na.rm =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="cn">TRUE</span> <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">mean</span>(x, <span class="at">na.rm =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="cn">TRUE</span> <span class="sc">|&gt;</span></span>
+<span id="cb59-2"><a></a>  <span class="fu">mean</span>(x, <span class="at">na.rm =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -491,30 +1094,30 @@ Dr.&nbsp;Alexander Fisher
 <section id="nyc-flights" class="slide level2">
 <h2>NYC flights</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb15-2"><a></a><span class="fu">glimpse</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb61-2"><a></a><span class="fu">glimpse</span>(flights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 336,776
 Columns: 19
-$ year           &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2…
-$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
-$ dep_time       &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, 558, …
-$ sched_dep_time &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, 600, …
-$ dep_delay      &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -2, -1…
-$ arr_time       &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753, 849,…
-$ sched_arr_time &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745, 851,…
-$ arr_delay      &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, 7, -1…
-$ carrier        &lt;chr&gt; "UA", "UA", "AA", "B6", "DL", "UA", "B6", "EV", "B6", "…
-$ flight         &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 301, 4…
-$ tailnum        &lt;chr&gt; "N14228", "N24211", "N619AA", "N804JB", "N668DN", "N394…
-$ origin         &lt;chr&gt; "EWR", "LGA", "JFK", "JFK", "LGA", "EWR", "EWR", "LGA",…
-$ dest           &lt;chr&gt; "IAH", "IAH", "MIA", "BQN", "ATL", "ORD", "FLL", "IAD",…
-$ air_time       &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 149, 1…
-$ distance       &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, 733, …
-$ hour           &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6, 6, 6…
-$ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59, 0…
-$ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-01 0…</code></pre>
+$ year           &lt;int&gt; 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 20…
+$ month          &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ day            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ dep_time       &lt;int&gt; 517, 533, 542, 544, 554, 554, 555, 557, 557, 558, …
+$ sched_dep_time &lt;int&gt; 515, 529, 540, 545, 600, 558, 600, 600, 600, 600, …
+$ dep_delay      &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -…
+$ arr_time       &lt;int&gt; 830, 850, 923, 1004, 812, 740, 913, 709, 838, 753,…
+$ sched_arr_time &lt;int&gt; 819, 830, 850, 1022, 837, 728, 854, 723, 846, 745,…
+$ arr_delay      &lt;dbl&gt; 11, 20, 33, -18, -25, 12, 19, -14, -8, 8, -2, -3, …
+$ carrier        &lt;chr&gt; "UA", "UA", "AA", "B6", "DL", "UA", "B6", "EV", "B…
+$ flight         &lt;int&gt; 1545, 1714, 1141, 725, 461, 1696, 507, 5708, 79, 3…
+$ tailnum        &lt;chr&gt; "N14228", "N24211", "N619AA", "N804JB", "N668DN", …
+$ origin         &lt;chr&gt; "EWR", "LGA", "JFK", "JFK", "LGA", "EWR", "EWR", "…
+$ dest           &lt;chr&gt; "IAH", "IAH", "MIA", "BQN", "ATL", "ORD", "FLL", "…
+$ air_time       &lt;dbl&gt; 227, 227, 160, 183, 116, 150, 158, 53, 140, 138, 1…
+$ distance       &lt;dbl&gt; 1400, 1416, 1089, 1576, 762, 719, 1065, 229, 944, …
+$ hour           &lt;dbl&gt; 5, 5, 5, 5, 6, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 6,…
+$ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01…</code></pre>
 </div>
 </div>
 </section></section>
@@ -527,9 +1130,9 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <h2>distinct()</h2>
 <p>How many flights are in the data set?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a></a>  <span class="fu">distinct</span>(tailnum) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a></a>  <span class="fu">distinct</span>(tailnum) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4044</code></pre>
 </div>
@@ -537,10 +1140,10 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <div class="fragment">
 <p>How many distinct routes?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a></a>  <span class="fu">select</span>(origin, dest) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb65-2"><a></a>  <span class="fu">select</span>(origin, dest) <span class="sc">%&gt;%</span></span>
+<span id="cb65-3"><a></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb65-4"><a></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 224</code></pre>
 </div>
@@ -550,7 +1153,7 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="select-two-columns" class="slide level2">
 <h2>select() two columns</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">select</span>(flights, arr_delay, dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">select</span>(flights, arr_delay, dest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 2
    arr_delay dest 
@@ -572,8 +1175,8 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="select-columns-that-contain-information-about-departures-or-arrivals" class="slide level2">
 <h2>select() columns that contain information about departures or arrivals</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"dep_"</span>), <span class="fu">contains</span>(<span class="st">"arr_"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"dep_"</span>), <span class="fu">contains</span>(<span class="st">"arr_"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 6
    dep_time sched_dep_time dep_delay arr_time sched_arr_time arr_delay
@@ -595,24 +1198,24 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="select-the-numeric-or-not-numeric-columns" class="slide level2">
 <h2>select() the numeric (or not numeric) columns</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 14
-   year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-  &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
-1  2013     1     1      517            515         2      830            819
-2  2013     1     1      533            529         4      850            830
-3  2013     1     1      542            540         2      923            850
-# ℹ 6 more variables: arr_delay &lt;dbl&gt;, flight &lt;int&gt;, air_time &lt;dbl&gt;,
-#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;</code></pre>
+   year month   day dep_time sched_dep_time dep_delay arr_time
+  &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+1  2013     1     1      517            515         2      830
+2  2013     1     1      533            529         4      850
+3  2013     1     1      542            540         2      923
+# ℹ 7 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, flight &lt;int&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="cf">function</span>(x) <span class="sc">!</span><span class="fu">is.numeric</span>(x))) <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a></a>  <span class="fu">select</span>(<span class="fu">where</span>(<span class="cf">function</span>(x) <span class="sc">!</span><span class="fu">is.numeric</span>(x))) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   carrier tailnum origin dest  time_hour          
@@ -629,8 +1232,8 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <h2>exclude with select()</h2>
 <p>select() all but the first 10 columns</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb75-2"><a></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in x:y: numerical expression has 18 elements: only the first used</code></pre>
 </div>
@@ -656,9 +1259,9 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="relocate" class="slide level2">
 <h2>relocate()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a></a>  <span class="fu">relocate</span>(carrier, origin, dest) <span class="sc">%&gt;%</span> <span class="co"># to the front</span></span>
-<span id="cb32-3"><a></a>  <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a></a>  <span class="fu">relocate</span>(carrier, origin, dest) <span class="sc">%&gt;%</span> <span class="co"># to the front</span></span>
+<span id="cb78-3"><a></a>  <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "carrier"        "origin"         "dest"           "year"          
  [5] "month"          "day"            "dep_time"       "sched_dep_time"
@@ -669,9 +1272,9 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a></a>  <span class="fu">relocate</span>(year, month, day, <span class="at">.after =</span> <span class="fu">last_col</span>()) <span class="sc">%&gt;%</span> <span class="co"># to the end</span></span>
-<span id="cb34-3"><a></a>  <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a></a>  <span class="fu">relocate</span>(year, month, day, <span class="at">.after =</span> <span class="fu">last_col</span>()) <span class="sc">%&gt;%</span> <span class="co"># to the end</span></span>
+<span id="cb80-3"><a></a>  <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "dep_time"       "sched_dep_time" "dep_delay"      "arr_time"      
  [5] "sched_arr_time" "arr_delay"      "carrier"        "flight"        
@@ -686,9 +1289,9 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <h2>rename()</h2>
 <p>change the column names</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a></a>  <span class="fu">relocate</span>(tailnum) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-3"><a></a>  <span class="fu">rename</span>(<span class="at">tail_number =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a></a>  <span class="fu">relocate</span>(tailnum) <span class="sc">%&gt;%</span> </span>
+<span id="cb82-3"><a></a>  <span class="fu">rename</span>(<span class="at">tail_number =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
    tail_number  year month   day dep_time sched_dep_time dep_delay arr_time
@@ -704,17 +1307,17 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
  9 N593JB       2013     1     1      557            600        -3      838
 10 N3ALAA       2013     1     1      558            600        -2      753
 # ℹ 336,766 more rows
-# ℹ 11 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
-#   flight &lt;int&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
-#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+# ℹ 11 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+#   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="re-name-with-select" class="slide level2">
 <h2>re-name with select()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a></a>  <span class="fu">select</span>(<span class="at">tail_number =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a></a>  <span class="fu">select</span>(<span class="at">tail_number =</span> tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 1
    tail_number
@@ -738,11 +1341,11 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb40-2"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-4"><a></a>  <span class="fu">select</span>(tailnum, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-5"><a></a>  <span class="fu">arrange</span>(day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb86-2"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb86-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-4"><a></a>  <span class="fu">select</span>(tailnum, day) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-5"><a></a>  <span class="fu">arrange</span>(day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   tailnum   day
@@ -754,11 +1357,11 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
-<span id="cb42-2"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a></a>  <span class="fu">select</span>(tailnum, day) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(day))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb88-2"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-4"><a></a>  <span class="fu">select</span>(tailnum, day) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-5"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(day))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   tailnum   day
@@ -779,40 +1382,41 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="group_by" class="slide level2">
 <h2>group_by()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a></a>  <span class="fu">group_by</span>(origin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a></a>  <span class="fu">group_by</span>(origin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 19
 # Groups:   origin [3]
-    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
-   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
- 1  2013     1     1      517            515         2      830            819
- 2  2013     1     1      533            529         4      850            830
- 3  2013     1     1      542            540         2      923            850
- 4  2013     1     1      544            545        -1     1004           1022
- 5  2013     1     1      554            600        -6      812            837
- 6  2013     1     1      554            558        -4      740            728
- 7  2013     1     1      555            600        -5      913            854
- 8  2013     1     1      557            600        -3      709            723
- 9  2013     1     1      557            600        -3      838            846
-10  2013     1     1      558            600        -2      753            745
+    year month   day dep_time sched_dep_time dep_delay arr_time
+   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+ 1  2013     1     1      517            515         2      830
+ 2  2013     1     1      533            529         4      850
+ 3  2013     1     1      542            540         2      923
+ 4  2013     1     1      544            545        -1     1004
+ 5  2013     1     1      554            600        -6      812
+ 6  2013     1     1      554            558        -4      740
+ 7  2013     1     1      555            600        -5      913
+ 8  2013     1     1      557            600        -3      709
+ 9  2013     1     1      557            600        -3      838
+10  2013     1     1      558            600        -2      753
 # ℹ 336,766 more rows
-# ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
-#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
-#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+# ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+#   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+#   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+#   time_hour &lt;dttm&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="summarize-with-group_by" class="slide level2">
 <h2>summarize() with group_by()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb46-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb46-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb46-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb92-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb92-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb92-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb92-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb92-7"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   origin      n min_dep_delay max_dep_delay
@@ -828,14 +1432,14 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb48-3"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb48-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb48-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb48-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb48-7"><a></a>    <span class="at">.groups =</span> <span class="st">"drop_last"</span></span>
-<span id="cb48-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb94-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb94-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb94-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb94-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb94-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb94-7"><a></a>    <span class="at">.groups =</span> <span class="st">"drop_last"</span></span>
+<span id="cb94-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   origin      n min_dep_delay max_dep_delay
@@ -847,14 +1451,14 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb50-3"><a></a>  <span class="fu">summarize</span>(</span>
-<span id="cb50-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb50-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb50-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-7"><a></a>    <span class="at">.groups =</span> <span class="st">"keep"</span></span>
-<span id="cb50-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb96-3"><a></a>  <span class="fu">summarize</span>(</span>
+<span id="cb96-4"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb96-5"><a></a>    <span class="at">min_dep_delay =</span> <span class="fu">min</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb96-6"><a></a>    <span class="at">max_dep_delay =</span> <span class="fu">max</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb96-7"><a></a>    <span class="at">.groups =</span> <span class="st">"keep"</span></span>
+<span id="cb96-8"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
 # Groups:   origin [3]
@@ -873,9 +1477,9 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb52-2"><a></a>  <span class="fu">group_by</span>(origin, carrier) <span class="sc">%&gt;%</span></span>
-<span id="cb52-3"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a></a>  <span class="fu">group_by</span>(origin, carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb98-3"><a></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35 × 3
    origin carrier     n
@@ -895,8 +1499,8 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>flights <span class="sc">%&gt;%</span></span>
-<span id="cb54-2"><a></a>  <span class="fu">count</span>(origin, carrier)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb100-2"><a></a>  <span class="fu">count</span>(origin, carrier)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35 × 3
    origin carrier     n
@@ -919,11 +1523,11 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <section id="mutate-with-group_by" class="slide level2">
 <h2>mutate() with group_by()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>flights <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
-<span id="cb56-2"><a></a>  <span class="fu">mutate</span>(</span>
-<span id="cb56-3"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
-<span id="cb56-4"><a></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb56-5"><a></a>  <span class="fu">select</span>(origin, n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a></a>flights <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb102-2"><a></a>  <span class="fu">mutate</span>(</span>
+<span id="cb102-3"><a></a>    <span class="at">n =</span> <span class="fu">n</span>(), </span>
+<span id="cb102-4"><a></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb102-5"><a></a>  <span class="fu">select</span>(origin, n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 336,776 × 2
 # Groups:   origin [3]
@@ -947,12 +1551,12 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <h2>combined example</h2>
 <p>What’s the average speed in miles per hour of flights traveling to Raleigh-Durham, Atlanta and Orlando airports?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
-<span id="cb58-2"><a></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"RDU"</span>, <span class="st">"ATL"</span>, <span class="st">"MCO"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb58-3"><a></a>  <span class="fu">mutate</span>(<span class="at">time_hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb58-4"><a></a>  <span class="fu">mutate</span>(<span class="at">mph =</span> distance <span class="sc">/</span> time_hours) <span class="sc">%&gt;%</span></span>
-<span id="cb58-5"><a></a>  <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span></span>
-<span id="cb58-6"><a></a>  <span class="fu">summarize</span>(<span class="at">mean_speed =</span> <span class="fu">mean</span>(mph, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a></a>flights <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a></a>  <span class="fu">filter</span>(dest <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"RDU"</span>, <span class="st">"ATL"</span>, <span class="st">"MCO"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb104-3"><a></a>  <span class="fu">mutate</span>(<span class="at">time_hours =</span> air_time <span class="sc">/</span> <span class="dv">60</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb104-4"><a></a>  <span class="fu">mutate</span>(<span class="at">mph =</span> distance <span class="sc">/</span> time_hours) <span class="sc">%&gt;%</span></span>
+<span id="cb104-5"><a></a>  <span class="fu">group_by</span>(dest) <span class="sc">%&gt;%</span></span>
+<span id="cb104-6"><a></a>  <span class="fu">summarize</span>(<span class="at">mean_speed =</span> <span class="fu">mean</span>(mph, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   dest  mean_speed
@@ -977,6 +1581,36 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
 <li><p>Which day of the year should you fly on if you want to have the lowest possible average departure delay? What about arrival delay?</p></li>
 <li><p>What was the shortest flight out of each airport in terms of distance?</p></li>
 </ul>
+<!-- 1 -->
+<!-- flights |> -->
+<!--   filter(!is.na(tailnum)) |> -->
+<!--   count(origin, tailnum) |> -->
+<!--   group_by(origin) |> -->
+<!--   slice_max(n, n = 1, with_ties = FALSE) -->
+<!--   2 -->
+<!--   flights |> -->
+<!--   group_by(month, day) |> -->
+<!--   summarise( -->
+<!--     avg_dep_delay = mean(dep_delay, na.rm = TRUE), -->
+<!--     .groups = "drop" -->
+<!--   ) |> -->
+<!--   slice_min(avg_dep_delay, n = 1) -->
+<!--   flights |> -->
+<!--   group_by(month, day) |> -->
+<!--   summarise( -->
+<!--     avg_arr_delay = mean(arr_delay, na.rm = TRUE), -->
+<!--     .groups = "drop" -->
+<!--   ) |> -->
+<!--   slice_min(avg_arr_delay, n = 1) -->
+<!--   3 -->
+<!--   flights |> -->
+<!--   group_by(origin) |> -->
+<!--   slice_min(distance, n = 1, with_ties = FALSE) |> -->
+<!--   select(origin, dest, distance) -->
+<!--   flights |> -->
+<!--   group_by(origin) |> -->
+<!--   slice_min(distance) |> -->
+<!--   select(origin, dest, distance) -->
 
 
 </section></section>
@@ -1236,190 +1870,172 @@ $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
-          }
-        }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
             }
           }
-          return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          return false;
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
             }
-          }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
         }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
               }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>
