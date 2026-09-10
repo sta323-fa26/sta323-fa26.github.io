@@ -49,6 +49,8 @@ projectPackages = [
   pkgs.rPackages.sloop
   pkgs.rPackages.BEDMatrix
   pkgs.rPackages.plotly
+  pkgs.rPackages.nycflights13
+  pkgs.rPackages.repurrrsive
 ];
 
   rEnv = pkgs.rstudioWrapper.override {

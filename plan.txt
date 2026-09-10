@@ -1,0 +1,4 @@
+dimension reduction for visualization;
+examples for topics, ideas:
+- PCA: many penguins data set from tidy tuesday; SNP data set from Novembre
+- geography? dinosaur data set
