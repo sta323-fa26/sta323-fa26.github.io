@@ -154,10 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
   <li><a href="#examine-two-emails" id="toc-examine-two-emails" class="nav-link" data-scroll-target="#examine-two-emails">1. Examine two emails</a></li>
   <li><a href="#who-sends-emails" id="toc-who-sends-emails" class="nav-link" data-scroll-target="#who-sends-emails">2. Who sends emails?</a></li>
-  <li><a href="#make-a-data-frame" id="toc-make-a-data-frame" class="nav-link" data-scroll-target="#make-a-data-frame">3. Make a data frame</a>
-  <ul class="collapse">
-  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task">Task</a></li>
-  </ul></li>
+  <li><a href="#extract-the-body-of-the-email" id="toc-extract-the-body-of-the-email" class="nav-link" data-scroll-target="#extract-the-body-of-the-email">3. Extract the body of the email</a></li>
+  <li><a href="#make-a-data-frame" id="toc-make-a-data-frame" class="nav-link" data-scroll-target="#make-a-data-frame">4. Make a data frame</a></li>
   <li><a href="#style-guidelines" id="toc-style-guidelines" class="nav-link" data-scroll-target="#style-guidelines">Style guidelines</a></li>
   <li><a href="#submitting-your-lab" id="toc-submitting-your-lab" class="nav-link" data-scroll-target="#submitting-your-lab">Submitting your lab</a></li>
   </ul></li>
@@ -204,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <p>There are 4911 documents. Each document is an email from one of 5 email listservs (news groups), that, as far as I can tell, were all hosted at Carnegie Mellon University in the early 90s. The original data set (with a total of 20 news groups) can be found <a href="http://qwone.com/~jason/20Newsgroups/">here</a>. This data set is a popular choice for experiments in text classification and clustering. Please note the following warning: similar to many modern forums on the internet, the emails in this data set may contain profanity and offensive language. I do not condone, endorse nor promote language, views or content expressed within this data set.</p>
-<p>The five document classes (newsgroups) are as follows:</p>
+<p>The five document classes (newsgroups) we will consider are as follows:</p>
 <ol type="1">
 <li><code>comp.graphics</code></li>
 <li><code>comp.sys.mac.hardware</code></li>
@@ -219,166 +217,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examine-two-emails" class="level2">
 <h2 class="anchored" data-anchor-id="examine-two-emails">1. Examine two emails</h2>
-<p>Read in the data from the file <code>37916</code> with <code>readLines</code>, e.g.&nbsp;<code>x &lt;- readLines("path/to/file/37916")</code>. Also read in file <code>62616</code> and assign it to the variable <code>y</code>. Write a function <code>extract_class()</code> that takes in the text (<code>x</code>) and returns a character string containing the document class (or classes) using regular expressions. Show the output of the following:</p>
+<p>Read in the data from the file <code>37916</code> with <code>readLines</code>, e.g.&nbsp;<code>x &lt;- readLines("path/to/file/37916")</code>. Also read in file <code>101554</code> and assign it to the variable <code>y</code>. Write a function <code>extract_newsgroup()</code> that takes in the text <code>x</code> and returns a character string containing the document class (or classes) using regular expressions. Show the output of the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_class</span>(x)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_class</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_newsgroup</span>(x)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_newsgroup</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Why are regular expressions preferred to examining newsgroup by line number?</p>
+<p>Note: if there are 2 or more classes (document types) then the output show be a vector of length 2 or more. Example: for document <code>y</code> above, the output should be a character vector of length 2.</p>
+<p>Why would someone prefer to extract newsgroup information by regular expression instead of grabbing the information from a specific line number in the file?</p>
 </section>
 <section id="who-sends-emails" class="level2">
 <h2 class="anchored" data-anchor-id="who-sends-emails">2. Who sends emails?</h2>
-<p>Write a function <code>extract_sender()</code> that extracts only the email of the sender from a file. For example, the output should be <code>email@duke.edu</code> and <strong>not</strong> <code>email@duke.edu (name)</code>. Show the output of</p>
+<p>Information about who sends the email is usually printed at the top of the file. Examine emails <code>x</code> and <code>y</code> and then write a function <code>extract_sender()</code> that extracts only the email of the sender from a file. For example, the output should be <code>email@duke.edu</code> and <strong>not</strong> <code>email@duke.edu (name)</code>. Show the output of</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_sender</span>(x)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_sender</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="make-a-data-frame" class="level2">
-<h2 class="anchored" data-anchor-id="make-a-data-frame">3. Make a data frame</h2>
-<p>Now using all 4911 documents together with your functions from exercise 1 and 2, construct a data frame called <code>email_df</code> that contains the following 3 columns:</p>
-<ul>
-<li><code>id</code>: the actual file name that uniquely identifies the email, e.g.&nbsp;<code>37916</code>.</li>
-<li><code>class</code>: the newsgroup class (e.g.&nbsp;<code>sci.space</code>)</li>
-<li><code>sender</code>: email address of the sender</li>
-</ul>
-<p>Show the output of</p>
+<section id="extract-the-body-of-the-email" class="level2">
+<h2 class="anchored" data-anchor-id="extract-the-body-of-the-email">3. Extract the body of the email</h2>
+<p>Write a function <code>extract_body()</code> that takes in one of the emails, <code>x</code> and (1) identifies the first blank line in the email and (2) extracts everything <em>after</em> the blank line (this is what we will call the “body” of the email). The function should return the entire body of the email as a list. Show the result of</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(email_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_body</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, report, using an appropriate set of dplyr commands and regular expressions, the proportion of emails in each newsgroup class that originate from a duke email address.</p>
-<section id="task" class="level3">
-<h3 class="anchored" data-anchor-id="task">Task</h3>
-<p>We will comb through 4911 documents and construct a single data frame from these documents for use in a future lab. Our goal is to create a data frame that looks like the following:</p>
+</section>
+<section id="make-a-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="make-a-data-frame">4. Make a data frame</h2>
+<p>You will now comb through all 4911 documents and construct a single data frame from these documents for use in a future lab. Our goal is to create a data frame that looks like the following:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="img/document_example_df.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="img/regexp-img.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>where the column <code>Document</code> contains the documents name or #, <code>Newsgroup</code> contains the category the document belongs to, <code>total_words</code> contains the total words in the document, <code>word_1</code>, <code>word_2</code> up to <code>word_v</code> contains every word in every document and the values represent the number of occurrences of each given word in the document.</p>
-<p>To make this task more manageable, let’s break this into smaller tasks below:</p>
-<section id="part-1" class="level4">
-<h4 class="anchored" data-anchor-id="part-1">part 1</h4>
-<p>Read in the data from the file <code>37916</code> with <code>readLines</code>, e.g.&nbsp;<code>x = readLines("pathToFile/37916")</code>. Write a regular expression to identify the “Newsgroup” from the text. Save the result as an object called <code>newsgroup_id</code>. Print <code>newsgroup_id</code> to the screen.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Some documents (emails) are featured in multiple newsgroups, separated by a comma <code>,</code>. You should return a character vector of the newsgroups and can handle this like below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">"rec.autos,rec.autos.tech"</span> <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(<span class="st">","</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "rec.autos"      "rec.autos.tech"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="part-2" class="level4">
-<h4 class="anchored" data-anchor-id="part-2">part 2</h4>
-<p>Identify which part of the document is the body of the email. Write a regular expression to extract each word (alphanumeric) from the body of the email. Save a <strong>character vector</strong> of words in the email as an object called <code>words_in_email</code>. Print the first 10 <code>words_in_email</code> to the screen. The first three should be</p>
-<pre><code>"I" "recently" "got"</code></pre>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Find which entry has “Lines:”</li>
-<li>Subset the document <code>x</code> to only be what occurs after this entry.</li>
-<li>Extract each word followed by a break.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="part-3" class="level4">
-<h4 class="anchored" data-anchor-id="part-3">part 3</h4>
-<p>Save your result from part 1 and 2 into a list like so:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>i <span class="ot">=</span> <span class="dv">37916</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>doc_i <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"doc_id"</span> <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"doc"</span>, i, <span class="at">sep =</span> <span class="st">"_"</span>),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Newsgroup"</span> <span class="ot">=</span> newsgroup_id,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"words"</span> <span class="ot">=</span> words_in_email</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>and then write a for loop, using the template code below as a starting point to make a list of lists for each document.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>all_docs <span class="ot">=</span> <span class="fu">list.files</span>(<span class="st">"/data/newsgroups_5"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>doc_words <span class="ot">=</span> <span class="fu">list</span>()</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># begin for loop over i in all_docs </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read in doc i</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create newsgroup_id</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create words_in_email</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># put both together in a list called doc_i</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  doc_words[[<span class="fu">paste</span>(<span class="st">"doc"</span>, i, <span class="at">sep =</span> <span class="st">"_"</span>)]] <span class="ot">=</span> doc_i</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># end for loop</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Print the first three lists inside of <code>doc_words</code> using the code below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>doc_words[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Use <code>paste</code> or <code>paste0</code> to concatenate the filepath and filenames as you read them in.</p>
-</div>
-</div>
-</section>
-<section id="part-4" class="level4">
-<h4 class="anchored" data-anchor-id="part-4">part 4</h4>
-<p>Using the appropriate lookup functions from <code>purrr</code> (see lecture on functional programming) turn your list of lists <code>doc_words</code> into a tibble called <code>doc_words_df</code> that looks like the data frame pictured below. While building your data frame, remove all documents for which there are <strong>multiple newsgroups</strong>.</p>
-<pre><code>  Document   Newsgroup          total_words words      
-  &lt;chr&gt;      &lt;chr&gt;                    &lt;int&gt; &lt;list&gt;     
-1 doc_100521 rec.sport.baseball         261 &lt;chr [261]&gt;
-2 doc_101551 rec.autos                  439 &lt;chr [439]&gt;
-3 doc_101552 rec.autos                  147 &lt;chr [147]&gt;</code></pre>
+<p>More specifically, use your functions from exercise 1, 2, and 3 to construct a data frame called <code>emails_df</code> that contains the following 5 columns:</p>
 <ul>
-<li><p>Print the first 10 rows to the screen <strong>and</strong> glimpse your resulting data frame. There should be <strong>3922</strong> rows and <strong>4</strong> columns.<br>
-</p></li>
-<li><p>Finally, print a count of how many observations of each Newsgroup is in the data set.</p></li>
+<li><code>id</code>: the actual file name that uniquely identifies the email, e.g.&nbsp;<code>37916</code>.</li>
+<li><code>newsgroup1</code>: the first newsgroup class (e.g.&nbsp;<code>sci.space</code>)</li>
+<li><code>newsgroup2</code>: the second newsgroup class (if available) otherwise, NA</li>
+<li><code>sender</code>: email address of the sender</li>
+<li><code>body</code>: list containing all lines that comprise the body of the email</li>
 </ul>
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>Make it so that <code>newsgroup1</code> and <code>newsgroup2</code> <strong>only</strong> display newsgroups of the following 5 categories:</p>
+<ol type="1">
+<li><code>comp.graphics</code></li>
+<li><code>comp.sys.mac.hardware</code></li>
+<li><code>rec.autos</code></li>
+<li><code>rec.sport.baseball</code></li>
+<li><code>sci.space</code></li>
+</ol>
+<p>Note: every single email in this data set has at least one of the category labels above.</p>
+<p>Show the output of</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(emails_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Answer the following questions:</p>
+<ol type="1">
+<li>Are any of the “sender” in your data frame NA? If so, examine one of those emails and explain why.</li>
+<li>What total number of emails have only 1 newsgroup label (of the 5 categories above)?</li>
+<li>What proportion of emails originate from an academic “edu” sender address? Note: some may be “EDU”, e.g.&nbsp;see image above. <!-- 4. What proportion of emails in each `newsgroup1`, originate from a Duke email address? --></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Hint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Do <strong>not</strong> unnest the <code>words</code> column. This operation is too expensive to play with and may freeze your container/computer.</p>
+<p>You might revisit <code>list.files</code> from a previous lab and construct a vector of paths you can loop over.</p>
 </div>
 </div>
-</section>
-</section>
 </section>
 <section id="style-guidelines" class="level2">
 <h2 class="anchored" data-anchor-id="style-guidelines">Style guidelines</h2>
