@@ -1,605 +1,511 @@
 ---
-title: "Regular expressions"
+title: "Regular expressions cheat sheet"
 author: "Dr. Alexander Fisher"
 execute:
   warning: true
+  eval: false
 format: html
+
 ---
 
-
-## Introduction
-
-::: callout-note
-## Definition
-A regular expression (or regex / regexp) is a tool for identifying patterns in strings.
-:::
-
-A regular expression lets you:
-
-1.  extract *only* the phone number from this string: "My phone number is (123) 456-7890, not to be confused with my birth month which is 0"
-
-2.  search and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously
-
-3.  search through all files in a directory for the one that contains a specific string
-
-4.  find the specific line number from a file that contains a string
-
-5.  find and replace through multiple files simultaneously
-
-And much, much more!
-
-## Quick example
-
-`grep` and `grepl` are base R functions that return the index of a match and the logical value of a match respectively.
-
 ```{r}
-text = c("Wealth, fame, power. Gold Roger, the King of the Pirates, attained",
-         "everything this world has to offer.")
-text
-```
-
-```{r}
-grep("Pirate", text)
-grepl("Pirate", text)
-```
-
-::: {.fragment}
-
-**Note**: regular expressions are case-sensitive
-
-```{r}
-grep("pirate", text)
-grepl("pirate", text)
-```
-:::
-
-# stringr
-
-![](images/stringr.png){fig-align="center"}
-
-## introducing stringr
-
-```{r}
-#| echo: false
-#| warning: false
 library(tidyverse)
 ```
 
-`stringr` hosts a convenient set of tools to manipulate strings and extract regular expressions. All functions begin with the prefix `str`.
+## The basic idea
 
-See [this cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf) for a summary of `stringr` functions.
-
-Notice below that the string comes first in these functions (in contrast with `grep`)
-
-### Example
+A **regular expression** (regex or regexp) is a pattern used to find text.
+In `stringr`, the string is usually the first argument and the pattern is
+the second.
 
 ```{r}
-txt = c("Luffy: 'I'm going to be king of the pirates! !'", 
-        "The straw hat crew set sail.", 
-        "Nami: 'I'm Going to be the world's greatest navigator!'")
+str_detect(strings, pattern)       # Is there a match? TRUE or FALSE
+str_subset(strings, pattern)       # Keep strings containing a match
+str_count(strings, pattern)        # Count matches in each string
+str_locate(strings, pattern)       # Return positions of the first match
+str_extract(strings, pattern)      # Return the first match
+str_extract_all(strings, pattern)  # Return every match (as a list)
+str_remove(strings, pattern)       # Remove the first match
+str_remove_all(strings, pattern)   # Remove every match
+str_replace(strings, pattern, replacement)
+str_replace_all(strings, pattern, replacement)
+str_split(strings, pattern)        # Split each string (returns a list)
+str_split_1(string, pattern)       # Split one string (returns a vector)
+str_match(strings, pattern)        # Return match and captured groups
+str_view(strings, pattern)         # Display matches for debugging
 ```
 
-::: panel-tabset
-### str_detect()
+::: {.callout-tip title="Choose the function from the desired output"}
+Use `str_detect()` for a logical vector, `str_subset()` for the original
+strings, and `str_extract()` for only the matching text.
 
--   like `grepl`
-
-```{r}
-str_detect(txt, ":")
-```
-
-### str_extract()
-
--   return the match
-
-```{r}
-str_extract(txt, "\\s([A-Z]|[a-z])*ng") # first instance
-str_extract_all(txt, "\\s([A-Z]|[a-z])*ng") %>% str()
-```
-
-### str_replace
-
-```{r}
-str_replace(txt, "Nami", "Zoro") %>%
-  str_replace("navigator", "swordsman")
-```
+Functions ending in `_all()` act on every match within each string. Without
+`_all()`, only the first match in each string is used.
 :::
 
-## The power of `str_replace`
+## Essential pattern pieces
+
+### Literals, alternatives, and groups
+
+| Goal | Regex | R string | Meaning |
+|---|---|---|---|
+| Exact text | `cat` | `"cat"` | The characters `cat` |
+| One of several characters | `[abc]` | `"[abc]"` | `a`, `b`, or `c` |
+| A range | `[A-Z]` | `"[A-Z]"` | One uppercase letter |
+| Anything except a set | `[^0-9]` | `"[^0-9]"` | One non-digit |
+| Either expression | `cat\|dog` | `"cat|dog"` | `cat` or `dog` |
+| Group expressions | `gr(a\|e)y` | `"gr(a|e)y"` | `gray` or `grey` |
+| Group without capture | `(?:cat\|dog)` | `"(?:cat|dog)"` | Group only |
+
+Alternation has low precedence. Group alternatives when they are only part of
+a larger pattern.
 
 ```{r}
-no_bots = "My number is one Two tHree 456 fOuR 3 2 1"
+str_detect(c("gray", "grey"), "gr(a|e)y")
+
+# A vowel at the start, not a vowel anywhere or "a" at the start.
+str_detect(names, "^[aeiou]")
 ```
+
+### Character classes
+
+| Regex | R string | Matches one... |
+|---|---|---|
+| `.` | `"."` | Character other than a newline |
+| `\d` | `"\\d"` | Digit |
+| `\D` | `"\\D"` | Non-digit |
+| `\s` | `"\\s"` | Whitespace character |
+| `\S` | `"\\S"` | Non-whitespace character |
+| `\w` | `"\\w"` | Letter, digit, or underscore |
+| `\W` | `"\\W"` | Non-word character |
+| `[[:alpha:]]` | `"[[:alpha:]]"` | Alphabetic character |
+| `[[:digit:]]` | `"[[:digit:]]"` | Digit |
+| `[[:punct:]]` | `"[[:punct:]]"` | Punctuation character |
+
+The dot is a wildcard. To match a literal dot, use `\\.` in an ordinary R
+string.
 
 ```{r}
-str_to_lower(no_bots) %>%
-  str_replace_all(c("one" = "1", "two" = "2", 
-                    "three" = "3", "four" = "4")) %>%
-  str_extract_all("\\d") %>% # simplify arg here could change pipeline
-  unlist() %>%
-  paste(collapse = "") # or use str_c(collapse = "")
+str_detect("duke.edu", ".")       # TRUE: . matches any character
+str_detect("duke.edu", "\\.")     # TRUE: matches a literal dot
+str_detect("dukeXedu", "\\.")     # FALSE
 ```
 
-## Basic principles
+### Anchors and boundaries
 
--   To match a string exactly, just write those characters.
+Anchors match a **position**, not a character.
 
--   To match a single character from a set of possibilities, use square brackets, e.g. `[0123456789]` matches any digit.
+| Regex | R string | Position |
+|---|---|---|
+| `^` | `"^"` | Start of string |
+| `$` | `"$"` | End of string |
+| `\b` | `"\\b"` | Word boundary |
+| `\B` | `"\\B"` | Not a word boundary |
 
--   To group characters together into an expression, use parentheses, `()`
+```{r}
+str_detect(x, "^From:")           # starts with From:
+str_detect(x, "\\.edu$")          # ends with .edu
+str_detect(x, "\\bcat\\b")        # the whole word cat
+str_detect(x, "^\\s*$")           # blank or whitespace-only string
+```
 
-::: {.fragment}
-
-**Repeaters:** `*` , `+` and `{ }`: the preceding character is to be used for more than once
-
--   `*` match zero or more occurrences of the preceding expression.
-
--   `+` match one or more occurrences of the preceding expression.
-
--   `{}` match the preceding expression for as many times as the value inside this bracket.
+::: {.callout-important title="A blank line read by readLines()"}
+`readLines()` returns one character string per line. A blank line is therefore
+usually an element equal to `""`; it is not stored as `"\n"`. The pattern
+`"^\\s*$"` matches both `""` and a line containing only whitespace.
 :::
 
-::: {.fragment}
+### Quantifiers
 
+A quantifier controls how many times the **preceding item** may repeat.
 
-Some repeater examples:\
-\
+| Quantifier | Meaning | Example |
+|---|---|---|
+| `*` | Zero or more | `"a*"` |
+| `+` | One or more | `"a+"` |
+| `?` | Zero or one | `"colou?r"` |
+| `{3}` | Exactly three | `"\\d{3}"` |
+| `{3,}` | Three or more | `"\\d{3,}"` |
+| `{3,5}` | Three through five | `"\\d{3,5}"` |
 
-| regexp   | explanation                       |
-|----------|-----------------------------------|
-| `a*`     | match 0 or more occurences of "a" |
-|  `a+`        | match 1 more occurences of "a"                                 |
-|   `(abc)+`  | match 1 or more back-to-back occurence of the group "abc"                               |
-| `a{3}`   | match a 3 times                   |
-| `a{3,}`  | match a 3 or more times           |
-| `a{3,5}` | match "a" 3, 4 or 5 times         |
+```{r}
+str_detect("919-555-1234", "^\\d{3}-\\d{3}-\\d{4}$")
+str_detect(c("color", "colour"), "^colou?r$")
+```
 
-\small{citation: <https://www.geeksforgeeks.org/write-regular-expressions/>}
+Common whitespace templates are:
+
+```{r}
+"\\s*"  # allow no whitespace or any amount of whitespace
+"\\s+"  # require at least one whitespace character
+"\\s?"  # allow at most one whitespace character
+```
+
+### Greedy and lazy matching
+
+Quantifiers are **greedy** by default: they match as much text as possible.
+Add `?` after a quantifier to make it lazy (or non-greedy).
+
+```{r}
+html <- "<div>first</div><div>second</div>"
+
+str_extract(html, "<div>.*</div>")
+# <div>first</div><div>second</div>
+
+str_extract(html, "<div>.*?</div>")
+# <div>first</div>
+```
+
+## R has two layers of escaping
+
+Characters such as `. ^ $ * + ? { } [ ] \\ | ( )` have special regex
+meanings. A backslash tells the regex engine to treat one literally, but the
+backslash is also special inside an ordinary R string. Consequently, an
+ordinary R string generally needs **two backslashes**.
+
+| Desired match | Regex engine needs | Ordinary R string | Raw R string |
+|---|---|---|---|
+| A digit | `\d` | `"\\d"` | `r"(\d)"` |
+| A period | `\.` | `"\\."` | `r"(\.)"` |
+| `(` | `\(` | `"\\("` | `r"(\()"` |
+| A backslash | `\\` | `"\\\\"` | `r"(\\)"` |
+
+Raw strings, available in R 4.0 and later, can make complicated patterns much
+easier to read.
+
+```{r}
+ordinary <- "\\(\\d{3}\\)\\s*\\d{3}-\\d{4}"
+raw <- r"(\(\d{3}\)\s*\d{3}-\d{4})"
+
+identical(ordinary, raw)
+```
+
+## Pattern options
+
+Wrap a pattern in `regex()` to change how it is interpreted.
+
+```{r}
+# Ignore capitalization.
+str_detect(x, regex("duke", ignore_case = TRUE))
+
+# Let ^ and $ refer to the start and end of each line in one string.
+str_extract_all(
+  one_multiline_string,
+  regex("^From:.*$", multiline = TRUE)
+)
+
+# Let the . wildcard match newline characters too.
+str_extract(
+  one_multiline_string,
+  regex("BEGIN.*END", dotall = TRUE)
+)
+
+# Permit spacing and comments inside a long pattern.
+phone_pattern <- regex(
+  r"(
+    \(? (\d{3}) \)?  # optional parentheses around area code
+    [ -]?             # optional separator
+    (\d{3})           # exchange
+    [ -]?             # optional separator
+    (\d{4})           # subscriber number
+  )",
+  comments = TRUE
+)
+```
+
+Use `fixed()` when the pattern should have **no regex meaning**. This is often
+the clearest and fastest choice for literal text.
+
+```{r}
+str_detect("price is $5.00", fixed("$5.00"))
+```
+
+## Capture groups and backreferences
+
+Parentheses can save parts of a match. `str_match()` returns the full match in
+its first column and one captured group in each additional column.
+
+```{r}
+dates <- c("2026-09-11", "2025-01-30")
+
+str_match(dates, "^(\\d{4})-(\\d{2})-(\\d{2})$")
+#      full match   year   month  day
+```
+
+In a replacement, `\\1`, `\\2`, and so on refer to captured groups.
+
+```{r}
+str_replace(
+  "Fisher, Alexander",
+  "^([^,]+),\\s*(.+)$",
+  "\\2 \\1"
+)
+# Alexander Fisher
+```
+
+A backreference can also require text to repeat within the match.
+
+```{r}
+str_detect(c("abab", "cdcd", "abcd"), "^(..)\\1$")
+```
+
+## Lookarounds
+
+Lookarounds require context without including that context in the returned
+match.
+
+| Form | Meaning |
+|---|---|
+| `(?=...)` | Must be followed by... |
+| `(?!...)` | Must not be followed by... |
+| `(?<=...)` | Must be preceded by... |
+| `(?<!...)` | Must not be preceded by... |
+
+```{r}
+# Extract digits only when they follow "DUID: ".
+str_extract(student_id, "(?<=DUID: )\\d+")
+
+# Extract a username only when it is followed by @.
+str_extract(address, "[A-Za-z0-9._+-]+(?=@)")
+
+# Extract a number only when it is not followed by a unit such as kg.
+str_extract(x, "\\d+\\b(?!\\s*kg\\b)")
+```
+
+::: {.callout-note}
+Lookbehind is useful when the prefix has a fixed length. If the surrounding
+text is complicated, a capture group with `str_match()` is often clearer.
 :::
 
+## Common templates
 
-## Symbols
+### Match a complete string
 
--   `.` symbol for wildcard. The dot symbol can take place of any other symbol.
-
--   `?` symbol for optional character. The preceding character may or may not be present in the string to be matched. Example: `docx?` will match both `docx` and `doc`
-
--   `$` symbol for position match end. Tells the computer that the match must occur at the end of the string or before `\n` at the end of the line or string.
-
--   `\` symbol for escaping characters. If you want to match for the actual `+` or `.`, etc. add a backslash `\` before that character.
-
--   `|` symbol for "or". Match any one element separated by the vertical bar `|` character. Example: `th(e|is|at)` will match words "the", "this" and "that".
-
--   `^` symbol has two meanings.
-
-    -   By itself, `^` sets the position of the match to the beginning of the string or line. Example: `^\d{3}` says to match the first three digits at the beginning of the string and will return `919` from `919-123-4567`.
-
-    -   Together with brackets, `[^set_of_characters]` implies *exclusion*. Example: `[^abc]` will match any character except a, b, c.
-
-## Character classes
-
-**Character classes**: match a character by its class, for example: letter, digit, space, and symbols.
-
--   `\s` : matches any whitespace characters such as space and tab
-
--   `\S` : matches any non-whitespace characters
-
--   `\d` : matches any digit character
-
--   `\D` : matches any non-digit characters
-
--   `\w` : matches any word character (basically alpha-numeric)
-
--   `\W` : matches any non-word character
-
--   `\b` : matches any word boundary (this would include spaces, dashes, commas, semi-colons, etc)
-
-\small{citation: <https://www.geeksforgeeks.org/write-regular-expressions/>}
-
-## A hierarchical view of character classes
-
-![](images/regex_char_classes.png){fig-align="center" width="479"}
-
-\small{citation: [http://perso.ens-lyon.fr/lise.vaudor/strings-et-expressions-regulieres/]()}
-
-## Ranges
-
-`-` can be used to interpolate between first and last and grab consecutive values. Example: `[A-Z]` matches any capital letters from "A" to "Z". `[1-4]` matches any integer digit from 1 to 4.
-
-To match an alphabetical character (upper or lower case "A-Z" or "a-z") but not numbers, you can use the regular expression `([A-Z]|[a-z])`
-
-To match everything but capital "F" through "N", you can use the regular expression `[^F-N]`
-
-## Escapism
-
-When to escape?
-
-    . ^ $ * + ? { } [ ] \ | ( )
-
-Are all special and perform as described on the previous slides by default. Therefore, these special characters must be escaped to match directly. You need to use *two* levels of escape to escape a special character. Example:
+Use both anchors when the **entire** string must follow the format.
 
 ```{r}
-txt = "To be, [or] not to be that is the question."
+str_detect(x, "^[A-Za-z]+$")
+str_detect(x, "^\\d{4}-\\d{2}-\\d{2}$")
+str_detect(x, regex("^(yes|no)$", ignore_case = TRUE))
 ```
+
+### Extract words or numbers
 
 ```{r}
-#| error: true
-str_detect(txt, "[")
+str_extract_all(x, "\\b[[:alpha:]]+\\b")
+str_extract_all(x, "-?\\d+(?:\\.\\d+)?")
+str_extract_all(x, "\\$\\d+(?:,\\d{3})*(?:\\.\\d{2})?")
 ```
+
+The number pattern above allows an optional minus sign and optional decimal
+part. The currency pattern allows commas and an optional two-digit cents part.
+
+### Match a file extension
 
 ```{r}
-#| error: true
-str_detect(txt, "\[")
+str_detect(
+  filenames,
+  regex("\\.(csv|tsv|txt)$", ignore_case = TRUE)
+)
 ```
+
+The dot must be escaped, and `$` prevents a match such as `data.csv.backup`.
+
+### Match or extract an email-like address
+
+For ordinary data cleaning, a deliberately simple pattern is often better than
+an attempted complete implementation of every valid email address.
 
 ```{r}
-str_detect(txt, "\\[")
+email_pattern <-
+  "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+
+str_extract(x, email_pattern)
 ```
 
-## Escape classes
+This is a useful extraction heuristic, not a complete email validator.
 
-In order to access the presumed functionality of character classes, you need to use a double escape as well. Example:
+### Split around a delimiter and optional whitespace
 
 ```{r}
-txt = c("A1", "B2", "CC", "DD", "EE2")
+str_split_1("rec.autos, rec.autos.tech", "\\s*,\\s*")
+str_split_1("key : value", "\\s*:\\s*")
 ```
 
--   Which strings end with a digit?
+### Remove a labeled prefix
 
 ```{r}
-#| error: true
-str_detect(txt, "\d$")
+str_remove("From: name@duke.edu", "^From\\s*:\\s*")
 ```
+
+Anchoring the label with `^` prevents removal of the word `From` later in the
+text.
+
+## Lab 3 recipes
+
+These templates match the structure of the newsgroup email files. They are
+shown separately so that each part can be understood and adapted.
+
+### 1. Find and split the `Newsgroups:` header
 
 ```{r}
-#| error: true
-str_detect(txt, "\\d$")
+extract_newsgroup <- function(x) {
+  x |>
+    str_subset("^Newsgroups\\s*:") |>
+    str_remove("^Newsgroups\\s*:\\s*") |>
+    _[1] |>
+    str_split_1("\\s*,\\s*")
+}
 ```
 
--   Which strings contain 3 alphanumeric characters?
+Pattern anatomy:
+
+- `^Newsgroups` requires the label at the start of a line.
+- `\\s*` allows zero or more whitespace characters.
+- `:` matches the literal colon.
+- The removal pattern includes trailing `\\s*` so the result begins at the
+  first newsgroup name.
+- `"\\s*,\\s*"` splits at a comma and consumes surrounding whitespace.
+
+Do not rely on a fixed line number: different files can contain different
+numbers or orders of header lines.
+
+### 2. Extract the sender's address
 
 ```{r}
-str_detect(txt, "\\w{3}")
+extract_sender <- function(x) {
+  x |>
+    str_subset("^From\\s*:") |>
+    str_remove("^From\\s*:\\s*") |>
+    str_extract(
+      "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+"
+    ) |>
+    _[1]
+}
 ```
 
-. . .
+Some files may have a `From:` line without an email address, or place useful
+information in another header such as `Sender:`. In those cases the function
+correctly produces `NA`; inspecting those exceptions is part of data cleaning.
 
-::: callout-note
-## tl;dr
+### 3. Locate the first blank line and keep the body
 
-to match a symbol or character class, use double escapes
+```{r}
+extract_body <- function(x) {
+  first_blank <- which(str_detect(x, "^\\s*$"))[1]
+
+  if (is.na(first_blank) || first_blank == length(x)) {
+    stop("Email has no body")
+  }
+
+  list(x[(first_blank + 1):length(x)])
+}
+```
+
+Pattern anatomy:
+
+- `^` starts at the beginning of an element of `x`.
+- `\\s*` permits zero or more whitespace characters.
+- `$` requires the end immediately afterward.
+- Together, `^\\s*$` matches `""`, spaces only, or tabs only.
+- `[1]` selects the first matching line, which separates headers from body.
+
+### 4. Detect academic `.edu` sender addresses
+
+```{r}
+is_edu <- str_detect(
+  emails_df$sender,
+  regex("\\.edu$", ignore_case = TRUE)
+)
+
+mean(is_edu, na.rm = TRUE)
+```
+
+Why each part matters:
+
+- `\\.` means a literal period; `.` alone would be a wildcard.
+- `edu` is the desired ending.
+- `$` requires `.edu` at the end of the extracted address.
+- `ignore_case = TRUE` matches `.edu`, `.EDU`, and other capitalizations.
+- `na.rm = TRUE` defines the proportion among senders with a detected address.
+
+If the intended denominator is **all emails**, treat missing addresses
+explicitly instead:
+
+```{r}
+mean(replace_na(is_edu, FALSE))
+```
+
+### 5. Keep only the five target newsgroups
+
+Exact membership is clearer than a regex once the header has already been
+split into labels.
+
+```{r}
+target_groups <- c(
+  "comp.graphics",
+  "comp.sys.mac.hardware",
+  "rec.autos",
+  "rec.sport.baseball",
+  "sci.space"
+)
+
+newsgroups[newsgroups %in% target_groups]
+```
+
+::: {.callout-tip title="Regex is not always the right tool"}
+Use regex to recognize structure inside strings. After text has been parsed
+into exact values, `%in%`, joins, factors, or ordinary comparisons are usually
+clearer.
 :::
 
-## Exercise 1
+## Base R equivalents
+
+| Task | `stringr` | Base R |
+|---|---|---|
+| Logical detection | `str_detect(x, p)` | `grepl(p, x)` |
+| Indices of matches | `which(str_detect(x, p))` | `grep(p, x)` |
+| Matching strings | `str_subset(x, p)` | `grep(p, x, value = TRUE)` |
+| Replace first | `str_replace(x, p, r)` | `sub(p, r, x)` |
+| Replace all | `str_replace_all(x, p, r)` | `gsub(p, r, x)` |
+| Split | `str_split(x, p)` | `strsplit(x, p)` |
+
+Note the argument order: `stringr` generally uses `(string, pattern)`, whereas
+base R's regex functions generally use `(pattern, string)`.
+
+## Debugging checklist
+
+When a pattern does not behave as expected, check these in order:
+
+1. **Inspect the actual strings.** Use `dput(x)` or `str_view(x)` to expose
+   whitespace and escapes.
+2. **Start with a small literal.** Confirm that the relevant line can be found
+   before adding classes, groups, and quantifiers.
+3. **Check anchors.** Should the match occur anywhere, or only at the start or
+   end?
+4. **Check escaping.** In an ordinary R string, `\\d`, `\\s`, and `\\.` need
+   two backslashes.
+5. **Check capitalization.** Use `regex(..., ignore_case = TRUE)` when case
+   should not matter.
+6. **Check missing values.** Most `stringr` functions return `NA` for an `NA`
+   input.
+7. **Check greediness.** Replace `.*` with a more specific class or use `.*?`
+   when the shortest match is intended.
+8. **Prefer a simpler non-regex tool** when values have already been parsed.
 
 ```{r}
-#| echo: false 
-#| eval: false
-# to make another example in the future
-x = sample(letters, 500000, replace = TRUE) %>% paste(collapse = "") 
-
-x %>%
-  paste0("sta323{https://www.youtube.com/watch?v=dQw4w9WgXcQ}") %>% 
-  paste0(x) %>%  
-  write("~/Desktop/secret-message.txt")
+candidate <- "^Newsgroups\\s*:\\s*"
+str_view(x, candidate)
 ```
 
-Download the files `secret-message.txt` and `emails.txt` using the command below in the console:
-
-::: callout-important 
-## WARNING
-DO NOT VIEW THE FILE -- YOUR CONTAINER MAY CRASH!
-:::
-
-```{r}
-#| eval: false
-download.file("https://sta323-fa25.github.io/data/secret-message.txt", 
-              destfile = "secret-message.txt")
-
-download.file("https://sta323-fa25.github.io/data/emails.txt", 
-              destfile = "emails.txt")
-```
-
-
-*Hint*: read in the file as a string with `read_lines()`
-
-### part 1
-
-In `secret-message.txt`, find the secret message. It will be of the form `sta323{secret-message}` where `secret-message` is replaced by some other text.
-
-### part 2
-
-In `emails.txt` extract the unique part of the email address (part before the "\@") and count the number of each hosting domain, i.e. count how many emails are `Duke` emails and how many are `gmail`.
-
-## Examples
-
-In the following example we will search through the text, line by line, and extract matches.
-
-    Luffy's phone number is 123 456 7890
-    Zoro doesn't have a phone number
-    Nami's number is 012-345-6789
-    Usopp's number is (919)000 0000
-    Sanji's telephone number is (919) 123 4567
-    0000000000 is Robin's number.
-    Chopper doesn't have a phone number, but his lucky number is 1.
-
-### regex extraction
-
-```{r}
-#| eval: true
-#| echo: false
-#| warning: false
-pirate_phone = "Luffy's phone number is 123 456 7890
-    Zoro doesn't have a phone number
-    Nami's number is 012-345-6789
-    Usopp's number is (919)000 0000
-    Sanji's telephone number is (919) 123 4567
-    0000000000 is Robin's number.
-    Chopper doesn't have a phone number, but his lucky number is 1."
-```
-
-You can download the text file with
-
-```{r}
-#| eval: false
-download.file("https://sta323-fa25.github.io/data/pirate-phone.txt",
-destfile = "pirate-phone.txt")
-```
-
-::: panel-tabset
-### regex
-
-```{r}
-#| eval: false
-str_extract(pirate_phone, "123 456 7890")
-```
-
-### output
-
-`123 456 7890`
-
-### principles
-
-exact match
-:::
-
-::: panel-tabset
-### regex
-
-```{r}
-#| eval: false
-str_extract(pirate_phone, "[0-9]{3}\\-[0-9]{3}\\-[0-9]{4}")
-```
-
-### output
-
-`012-345-6789`
-
-### principles
-
-matching xxx-xxx-xxxx using ranges, repeaters, escaped characters
-:::
-
-## Examples
-
-    Luffy's phone number is 123 456 7890
-    Zoro doesn't have a phone number
-    Nami's number is 012-345-6789
-    Usopp's number is (919)000 0000
-    Sanji's telephone number is (919) 123 4567
-    0000000000 is Robin's number.
-    Chopper doesn't have a phone number, but his lucky number is 1.
-
-### regex extraction
-
-::: panel-tabset
-### regex
-
-```{r}
-#| eval: false
-str_extract_all(pirate_phone, "\\(\\d{3}\\)\\d{3}\\s\\d{4}")
-```
-
-### output
-
-`(919)000 0000`
-
-### principles
-
-matching (xxx)xxx xxxx using character classes (`\d` for digit, `\s` for whitespace) and repeaters
-:::
-
-::: panel-tabset
-### regex
-
-```{r}
-#| eval: false
-str_extract_all(pirate_phone, "\\(\\d{3}\\).?\\d{3}\\s[0-9]{4}")
-```
-
-### output
-
-    (919)000 0000
-    (919) 123 4567
-
-### principles
-
-matching (xxx)\*xxx xxxx using character classes, wildcard (`.`) and optional chracter (`?`)
-:::
-
-::: {.fragment}
-
-::: panel-tabset
-### regex
-
-```{r}
-#| eval: false
-# hidden exercise, code here!
-```
-
-### output
-
-    123 456 7890
-    012-345-6789
-    (919)000 0000
-    (919) 123 4567
-    0000000000
-
-### principles
-
-Multiple optional matching
-:::
-
-:::
-
-## Greedy vs ungreedy matching
-
-What went wrong here?
-
-```{r}
-text = "<div class='main'> <div> <a href='here.pdf'>Here!</a> </div> </div>"
-```
-
-```{r}
-str_extract(text, "<div>.*</div>")
-```
-
-. . .
-
-If you add `?` after a repeater, the matching will be non-greedy (find the shortest possible match, not the longest).
-
-```{r}
-str_extract(text, "<div>.*?</div>")
-```
-
-# Appendix
-
-## base R string toolkit
-
-The base language provides a number helper functions for additional manipulation of string objects:
-
--   `paste()`, `paste0()` - concatenate strings
--   `substr()`, `substring()` - extract or replace substrings
--   `sprintf()` - C-like string construction
--   `nchar()` - counts characters
--   `strsplit()` - split a string into substrings
--   `tolower()` - make string all lowercase
--   `toupper()` - make string all uppercase
-
-...many more.
-
-the "See Also" section of the the above functions' documentation is a good place to discover additional functions.
-
-## On the commmand line (grep)
-
-There are three fundamental tools on unix systems to process text patterns: grep, sed and awk.
-
-The simplest is grep. grep looks by default for **lines** of **files** that match the regex.
-
-Check out the documentation with
-
-    $ man grep
-
-The basics are:
-
-    $ grep -option path/to/file(s)
-
-Common options include:\
-
-| grep option | what it does                                      |
-|-------------|---------------------------------------------------|
-| -c          | count lines with a match                          |
-| -i          | case insensitive search                           |
-| -l          | list only names of matching files                 |
-| -n          | each output is preceded by its line number        |
-| -o          | print only the matching parts of lines            |
-| -v          | invert; list only lines that do not match pattern |
-
-## Exercise 2
-
-The power and ease of the terminal...
-
-Using an appropriate regex and the terminal `grep`, find the secret message hidden in *some* of the files in the zip folder:
-
-```{r}
-#| eval: false
-download.file("https://sta323-fa25.github.io/data/secret-messages.zip", 
-              destfile = "secret-messages.zip")
-
-unzip("secret-messages.zip", exdir = "secret-messages")
-```
-
-Again, look for `sta323{message-here}`.
-
-## base R regex
-
--   `grep()`, `grepl()` - regular expression pattern matching, "l" for return logical
--   `sub()`, `gsub()` - regular expression pattern replacement (replace first, replace all)
--   `regmatches()` - extract or replace matched strings
-
-### Example
-
-```{r}
-txt = c("Luffy: 'I'm going to be king of the pirates! !'", 
-        "The straw hat crew set sail.", 
-        "Nami: 'I'm Going to be the world's greatest navigator!'")
-```
-
-::: panel-tabset
-### grep/grepl
-
-```{r}
-grep(":", txt)
-grepl(":", txt)
-grep(":", txt, value = TRUE)
-```
-
-### sub/gsub
-
-```{r}
-sub("!", "!!!", txt) # first ! in a string, vectorized
-gsub("!", "!!!", txt) # all !, vectorized
-```
-
-### regmatches
-
-```{r}
-regmatches(txt, regexpr(".*:", txt))
-regmatches(txt, regexpr("\\s[a-z]*ng", txt))
-regmatches(txt, regexpr("\\s[A-Z\\|a-z]*ng", txt))
-```
-:::
-
-## basic unix toolkit
-
-A "folder" aka a "directory" is a container. A "file\* is an element of a container, e.g. `lab-1.qmd` is a file contained in a `lab-1-username` directory.
-
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| command                          | action                                                                                                                         |
-+==================================+================================================================================================================================+
-| `$ ls`                           | list files in current directory                                                                                                |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ pwd`                          | print working directory                                                                                                        |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ cd`                           | change directory\                                                                                                              |
-|                                  | example: `$ cd ..` to go to parent directory                                                                                   |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ mkdir dname`                  | make directory "dname"                                                                                                         |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ mkdir s{1..5}`                | overpowered file creation                                                                                                      |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ rm /path/to/file`             | remove a file                                                                                                                  |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ rm -rf dname`                 | recursively remove a directory and its contents                                                                                |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ rm core*`                     | remove all objects in the current working directory that begin with "core"                                                     |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ wc -l`                        | show \# lines in a file                                                                                                        |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ y > x.txt`                    | pass printed output from command "y" on the left to file "x.txt" on the right\                                                 |
-|                                  | example: `$ head -N file1.txt > file2.txt` creates a new file called "file2" that is a replica of the first N lines of file 1\ |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ echo 'text here' >> filename` | add text to the end of a file                                                                                                  |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| `$ man x`                        | pull up documentation for command x, example: `$ man ls`                                                                       |
-+----------------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+## Further references
+
+- [Lab 3: wrangling the written word](
+  https://sta323-fa26.github.io/labs/lab3.html)
+- [STA 323 regular expressions lecture](
+  https://sta323-fa25.github.io/slides/lec09.html)
+- [STA 323 text processing and regular expressions slides](
+  https://sta323-sp26.github.io/slides/Lec12.pdf)
+- [`stringr` regular-expression vignette](
+  https://stringr.tidyverse.org/articles/regular-expressions.html)
+- [`stringr` function reference](https://stringr.tidyverse.org/reference/)
