@@ -1,6 +1,6 @@
 ---
 title: "Lab 2: walking paths, climbing trees, and finding nests"
-subtitle: "Due Monday September 13 at 5:00pm"  
+subtitle: "Due Monday September 14 at 5:00pm"  
 editor: source
 execute:
   eval: false

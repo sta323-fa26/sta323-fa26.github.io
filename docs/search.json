@@ -4230,9 +4230,9 @@
   {
     "objectID": "notes/regexp-lecture.html",
     "href": "notes/regexp-lecture.html",
-    "title": "Regular expressions",
+    "title": "Regular expressions cheat sheet",
     "section": "",
-    "text": "Definition\n\n\n\nA regular expression (or regex / regexp) is a tool for identifying patterns in strings.\n\n\nA regular expression lets you:\n\nextract only the phone number from this string: “My phone number is (123) 456-7890, not to be confused with my birth month which is 0”\nsearch and replace multiple spellings of the word gray (grey, 6R3Y) in a document simultaneously\nsearch through all files in a directory for the one that contains a specific string\nfind the specific line number from a file that contains a string\nfind and replace through multiple files simultaneously\n\nAnd much, much more!"
+    "text": "library(tidyverse)"
   },
   {
     "objectID": "notes/regexp-lecture.html#definition-and-utility",
@@ -4534,5 +4534,82 @@
     "title": "Lab 3: wrangling the written word",
     "section": "3. Extract the body of the email",
     "text": "3. Extract the body of the email\nWrite a function extract_body() that takes in one of the emails, x and (1) identifies the first blank line in the email and (2) extracts everything after the blank line (this is what we will call the “body” of the email). The function should return the entire body of the email as a list. Show the result of\n\nextract_body(x)"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#the-basic-idea",
+    "href": "notes/regexp-lecture.html#the-basic-idea",
+    "title": "Regular expressions cheat sheet",
+    "section": "The basic idea",
+    "text": "The basic idea\nA regular expression (regex or regexp) is a pattern used to find text. In stringr, the string is usually the first argument and the pattern is the second.\n\nstr_detect(strings, pattern)       # Is there a match? TRUE or FALSE\nstr_subset(strings, pattern)       # Keep strings containing a match\nstr_count(strings, pattern)        # Count matches in each string\nstr_locate(strings, pattern)       # Return positions of the first match\nstr_extract(strings, pattern)      # Return the first match\nstr_extract_all(strings, pattern)  # Return every match (as a list)\nstr_remove(strings, pattern)       # Remove the first match\nstr_remove_all(strings, pattern)   # Remove every match\nstr_replace(strings, pattern, replacement)\nstr_replace_all(strings, pattern, replacement)\nstr_split(strings, pattern)        # Split each string (returns a list)\nstr_split_1(string, pattern)       # Split one string (returns a vector)\nstr_match(strings, pattern)        # Return match and captured groups\nstr_view(strings, pattern)         # Display matches for debugging\n\n\n\n\n\n\n\nChoose the function from the desired output\n\n\n\nUse str_detect() for a logical vector, str_subset() for the original strings, and str_extract() for only the matching text.\nFunctions ending in _all() act on every match within each string. Without _all(), only the first match in each string is used."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#essential-pattern-pieces",
+    "href": "notes/regexp-lecture.html#essential-pattern-pieces",
+    "title": "Regular expressions cheat sheet",
+    "section": "Essential pattern pieces",
+    "text": "Essential pattern pieces\n\nLiterals, alternatives, and groups\n\n\n\n\n\n\n\n\n\nGoal\nRegex\nR string\nMeaning\n\n\n\n\nExact text\ncat\n\"cat\"\nThe characters cat\n\n\nOne of several characters\n[abc]\n\"[abc]\"\na, b, or c\n\n\nA range\n[A-Z]\n\"[A-Z]\"\nOne uppercase letter\n\n\nAnything except a set\n[^0-9]\n\"[^0-9]\"\nOne non-digit\n\n\nEither expression\ncat\\|dog\n\"cat|dog\"\ncat or dog\n\n\nGroup expressions\ngr(a\\|e)y\n\"gr(a|e)y\"\ngray or grey\n\n\nGroup without capture\n(?:cat\\|dog)\n\"(?:cat|dog)\"\nGroup only\n\n\n\nAlternation has low precedence. Group alternatives when they are only part of a larger pattern.\n\nstr_detect(c(\"gray\", \"grey\"), \"gr(a|e)y\")\n\n# A vowel at the start, not a vowel anywhere or \"a\" at the start.\nstr_detect(names, \"^[aeiou]\")\n\n\n\nCharacter classes\n\n\n\nRegex\nR string\nMatches one…\n\n\n\n\n.\n\".\"\nCharacter other than a newline\n\n\n\\d\n\"\\\\d\"\nDigit\n\n\n\\D\n\"\\\\D\"\nNon-digit\n\n\n\\s\n\"\\\\s\"\nWhitespace character\n\n\n\\S\n\"\\\\S\"\nNon-whitespace character\n\n\n\\w\n\"\\\\w\"\nLetter, digit, or underscore\n\n\n\\W\n\"\\\\W\"\nNon-word character\n\n\n[[:alpha:]]\n\"[[:alpha:]]\"\nAlphabetic character\n\n\n[[:digit:]]\n\"[[:digit:]]\"\nDigit\n\n\n[[:punct:]]\n\"[[:punct:]]\"\nPunctuation character\n\n\n\nThe dot is a wildcard. To match a literal dot, use \\\\. in an ordinary R string.\n\nstr_detect(\"duke.edu\", \".\")       # TRUE: . matches any character\nstr_detect(\"duke.edu\", \"\\\\.\")     # TRUE: matches a literal dot\nstr_detect(\"dukeXedu\", \"\\\\.\")     # FALSE\n\n\n\nAnchors and boundaries\nAnchors match a position, not a character.\n\n\n\nRegex\nR string\nPosition\n\n\n\n\n^\n\"^\"\nStart of string\n\n\n$\n\"$\"\nEnd of string\n\n\n\\b\n\"\\\\b\"\nWord boundary\n\n\n\\B\n\"\\\\B\"\nNot a word boundary\n\n\n\n\nstr_detect(x, \"^From:\")           # starts with From:\nstr_detect(x, \"\\\\.edu$\")          # ends with .edu\nstr_detect(x, \"\\\\bcat\\\\b\")        # the whole word cat\nstr_detect(x, \"^\\\\s*$\")           # blank or whitespace-only string\n\n\n\n\n\n\n\nA blank line read by readLines()\n\n\n\nreadLines() returns one character string per line. A blank line is therefore usually an element equal to \"\"; it is not stored as \"\\n\". The pattern \"^\\\\s*$\" matches both \"\" and a line containing only whitespace.\n\n\n\n\nQuantifiers\nA quantifier controls how many times the preceding item may repeat.\n\n\n\nQuantifier\nMeaning\nExample\n\n\n\n\n*\nZero or more\n\"a*\"\n\n\n+\nOne or more\n\"a+\"\n\n\n?\nZero or one\n\"colou?r\"\n\n\n{3}\nExactly three\n\"\\\\d{3}\"\n\n\n{3,}\nThree or more\n\"\\\\d{3,}\"\n\n\n{3,5}\nThree through five\n\"\\\\d{3,5}\"\n\n\n\n\nstr_detect(\"919-555-1234\", \"^\\\\d{3}-\\\\d{3}-\\\\d{4}$\")\nstr_detect(c(\"color\", \"colour\"), \"^colou?r$\")\n\nCommon whitespace templates are:\n\n\"\\\\s*\"  # allow no whitespace or any amount of whitespace\n\"\\\\s+\"  # require at least one whitespace character\n\"\\\\s?\"  # allow at most one whitespace character\n\n\n\nGreedy and lazy matching\nQuantifiers are greedy by default: they match as much text as possible. Add ? after a quantifier to make it lazy (or non-greedy).\n\nhtml &lt;- \"&lt;div&gt;first&lt;/div&gt;&lt;div&gt;second&lt;/div&gt;\"\n\nstr_extract(html, \"&lt;div&gt;.*&lt;/div&gt;\")\n# &lt;div&gt;first&lt;/div&gt;&lt;div&gt;second&lt;/div&gt;\n\nstr_extract(html, \"&lt;div&gt;.*?&lt;/div&gt;\")\n# &lt;div&gt;first&lt;/div&gt;"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#r-has-two-layers-of-escaping",
+    "href": "notes/regexp-lecture.html#r-has-two-layers-of-escaping",
+    "title": "Regular expressions cheat sheet",
+    "section": "R has two layers of escaping",
+    "text": "R has two layers of escaping\nCharacters such as . ^ $ * + ? { } [ ] \\\\ | ( ) have special regex meanings. A backslash tells the regex engine to treat one literally, but the backslash is also special inside an ordinary R string. Consequently, an ordinary R string generally needs two backslashes.\n\n\n\n\n\n\n\n\n\nDesired match\nRegex engine needs\nOrdinary R string\nRaw R string\n\n\n\n\nA digit\n\\d\n\"\\\\d\"\nr\"(\\d)\"\n\n\nA period\n\\.\n\"\\\\.\"\nr\"(\\.)\"\n\n\n(\n\\(\n\"\\\\(\"\nr\"(\\()\"\n\n\nA backslash\n\\\\\n\"\\\\\\\\\"\nr\"(\\\\)\"\n\n\n\nRaw strings, available in R 4.0 and later, can make complicated patterns much easier to read.\n\nordinary &lt;- \"\\\\(\\\\d{3}\\\\)\\\\s*\\\\d{3}-\\\\d{4}\"\nraw &lt;- r\"(\\(\\d{3}\\)\\s*\\d{3}-\\d{4})\"\n\nidentical(ordinary, raw)"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#pattern-options",
+    "href": "notes/regexp-lecture.html#pattern-options",
+    "title": "Regular expressions cheat sheet",
+    "section": "Pattern options",
+    "text": "Pattern options\nWrap a pattern in regex() to change how it is interpreted.\n\n# Ignore capitalization.\nstr_detect(x, regex(\"duke\", ignore_case = TRUE))\n\n# Let ^ and $ refer to the start and end of each line in one string.\nstr_extract_all(\n  one_multiline_string,\n  regex(\"^From:.*$\", multiline = TRUE)\n)\n\n# Let the . wildcard match newline characters too.\nstr_extract(\n  one_multiline_string,\n  regex(\"BEGIN.*END\", dotall = TRUE)\n)\n\n# Permit spacing and comments inside a long pattern.\nphone_pattern &lt;- regex(\n  r\"(\n    \\(? (\\d{3}) \\)?  # optional parentheses around area code\n    [ -]?             # optional separator\n    (\\d{3})           # exchange\n    [ -]?             # optional separator\n    (\\d{4})           # subscriber number\n  )\",\n  comments = TRUE\n)\n\nUse fixed() when the pattern should have no regex meaning. This is often the clearest and fastest choice for literal text.\n\nstr_detect(\"price is $5.00\", fixed(\"$5.00\"))"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#capture-groups-and-backreferences",
+    "href": "notes/regexp-lecture.html#capture-groups-and-backreferences",
+    "title": "Regular expressions cheat sheet",
+    "section": "Capture groups and backreferences",
+    "text": "Capture groups and backreferences\nParentheses can save parts of a match. str_match() returns the full match in its first column and one captured group in each additional column.\n\ndates &lt;- c(\"2026-09-11\", \"2025-01-30\")\n\nstr_match(dates, \"^(\\\\d{4})-(\\\\d{2})-(\\\\d{2})$\")\n#      full match   year   month  day\n\nIn a replacement, \\\\1, \\\\2, and so on refer to captured groups.\n\nstr_replace(\n  \"Fisher, Alexander\",\n  \"^([^,]+),\\\\s*(.+)$\",\n  \"\\\\2 \\\\1\"\n)\n# Alexander Fisher\n\nA backreference can also require text to repeat within the match.\n\nstr_detect(c(\"abab\", \"cdcd\", \"abcd\"), \"^(..)\\\\1$\")"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#lookarounds",
+    "href": "notes/regexp-lecture.html#lookarounds",
+    "title": "Regular expressions cheat sheet",
+    "section": "Lookarounds",
+    "text": "Lookarounds\nLookarounds require context without including that context in the returned match.\n\n\n\nForm\nMeaning\n\n\n\n\n(?=...)\nMust be followed by…\n\n\n(?!...)\nMust not be followed by…\n\n\n(?&lt;=...)\nMust be preceded by…\n\n\n(?&lt;!...)\nMust not be preceded by…\n\n\n\n\n# Extract digits only when they follow \"DUID: \".\nstr_extract(student_id, \"(?&lt;=DUID: )\\\\d+\")\n\n# Extract a username only when it is followed by @.\nstr_extract(address, \"[A-Za-z0-9._+-]+(?=@)\")\n\n# Extract a number only when it is not followed by a unit such as kg.\nstr_extract(x, \"\\\\d+\\\\b(?!\\\\s*kg\\\\b)\")\n\n\n\n\n\n\n\nNote\n\n\n\nLookbehind is useful when the prefix has a fixed length. If the surrounding text is complicated, a capture group with str_match() is often clearer."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#common-templates",
+    "href": "notes/regexp-lecture.html#common-templates",
+    "title": "Regular expressions cheat sheet",
+    "section": "Common templates",
+    "text": "Common templates\n\nMatch a complete string\nUse both anchors when the entire string must follow the format.\n\nstr_detect(x, \"^[A-Za-z]+$\")\nstr_detect(x, \"^\\\\d{4}-\\\\d{2}-\\\\d{2}$\")\nstr_detect(x, regex(\"^(yes|no)$\", ignore_case = TRUE))\n\n\n\nExtract words or numbers\n\nstr_extract_all(x, \"\\\\b[[:alpha:]]+\\\\b\")\nstr_extract_all(x, \"-?\\\\d+(?:\\\\.\\\\d+)?\")\nstr_extract_all(x, \"\\\\$\\\\d+(?:,\\\\d{3})*(?:\\\\.\\\\d{2})?\")\n\nThe number pattern above allows an optional minus sign and optional decimal part. The currency pattern allows commas and an optional two-digit cents part.\n\n\nMatch a file extension\n\nstr_detect(\n  filenames,\n  regex(\"\\\\.(csv|tsv|txt)$\", ignore_case = TRUE)\n)\n\nThe dot must be escaped, and $ prevents a match such as data.csv.backup.\n\n\nMatch or extract an email-like address\nFor ordinary data cleaning, a deliberately simple pattern is often better than an attempted complete implementation of every valid email address.\n\nemail_pattern &lt;-\n  \"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\"\n\nstr_extract(x, email_pattern)\n\nThis is a useful extraction heuristic, not a complete email validator.\n\n\nSplit around a delimiter and optional whitespace\n\nstr_split_1(\"rec.autos, rec.autos.tech\", \"\\\\s*,\\\\s*\")\nstr_split_1(\"key : value\", \"\\\\s*:\\\\s*\")\n\n\n\nRemove a labeled prefix\n\nstr_remove(\"From: name@duke.edu\", \"^From\\\\s*:\\\\s*\")\n\nAnchoring the label with ^ prevents removal of the word From later in the text."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#lab-3-recipes",
+    "href": "notes/regexp-lecture.html#lab-3-recipes",
+    "title": "Regular expressions cheat sheet",
+    "section": "Lab 3 recipes",
+    "text": "Lab 3 recipes\nThese templates match the structure of the newsgroup email files. They are shown separately so that each part can be understood and adapted.\n\n1. Find and split the Newsgroups: header\n\nextract_newsgroup &lt;- function(x) {\n  x |&gt;\n    str_subset(\"^Newsgroups\\\\s*:\") |&gt;\n    str_remove(\"^Newsgroups\\\\s*:\\\\s*\") |&gt;\n    _[1] |&gt;\n    str_split_1(\"\\\\s*,\\\\s*\")\n}\n\nPattern anatomy:\n\n^Newsgroups requires the label at the start of a line.\n\\\\s* allows zero or more whitespace characters.\n: matches the literal colon.\nThe removal pattern includes trailing \\\\s* so the result begins at the first newsgroup name.\n\"\\\\s*,\\\\s*\" splits at a comma and consumes surrounding whitespace.\n\nDo not rely on a fixed line number: different files can contain different numbers or orders of header lines.\n\n\n2. Extract the sender’s address\n\nextract_sender &lt;- function(x) {\n  x |&gt;\n    str_subset(\"^From\\\\s*:\") |&gt;\n    str_remove(\"^From\\\\s*:\\\\s*\") |&gt;\n    str_extract(\n      \"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\"\n    ) |&gt;\n    _[1]\n}\n\nSome files may have a From: line without an email address, or place useful information in another header such as Sender:. In those cases the function correctly produces NA; inspecting those exceptions is part of data cleaning.\n\n\n3. Locate the first blank line and keep the body\n\nextract_body &lt;- function(x) {\n  first_blank &lt;- which(str_detect(x, \"^\\\\s*$\"))[1]\n\n  if (is.na(first_blank) || first_blank == length(x)) {\n    stop(\"Email has no body\")\n  }\n\n  list(x[(first_blank + 1):length(x)])\n}\n\nPattern anatomy:\n\n^ starts at the beginning of an element of x.\n\\\\s* permits zero or more whitespace characters.\n$ requires the end immediately afterward.\nTogether, ^\\\\s*$ matches \"\", spaces only, or tabs only.\n[1] selects the first matching line, which separates headers from body.\n\n\n\n4. Detect academic .edu sender addresses\n\nis_edu &lt;- str_detect(\n  emails_df$sender,\n  regex(\"\\\\.edu$\", ignore_case = TRUE)\n)\n\nmean(is_edu, na.rm = TRUE)\n\nWhy each part matters:\n\n\\\\. means a literal period; . alone would be a wildcard.\nedu is the desired ending.\n$ requires .edu at the end of the extracted address.\nignore_case = TRUE matches .edu, .EDU, and other capitalizations.\nna.rm = TRUE defines the proportion among senders with a detected address.\n\nIf the intended denominator is all emails, treat missing addresses explicitly instead:\n\nmean(replace_na(is_edu, FALSE))\n\n\n\n5. Keep only the five target newsgroups\nExact membership is clearer than a regex once the header has already been split into labels.\n\ntarget_groups &lt;- c(\n  \"comp.graphics\",\n  \"comp.sys.mac.hardware\",\n  \"rec.autos\",\n  \"rec.sport.baseball\",\n  \"sci.space\"\n)\n\nnewsgroups[newsgroups %in% target_groups]\n\n\n\n\n\n\n\nRegex is not always the right tool\n\n\n\nUse regex to recognize structure inside strings. After text has been parsed into exact values, %in%, joins, factors, or ordinary comparisons are usually clearer."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#base-r-equivalents",
+    "href": "notes/regexp-lecture.html#base-r-equivalents",
+    "title": "Regular expressions cheat sheet",
+    "section": "Base R equivalents",
+    "text": "Base R equivalents\n\n\n\nTask\nstringr\nBase R\n\n\n\n\nLogical detection\nstr_detect(x, p)\ngrepl(p, x)\n\n\nIndices of matches\nwhich(str_detect(x, p))\ngrep(p, x)\n\n\nMatching strings\nstr_subset(x, p)\ngrep(p, x, value = TRUE)\n\n\nReplace first\nstr_replace(x, p, r)\nsub(p, r, x)\n\n\nReplace all\nstr_replace_all(x, p, r)\ngsub(p, r, x)\n\n\nSplit\nstr_split(x, p)\nstrsplit(x, p)\n\n\n\nNote the argument order: stringr generally uses (string, pattern), whereas base R’s regex functions generally use (pattern, string)."
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#debugging-checklist",
+    "href": "notes/regexp-lecture.html#debugging-checklist",
+    "title": "Regular expressions cheat sheet",
+    "section": "Debugging checklist",
+    "text": "Debugging checklist\nWhen a pattern does not behave as expected, check these in order:\n\nInspect the actual strings. Use dput(x) or str_view(x) to expose whitespace and escapes.\nStart with a small literal. Confirm that the relevant line can be found before adding classes, groups, and quantifiers.\nCheck anchors. Should the match occur anywhere, or only at the start or end?\nCheck escaping. In an ordinary R string, \\\\d, \\\\s, and \\\\. need two backslashes.\nCheck capitalization. Use regex(..., ignore_case = TRUE) when case should not matter.\nCheck missing values. Most stringr functions return NA for an NA input.\nCheck greediness. Replace .* with a more specific class or use .*? when the shortest match is intended.\nPrefer a simpler non-regex tool when values have already been parsed.\n\n\ncandidate &lt;- \"^Newsgroups\\\\s*:\\\\s*\"\nstr_view(x, candidate)"
+  },
+  {
+    "objectID": "notes/regexp-lecture.html#further-references",
+    "href": "notes/regexp-lecture.html#further-references",
+    "title": "Regular expressions cheat sheet",
+    "section": "Further references",
+    "text": "Further references\n\nLab 3: wrangling the written word\nSTA 323 regular expressions lecture\nSTA 323 text processing and regular expressions slides\nstringr regular-expression vignette\nstringr function reference"
   }
 ]
