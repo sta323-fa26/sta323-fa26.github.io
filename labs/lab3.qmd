@@ -49,7 +49,7 @@ For all exercises, you should respond in the space provided in the template `lab
 
 ## 1. Examine two emails
 
-Read in the data from the file `37916` with `readLines`, e.g. `x <- readLines("path/to/file/37916")`. Also read in file `101554` and assign it to the variable `y`. Write a function `extract_newsgroup()` that takes in the text (`x`) and returns a character string containing the document class (or classes) using regular expressions. Show the output of the following:
+Read in the data from the file `37916` with `readLines`, e.g. `x <- readLines("path/to/file/37916")`. Also read in file `101554` and assign it to the variable `y`. Write a function `extract_newsgroup()` that takes in the text `x` and returns a character string containing the document class (or classes) using regular expressions. Show the output of the following:
 
 ```{r}
 extract_newsgroup(x)
@@ -58,7 +58,7 @@ extract_newsgroup(y)
 
 Note: if there are 2 or more classes (document types) then the output show be a vector of length 2 or more. Example: for document `y` above, the output should be a character vector of length 2.
 
-Why are regular expressions preferred to examining newsgroup by line number?
+Why would someone prefer to extract newsgroup information by regular expression instead of grabbing the information from a specific line number in the file?
 
 
 ## 2. Who sends emails?
@@ -70,14 +70,30 @@ extract_sender(x)
 extract_sender(y)
 ```
 
-## 3. Make a data frame
+## 3. Extract the body of the email
 
-Now using all 4911 documents together with your functions from exercise 1 and 2, construct a data frame called `emails_df` that contains the following 4 columns: 
+Write a function `extract_body()` that takes in one of the emails, `x` and (1) identifies the first blank line in the email and (2) extracts everything *after* the blank line (this is what we will call the "body" of the email). The function should return the entire body of the email as a list. Show the result of 
+
+```{r}
+extract_body(x)
+```
+
+
+
+## 4. Make a data frame
+
+You will now comb through all 4911 documents and construct a single data frame from these documents for use in a future lab. Our goal is to create a data frame that looks like the following:
+
+![](img/regexp-img.png){fig-align="center"}
+
+
+More specifically, use your functions from exercise 1, 2, and 3 to construct a data frame called `emails_df` that contains the following 5 columns: 
 
 - `id`: the actual file name that uniquely identifies the email, e.g. `37916`.
 - `newsgroup1`: the first newsgroup class (e.g. `sci.space`)
 - `newsgroup2`: the second newsgroup class (if available) otherwise, NA
 - `sender`: email address of the sender
+- `body`: list containing all lines that comprise the body of the email
 
 Make it so that `newsgroup1` and `newsgroup2` **only** display newsgroups of the following 5 categories:
 
@@ -99,126 +115,13 @@ Answer the following questions:
 
 1. Are any of the "sender" in your data frame NA? If so, examine one of those emails and explain why.
 2. What total number of emails have only 1 newsgroup label (of the 5 categories above)?
-3. What proportion of emails originate from an academic "edu" sender address?
-4. What proportion of emails in each `newsgroup1`, originate from a Duke email address?
+3. What proportion of emails originate from an academic "edu" sender address? Note: some may be "EDU", e.g. see image above.
+<!-- 4. What proportion of emails in each `newsgroup1`, originate from a Duke email address? -->
 
 ::: callout-tip
 ## Hint
 
 You might revisit `list.files` from a previous lab and construct a vector of paths you can loop over.
-:::
-
-### Task
-
-We will comb through 4911 documents and construct a single data frame from these documents for use in a future lab. Our goal is to create a data frame that looks like the following:
-
-![](img/document_example_df.png){fig-align="center"}
-
-where the column `Document` contains the documents name or #, `Newsgroup` contains the category the document belongs to, `total_words` contains the total words in the document, `word_1`, `word_2` up to `word_v` contains every word in every document and the values represent the number of occurrences of each given word in the document.
-
-To make this task more manageable, let's break this into smaller tasks below:
-
-#### part 1
-
-Read in the data from the file `37916` with `readLines`, e.g. `x = readLines("pathToFile/37916")`. Write a regular expression to identify the "Newsgroup" from the text. Save the result as an object called `newsgroup_id`. Print `newsgroup_id` to the screen.
-
-::: callout-tip
-## Hint
-
-Some documents (emails) are featured in multiple newsgroups, separated by a comma `,`. You should return a character vector of the newsgroups and can handle this like below:
-
-```{r}
-#| eval: true
-"rec.autos,rec.autos.tech" %>%
-  str_split(",") %>% 
-  unlist()
-```
-:::
-
-#### part 2
-
-Identify which part of the document is the body of the email. Write a regular expression to extract each word (alphanumeric) from the body of the email. Save a **character vector** of words in the email as an object called `words_in_email`. Print the first 10 `words_in_email` to the screen. The first three should be 
-
-```
-"I" "recently" "got"
-```
-
-::: callout-tip
-## Hint
-
-1.  Find which entry has "Lines:"
-2.  Subset the document `x` to only be what occurs after this entry.
-3.  Extract each word followed by a break.
-:::
-
-#### part 3
-
-Save your result from part 1 and 2 into a list like so:
-
-```{r}
-#| eval: false
-
-i = 37916
-
-doc_i = list(
-  "doc_id" = paste("doc", i, sep = "_"),
-  "Newsgroup" = newsgroup_id,
-  "words" = words_in_email
-)
-```
-
-and then write a for loop, using the template code below as a starting point to make a list of lists for each document.
-
-```{r}
-#| eval: false
-
-all_docs = list.files("/data/newsgroups_5")
-  
-doc_words = list()
-# begin for loop over i in all_docs 
-
-  # read in doc i
-  # create newsgroup_id
-  # create words_in_email
-  # put both together in a list called doc_i
-
-  doc_words[[paste("doc", i, sep = "_")]] = doc_i
-  
-# end for loop
-```
-
-Print the first three lists inside of `doc_words` using the code below:
-
-```{r}
-#| eval: false
-doc_words[1:3] %>% 
-  str()
-```
-
-::: callout-tip
-## Hint
-
-Use `paste` or `paste0` to concatenate the filepath and filenames as you read them in.
-:::
-
-#### part 4
-
-Using the appropriate lookup functions from `purrr` (see lecture on functional programming) turn your list of lists `doc_words` into a tibble called `doc_words_df` that looks like the data frame pictured below. While building your data frame, remove all documents for which there are **multiple newsgroups**.
-
-```
-  Document   Newsgroup          total_words words      
-  <chr>      <chr>                    <int> <list>     
-1 doc_100521 rec.sport.baseball         261 <chr [261]>
-2 doc_101551 rec.autos                  439 <chr [439]>
-3 doc_101552 rec.autos                  147 <chr [147]>
-```
-
-- Print the first 10 rows to the screen **and** glimpse your resulting data frame. There should be **3922** rows and **4** columns.\
-
-- Finally, print a count of how many observations of each Newsgroup is in the data set.
-
-::: callout-warning
-Do **not** unnest the `words` column. This operation is too expensive to play with and may freeze your container/computer.
 :::
 
 ## Style guidelines
