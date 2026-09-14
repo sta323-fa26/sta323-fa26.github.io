@@ -3,7 +3,7 @@ library(ghclass)
 ##################################
 ### to download the html files ###
 ##################################
-repos_of_interest = ghclass::org_repos("sta323-fa25", filter="exam2-")
+repos_of_interest = ghclass::org_repos("sta323-fa26", filter="lab-1")
 ghclass::action_artifact_download(repos_of_interest,
                                   dir = paste0("~/Downloads/sta323-", Sys.Date()),
                                   overwrite = FALSE)
