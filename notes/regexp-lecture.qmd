@@ -9,6 +9,8 @@ format: html
 ---
 
 ```{r}
+#| message: false
+#| warning: false
 library(tidyverse)
 ```
 
@@ -125,6 +127,13 @@ readLines("https://sta323-fa26.github.io/data/emails.txt")
 usually an element equal to `""`; it is not stored as `"\n"`. The pattern
 `"^\\s*$"` matches both `""` and a line containing only whitespace.
 :::
+
+
+### Exercise 1
+
+Extract the emails from above and create a data frame with full email in the first column.
+
+Bonus: extract domain (e.g. "gmail") in the second column (a look around may make this easy, see the end of doc).
 
 ### Quantifiers
 
@@ -302,8 +311,6 @@ Use both anchors when the **entire** string must follow the format.
 ```{r}
 #| eval: false
 str_detect(x, "^[A-Za-z]+$") # any character repeating
-str_detect(x, "^\\d{4}-\\d{2}-\\d{2}$") 
-str_detect(x, regex("^(yes|no)$", ignore_case = TRUE))
 ```
 
 ### Extract words or numbers
@@ -311,8 +318,6 @@ str_detect(x, regex("^(yes|no)$", ignore_case = TRUE))
 ```{r}
 #| eval: false
 str_extract_all(x, "\\b[[:alpha:]]+\\b")
-str_extract_all(x, "-?\\d+(?:\\.\\d+)?")
-str_extract_all(x, "\\$\\d+(?:,\\d{3})*(?:\\.\\d{2})?")
 ```
 
 The number pattern above allows an optional minus sign and optional decimal
@@ -330,16 +335,6 @@ str_detect(
 
 The dot must be escaped, and `$` prevents a match such as `data.csv.backup`.
 
-### Match or extract an email-like address
-
-```{r}
-#| eval: false
-email_pattern <-
-  "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+"
-
-str_extract(x, email_pattern)
-```
-
 
 ### Split around a delimiter and optional whitespace
 
@@ -356,6 +351,25 @@ str_remove("From: name@duke.edu", "^From\\s*:\\s*")
 
 Anchoring the label with `^` prevents removal of the word `From` later in the
 text.
+
+### Exercise 2
+
+```{r}
+#| eval: false
+download.file("https://sta323-fa25.github.io/data/secret-message.txt", 
+              destfile = "secret-message.txt")
+download.file("https://sta323-fa26.github.io/data/secret-messages.zip", 
+              destfile = "secret-messages.zip")
+
+unzip("secret-messages.zip", exdir = "secret-messages")
+```
+
+In `secret-message.txt`, (and the folder) find the secret message. It will be of the form `sta323{secret-message}` where `secret-message` is replaced by some other text.
+
+::: callout-warning
+## WARNING
+Do NOT view the files --  RStudio may CRASH!
+:::
 
 
 ## Base R equivalents
