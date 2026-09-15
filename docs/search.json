@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n\n\n\n\n\n5\nTue Sep 22\ndimension reduction\n\nlab 4\n\n\n\n\nThu Sep 24\ngeographical data\n\n\n\n\n\n6\nTue Sep 29\nfunctionals\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction\n\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -2370,7 +2370,7 @@
     "href": "slides/lec07.html#your-turn",
     "title": "ggplot2",
     "section": "Your turn",
-    "text": "Your turn\n\namendments = read_csv(\"http://sta323-fa25.github.io/data/American_Amendments.csv\")\n\nToday’s data set comes from data.gov"
+    "text": "Your turn\n\namendments = read_csv(\"http://sta323-fa26.github.io/data/American_Amendments.csv\")\n\nToday’s data set comes from data.gov"
   },
   {
     "objectID": "slides/lec09.html#definition-and-utility",
@@ -3714,7 +3714,7 @@
     "href": "slides/lec07.html",
     "title": "ggplot2",
     "section": "",
-    "text": "teams set for lab 03.\nfor lab 04 and beyond:\n\nmessage me by Friday, Sept 19 if you’d like to be pseudo-randomly assigned a team or\nreach out to any member of the teaching team if you’d like to form a specific team but have not done so yet."
+    "text": ". . .\nincluded in the tidyverse package\nlibrary(tidyverse)"
   },
   {
     "objectID": "slides/lec05.html",

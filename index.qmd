@@ -66,8 +66,8 @@ schedule %>%
 | 4 | Tue Sep 15 | regular expressions | [🗒](/notes/regexp-lecture.html) | [lab 3](/labs/lab3.html) |  |
 |  | Thu Sep 17 | visualization with ggplot2 |  [💻](/slides/lec07.html) |  |  |
 | 5 | Tue Sep 22 | dimension reduction |  | lab 4 |  |
-|  | Thu Sep 24 | geographical data |  |  |  |
-| 6 | Tue Sep 29 | functionals  |  |  |  |
+|  | Thu Sep 24 | spatial data |  |  |  |
+| 6 | Tue Sep 29 | functionals & purrr  |  |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
 | 7 | Tue Oct 06 |  shiny |  | lab 5 |  | <!-- project workday -->
 |  | Thu Oct 08 | APIs |  |  |  |

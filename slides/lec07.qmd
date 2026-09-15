@@ -8,12 +8,7 @@ format:
       smaller: true
 ---
 
-<!-- ## Announcements  -->
-
-<!-- - teams set for lab 03. -->
-<!-- - for lab 04 and beyond: -->
-<!--     -   message me by *Friday, Sept 19* if you'd like to be pseudo-randomly assigned a team or -->
-<!--     -   reach out to any member of the teaching team if you'd like to form a specific team but have not done so yet. -->
+# 
 
 ![](images/ggplot2-logo.png){fig-align="center"}
 
