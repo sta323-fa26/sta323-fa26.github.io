@@ -3,7 +3,7 @@ title: "Regular expressions cheat sheet"
 author: "Dr. Alexander Fisher"
 execute:
   warning: true
-  eval: false
+  eval: true
 format: html
 
 ---
@@ -19,6 +19,7 @@ In `stringr`, the string is usually the first argument and the pattern is
 the second.
 
 ```{r}
+#| eval: false
 str_detect(strings, pattern)       # Is there a match? TRUE or FALSE
 str_subset(strings, pattern)       # Keep strings containing a match
 str_count(strings, pattern)        # Count matches in each string
@@ -57,17 +58,19 @@ Functions ending in `_all()` act on every match within each string. Without
 | Group expressions | `gr(a\|e)y` | `"gr(a|e)y"` | `gray` or `grey` |
 | Group without capture | `(?:cat\|dog)` | `"(?:cat|dog)"` | Group only |
 
-Alternation has low precedence. Group alternatives when they are only part of
-a larger pattern.
-
 ```{r}
+#| label: gray
 str_detect(c("gray", "grey"), "gr(a|e)y")
+
+names <- c("aang", "katara", "sokka")
 
 # A vowel at the start, not a vowel anywhere or "a" at the start.
 str_detect(names, "^[aeiou]")
 ```
 
 ### Character classes
+
+- Notice we need to double escape in R because the backslash is already an escape character.
 
 | Regex | R string | Matches one... |
 |---|---|---|
@@ -86,9 +89,9 @@ The dot is a wildcard. To match a literal dot, use `\\.` in an ordinary R
 string.
 
 ```{r}
-str_detect("duke.edu", ".")       # TRUE: . matches any character
-str_detect("duke.edu", "\\.")     # TRUE: matches a literal dot
-str_detect("dukeXedu", "\\.")     # FALSE
+str_detect("duke.edu", ".") # matching a wildcard
+str_detect("duke.edu", "\\.")     
+str_detect("dukeXedu", "\\.")     
 ```
 
 ### Anchors and boundaries
@@ -103,11 +106,19 @@ Anchors match a **position**, not a character.
 | `\B` | `"\\B"` | Not a word boundary |
 
 ```{r}
+#| eval: false
 str_detect(x, "^From:")           # starts with From:
 str_detect(x, "\\.edu$")          # ends with .edu
 str_detect(x, "\\bcat\\b")        # the whole word cat
 str_detect(x, "^\\s*$")           # blank or whitespace-only string
 ```
+
+```{r}
+#| label: example-read-lines
+
+readLines("https://sta323-fa26.github.io/data/emails.txt")
+```
+
 
 ::: {.callout-important title="A blank line read by readLines()"}
 `readLines()` returns one character string per line. A blank line is therefore
@@ -129,13 +140,14 @@ A quantifier controls how many times the **preceding item** may repeat.
 | `{3,5}` | Three through five | `"\\d{3,5}"` |
 
 ```{r}
-str_detect("919-555-1234", "^\\d{3}-\\d{3}-\\d{4}$")
+str_extract("919-123-4567", "^\\d{3}-\\d{3}-\\d{4}$")
 str_detect(c("color", "colour"), "^colou?r$")
 ```
 
 Common whitespace templates are:
 
 ```{r}
+#| eval: false
 "\\s*"  # allow no whitespace or any amount of whitespace
 "\\s+"  # require at least one whitespace character
 "\\s?"  # allow at most one whitespace character
@@ -185,6 +197,7 @@ identical(ordinary, raw)
 Wrap a pattern in `regex()` to change how it is interpreted.
 
 ```{r}
+#| eval: false
 # Ignore capitalization.
 str_detect(x, regex("duke", ignore_case = TRUE))
 
@@ -226,7 +239,7 @@ Parentheses can save parts of a match. `str_match()` returns the full match in
 its first column and one captured group in each additional column.
 
 ```{r}
-dates <- c("2026-09-11", "2025-01-30")
+dates <- c("2026-09-15", "2025-01-30")
 
 str_match(dates, "^(\\d{4})-(\\d{2})-(\\d{2})$")
 #      full match   year   month  day
@@ -236,17 +249,19 @@ In a replacement, `\\1`, `\\2`, and so on refer to captured groups.
 
 ```{r}
 str_replace(
-  "Fisher, Alexander",
+  "NC, Durham",
   "^([^,]+),\\s*(.+)$",
   "\\2 \\1"
 )
-# Alexander Fisher
 ```
 
 A backreference can also require text to repeat within the match.
 
 ```{r}
 str_detect(c("abab", "cdcd", "abcd"), "^(..)\\1$")
+# (..) matches any two characters in this group
+# \1 matches the same as group 1 
+# $ signifies end of string
 ```
 
 ## Lookarounds
@@ -262,6 +277,7 @@ match.
 | `(?<!...)` | Must not be preceded by... |
 
 ```{r}
+#| eval: false
 # Extract digits only when they follow "DUID: ".
 str_extract(student_id, "(?<=DUID: )\\d+")
 
@@ -284,14 +300,16 @@ text is complicated, a capture group with `str_match()` is often clearer.
 Use both anchors when the **entire** string must follow the format.
 
 ```{r}
-str_detect(x, "^[A-Za-z]+$")
-str_detect(x, "^\\d{4}-\\d{2}-\\d{2}$")
+#| eval: false
+str_detect(x, "^[A-Za-z]+$") # any character repeating
+str_detect(x, "^\\d{4}-\\d{2}-\\d{2}$") 
 str_detect(x, regex("^(yes|no)$", ignore_case = TRUE))
 ```
 
 ### Extract words or numbers
 
 ```{r}
+#| eval: false
 str_extract_all(x, "\\b[[:alpha:]]+\\b")
 str_extract_all(x, "-?\\d+(?:\\.\\d+)?")
 str_extract_all(x, "\\$\\d+(?:,\\d{3})*(?:\\.\\d{2})?")
@@ -303,6 +321,7 @@ part. The currency pattern allows commas and an optional two-digit cents part.
 ### Match a file extension
 
 ```{r}
+#| eval: false
 str_detect(
   filenames,
   regex("\\.(csv|tsv|txt)$", ignore_case = TRUE)
@@ -313,17 +332,14 @@ The dot must be escaped, and `$` prevents a match such as `data.csv.backup`.
 
 ### Match or extract an email-like address
 
-For ordinary data cleaning, a deliberately simple pattern is often better than
-an attempted complete implementation of every valid email address.
-
 ```{r}
+#| eval: false
 email_pattern <-
-  "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+  "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+"
 
 str_extract(x, email_pattern)
 ```
 
-This is a useful extraction heuristic, not a complete email validator.
 
 ### Split around a delimiter and optional whitespace
 
@@ -341,123 +357,6 @@ str_remove("From: name@duke.edu", "^From\\s*:\\s*")
 Anchoring the label with `^` prevents removal of the word `From` later in the
 text.
 
-## Lab 3 recipes
-
-These templates match the structure of the newsgroup email files. They are
-shown separately so that each part can be understood and adapted.
-
-### 1. Find and split the `Newsgroups:` header
-
-```{r}
-extract_newsgroup <- function(x) {
-  x |>
-    str_subset("^Newsgroups\\s*:") |>
-    str_remove("^Newsgroups\\s*:\\s*") |>
-    _[1] |>
-    str_split_1("\\s*,\\s*")
-}
-```
-
-Pattern anatomy:
-
-- `^Newsgroups` requires the label at the start of a line.
-- `\\s*` allows zero or more whitespace characters.
-- `:` matches the literal colon.
-- The removal pattern includes trailing `\\s*` so the result begins at the
-  first newsgroup name.
-- `"\\s*,\\s*"` splits at a comma and consumes surrounding whitespace.
-
-Do not rely on a fixed line number: different files can contain different
-numbers or orders of header lines.
-
-### 2. Extract the sender's address
-
-```{r}
-extract_sender <- function(x) {
-  x |>
-    str_subset("^From\\s*:") |>
-    str_remove("^From\\s*:\\s*") |>
-    str_extract(
-      "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+"
-    ) |>
-    _[1]
-}
-```
-
-Some files may have a `From:` line without an email address, or place useful
-information in another header such as `Sender:`. In those cases the function
-correctly produces `NA`; inspecting those exceptions is part of data cleaning.
-
-### 3. Locate the first blank line and keep the body
-
-```{r}
-extract_body <- function(x) {
-  first_blank <- which(str_detect(x, "^\\s*$"))[1]
-
-  if (is.na(first_blank) || first_blank == length(x)) {
-    stop("Email has no body")
-  }
-
-  list(x[(first_blank + 1):length(x)])
-}
-```
-
-Pattern anatomy:
-
-- `^` starts at the beginning of an element of `x`.
-- `\\s*` permits zero or more whitespace characters.
-- `$` requires the end immediately afterward.
-- Together, `^\\s*$` matches `""`, spaces only, or tabs only.
-- `[1]` selects the first matching line, which separates headers from body.
-
-### 4. Detect academic `.edu` sender addresses
-
-```{r}
-is_edu <- str_detect(
-  emails_df$sender,
-  regex("\\.edu$", ignore_case = TRUE)
-)
-
-mean(is_edu, na.rm = TRUE)
-```
-
-Why each part matters:
-
-- `\\.` means a literal period; `.` alone would be a wildcard.
-- `edu` is the desired ending.
-- `$` requires `.edu` at the end of the extracted address.
-- `ignore_case = TRUE` matches `.edu`, `.EDU`, and other capitalizations.
-- `na.rm = TRUE` defines the proportion among senders with a detected address.
-
-If the intended denominator is **all emails**, treat missing addresses
-explicitly instead:
-
-```{r}
-mean(replace_na(is_edu, FALSE))
-```
-
-### 5. Keep only the five target newsgroups
-
-Exact membership is clearer than a regex once the header has already been
-split into labels.
-
-```{r}
-target_groups <- c(
-  "comp.graphics",
-  "comp.sys.mac.hardware",
-  "rec.autos",
-  "rec.sport.baseball",
-  "sci.space"
-)
-
-newsgroups[newsgroups %in% target_groups]
-```
-
-::: {.callout-tip title="Regex is not always the right tool"}
-Use regex to recognize structure inside strings. After text has been parsed
-into exact values, `%in%`, joins, factors, or ordinary comparisons are usually
-clearer.
-:::
 
 ## Base R equivalents
 
@@ -477,7 +376,7 @@ base R's regex functions generally use `(pattern, string)`.
 
 When a pattern does not behave as expected, check these in order:
 
-1. **Inspect the actual strings.** Use `dput(x)` or `str_view(x)` to expose
+1. **Inspect the actual strings.** Use `str_view(x)` to expose
    whitespace and escapes.
 2. **Start with a small literal.** Confirm that the relevant line can be found
    before adding classes, groups, and quantifiers.
@@ -491,21 +390,8 @@ When a pattern does not behave as expected, check these in order:
    input.
 7. **Check greediness.** Replace `.*` with a more specific class or use `.*?`
    when the shortest match is intended.
-8. **Prefer a simpler non-regex tool** when values have already been parsed.
 
-```{r}
-candidate <- "^Newsgroups\\s*:\\s*"
-str_view(x, candidate)
-```
 
 ## Further references
 
-- [Lab 3: wrangling the written word](
-  https://sta323-fa26.github.io/labs/lab3.html)
-- [STA 323 regular expressions lecture](
-  https://sta323-fa25.github.io/slides/lec09.html)
-- [STA 323 text processing and regular expressions slides](
-  https://sta323-sp26.github.io/slides/Lec12.pdf)
-- [`stringr` regular-expression vignette](
-  https://stringr.tidyverse.org/articles/regular-expressions.html)
 - [`stringr` function reference](https://stringr.tidyverse.org/reference/)
