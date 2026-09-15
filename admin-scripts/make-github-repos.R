@@ -4,7 +4,7 @@ library(ghclass)
 ## Individual assignment creation ##
 ####################################. 
 this_org <- "sta323-fa26"
-assignment <- "lab-2"
+assignment <- "lab-3"
 
 
 usernames <- ghclass::org_members(org = this_org)

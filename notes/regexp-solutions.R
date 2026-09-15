@@ -9,6 +9,15 @@ str_match(emails,
   drop_na() |> 
   mutate(domain = str_extract(email, ("(?<=@)[^.*]+")))
 
+# alternate solution to ex 1
+
+str_match(emails, 
+          "(?:[A-Za-z0-9._%+-]+)@([A-Za-z0-9]+)\\..*") |>
+  data.frame(email = _) |>
+  drop_na()
+#####
+## notice, ?: prevents certain groups from being separately captured by str_match.
+#####
 
 ## Exercise 2
 

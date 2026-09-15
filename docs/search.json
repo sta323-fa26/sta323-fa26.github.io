@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n\n\n\n\n\n5\nTue Sep 22\ndimension reduction\n\n\n\n\n\n\nThu Sep 24\ngeographical data\n\n\n\n\n\n6\nTue Sep 29\n\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\n\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\n\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n\n\n\n\n\n5\nTue Sep 22\ndimension reduction\n\nlab 4\n\n\n\n\nThu Sep 24\ngeographical data\n\n\n\n\n\n6\nTue Sep 29\nfunctionals\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -2265,7 +2265,7 @@
     "href": "slides/lec07.html#variable-mappings-aesthetics",
     "title": "ggplot2",
     "section": "Variable mappings (aesthetics)",
-    "text": "Variable mappings (aesthetics)\nThe name of the argument is mapping because it says how to “map” variables to a visual aesthetic.\n\npenguins %&gt;%\n  ggplot(mapping = aes(x = bill_depth_mm, y = flipper_length_mm))\n\n. . .\nWhen does an aesthetic (visual) go inside function aes()?\n\nIf you want an aesthetic to be reflective of a variable’s values, it must go inside aes().\nIf you want to set an aesthetic manually and not have it convey information about a variable, use the aesthetic’s name outside of aes(), e.g. in the geometry, and set it to your desired value.\n\n. . .\n\ncodeplot\n\n\n\npenguins %&gt;%\n  ggplot(aes(x = flipper_length_mm)) + \n  geom_histogram(color = \"gold\", fill = \"steelblue\")"
+    "text": "Variable mappings (aesthetics)\nThe name of the argument is mapping because it says how to “map” variables to a visual aesthetic.\n\npenguins %&gt;%\n  ggplot(mapping = aes(x = bill_depth_mm, y = flipper_length_mm))\n\n\nWhen does an aesthetic (visual) go inside function aes()?\n\nIf you want an aesthetic to be reflective of a variable’s values, it must go inside aes().\nIf you want to set an aesthetic manually and not have it convey information about a variable, use the aesthetic’s name outside of aes(), e.g. in the geometry, and set it to your desired value.\n\n\n\n\ncodeplot\n\n\n\npenguins %&gt;%\n  ggplot(aes(x = flipper_length_mm)) + \n  geom_histogram(color = \"gold\", fill = \"steelblue\")"
   },
   {
     "objectID": "slides/lec07.html#continuous-and-discrete-variables",
@@ -2286,7 +2286,7 @@
     "href": "slides/lec07.html#themes",
     "title": "ggplot2",
     "section": "Themes",
-    "text": "Themes\n\n\n\n\n\n\nimage credit: tvthemes package by Ryo Nakagawra\nSee https://ggplot2.tidyverse.org/reference/ggtheme.html for a list of default themes."
+    "text": "Themes\n\n\nimage credit: tvthemes package by Ryo Nakagawra\nSee https://ggplot2.tidyverse.org/reference/ggtheme.html for a list of default themes."
   },
   {
     "objectID": "slides/lec07.html#plotting-functions",
@@ -2300,7 +2300,7 @@
     "href": "slides/lec07.html#save-the-plot",
     "title": "ggplot2",
     "section": "Save the plot",
-    "text": "Save the plot\n\nSave a plot as a file on your computer with ggsave()\n\n\npenguins %&gt;%\n  ggplot(aes(x = bill_depth_mm, y = species)) + \n  geom_boxplot() +\n  labs(x = \"Bill depth (mm)\", y = \"Species\") +\n  theme_bw()\n\n\n\n\n\n\n\n\n\nggsave(\"penguin-box-plot.png\", \n       plot = last_plot())"
+    "text": "Save the plot\n\nSave a plot as a file on your computer with ggsave()\n\n\npenguins %&gt;%\n  ggplot(aes(x = bill_depth_mm, y = species)) + \n  geom_boxplot() +\n  labs(x = \"Bill depth (mm)\", y = \"Species\") +\n  theme_bw()\n\n\n\nggsave(\"penguin-box-plot.png\", \n       plot = last_plot())"
   },
   {
     "objectID": "slides/lec07.html#annotate",
@@ -2335,7 +2335,7 @@
     "href": "slides/lec07.html#gganimate-example",
     "title": "ggplot2",
     "section": "gganimate example",
-    "text": "gganimate example\n\nlibrary(gganimate) # animate\nlibrary(gapminder) # data\n\n\ncode-plotplotcode-animateanimation\n\n\n\nggplot(gapminder, aes(x = gdpPercap, y = lifeExp, size = pop, colour = country)) +\n  geom_point(alpha = 0.7, show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw(base_size = 16)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(gapminder, aes(x = gdpPercap, y = lifeExp, size = pop, colour = country)) +\n  geom_point(alpha = 0.7, show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw(base_size = 16) +\n  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'Life expectancy') +\n  transition_time(year) +\n  ease_aes('linear')\n\n\n\n\n\n\n\nNote\n\n\n\nIf the gif is not rendering, you might need some other dependencies, install.packages(c(\"gifski\",\"png\"))"
+    "text": "gganimate example\n\nlibrary(gganimate) # animate\nlibrary(gapminder) # data\n\n\ncode-plotplotcode-animateanimation\n\n\n\nggplot(gapminder, aes(x = gdpPercap, y = lifeExp, size = pop, colour = country)) +\n  geom_point(alpha = 0.7, show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw(base_size = 16)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(gapminder, aes(x = gdpPercap, y = lifeExp, size = pop, colour = country)) +\n  geom_point(alpha = 0.7, show.legend = FALSE) +\n  scale_colour_manual(values = country_colors) +\n  scale_size(range = c(2, 12)) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw(base_size = 16) +\n  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'Life expectancy') +\n  transition_time(year) +\n  ease_aes('linear')\n\n\n\n\n\n\n\nNote\n\n\nIf the gif is not rendering, you might need some other dependencies, install.packages(c(\"gifski\",\"png\"))"
   },
   {
     "objectID": "slides/lec07.html#gganimate-summary",
@@ -4611,5 +4611,33 @@
     "title": "Regular expressions notes",
     "section": "Further references",
     "text": "Further references\n\nstringr function reference"
+  },
+  {
+    "objectID": "labs/lab-4.html",
+    "href": "labs/lab-4.html",
+    "title": "Lab 4: dream of plots",
+    "section": "",
+    "text": "“I dream of plots, and then I plot my dreams”\nVincent van Gogh (loosely)\nBy the end of the lab, you will…"
+  },
+  {
+    "objectID": "labs/lab-4.html#exercises",
+    "href": "labs/lab-4.html#exercises",
+    "title": "Lab 4: dream of plots",
+    "section": "Exercises",
+    "text": "Exercises\nFor all exercises, you should respond in the space provided in the template lab-4.qmd and show all your work. In all answers of type double, three significant figures suffices.\n\n1. Re-create the plot"
+  },
+  {
+    "objectID": "labs/lab-4.html#style-guidelines",
+    "href": "labs/lab-4.html#style-guidelines",
+    "title": "Lab 4: dream of plots",
+    "section": "Style guidelines",
+    "text": "Style guidelines\nAll assignments in this course must employ proper coding style, as outlined below:\n\nAll code should obey the 80 character limit per line (i.e. no code should run off the page when rendering or require scrolling). To enable a vertical line in the RStudio IDE that helps guide this, see the style guidelines from lab 0 or ask a member of the teaching team for help.\nAll commas should be followed by a space.\nAll binary operators should be surrounded by space. For example x + y is appropriate. x+y is not.\nAll pipes %&gt;% or |&gt; as well as ggplot layers + should be followed by a new line.\nYou should be consistent with stylistic choices, e.g. only use 1 of = vs &lt;- and %&gt;% vs |&gt;\nYour name should be at the top (in the YAML) of each document under “author:”\nAll code chunks should be named (with names that don’t have spaces, e.g. ex-1, ex-2 etc.)\nFile names in your GitHub repo such as lab-x.qmd must not be changed and left as provided. Additionally, your repo must pass certain basic checks. The results of these checks are visible on GitHub via the badges at the top of your README and the actions tab. These are meant to give you feedback around the structure and reproducibility of your repository and assignment - they do not assess the correctness of your work. You should consider them a necessary but not sufficient condition when turning in your work - passing all of the checks simply means your have met a minimum standard of reproducibility for the assignment.\n\nFundamentally, the check is making sure 1) you only have the files you should in your repository, 2) your .qmd renders.\nIf you have any questions about style, please ask a member of the teaching team."
+  },
+  {
+    "objectID": "labs/lab-4.html#submitting-your-lab",
+    "href": "labs/lab-4.html#submitting-your-lab",
+    "title": "Lab 4: dream of plots",
+    "section": "Submitting your lab",
+    "text": "Submitting your lab\nTo submit your assignment, simply commit and push your completed lab-x.qmd to your GitHub repo. Your most recent commit 48 hours after the assignment deadline will be graded, and any applicable late penalty will be applied (see the syllabus). For this reason, do not push commits after you are satisfied with your work, or a late penalty will be applied."
   }
 ]

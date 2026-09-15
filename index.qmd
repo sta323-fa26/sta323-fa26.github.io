@@ -64,26 +64,26 @@ schedule %>%
 | 3 | Tue Sep 08 | subsetting  | [💻](/slides/lec06.html)  | [lab 2](/labs/lab2.html)  |  |
 |  | Thu Sep 10 | tidy data & dplyr | [💻](/slides/lec05.html)  |  | [mini project](/mini_project.html) |
 | 4 | Tue Sep 15 | regular expressions | [🗒](/notes/regexp-lecture.html) | [lab 3](/labs/lab3.html) |  |
-|  | Thu Sep 17 | visualization with ggplot2 |  |  |  |
-| 5 | Tue Sep 22 | dimension reduction |  |  |  |
+|  | Thu Sep 17 | visualization with ggplot2 |  [💻](/slides/lec07.html) |  |  |
+| 5 | Tue Sep 22 | dimension reduction |  | lab 4 |  |
 |  | Thu Sep 24 | geographical data |  |  |  |
-| 6 | Tue Sep 29 |   |  |  |  |
+| 6 | Tue Sep 29 | functionals  |  |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
-| 7 | Tue Oct 06 |  shiny |  |  |  | <!-- project workday -->
-|  | Thu Oct 08 |  |  |  |  |
+| 7 | Tue Oct 06 |  shiny |  | lab 5 |  | <!-- project workday -->
+|  | Thu Oct 08 | APIs |  |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |  |  |
 |  | Thu Oct 15 |  |  |  |  |
 | 9 | Tue Oct 20 |  |  |  | mp presentations |
 |  | Thu Oct 22 |  |  |  |  |
-| 10 | Tue Oct 27 |  |  |  | |
+| 10 | Tue Oct 27 |  |  | lab 6 | |
 |  | Thu Oct 29 |  |  |  |  |
-| 11 | Tue Nov 03 |  |  |  |  |
+| 11 | Tue Nov 03 |  |  | project workday |  |
 |  | Thu Nov 05 |  |  |  |  |
-| 12 | Tue Nov 10 |  |  |  |  |
+| 12 | Tue Nov 10 |  |  | lab 7 |  |
 |  | Thu Nov 12 |  |  |  |  |
 | 13 | Tue Nov 17 | exam 2 |  |  |  |
 |  | Thu Nov 19 |  |  |  |  |
-| 14 | Tue Nov 24 |  |  |  |  |
+| 14 | Tue Nov 24 |  |  | project workday |  |
 |  | Thu Nov 26 | NO CLASS |  |  |  |
 | 15 | Tue Dec 01 | project presentations |  |  | fp presentations |
 |  | Thu Dec 03 |  |  |  |  |

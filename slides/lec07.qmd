@@ -8,14 +8,12 @@ format:
       smaller: true
 ---
 
-## Announcements 
+<!-- ## Announcements  -->
 
-- teams set for lab 03.
-- for lab 04 and beyond:
-    -   message me by *Friday, Sept 19* if you'd like to be pseudo-randomly assigned a team or
-    -   reach out to any member of the teaching team if you'd like to form a specific team but have not done so yet.
-
-# 
+<!-- - teams set for lab 03. -->
+<!-- - for lab 04 and beyond: -->
+<!--     -   message me by *Friday, Sept 19* if you'd like to be pseudo-randomly assigned a team or -->
+<!--     -   reach out to any member of the teaching team if you'd like to form a specific team but have not done so yet. -->
 
 ![](images/ggplot2-logo.png){fig-align="center"}
 
@@ -791,10 +789,10 @@ ggplot() +
 #| warning: false
 #| message: false
 #| eval: false
-amendments = read_csv("http://sta323-fa25.github.io/data/American_Amendments.csv")
+amendments = read_csv("http://sta323-fa26.github.io/data/American_Amendments.csv")
 ```
 
-Today's data set comes from [data.gov](https://catalog.data.gov/dataset/amending-america-proposed-amendments-to-the-united-states-constitution-1787-to-2014?utm_source=chatgpt.com)
+Today's data set comes from [data.gov](https://catalog.data.gov/dataset/amending-america-proposed-amendments-to-the-united-states-constitution-1787-to-2014)
 
 
 ```{r}
@@ -828,7 +826,7 @@ all_recipes %>%
 #| echo: false
 #| eval: false
 library(tidyverse)
-x = read_csv("../data/American_Amendments.csv")
+x = read_csv("data/American_Amendments.csv")
 x %>%
   mutate(century = case_when(year < 1800 ~ 18,
                              year < 1900 & year >= 1800 ~ 19,
