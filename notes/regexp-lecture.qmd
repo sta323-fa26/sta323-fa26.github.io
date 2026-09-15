@@ -1,5 +1,5 @@
 ---
-title: "Regular expressions cheat sheet"
+title: "Regular expressions notes"
 author: "Dr. Alexander Fisher"
 execute:
   warning: true
