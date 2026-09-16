@@ -1,5 +1,5 @@
 ---
-title: "Special topic: dimension reduction"
+title: "Dimension reduction"
 author: "Dr. Alexander Fisher"
 execute:
   warning: true
@@ -8,11 +8,63 @@ format:
       smaller: true
 ---
 
-# Announcements
+# Background
 
-Reminder:
+## Matrices in R
 
--   Final project presentations during lab Tuesday, April 25.
+
+::: {.columns}
+::: {.column width="50%"}
+#### Make matrices
+```{r}
+A <- matrix(c(1, 2, 2, 1), nrow = 2)
+A
+B <- matrix(c(0, 1, 0, 1), nrow = 2)
+B
+```
+
+:::
+::: {.column width="50%"}
+
+#### Multiply a matrix
+
+Matrix multiplication proceeds row by column.
+
+```{r}
+A %*% B # multiplication
+```
+:::
+:::
+
+
+## Matrix vector multiplication
+
+## Identity Matrix
+
+The identity matrix has 1s on its diagonals and 0s in the off-diagonal entries.
+
+```{r}
+identity <- diag(1, nrow = 2)
+identity
+
+A %*% identity == A
+```
+
+## Positive definite
+
+## Covariance matrix
+
+## Visualizing a covariance matrix
+
+## Eigenvalues and Eigenvectors
+
+# Principal Component Analysis
+
+## Intuition 
+
+## In practice
+
+## Example
 
 # Multi-dimensional scaling (MDS)
 
@@ -44,10 +96,8 @@ is
 
 
 
-# MDS (an MM solution)
+<!-- # MDS (an MM solution) -->
 
-# Principle component analysis
 
-## Covariance
 
 
