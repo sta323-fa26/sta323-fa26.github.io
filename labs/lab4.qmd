@@ -33,10 +33,13 @@ For all exercises, you should respond in the space provided in the template `lab
 
 ## The data
 
-Load the data using `readRDS`
+Load the data using `readRDS`. The data are stored as a large matrix. Rows are individuals (observations), and columns are specific loci where SNPs (single nucleotide polymorphisms) occur. Each cell contains a 0, 1, or 2, indicating how many copies of a particular allele the individual has at that SNP site. A value of 0 means the individual is homozygous for the other allele (0 copies of the counted allele), a value of 1 means the individual is heterozygous (1 copy), and a value of 2 means the individual is homozygous for the counted allele (2 copies). Some individuals have a missing genotype at a given SNP; these are represented as `NA`.
 
-## 1. PCA
+## 1. About the data
 
+Answer the following questions: How many individuals are in the data set? How many SNP sites per individual? How many total observed vs missing cells in the matrix? Verify that SNPs only take values 0, 1, 2 or missing. 
+
+## 2. PCA
 
 ## 2. Overlay
 
