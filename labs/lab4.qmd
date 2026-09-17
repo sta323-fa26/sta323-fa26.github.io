@@ -31,7 +31,18 @@ Make sure everyone in your team knows when to stop committing! After 5pm on the 
 
 For all exercises, you should respond in the space provided in the template `lab-4.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
 
-### 1. Re-create the plot
+## The data
+
+Load the data using `loadRDS`
+
+## 1. PCA
+
+
+## 2. Overlay
+
+## 3. ggproto functionality
+
+## 4. MDS?
 
 ## Style guidelines
 
