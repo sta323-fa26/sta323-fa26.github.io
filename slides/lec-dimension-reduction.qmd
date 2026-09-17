@@ -10,6 +10,19 @@ format:
 
 # Background
 
+The tidy way of thinking: rows are observations, columns are measurements.
+
+Dimension reduction is the art of replacing many columns with a few carefully chosen (or constructed) columns.
+
+. . .
+
+A sketch of today's lecture:
+
+- covariance matrices can be visualized as ellipses
+- eigenvectors point along the ellipse's main axes
+- PCA reduces dimension by keeping the most important axes (linear combinations of existing columns)
+- MDS is another form of dimension reduction
+
 ## Matrices in R
 
 
@@ -36,8 +49,88 @@ A %*% B # multiplication
 :::
 :::
 
+. . .
+
+The single entry in row 1, column 1 is just a dot product:
+
+$$
+\require{enclose}
+\left[
+\begin{array}{c}
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{cc}1 & 2\end{array}}\\
+\begin{array}{cc}2 & 1\end{array}
+\end{array}
+\right]
+\left[
+\begin{array}{cc}
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{c}0\\1\end{array}} &
+\begin{array}{c}0\\1\end{array}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cc}
+\enclose{circle}[mathcolor="red",padding="8px"]{1(0)+2(1)} & 1(0)+2(1)\\
+2(0)+1(1) & 2(0)+1(1)
+\end{array}
+\right]
+$$
+
+Same rule for every entry: choose a row, choose a column, multiply across, add up.
+
 
 ## Matrix vector multiplication
+
+A vector is just a matrix with one column.
+
+$$
+\require{enclose}
+\left[
+\begin{array}{cc}
+3 & 1\\
+1 & 2
+\end{array}
+\right]
+\left[
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{c}2\\1\end{array}}
+\right]
+=
+\left[
+\begin{array}{c}
+3(2)+1(1)\\
+1(2)+2(1)
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+7\\
+4
+\end{array}
+\right]
+$$
+
+. . .
+
+We can pre-multiply (put the vector on the left side) too:
+
+$$
+\require{enclose}
+\mathbf{x}^T A \mathbf{x}
+=
+\enclose{circle}[mathcolor="red",padding="4px"]{\begin{bmatrix}2 & 1\end{bmatrix}}
+\begin{bmatrix}
+3 & 1\\
+1 & 2
+\end{bmatrix}
+\begin{bmatrix}2\\1\end{bmatrix}
+=
+\begin{bmatrix}2 & 1\end{bmatrix}
+\begin{bmatrix}7\\4\end{bmatrix}
+= 18
+$$
+
+This pattern is called a **quadratic form**. It takes a direction $\mathbf{x}$ and turns it into one number.
 
 ## Identity Matrix
 
@@ -50,21 +143,287 @@ identity
 A %*% identity == A
 ```
 
+. . .
+
+The identity matrix is the matrix version of multiplying by 1:
+
+$$
+A I = A
+$$
+
+It is useful as a baseline: some matrices stretch, rotate, or shear vectors; the identity leaves them alone.
+
 ## Positive definite
+
+A symmetric matrix $A$ is **positive definite** if
+
+$$
+\mathbf{x}^T A \mathbf{x} > 0
+\quad \text{for every nonzero vector } \mathbf{x}.
+$$
+
+. . .
+
+Intuition:
+
+- $\mathbf{x}^T A \mathbf{x}$ acts like a squared length after $A$ has reshaped space
+- positive definite means every nonzero direction has positive length
+- no direction is flattened to zero
+- no direction has a "negative squared length"
+
+. . .
+
+For covariance matrices, positive definite is the condition that let's us visualize it as an ellipse instead of a line, or point (if positive semi-definite).
 
 ## Covariance matrix
 
+A covariance matrix stores how variables vary together.
+
+For two variables:
+
+$$
+A =
+\begin{bmatrix}
+\mathrm{var}(x_1) & \mathrm{cov}(x_1, x_2)\\
+\mathrm{cov}(x_1, x_2) & \mathrm{var}(x_2)
+\end{bmatrix}
+$$
+
+. . .
+
+::: panel-tabset
+## Read it
+
+Read it geometrically:
+
+- large variance in $x_1$: wide horizontal spread
+- large variance in $x_2$: wide vertical spread
+- positive covariance: the cloud tilts up and to the right
+- negative covariance: the cloud tilts down and to the right
+
+## Positive covariance
+
+```{r}
+set.seed(1)
+A <- matrix(c(1, .5, .5, 1), nrow = 2) 
+points <- mvtnorm::rmvnorm(100, mean = c(0,0), sigma = A)
+plot(points, asp = 1)
+```
+
+
+## Negative covariance
+
+```{r}
+set.seed(1)
+A <- matrix(c(1, -.5, -.5, 1), nrow = 2) 
+points <- mvtnorm::rmvnorm(100, mean = c(0,0), sigma = A)
+plot(points, asp = 1)
+```
+
+## Zero covariance
+
+```{r}
+set.seed(1)
+A <- matrix(c(1, 0, 0, 1), nrow = 2) 
+points <- mvtnorm::rmvnorm(100, mean = c(0,0), sigma = A)
+plot(points, asp = 1)
+```
+
+
+:::
 ## Visualizing a covariance matrix
 
+A covariance matrix $A$ can be visualized by the points that have the same "covariance distance" from the center:
+
+$$
+\mathbf{x}^T A^{-1} \mathbf{x} = c
+$$
+
+In two dimensions, that equation draws an ellipse.
+
+::: panel-tabset
+
+### Plot
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4.2
+A <- matrix(c(4, 1.4,
+              1.4, 1), nrow = 2)
+
+level <- 4
+theta <- seq(0, 2 * pi, length.out = 300)
+circle <- rbind(cos(theta), sin(theta))
+
+eig <- eigen(A)
+ellipse <- t(eig$vectors %*% diag(sqrt(level * eig$values)) %*% circle)
+
+lim <- max(abs(ellipse)) * 1.15
+plot(ellipse, type = "l", asp = 1,
+     xlim = c(-lim, lim), ylim = c(-lim, lim),
+     xlab = expression(x[1]), ylab = expression(x[2]),
+     main = expression(x^T * A^{-1} * x == c))
+abline(h = 0, v = 0, col = "gray80")
+
+cols <- c("#D55E00", "#0072B2")
+for (j in 1:2) {
+  axis_vec <- eig$vectors[, j] * sqrt(level * eig$values[j])
+  arrows(0, 0, axis_vec[1], axis_vec[2],
+         length = 0.10, lwd = 3, col = cols[j])
+  arrows(0, 0, -axis_vec[1], -axis_vec[2],
+         length = 0.10, lwd = 3, col = cols[j])
+}
+legend("topright", legend = c("large spread", "small spread"),
+       col = cols, lwd = 3, bty = "n")
+```
+
+### Code
+
+```{r}
+#| eval: false
+A <- matrix(c(4, 1.4,
+              1.4, 1), nrow = 2)
+
+level <- 4
+theta <- seq(0, 2 * pi, length.out = 300)
+circle <- rbind(cos(theta), sin(theta))
+
+eig <- eigen(A)
+ellipse <- t(eig$vectors %*% diag(sqrt(level * eig$values)) %*% circle)
+
+lim <- max(abs(ellipse)) * 1.15
+plot(ellipse, type = "l", asp = 1,
+     xlim = c(-lim, lim), ylim = c(-lim, lim),
+     xlab = expression(x[1]), ylab = expression(x[2]),
+     main = expression(x^T * A^{-1} * x == c))
+abline(h = 0, v = 0, col = "gray80")
+
+cols <- c("#D55E00", "#0072B2")
+for (j in 1:2) {
+  axis_vec <- eig$vectors[, j] * sqrt(level * eig$values[j])
+  arrows(0, 0, axis_vec[1], axis_vec[2],
+         length = 0.10, lwd = 3, col = cols[j])
+  arrows(0, 0, -axis_vec[1], -axis_vec[2],
+         length = 0.10, lwd = 3, col = cols[j])
+}
+legend("topright", legend = c("large spread", "small spread"),
+       col = cols, lwd = 3, bty = "n")
+```
+
+:::
+
 ## Eigenvalues and Eigenvectors
+
+Some special directions do not get turned by a matrix. They only get stretched or shrunk.
+
+$$
+A \mathbf{v} = \lambda \mathbf{v}
+$$
+
+- $\mathbf{v}$ is an **eigenvector**: a direction that survives the transformation
+- $\lambda$ is an **eigenvalue**: how much that direction is stretched
+
+. . .
+
+For a covariance ellipse:
+
+- eigenvectors point along the long and short axes
+- eigenvalues measure spread along those axes
+- the largest eigenvalue points to the direction with the most variation
 
 # Principal Component Analysis
 
 ## Intuition 
 
+PCA asks:
+
+> Can we rotate the coordinate system so the first axis catches as much variation as possible?
+
+. . .
+
+The answer comes from the covariance matrix:
+
+- PC1 is the eigenvector with the largest eigenvalue
+- PC2 is the next eigenvector, at a right angle to PC1
+- the PC scores are the data's coordinates in this rotated system
+
+Dimension reduction happens when we keep only the first few PC scores.
+
 ## In practice
 
+For a data matrix $X$ with rows as observations and columns as variables:
+
+1. center each column
+2. often scale columns to comparable units
+3. compute the covariance matrix
+4. find eigenvectors and eigenvalues
+5. rotate the data onto those eigenvectors
+6. keep the first few rotated columns
+
+. . .
+
+In R:
+
+```{r}
+#| eval: false
+pca <- prcomp(X, center = TRUE, scale. = TRUE)
+pca$x        # principal component scores
+pca$rotation # principal component directions
+```
+
 ## Example
+
+### Example 1: two columns that are almost one column
+
+Suppose students with high coding scores also tend to have high statistics scores.
+
+```{r}
+toy <- data.frame(
+  coding = c(1, 2, 3, 4, 5, 6),
+  stats = c(1.1, 1.9, 3.2, 3.8, 5.1, 5.9)
+)
+
+pca_toy <- prcomp(toy, scale. = TRUE)
+round(summary(pca_toy)$importance, 3)
+```
+
+. . .
+
+PC1 is almost the average of the two standardized columns:
+
+$$
+\mathrm{PC1} \approx .71(\text{coding}) + .71(\text{stats})
+$$
+
+So the two-column data set can be summarized by one "overall performance" axis with very little loss.
+
+## Example 2: genes mirror geography
+
+::: {.columns}
+::: {.column width="53%"}
+![](https://upload.wikimedia.org/wikipedia/commons/a/a3/Genes_mirror.jpg){fig-align="center" width="100%"}
+:::
+::: {.column width="47%"}
+Novembre et al. (2008) used PCA on European genetic data.
+
+. . .
+
+- rows: people
+- columns: genetic markers
+- PC1 and PC2: two summary coordinates
+
+. . .
+
+The striking part: the first two PCs resemble a map of Europe, even though PCA was only told about genetic variation.
+
+. . .
+
+Geometric lesson: the leading eigenvectors of a covariance matrix can reveal real low-dimensional structure.
+
+Image: Wikimedia Commons version of Novembre et al., *Nature* 456:98-101.
+:::
+:::
 
 # Multi-dimensional scaling (MDS)
 
@@ -84,6 +443,15 @@ $$
 
 where $w_{ij} = w_{ji}$ is a nonnegative weight and $||\cdot||$ is an arbitrary norm, often taken to be the Euclidean ($L_2$) norm.
 
+. . .
+
+Plain-English version:
+
+- PCA starts with variables and finds useful axes
+- MDS starts with distances and tries to draw a map
+- if two objects are similar, MDS tries to place them close together
+- if two objects are dissimilar, MDS tries to place them far apart
+
 ## Properties of the objective
 
 The function
@@ -94,10 +462,15 @@ $$
 
 is
 
+- nonnegative: it adds up squared errors
+- zero only when the displayed distances exactly match the observed distances
+- unchanged if we rotate or flip the whole final picture
+- usually minimized by an iterative algorithm rather than by hand
+
+. . .
+
+MDS is another form of dimension reduction: it trades a large table of pairwise distances for a low-dimensional picture.
+
 
 
 <!-- # MDS (an MM solution) -->
-
-
-
-
