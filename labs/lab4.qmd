@@ -33,7 +33,7 @@ For all exercises, you should respond in the space provided in the template `lab
 
 ## The data
 
-Load the data using `loadRDS`
+Load the data using `readRDS`
 
 ## 1. PCA
 
