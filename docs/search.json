@@ -1334,7 +1334,7 @@
     "href": "links.html",
     "title": "Links",
     "section": "",
-    "text": "Code\n\nRStudio containers\n\nCommunication\n\nEd Discussion\n\nCollaboration\n\ncourse GitHub organization\n\nTextbooks\n\nAdvanced R (2nd ed.) - Wickham - Chapman and Hall/CRC, 2019 (978-0815384571)\nR for Data Science - Grolemund, Wickham - O’Reilly, 2016 (978-1491910399)"
+    "text": "Code\n\nRStudio containers\ngit cheatsheet\n\nCommunication\n\nEd Discussion\n\nCollaboration\n\ncourse GitHub organization\n\nTextbooks\n\nAdvanced R (2nd ed.) - Wickham - Chapman and Hall/CRC, 2019 (978-0815384571)\nR for Data Science - Grolemund, Wickham - O’Reilly, 2016 (978-1491910399)"
   },
   {
     "objectID": "labs/lab6.html",
@@ -4639,5 +4639,82 @@
     "title": "Lab 4: dream of plots",
     "section": "Submitting your lab",
     "text": "Submitting your lab\nTo submit your assignment, simply commit and push your completed lab-x.qmd to your GitHub repo. Your most recent commit 48 hours after the assignment deadline will be graded, and any applicable late penalty will be applied (see the syllabus). For this reason, do not push commits after you are satisfied with your work, or a late penalty will be applied."
+  },
+  {
+    "objectID": "git-cheatsheet.html",
+    "href": "git-cheatsheet.html",
+    "title": "git FAQ",
+    "section": "",
+    "text": "The everyday workflow\n\n\n\npull → edit files → stage → check status → commit → pull → push"
+  },
+  {
+    "objectID": "git-cheatsheet.html#what-has-changed",
+    "href": "git-cheatsheet.html#what-has-changed",
+    "title": "git FAQ",
+    "section": "What has changed?",
+    "text": "What has changed?\ngit status\nUse this often. It shows changed files, staged files, and your current branch."
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-save-my-state-commit",
+    "href": "git-cheatsheet.html#how-do-i-save-my-state-commit",
+    "title": "git FAQ",
+    "section": "How do I save my state (commit)?",
+    "text": "How do I save my state (commit)?\nFirst, choose the changes to include:\nTo add everything in current folder:\ngit add . \nTo add a specific file:\ngit add lab-2.qmd\nThen commit them with a short description:\ngit commit -m \"added ggplot function\"\n\n\n\n\n\n\nA commit saves a checkpoint locally (on your machine). It is not shared with teammates or put on GitHub until you push it."
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-pull-updates-from-other-teammates",
+    "href": "git-cheatsheet.html#how-do-i-pull-updates-from-other-teammates",
+    "title": "git FAQ",
+    "section": "How do I pull updates from other teammates?",
+    "text": "How do I pull updates from other teammates?\nAfter committing your changes, run:\ngit pull\nThis downloads your teammates’ commits and combines them with your work."
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-share-my-commits",
+    "href": "git-cheatsheet.html#how-do-i-share-my-commits",
+    "title": "git FAQ",
+    "section": "How do I share my commits?",
+    "text": "How do I share my commits?\ngit push\nIf git says the remote contains work you do not have, pull first and then push again:\ngit pull\ngit push"
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-handle-a-merge-conflict",
+    "href": "git-cheatsheet.html#how-do-i-handle-a-merge-conflict",
+    "title": "git FAQ",
+    "section": "How do I handle a merge conflict?",
+    "text": "How do I handle a merge conflict?\nOpen each conflicted file and look for markers like these:\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nyour version\n=======\nyour teammate's version\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; incoming-commit\nEdit the file to keep the correct content and delete all three marker lines. Then save the file and run:\ngit add lab-4.qmd\ngit commit -m \"resolved merge conflict\"\ngit push"
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-remove-a-file-from-git",
+    "href": "git-cheatsheet.html#how-do-i-remove-a-file-from-git",
+    "title": "git FAQ",
+    "section": "How do I remove a file from git?",
+    "text": "How do I remove a file from git?\nDelete it and stage the deletion in one step:\ngit rm old-file.R\ngit commit -m \"removed old file\"\n\n\n\n\n\n\nNote: this deletes the file locally too!\n\n\n\nTo stop tracking a file without deleting it from your computer:\ngit rm --cached private-notes.txt\nAdd that filename to the .gitignore file if git should continue ignoring it."
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-see-recent-commits",
+    "href": "git-cheatsheet.html#how-do-i-see-recent-commits",
+    "title": "git FAQ",
+    "section": "How do I see recent commits?",
+    "text": "How do I see recent commits?\ngit log --oneline --graph --decorate -10"
+  },
+  {
+    "objectID": "git-cheatsheet.html#what-commands-will-i-use-most",
+    "href": "git-cheatsheet.html#what-commands-will-i-use-most",
+    "title": "git FAQ",
+    "section": "What commands will I use most?",
+    "text": "What commands will I use most?\n\n\n\nGoal\nCommand\n\n\n\n\nCheck the project\ngit status\n\n\nStage changes\ngit add .\n\n\nSave a checkpoint\ngit commit -m \"message\"\n\n\nGet teammates’ work\ngit pull\n\n\nShare your work\ngit push\n\n\nRemove a tracked file\ngit rm filename\n\n\n\n\n\n\n\n\n\nBefore you begin working\n\n\n\nStart with git pull. When you finish, commit your work, pull once more, and then push."
+  },
+  {
+    "objectID": "git-cheatsheet.html#most-common-commands-summary",
+    "href": "git-cheatsheet.html#most-common-commands-summary",
+    "title": "git FAQ",
+    "section": "Most common commands summary",
+    "text": "Most common commands summary\n\n\n\nGoal\nCommand\n\n\n\n\nCheck the project\ngit status\n\n\nStage changes\ngit add .\n\n\nSave a checkpoint\ngit commit -m \"message\"\n\n\nGet teammates’ work\ngit pull\n\n\nShare your work\ngit push\n\n\nRemove a tracked file\ngit rm filename"
+  },
+  {
+    "objectID": "git-cheatsheet.html#how-do-i-unstage-a-file",
+    "href": "git-cheatsheet.html#how-do-i-unstage-a-file",
+    "title": "git FAQ",
+    "section": "How do I unstage a file?",
+    "text": "How do I unstage a file?\nYou probably see that the file is staged via git status. If you want to unstaged it:\ngit restore --staged lab-2.html"
   }
 ]

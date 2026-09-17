@@ -1,0 +1,135 @@
+---
+title: "git FAQ"
+format: html
+---
+
+
+::: {.callout-tip appearance="simple" icon="true"}
+## The everyday workflow
+
+**pull → edit files → stage → check status → commit → pull → push**
+:::
+
+## What has changed?
+
+```bash
+git status
+```
+
+Use this often. It shows changed files, staged files, and your current branch.
+
+## How do I save my state (commit)?
+
+First, choose the changes to include:
+
+To add everything in current folder: 
+
+```bash
+git add . 
+```
+
+To add a specific file:
+
+```bash
+git add lab-2.qmd
+```
+
+Then commit them with a short description:
+
+```bash
+git commit -m "added ggplot function"
+```
+
+::: {.callout-note appearance="simple"}
+A commit saves a checkpoint **locally** (on your machine). It is not shared with teammates or put on GitHub until you push it.
+:::
+
+## How do I pull updates from other teammates?
+
+After committing your changes, run:
+
+```bash
+git pull
+```
+
+This downloads your teammates' commits and combines them with your work.
+
+## How do I share my commits?
+
+```bash
+git push
+```
+
+If git says the remote contains work you do not have, pull first and then push again:
+
+```bash
+git pull
+git push
+```
+
+## How do I handle a merge conflict?
+
+Open each conflicted file and look for markers like these:
+
+```text
+<<<<<<< HEAD
+your version
+=======
+your teammate's version
+>>>>>>> incoming-commit
+```
+
+Edit the file to keep the correct content and delete all three marker lines. Then save the file and run:
+
+```bash
+git add lab-4.qmd
+git commit -m "resolved merge conflict"
+git push
+```
+
+## How do I remove a file from git?
+
+Delete it and stage the deletion in one step:
+
+```bash
+git rm old-file.R
+git commit -m "removed old file"
+```
+
+::: {.callout-warning appearance="simple"}
+Note: this deletes the file locally too!
+:::
+
+
+To stop tracking a file **without deleting it from your computer**:
+
+```bash
+git rm --cached private-notes.txt
+```
+
+Add that filename to the `.gitignore` file if git should continue ignoring it.
+
+## How do I see recent commits?
+
+```bash
+git log --oneline --graph --decorate -10
+```
+
+## How do I unstage a file?
+
+You probably see that the file is staged via `git status`. If you want to unstaged it: 
+
+```bash
+git restore --staged lab-2.html
+```
+
+## Most common commands summary
+
+| Goal | Command |
+|---|---|
+| Check the project | `git status` |
+| Stage changes | `git add .` |
+| Save a checkpoint | `git commit -m "message"` |
+| Get teammates' work | `git pull` |
+| Share your work | `git push` |
+| Remove a tracked file | `git rm filename` |

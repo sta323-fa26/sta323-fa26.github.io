@@ -25,8 +25,18 @@ website:
             text: mini project
           - href: project.qmd
             text: final project
-      - href: links.qmd
-        text: links
+      - text: links
+        menu: 
+          - href: https://cmgr.oit.duke.edu/containers
+            text: Rstudio containers
+          - href: https://edstem.org/us/courses/103562/
+            text: Ed discussion
+          - href: https://github.com/sta323-fa26
+            text: GitHub organization
+          - href: git-cheatsheet.qmd
+            text: git FAQ
+          - href: links.qmd
+            text: all links
     
       
 format:

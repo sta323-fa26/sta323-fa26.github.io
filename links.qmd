@@ -6,6 +6,8 @@ Code
 
 - [RStudio containers](https://cmgr.oit.duke.edu/containers)
 
+- [git FAQ](/git-cheatsheet.qmd)
+
 Communication 
 
 - [Ed Discussion](https://edstem.org/us/courses/103562/)

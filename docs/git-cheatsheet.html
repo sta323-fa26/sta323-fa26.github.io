@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Links – STA323</title>
+<title>git FAQ – STA323</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -113,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./git-cheatsheet.html">
- <span class="dropdown-text">git cheatsheet</span></a>
+ <span class="dropdown-text">git FAQ</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./links.html">
@@ -132,15 +166,29 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-has-changed" id="toc-what-has-changed" class="nav-link active" data-scroll-target="#what-has-changed">What has changed?</a></li>
+  <li><a href="#how-do-i-save-my-state-commit" id="toc-how-do-i-save-my-state-commit" class="nav-link" data-scroll-target="#how-do-i-save-my-state-commit">How do I save my state (commit)?</a></li>
+  <li><a href="#how-do-i-pull-updates-from-other-teammates" id="toc-how-do-i-pull-updates-from-other-teammates" class="nav-link" data-scroll-target="#how-do-i-pull-updates-from-other-teammates">How do I pull updates from other teammates?</a></li>
+  <li><a href="#how-do-i-share-my-commits" id="toc-how-do-i-share-my-commits" class="nav-link" data-scroll-target="#how-do-i-share-my-commits">How do I share my commits?</a></li>
+  <li><a href="#how-do-i-handle-a-merge-conflict" id="toc-how-do-i-handle-a-merge-conflict" class="nav-link" data-scroll-target="#how-do-i-handle-a-merge-conflict">How do I handle a merge conflict?</a></li>
+  <li><a href="#how-do-i-remove-a-file-from-git" id="toc-how-do-i-remove-a-file-from-git" class="nav-link" data-scroll-target="#how-do-i-remove-a-file-from-git">How do I remove a file from git?</a></li>
+  <li><a href="#how-do-i-see-recent-commits" id="toc-how-do-i-see-recent-commits" class="nav-link" data-scroll-target="#how-do-i-see-recent-commits">How do I see recent commits?</a></li>
+  <li><a href="#how-do-i-unstage-a-file" id="toc-how-do-i-unstage-a-file" class="nav-link" data-scroll-target="#how-do-i-unstage-a-file">How do I unstage a file?</a></li>
+  <li><a href="#most-common-commands-summary" id="toc-most-common-commands-summary" class="nav-link" data-scroll-target="#most-common-commands-summary">Most common commands summary</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Links</h1>
+<h1 class="title">git FAQ</h1>
 </div>
 
 
@@ -157,26 +205,137 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Code</p>
-<ul>
-<li><p><a href="https://cmgr.oit.duke.edu/containers">RStudio containers</a></p></li>
-<li><p><a href="./git-cheatsheet.html">git cheatsheet</a></p></li>
-</ul>
-<p>Communication</p>
-<ul>
-<li><a href="https://edstem.org/us/courses/103562/">Ed Discussion</a></li>
-</ul>
-<p>Collaboration</p>
-<ul>
-<li><a href="https://github.com/sta323-fa26">course GitHub organization</a></li>
-</ul>
-<p>Textbooks</p>
-<ul>
-<li><a href="https://adv-r.hadley.nz/">Advanced R (2nd ed.) - Wickham - Chapman and Hall/CRC, 2019 (978-0815384571)</a></li>
-<li><a href="https://r4ds.had.co.nz/">R for Data Science - Grolemund, Wickham - O’Reilly, 2016 (978-1491910399)</a></li>
-</ul>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The everyday workflow
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>pull → edit files → stage → check status → commit → pull → push</strong></p>
+</div>
+</div>
+<section id="what-has-changed" class="level2">
+<h2 class="anchored" data-anchor-id="what-has-changed">What has changed?</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use this often. It shows changed files, staged files, and your current branch.</p>
+</section>
+<section id="how-do-i-save-my-state-commit" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-save-my-state-commit">How do I save my state (commit)?</h2>
+<p>First, choose the changes to include:</p>
+<p>To add everything in current folder:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add . </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To add a specific file:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add lab-2.qmd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then commit them with a short description:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"added ggplot function"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>A commit saves a checkpoint <strong>locally</strong> (on your machine). It is not shared with teammates or put on GitHub until you push it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="how-do-i-pull-updates-from-other-teammates" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-pull-updates-from-other-teammates">How do I pull updates from other teammates?</h2>
+<p>After committing your changes, run:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This downloads your teammates’ commits and combines them with your work.</p>
+</section>
+<section id="how-do-i-share-my-commits" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-share-my-commits">How do I share my commits?</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If git says the remote contains work you do not have, pull first and then push again:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-do-i-handle-a-merge-conflict" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-handle-a-merge-conflict">How do I handle a merge conflict?</h2>
+<p>Open each conflicted file and look for markers like these:</p>
+<pre class="text"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+your version
+=======
+your teammate's version
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; incoming-commit</code></pre>
+<p>Edit the file to keep the correct content and delete all three marker lines. Then save the file and run:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add lab-4.qmd</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"resolved merge conflict"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-do-i-remove-a-file-from-git" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-remove-a-file-from-git">How do I remove a file from git?</h2>
+<p>Delete it and stage the deletion in one step:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm old-file.R</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"removed old file"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Note: this deletes the file locally too!</p>
+</div>
+</div>
+</div>
+<p>To stop tracking a file <strong>without deleting it from your computer</strong>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> rm <span class="at">--cached</span> private-notes.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add that filename to the <code>.gitignore</code> file if git should continue ignoring it.</p>
+</section>
+<section id="how-do-i-see-recent-commits" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-see-recent-commits">How do I see recent commits?</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span> <span class="at">--graph</span> <span class="at">--decorate</span> <span class="at">-10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="how-do-i-unstage-a-file" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-i-unstage-a-file">How do I unstage a file?</h2>
+<p>You probably see that the file is staged via <code>git status</code>. If you want to unstaged it:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="at">--staged</span> lab-2.html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="most-common-commands-summary" class="level2">
+<h2 class="anchored" data-anchor-id="most-common-commands-summary">Most common commands summary</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Goal</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Check the project</td>
+<td><code>git status</code></td>
+</tr>
+<tr class="even">
+<td>Stage changes</td>
+<td><code>git add .</code></td>
+</tr>
+<tr class="odd">
+<td>Save a checkpoint</td>
+<td><code>git commit -m "message"</code></td>
+</tr>
+<tr class="even">
+<td>Get teammates’ work</td>
+<td><code>git pull</code></td>
+</tr>
+<tr class="odd">
+<td>Share your work</td>
+<td><code>git push</code></td>
+</tr>
+<tr class="even">
+<td>Remove a tracked file</td>
+<td><code>git rm filename</code></td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
