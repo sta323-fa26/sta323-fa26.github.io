@@ -53,6 +53,7 @@ schedule %>%
 <!-- Unit 4: Scalability: hardware, profiling and benchmarking; parallelization; SQL; duckDB; bigLM: 5 lectures -->
 <!-- Unit 5: Computational statistics (mini unit): Newton-Raphson; MM; simulation; Monte Carlo: 3 lectures-->
 
+<!-- Idea: simulation unit // how to use simulation to validate models and claims. Could start with validation of inequalities (for use with MM later) -->
 <!-- Total lectures in semester: 25 broken down as follows: 11 before exam 1, 22 before exam 2, 3 after exam 2 -->
 
 | Week | Date | Topic | Notes | Lab | Project |
