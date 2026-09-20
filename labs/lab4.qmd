@@ -11,9 +11,8 @@ execute:
 
 By the end of the lab, you will...
 
-<!-- -   recreate plots starting from untidy data sets -->
-<!-- -   create your own plotting tools -->
-<!-- -   plot an admixture density -->
+- Visualize the first two principal components of genetic SNP data of over 100 individuals and create a labeled map of Europe to compare it to.
+- Write your own ggproto function to group individuals
 
 ::: callout-warning
 Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is "accidentally" pushed.
@@ -27,25 +26,128 @@ Make sure everyone in your team knows when to stop committing! After 5pm on the 
 
 -   Open the Quarto (`.qmd`) file, change the author name to your team name followed by a colon and then the names of the team members.
 
+
+A complete list of packages used in this lab is provided below:
+
+```{r}
+#| label: packages
+#| eval: false
+library(tidyverse)
+library(patchwork)
+library(RColorBrewer)
+library(sf)
+library(rnaturalearth)
+library(ggplot2)
+```
+
+
 ## Exercises
 
 For all exercises, you should respond in the space provided in the template `lab-4.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
 
 ## The data
 
+The SNP data set and population labels data set are sourced from the [Novembre lab GitHub repo](https://github.com/NovembreLab/HGDP_PopStruct_Exercise/tree/master/data).
+
+#### `snp_pca.rds`
+
 Load the data using `readRDS`. The data are stored as a large matrix. Rows are individuals (observations), and columns are specific loci where SNPs (single nucleotide polymorphisms) occur. Each cell contains a 0, 1, or 2, indicating how many copies of a particular allele the individual has at that SNP site. A value of 0 means the individual is homozygous for the other allele (0 copies of the counted allele), a value of 1 means the individual is heterozygous (1 copy), and a value of 2 means the individual is homozygous for the counted allele (2 copies). Some individuals have a missing genotype at a given SNP; these are represented as `NA`.
 
-## 1. About the data
 
-Answer the following questions: How many individuals are in the data set? How many SNP sites per individual? How many total observed vs missing cells in the matrix? Verify that SNPs only take values 0, 1, 2 or missing. 
+#### `population_labels.csv`
 
-## 2. PCA
+This data set contains two columns: `IID` which contains an individuals unique ID and `population` which is a label that tells which population the individual belongs to.
 
-## 2. Overlay
 
-## 3. ggproto functionality
+#### `pop_locations.csv`
 
-## 4. MDS?
+This data set contains three columns: `Population` (the population in question) and `longitude`, `latitude` which describe where the populations come from. This data was sourced from Table 1 of [Hollenbach et al. (2012)](https://pmc.ncbi.nlm.nih.gov/articles/PMC3438391/).
+
+## 1. Examine the SNP data
+
+Answer the following questions about the SNP data set: How many individuals are in the data set? How many SNP sites per individual? How many total observed vs missing cells in the matrix? Verify that SNPs only take values 0, 1, 2 or missing. 
+
+## 2. Principal Component Analysis
+
+Again using the SNP data set: impute missing values with the column means. Next, run PCA. Save the first two principal components as a `data.frame` named `df` with the unique ids as row names. Show the output of the following: 
+
+```r
+glimpse(df)
+```
+
+## 3. Plot
+
+Using `ggplot`, create a scatter plot of the first two principal components and color the points by population. If any `population` values are missing, the legend should instead read: "Unknown" (instead of 'NA'). In all plots you make, the title should be informative, the axes labeled (e.g. "PC1" and "PC2" here) and the background uncolored (change the theme from the default gray). Make sure the color scheme is colorblind friendly, but still clearly distinguishes meaningfully between populations.
+
+::: callout-tip
+## Hint
+
+You'll need to do some data wrangling to join the `population_labels` data set to the SNP data set prior to creating the plot. Regular expressions and `left_join` may be useful here. Check out `scale_color_brewer` function for some discrete category color palette options.
+:::
+
+## 4. Functional plotting with ggproto
+
+Save your plot from part 3 as `plot_ex3` and write a ggproto function `geom_ball` that 
+
+(1) takes in an x, y and color aesthetic and computes the median x and y values for each "group" assigned via the coloring. Do not compute a median for the missing group.
+
+(2) find which point in the "group" has the farthest Euclidean distance from from the median coordinates.
+
+(3) draw a circle for each group on the plot, using matching color scheme, centered at the median and with a radius that passes through the farthest point
+
+Show the output of the code below:
+
+```r
+plot_ex3 + 
+ geom_ball()
+```
+
+Do any individuals fall into multiple plotted balls? If so, what do you think this might mean?
+
+## 5. Reflect to match the map
+
+Load the `sf` and `rnaturalearth` packages at the top of your `qmd` file. Next use the provided code below as a template to plot a map of part of Europe.
+
+```{r}
+#| eval: false
+europe <- ne_countries(
+  scale = "medium",
+  returnclass = "sf"
+)
+
+
+p2 <- ggplot(europe) +
+  geom_sf(fill = "grey95", color = "grey70") +
+  coord_sf(
+    xlim = c(-15, 45),
+    ylim = c(35, 65)
+  )
+
+```
+
+::: callout-tip
+## Hint
+The coordinates in `pop_locations` are longitude and latitude measured in decimal degrees. When converting these coordinates to an `sf` object, for purposes of plotting, you will need to specify an appropriate coordinate reference system. Determine the EPSG code commonly used for standard longitude/latitude coordinates and supply it to `st_as_sf()`, e.g.
+
+```r
+pop_locations_sf <- st_as_sf(
+  pop_locations,
+  coords = c("longitude", "latitude"),
+  crs = ____
+)
+```
+:::
+
+Next, plot the each population as a point overlaid on the map using an appropriate geometry (e.g. `geom_sf`) and color each population using the identical color scheme you used in exercise 4. Display the plot side-by-side with your plot from exercise 3 using the `patchwork` package. Reflect the principal components and/or change the axes of your plot from exercise 4 so the two plots look similar. Make sure there are no redundant legends.
+
+From what region(s) on the map do you think the Unknown population comes?
+
+
+::: callout-tip
+## Hint
+
+To use colors consistently across plots, you will want to define the color palette separately and then use a function such as `scale_color_manual()`.
+:::
 
 ## Style guidelines
 
