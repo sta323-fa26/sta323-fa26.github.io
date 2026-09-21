@@ -14,31 +14,65 @@ The tidy way of thinking: rows are observations, columns are measurements.
 
 Dimension reduction is the art of replacing many columns with a few carefully chosen (or constructed) columns.
 
+<!-- . . . -->
+
+<!-- A sketch of today's lecture: -->
+
+<!-- - covariance matrices can be visualized as ellipses -->
+
+<!-- - eigenvectors point along the ellipse's main axes -->
+
+<!-- - PCA reduces dimension by keeping the most important axes (linear combinations of existing columns) -->
+
+<!-- - MDS is another form of dimension reduction -->
+
+## SNP Data Example
+
+```{r}
+#| label: load-libraries-and-data
+#| echo: false
+#| warning: false
+#| message: false
+library(tidyverse)
+snp_data <- readRDS("../data/snp_pca.rds")
+```
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- snp_data |> -->
+<!--   as.data.frame() |> -->
+<!--   head(n = 5) -->
+<!-- ``` -->
+
+![](images/01-welcome/alignment.png)
+
+SNP data typically record, for many individuals and many SNP locations, how many copies of a particular allele each person carries. Because humans have two copies of most chromosomes, a SNP is encoded as 0, 1, or 2 copies of the allele.
+
+<!-- The human genome is the complete set of genetic information contained in our DNA. It consists of roughly 3 billion DNA base pairs, built from four nucleotide bases—A, C, G, and T—organized into 23 pairs of chromosomes. -->
+
+<!-- Most of the human genome is shared across individuals, but there are millions of locations where people commonly differ. One of the most common types of genetic variation is a single nucleotide polymorphism (SNP, pronounced "snip"), where a single DNA base differs between individuals. For example, at a particular location in the genome, some people might have an A while others have a G. -->
+
 . . .
 
-A sketch of today's lecture:
+How to visualize?
 
-- covariance matrices can be visualized as ellipses
-- eigenvectors point along the ellipse's main axes
-- PCA reduces dimension by keeping the most important axes (linear combinations of existing columns)
-- MDS is another form of dimension reduction
+## 
 
 ## Matrices in R
 
-
-::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 #### Make matrices
+
 ```{r}
 A <- matrix(c(1, 2, 2, 1), nrow = 2)
 A
 B <- matrix(c(0, 1, 0, 1), nrow = 2)
 B
 ```
-
 :::
-::: {.column width="50%"}
 
+::: {.column width="50%"}
 #### Multiply a matrix
 
 Matrix multiplication proceeds row by column.
@@ -47,14 +81,13 @@ Matrix multiplication proceeds row by column.
 A %*% B # multiplication
 ```
 :::
-:::
+:::::
 
 . . .
 
 The single entry in row 1, column 1 is just a dot product:
 
-$$
-\require{enclose}
+$$\require{enclose}
 \left[
 \begin{array}{c}
 \enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{cc}1 & 2\end{array}}\\
@@ -73,18 +106,15 @@ $$
 \enclose{circle}[mathcolor="red",padding="8px"]{1(0)+2(1)} & 1(0)+2(1)\\
 2(0)+1(1) & 2(0)+1(1)
 \end{array}
-\right]
-$$
+\right]$$
 
 Same rule for every entry: choose a row, choose a column, multiply across, add up.
-
 
 ## Matrix vector multiplication
 
 A vector is just a matrix with one column.
 
-$$
-\require{enclose}
+$$\require{enclose}
 \left[
 \begin{array}{cc}
 3 & 1\\
@@ -107,15 +137,13 @@ $$
 7\\
 4
 \end{array}
-\right]
-$$
+\right]$$
 
 . . .
 
 We can pre-multiply (put the vector on the left side) too:
 
-$$
-\require{enclose}
+$$\require{enclose}
 \mathbf{x}^T A \mathbf{x}
 =
 \enclose{circle}[mathcolor="red",padding="4px"]{\begin{bmatrix}2 & 1\end{bmatrix}}
@@ -127,8 +155,7 @@ $$
 =
 \begin{bmatrix}2 & 1\end{bmatrix}
 \begin{bmatrix}7\\4\end{bmatrix}
-= 18
-$$
+= 18$$
 
 This pattern is called a **quadratic form**. It takes a direction $\mathbf{x}$ and turns it into one number.
 
@@ -147,9 +174,7 @@ A %*% identity == A
 
 The identity matrix is the matrix version of multiplying by 1:
 
-$$
-A I = A
-$$
+$$A I = A$$
 
 It is useful as a baseline: some matrices stretch, rotate, or shear vectors; the identity leaves them alone.
 
@@ -157,10 +182,8 @@ It is useful as a baseline: some matrices stretch, rotate, or shear vectors; the
 
 A symmetric matrix $A$ is **positive definite** if
 
-$$
-\mathbf{x}^T A \mathbf{x} > 0
-\quad \text{for every nonzero vector } \mathbf{x}.
-$$
+$$\mathbf{x}^T A \mathbf{x} > 0
+\quad \text{for every nonzero vector } \mathbf{x}.$$
 
 . . .
 
@@ -181,13 +204,11 @@ A covariance matrix stores how variables vary together.
 
 For two variables:
 
-$$
-A =
+$$A =
 \begin{bmatrix}
 \mathrm{var}(x_1) & \mathrm{cov}(x_1, x_2)\\
 \mathrm{cov}(x_1, x_2) & \mathrm{var}(x_2)
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 
 . . .
 
@@ -210,7 +231,6 @@ points <- mvtnorm::rmvnorm(100, mean = c(0,0), sigma = A)
 plot(points, asp = 1)
 ```
 
-
 ## Negative covariance
 
 ```{r}
@@ -228,21 +248,17 @@ A <- matrix(c(1, 0, 0, 1), nrow = 2)
 points <- mvtnorm::rmvnorm(100, mean = c(0,0), sigma = A)
 plot(points, asp = 1)
 ```
-
-
 :::
+
 ## Visualizing a covariance matrix
 
 A covariance matrix $A$ can be visualized by the points that have the same "covariance distance" from the center:
 
-$$
-\mathbf{x}^T A^{-1} \mathbf{x} = c
-$$
+$$\mathbf{x}^T A^{-1} \mathbf{x} = c$$
 
 In two dimensions, that equation draws an ellipse.
 
 ::: panel-tabset
-
 ### Plot
 
 ```{r}
@@ -310,16 +326,13 @@ for (j in 1:2) {
 legend("topright", legend = c("large spread", "small spread"),
        col = cols, lwd = 3, bty = "n")
 ```
-
 :::
 
 ## Eigenvalues and Eigenvectors
 
 Some special directions do not get turned by a matrix. They only get stretched or shrunk.
 
-$$
-A \mathbf{v} = \lambda \mathbf{v}
-$$
+$$A \mathbf{v} = \lambda \mathbf{v}$$
 
 - $\mathbf{v}$ is an **eigenvector**: a direction that survives the transformation
 - $\lambda$ is an **eigenvalue**: how much that direction is stretched
@@ -334,7 +347,7 @@ For a covariance ellipse:
 
 # Principal Component Analysis
 
-## Intuition 
+## Intuition
 
 PCA asks:
 
@@ -354,12 +367,12 @@ Dimension reduction happens when we keep only the first few PC scores.
 
 For a data matrix $X$ with rows as observations and columns as variables:
 
-1. center each column
-2. often scale columns to comparable units
-3. compute the covariance matrix
-4. find eigenvectors and eigenvalues
-5. rotate the data onto those eigenvectors
-6. keep the first few rotated columns
+1.  center each column
+2.  often scale columns to comparable units
+3.  compute the covariance matrix
+4.  find eigenvectors and eigenvalues
+5.  rotate the data onto those eigenvectors
+6.  keep the first few rotated columns
 
 . . .
 
@@ -392,18 +405,17 @@ round(summary(pca_toy)$importance, 3)
 
 PC1 is almost the average of the two standardized columns:
 
-$$
-\mathrm{PC1} \approx .71(\text{coding}) + .71(\text{stats})
-$$
+$$\mathrm{PC1} \approx .71(\text{coding}) + .71(\text{stats})$$
 
 So the two-column data set can be summarized by one "overall performance" axis with very little loss.
 
 ## Example 2: genes mirror geography
 
-::: {.columns}
+::::: columns
 ::: {.column width="53%"}
 ![](https://upload.wikimedia.org/wikipedia/commons/a/a3/Genes_mirror.jpg){fig-align="center" width="100%"}
 :::
+
 ::: {.column width="47%"}
 Novembre et al. (2008) used PCA on European genetic data.
 
@@ -423,7 +435,7 @@ Geometric lesson: the leading eigenvectors of a covariance matrix can reveal rea
 
 Image: Wikimedia Commons version of Novembre et al., *Nature* 456:98-101.
 :::
-:::
+:::::
 
 # Multi-dimensional scaling (MDS)
 
@@ -433,13 +445,11 @@ Image: Wikimedia Commons version of Novembre et al., *Nature* 456:98-101.
 
 - Common target dimensions are $p = 2$ or $p = 3$ for visualization purposes.
 
-- MDS requires that for every pair of data points $(i; j) \in (1, \ldots, q; 1, \ldots, q)$, we observe a dissimilarity measure (often distance) $d_{ij} = d_{ji}$. 
+- MDS requires that for every pair of data points $(i; j) \in (1, \ldots, q; 1, \ldots, q)$, we observe a dissimilarity measure (often distance) $d_{ij} = d_{ji}$.
 
 - The goal of MDS is to estimate $p \times q$ parameter matrix $\mathbf{X}$ where the $i$th column $\mathbf{x}_i$ is estimated by minimizing the function
 
-$$
-f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2
-$$
+$$f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2$$
 
 where $w_{ij} = w_{ji}$ is a nonnegative weight and $||\cdot||$ is an arbitrary norm, often taken to be the Euclidean ($L_2$) norm.
 
@@ -456,9 +466,7 @@ Plain-English version:
 
 The function
 
-$$
-f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2
-$$
+$$f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2$$
 
 is
 
@@ -470,7 +478,5 @@ is
 . . .
 
 MDS is another form of dimension reduction: it trades a large table of pairwise distances for a low-dimensional picture.
-
-
 
 <!-- # MDS (an MM solution) -->
