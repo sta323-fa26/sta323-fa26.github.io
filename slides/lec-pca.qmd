@@ -494,7 +494,15 @@ In two dimensions, that equation draws an ellipse.
 #| fig-width: 6.5
 #| fig-height: 4.2
 
+source("https://sta323-fa26.github.io/scripts/stat_cov_ellipse.R")
 
+Sigma <- matrix(c(4, 1.4, 1.4, 1), nrow = 2)
+
+ggplot() +
+  stat_cov_ellipse(sigma = Sigma, c = 4, linewidth = 1,
+                    include_axes = TRUE) +
+  coord_fixed() +
+  theme_bw()
 
 ```
 
@@ -567,22 +575,84 @@ In two dimensions, that equation draws an ellipse.
 <!-- ``` -->
 
 ```{r}
-source("stat_cov_ellipse.R")
+#| eval: false
+source("https://sta323-fa26.github.io/scripts/stat_cov_ellipse.R")
 
 Sigma <- matrix(c(4, 1.4, 1.4, 1), nrow = 2)
 
 ggplot() +
-  stat_cov_ellipse(sigma = Sigma, c = 4, colour = "#0072B2", linewidth = 1) +
-  coord_fixed()
+  stat_cov_ellipse(sigma = Sigma, c = 4, colour = "#0072B2", linewidth = 1,
+                    include_axes = TRUE) +
+  coord_fixed() +
+  theme_bw()
 ```
 
+. . . 
+
+The principal axes of the ellipse are called the **eigenvectors** of the covariance matrix.
 
 :::
 
+## Exercise 1
 
-## Principal axes
+- Create a covariance matrix and save it as an object `Sigma`. Next, simulate multivariate normal data using the following code:
+
+```{r}
+#| eval: false
+mvtnorm::rmvnorm(n = 100, mean = c(0, 0), sigma = Sigma)
+```
+
+- Next, create a scatter plot of the data, and overlay the `stat_cov_ellipse` using `c = 6.28`. 
+
+- Discuss with your neighbor.
+
+```{r}
+#| label: solution-to-exercise-1
+#| echo: false
+#| eval: false
+
+Sigma = matrix(c(1, .5, .5, 1), nrow = 2)
+
+df <- mvtnorm::rmvnorm(n = 100, mean = c(0, 0), sigma = Sigma) |>
+  data.frame()
+names(df) = c("x", "y")
+
+df |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  stat_cov_ellipse(sigma = Sigma, c = 6.28, colour = "#0072B2", linewidth = 1,
+                    include_axes = TRUE) +
+  theme_bw()
+```
+
 
 ## PCA in R
+
+For a data matrix $X$ with rows as observations and columns as variables:
+
+1.  center each column
+2.  often scale columns to comparable units
+3.  run PCA
+
+. . .
+
+In R:
+
+```{r}
+#| eval: false
+pca <- prcomp(X, center = TRUE, scale. = TRUE)
+pca$x        # principal component values
+```
+
+
+. . . 
+
+To view how much each variable is "loaded" onto the first principal component, the second principal component, and so forth, check:
+
+```{r}
+#| eval: false
+pca$rotation
+```
 
 ## PCA Summary
 
@@ -594,4 +664,12 @@ ggplot() +
 
 - What we gain in simplicity we often lose in interpretability. The 'dimensions' that capture the maximum variability of the data are created from linear combinations of the variables. These linear combinations are often difficult to interpret / motivate.
 
-## Exercise
+## Exercise 2
+
+```{r}
+library(palmerpenguins)
+
+glimpse(penguins)
+```
+
+Consider the `palmerpenguins` data. Conduct PCA on the variables that measure physical characteristics about the penguins in `mm` or `grams`. Create a scatter plot and color by your choice of the categorical variables.
