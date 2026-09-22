@@ -8,7 +8,7 @@
 
 <meta name="author" content="Dr.&nbsp;Alexander Fisher">
 
-<title>Special topic: dimension reduction – STA323</title>
+<title>Dimension reduction – STA323</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,21 +136,55 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../schedule.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">schedule</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../project.html"> 
-<span class="menu-text">project</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../mini_project.html">
+ <span class="dropdown-text">mini project</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../links.html"> 
-<span class="menu-text">links</span></a>
+        <li>
+    <a class="dropdown-item" href="../project.html">
+ <span class="dropdown-text">final project</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">links</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://cmgr.oit.duke.edu/containers">
+ <span class="dropdown-text">Rstudio containers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://edstem.org/us/courses/103562/">
+ <span class="dropdown-text">Ed discussion</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/sta323-fa26">
+ <span class="dropdown-text">GitHub organization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../git-cheatsheet.html">
+ <span class="dropdown-text">git FAQ</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../links.html">
+ <span class="dropdown-text">all links</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -133,16 +201,32 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#announcements" id="toc-announcements" class="nav-link active" data-scroll-target="#announcements">Announcements</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a>
+  <ul class="collapse">
+  <li><a href="#snp-data-example" id="toc-snp-data-example" class="nav-link" data-scroll-target="#snp-data-example">SNP Data Example</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#matrices-in-r" id="toc-matrices-in-r" class="nav-link" data-scroll-target="#matrices-in-r">Matrices in R</a></li>
+  <li><a href="#matrix-vector-multiplication" id="toc-matrix-vector-multiplication" class="nav-link" data-scroll-target="#matrix-vector-multiplication">Matrix vector multiplication</a></li>
+  <li><a href="#identity-matrix" id="toc-identity-matrix" class="nav-link" data-scroll-target="#identity-matrix">Identity Matrix</a></li>
+  <li><a href="#positive-definite" id="toc-positive-definite" class="nav-link" data-scroll-target="#positive-definite">Positive definite</a></li>
+  <li><a href="#covariance-matrix" id="toc-covariance-matrix" class="nav-link" data-scroll-target="#covariance-matrix">Covariance matrix</a></li>
+  <li><a href="#visualizing-a-covariance-matrix" id="toc-visualizing-a-covariance-matrix" class="nav-link" data-scroll-target="#visualizing-a-covariance-matrix">Visualizing a covariance matrix</a></li>
+  <li><a href="#eigenvalues-and-eigenvectors" id="toc-eigenvalues-and-eigenvectors" class="nav-link" data-scroll-target="#eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</a></li>
+  </ul></li>
+  <li><a href="#principal-component-analysis" id="toc-principal-component-analysis" class="nav-link" data-scroll-target="#principal-component-analysis">Principal Component Analysis</a>
+  <ul class="collapse">
+  <li><a href="#intuition" id="toc-intuition" class="nav-link" data-scroll-target="#intuition">Intuition</a></li>
+  <li><a href="#in-practice" id="toc-in-practice" class="nav-link" data-scroll-target="#in-practice">In practice</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example">Example</a>
+  <ul class="collapse">
+  <li><a href="#example-1-two-columns-that-are-almost-one-column" id="toc-example-1-two-columns-that-are-almost-one-column" class="nav-link" data-scroll-target="#example-1-two-columns-that-are-almost-one-column">Example 1: two columns that are almost one column</a></li>
+  </ul></li>
+  <li><a href="#example-2-genes-mirror-geography" id="toc-example-2-genes-mirror-geography" class="nav-link" data-scroll-target="#example-2-genes-mirror-geography">Example 2: genes mirror geography</a></li>
+  </ul></li>
   <li><a href="#multi-dimensional-scaling-mds" id="toc-multi-dimensional-scaling-mds" class="nav-link" data-scroll-target="#multi-dimensional-scaling-mds">Multi-dimensional scaling (MDS)</a>
   <ul class="collapse">
   <li><a href="#goal-of-mds" id="toc-goal-of-mds" class="nav-link" data-scroll-target="#goal-of-mds">Goal of MDS</a></li>
   <li><a href="#properties-of-the-objective" id="toc-properties-of-the-objective" class="nav-link" data-scroll-target="#properties-of-the-objective">Properties of the objective</a></li>
-  </ul></li>
-  <li><a href="#mds-an-mm-solution" id="toc-mds-an-mm-solution" class="nav-link" data-scroll-target="#mds-an-mm-solution">MDS (an MM solution)</a></li>
-  <li><a href="#principle-component-analysis" id="toc-principle-component-analysis" class="nav-link" data-scroll-target="#principle-component-analysis">Principle component analysis</a>
-  <ul class="collapse">
-  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance">Covariance</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lec-dimension-reduction.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
@@ -152,7 +236,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Special topic: dimension reduction</h1>
+<h1 class="title">Dimension reduction</h1>
 </div>
 
 
@@ -182,12 +266,406 @@ window.Quarto = {
 </header>
 
 
-<section id="announcements" class="level1">
-<h1>Announcements</h1>
-<p>Reminder:</p>
+<section id="background" class="level1">
+<h1>Background</h1>
+<p>The tidy way of thinking: rows are observations, columns are measurements.</p>
+<p>Dimension reduction is the art of replacing many columns with a few carefully chosen (or constructed) columns.</p>
+<!-- . . . -->
+<!-- A sketch of today's lecture: -->
+<!-- - covariance matrices can be visualized as ellipses -->
+<!-- - eigenvectors point along the ellipse's main axes -->
+<!-- - PCA reduces dimension by keeping the most important axes (linear combinations of existing columns) -->
+<!-- - MDS is another form of dimension reduction -->
+<section id="snp-data-example" class="level2">
+<h2 class="anchored" data-anchor-id="snp-data-example">SNP Data Example</h2>
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- snp_data |> -->
+<!--   as.data.frame() |> -->
+<!--   head(n = 5) -->
+<!-- ``` -->
+<p><img src="images/01-welcome/alignment.png" class="img-fluid"></p>
+<p>SNP data typically record, for many individuals and many SNP locations, how many copies of a particular allele each person carries. Because humans have two copies of most chromosomes, a SNP is encoded as 0, 1, or 2 copies of the allele.</p>
+<!-- The human genome is the complete set of genetic information contained in our DNA. It consists of roughly 3 billion DNA base pairs, built from four nucleotide bases—A, C, G, and T—organized into 23 pairs of chromosomes. -->
+<!-- Most of the human genome is shared across individuals, but there are millions of locations where people commonly differ. One of the most common types of genetic variation is a single nucleotide polymorphism (SNP, pronounced "snip"), where a single DNA base differs between individuals. For example, at a particular location in the genome, some people might have an A while others have a G. -->
+<p>. . .</p>
+<p>How to visualize?</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+</section>
+<section id="matrices-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="matrices-in-r">Matrices in R</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="make-matrices" class="level4">
+<h4 class="anchored" data-anchor-id="make-matrices">Make matrices</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    2    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    0    0
+[2,]    1    1</code></pre>
+</div>
+</div>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="multiply-a-matrix" class="level4">
+<h4 class="anchored" data-anchor-id="multiply-a-matrix">Multiply a matrix</h4>
+<p>Matrix multiplication proceeds row by column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%*%</span> B <span class="co"># multiplication</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    2    2
+[2,]    1    1</code></pre>
+</div>
+</div>
+</section>
+</div>
+</div>
+<p>. . .</p>
+<p>The single entry in row 1, column 1 is just a dot product:</p>
+<p><span class="math display">\[\require{enclose}
+\left[
+\begin{array}{c}
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{cc}1 &amp; 2\end{array}}\\
+\begin{array}{cc}2 &amp; 1\end{array}
+\end{array}
+\right]
+\left[
+\begin{array}{cc}
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{c}0\\1\end{array}} &amp;
+\begin{array}{c}0\\1\end{array}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{cc}
+\enclose{circle}[mathcolor="red",padding="8px"]{1(0)+2(1)} &amp; 1(0)+2(1)\\
+2(0)+1(1) &amp; 2(0)+1(1)
+\end{array}
+\right]\]</span></p>
+<p>Same rule for every entry: choose a row, choose a column, multiply across, add up.</p>
+</section>
+<section id="matrix-vector-multiplication" class="level2">
+<h2 class="anchored" data-anchor-id="matrix-vector-multiplication">Matrix vector multiplication</h2>
+<p>A vector is just a matrix with one column.</p>
+<p><span class="math display">\[\require{enclose}
+\left[
+\begin{array}{cc}
+3 &amp; 1\\
+1 &amp; 2
+\end{array}
+\right]
+\left[
+\enclose{circle}[mathcolor="red",padding="6px"]{\begin{array}{c}2\\1\end{array}}
+\right]
+=
+\left[
+\begin{array}{c}
+3(2)+1(1)\\
+1(2)+2(1)
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+7\\
+4
+\end{array}
+\right]\]</span></p>
+<p>. . .</p>
+<p>We can pre-multiply (put the vector on the left side) too:</p>
+<p><span class="math display">\[\require{enclose}
+\mathbf{x}^T A \mathbf{x}
+=
+\enclose{circle}[mathcolor="red",padding="4px"]{\begin{bmatrix}2 &amp; 1\end{bmatrix}}
+\begin{bmatrix}
+3 &amp; 1\\
+1 &amp; 2
+\end{bmatrix}
+\begin{bmatrix}2\\1\end{bmatrix}
+=
+\begin{bmatrix}2 &amp; 1\end{bmatrix}
+\begin{bmatrix}7\\4\end{bmatrix}
+= 18\]</span></p>
+<p>This pattern is called a <strong>quadratic form</strong>. It takes a direction <span class="math inline">\(\mathbf{x}\)</span> and turns it into one number.</p>
+</section>
+<section id="identity-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="identity-matrix">Identity Matrix</h2>
+<p>The identity matrix has 1s on its diagonals and 0s in the off-diagonal entries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>identity <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>identity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]    1    0
+[2,]    0    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">%*%</span> identity <span class="sc">==</span> A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,] TRUE TRUE
+[2,] TRUE TRUE</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<p>The identity matrix is the matrix version of multiplying by 1:</p>
+<p><span class="math display">\[A I = A\]</span></p>
+<p>It is useful as a baseline: some matrices stretch, rotate, or shear vectors; the identity leaves them alone.</p>
+</section>
+<section id="positive-definite" class="level2">
+<h2 class="anchored" data-anchor-id="positive-definite">Positive definite</h2>
+<p>A symmetric matrix <span class="math inline">\(A\)</span> is <strong>positive definite</strong> if</p>
+<p><span class="math display">\[\mathbf{x}^T A \mathbf{x} &gt; 0
+\quad \text{for every nonzero vector } \mathbf{x}.\]</span></p>
+<p>. . .</p>
+<p>Intuition:</p>
 <ul>
-<li>Final project presentations during lab Tuesday, April 25.</li>
+<li><span class="math inline">\(\mathbf{x}^T A \mathbf{x}\)</span> acts like a squared length after <span class="math inline">\(A\)</span> has reshaped space</li>
+<li>positive definite means every nonzero direction has positive length</li>
+<li>no direction is flattened to zero</li>
+<li>no direction has a “negative squared length”</li>
 </ul>
+<p>. . .</p>
+<p>For covariance matrices, positive definite is the condition that let’s us visualize it as an ellipse instead of a line, or point (if positive semi-definite).</p>
+</section>
+<section id="covariance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="covariance-matrix">Covariance matrix</h2>
+<p>A covariance matrix stores how variables vary together.</p>
+<p>For two variables:</p>
+<p><span class="math display">\[A =
+\begin{bmatrix}
+\mathrm{var}(x_1) &amp; \mathrm{cov}(x_1, x_2)\\
+\mathrm{cov}(x_1, x_2) &amp; \mathrm{var}(x_2)
+\end{bmatrix}\]</span></p>
+<p>. . .</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Read it</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Positive covariance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Negative covariance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Zero covariance</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Read it geometrically:</p>
+<ul>
+<li>large variance in <span class="math inline">\(x_1\)</span>: wide horizontal spread</li>
+<li>large variance in <span class="math inline">\(x_2\)</span>: wide vertical spread</li>
+<li>positive covariance: the cloud tilts up and to the right</li>
+<li>negative covariance: the cloud tilts down and to the right</li>
+</ul>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>) </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">sigma =</span> A)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(points, <span class="at">asp =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-dimension-reduction_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="sc">-</span>.<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>) </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">sigma =</span> A)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(points, <span class="at">asp =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-dimension-reduction_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>) </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">sigma =</span> A)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(points, <span class="at">asp =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-dimension-reduction_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-a-covariance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-a-covariance-matrix">Visualizing a covariance matrix</h2>
+<p>A covariance matrix <span class="math inline">\(A\)</span> can be visualized by the points that have the same “covariance distance” from the center:</p>
+<p><span class="math display">\[\mathbf{x}^T A^{-1} \mathbf{x} = c\]</span></p>
+<p>In two dimensions, that equation draws an ellipse.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-dimension-reduction_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">1.4</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>              <span class="fl">1.4</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>level <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="dv">300</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>circle <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">cos</span>(theta), <span class="fu">sin</span>(theta))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen</span>(A)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>ellipse <span class="ot">&lt;-</span> <span class="fu">t</span>(eig<span class="sc">$</span>vectors <span class="sc">%*%</span> <span class="fu">diag</span>(<span class="fu">sqrt</span>(level <span class="sc">*</span> eig<span class="sc">$</span>values)) <span class="sc">%*%</span> circle)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>lim <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">abs</span>(ellipse)) <span class="sc">*</span> <span class="fl">1.15</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ellipse, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">asp =</span> <span class="dv">1</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span>lim, lim), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>lim, lim),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(x[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(x[<span class="dv">2</span>]),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(x<span class="sc">^</span>T <span class="sc">*</span> A<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>} <span class="sc">*</span> x <span class="sc">==</span> c))</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"gray80"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  axis_vec <span class="ot">&lt;-</span> eig<span class="sc">$</span>vectors[, j] <span class="sc">*</span> <span class="fu">sqrt</span>(level <span class="sc">*</span> eig<span class="sc">$</span>values[j])</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrows</span>(<span class="dv">0</span>, <span class="dv">0</span>, axis_vec[<span class="dv">1</span>], axis_vec[<span class="dv">2</span>],</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">length =</span> <span class="fl">0.10</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> cols[j])</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrows</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span>axis_vec[<span class="dv">1</span>], <span class="sc">-</span>axis_vec[<span class="dv">2</span>],</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">length =</span> <span class="fl">0.10</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> cols[j])</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"large spread"</span>, <span class="st">"small spread"</span>),</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> cols, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="eigenvalues-and-eigenvectors" class="level2">
+<h2 class="anchored" data-anchor-id="eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</h2>
+<p>Some special directions do not get turned by a matrix. They only get stretched or shrunk.</p>
+<p><span class="math display">\[A \mathbf{v} = \lambda \mathbf{v}\]</span></p>
+<ul>
+<li><span class="math inline">\(\mathbf{v}\)</span> is an <strong>eigenvector</strong>: a direction that survives the transformation</li>
+<li><span class="math inline">\(\lambda\)</span> is an <strong>eigenvalue</strong>: how much that direction is stretched</li>
+</ul>
+<p>. . .</p>
+<p>For a covariance ellipse:</p>
+<ul>
+<li>eigenvectors point along the long and short axes</li>
+<li>eigenvalues measure spread along those axes</li>
+<li>the largest eigenvalue points to the direction with the most variation</li>
+</ul>
+</section>
+</section>
+<section id="principal-component-analysis" class="level1">
+<h1>Principal Component Analysis</h1>
+<section id="intuition" class="level2">
+<h2 class="anchored" data-anchor-id="intuition">Intuition</h2>
+<p>PCA asks:</p>
+<blockquote class="blockquote">
+<p>Can we rotate the coordinate system so the first axis catches as much variation as possible?</p>
+</blockquote>
+<p>. . .</p>
+<p>The answer comes from the covariance matrix:</p>
+<ul>
+<li>PC1 is the eigenvector with the largest eigenvalue</li>
+<li>PC2 is the next eigenvector, at a right angle to PC1</li>
+<li>the PC scores are the data’s coordinates in this rotated system</li>
+</ul>
+<p>Dimension reduction happens when we keep only the first few PC scores.</p>
+</section>
+<section id="in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="in-practice">In practice</h2>
+<p>For a data matrix <span class="math inline">\(X\)</span> with rows as observations and columns as variables:</p>
+<ol type="1">
+<li>center each column</li>
+<li>often scale columns to comparable units</li>
+<li>compute the covariance matrix</li>
+<li>find eigenvectors and eigenvalues</li>
+<li>rotate the data onto those eigenvectors</li>
+<li>keep the first few rotated columns</li>
+</ol>
+<p>. . .</p>
+<p>In R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(X, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>x        <span class="co"># principal component scores</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>pca<span class="sc">$</span>rotation <span class="co"># principal component directions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<section id="example-1-two-columns-that-are-almost-one-column" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-two-columns-that-are-almost-one-column">Example 1: two columns that are almost one column</h3>
+<p>Suppose students with high coding scores also tend to have high statistics scores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>toy <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">coding =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">stats =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.9</span>, <span class="fl">3.2</span>, <span class="fl">3.8</span>, <span class="fl">5.1</span>, <span class="fl">5.9</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>pca_toy <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(toy, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(pca_toy)<span class="sc">$</span>importance, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         PC1   PC2
+Standard deviation     1.413 0.057
+Proportion of Variance 0.998 0.002
+Cumulative Proportion  0.998 1.000</code></pre>
+</div>
+</div>
+<p>. . .</p>
+<p>PC1 is almost the average of the two standardized columns:</p>
+<p><span class="math display">\[\mathrm{PC1} \approx .71(\text{coding}) + .71(\text{stats})\]</span></p>
+<p>So the two-column data set can be summarized by one “overall performance” axis with very little loss.</p>
+</section>
+</section>
+<section id="example-2-genes-mirror-geography" class="level2">
+<h2 class="anchored" data-anchor-id="example-2-genes-mirror-geography">Example 2: genes mirror geography</h2>
+<div class="columns">
+<div class="column" style="width:53%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/a/a3/Genes_mirror.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:47%;">
+<p>Novembre et al.&nbsp;(2008) used PCA on European genetic data.</p>
+<p>. . .</p>
+<ul>
+<li>rows: people</li>
+<li>columns: genetic markers</li>
+<li>PC1 and PC2: two summary coordinates</li>
+</ul>
+<p>. . .</p>
+<p>The striking part: the first two PCs resemble a map of Europe, even though PCA was only told about genetic variation.</p>
+<p>. . .</p>
+<p>Geometric lesson: the leading eigenvectors of a covariance matrix can reveal real low-dimensional structure.</p>
+<p>Image: Wikimedia Commons version of Novembre et al., <em>Nature</em> 456:98-101.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="multi-dimensional-scaling-mds" class="level1">
 <h1>Multi-dimensional scaling (MDS)</h1>
@@ -199,27 +677,31 @@ window.Quarto = {
 <li><p>MDS requires that for every pair of data points <span class="math inline">\((i; j) \in (1, \ldots, q; 1, \ldots, q)\)</span>, we observe a dissimilarity measure (often distance) <span class="math inline">\(d_{ij} = d_{ji}\)</span>.</p></li>
 <li><p>The goal of MDS is to estimate <span class="math inline">\(p \times q\)</span> parameter matrix <span class="math inline">\(\mathbf{X}\)</span> where the <span class="math inline">\(i\)</span>th column <span class="math inline">\(\mathbf{x}_i\)</span> is estimated by minimizing the function</p></li>
 </ul>
-<p><span class="math display">\[
-f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2
-\]</span></p>
+<p><span class="math display">\[f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2\]</span></p>
 <p>where <span class="math inline">\(w_{ij} = w_{ji}\)</span> is a nonnegative weight and <span class="math inline">\(||\cdot||\)</span> is an arbitrary norm, often taken to be the Euclidean (<span class="math inline">\(L_2\)</span>) norm.</p>
+<p>. . .</p>
+<p>Plain-English version:</p>
+<ul>
+<li>PCA starts with variables and finds useful axes</li>
+<li>MDS starts with distances and tries to draw a map</li>
+<li>if two objects are similar, MDS tries to place them close together</li>
+<li>if two objects are dissimilar, MDS tries to place them far apart</li>
+</ul>
 </section>
 <section id="properties-of-the-objective" class="level2">
 <h2 class="anchored" data-anchor-id="properties-of-the-objective">Properties of the objective</h2>
 <p>The function</p>
-<p><span class="math display">\[
-f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2
-\]</span></p>
+<p><span class="math display">\[f(\mathbf{X}) = \sum_{1 \leq i \leq j \leq q} w_{ij} (d_{ij} - ||\mathbf{x}_i - \mathbf{x}_j||)^2\]</span></p>
 <p>is</p>
-</section>
-</section>
-<section id="mds-an-mm-solution" class="level1">
-<h1>MDS (an MM solution)</h1>
-</section>
-<section id="principle-component-analysis" class="level1">
-<h1>Principle component analysis</h1>
-<section id="covariance" class="level2">
-<h2 class="anchored" data-anchor-id="covariance">Covariance</h2>
+<ul>
+<li>nonnegative: it adds up squared errors</li>
+<li>zero only when the displayed distances exactly match the observed distances</li>
+<li>unchanged if we rotate or flip the whole final picture</li>
+<li>usually minimized by an iterative algorithm rather than by hand</li>
+</ul>
+<p>. . .</p>
+<p>MDS is another form of dimension reduction: it trades a large table of pairwise distances for a low-dimensional picture.</p>
+<!-- # MDS (an MM solution) -->
 
 
 </section>
