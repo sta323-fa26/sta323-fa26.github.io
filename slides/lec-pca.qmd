@@ -602,7 +602,7 @@ The principal axes of the ellipse are called the **eigenvectors** of the covaria
 mvtnorm::rmvnorm(n = 100, mean = c(0, 0), sigma = Sigma)
 ```
 
-- Next, create a scatter plot of the data, and overlay the `stat_cov_ellipse` using `c = 6.28`. 
+- Next, create a scatter plot of the data, and overlay the `stat_cov_ellipse` using `c = 5.99`. 
 
 - Discuss with your neighbor.
 
@@ -673,3 +673,15 @@ glimpse(penguins)
 ```
 
 Consider the `palmerpenguins` data. Conduct PCA on the variables that measure physical characteristics about the penguins in `mm` or `grams`. Create a scatter plot and color by your choice of the categorical variables.
+
+## Further reading
+
+This lecture is inspired by 
+
+> [Friendly, Michael, Georges Monette, and John Fox. "Elliptical insights: understanding statistical methods through elliptical geometry." (2013): 1-39.](https://arxiv.org/pdf/1302.4881.pdf)
+
+For further reading on principal component analysis in action, see
+
+> [Novembre, John, et al. "Genes mirror geography within Europe." Nature 456.7218 (2008): 98-101.](https://www.nature.com/articles/nature07331) 
+
+and [an associated news article](https://www.nationalgeographic.com/science/article/european-genes-mirror-european-geography) discussing the work.
