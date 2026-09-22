@@ -32,15 +32,20 @@ org_create_assignment(
 ### MAKE SURE YOU PUT ALL ROSTER IN 1 EXCEL SHEET
 ##################################################
 
-roster = readxl::read_xlsx("~/Downloads/teams_final.xlsx")
+roster = readxl::read_xlsx("~/Downloads/teams_public_sta323_fa26.xlsx")
 
-# edit "lab-x" below
+this_org <- "sta323-fa26"
+assignment <- "lab-4"
 
 org_create_assignment(
-  org = "sta323-fa25",
+  org = this_org,
   user = roster$github,
-  repo = paste0("lab-7-", roster$team),
+  repo = paste0(assignment, "-", roster$team_name),
   team = roster$team,
-  source_repo = "sta323-fa25/lab07",
+  source_repo = paste0(this_org, "/", assignment),
   private = TRUE
 )
+# REPO DELETION
+# roster <- readxl::read_xlsx("~/Downloads/teams_public_sta323_fa26.xlsx")
+# repos <- unique(paste0("sta323-fa26/lab-4-", roster$team_name))
+# repo_delete(repos)
