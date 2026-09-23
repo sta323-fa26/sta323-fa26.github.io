@@ -1,6 +1,6 @@
 ---
 title: "Lab 4: dream of plots"
-subtitle: "Due Monday September 22 at 5:00pm"  
+subtitle: "Due Monday September 28 at 5:00pm"  
 editor: source
 execute:
   eval: false
