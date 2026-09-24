@@ -763,4 +763,7 @@ nn_pairs |>
 
 <!-- This is the same **permutation (randomization) test** from intro stats. Real tools like Moran's I (`spdep`) are built on this idea. -->
 
+## Further reading
 
+- *Geocomputation with R* (Lovelace, Nowosad & Muenchow): <https://r.geocompx.org>
+- *Spatial Data Science with Applications in R* (Pebesma & Bivand): <https://r-spatial.org/book>
