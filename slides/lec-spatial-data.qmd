@@ -1,0 +1,766 @@
+---
+title: "Spatial data"
+author: "Dr. Alexander Fisher"
+execute:
+  warning: true
+format: 
+    revealjs:
+      smaller: true
+---
+
+
+```{r setup}
+#| include: false
+# terra is attached FIRST so that dplyr/tidyr versions of shared names
+# (e.g. extract, select) win. We call terra::extract() explicitly below.
+library(terra)
+library(tidyverse)
+library(sf)
+library(patchwork)
+
+set.seed(323)
+theme_set(theme_minimal(base_size = 18))
+```
+
+## Today
+
+By the end, you should be able to:
+
+1. Tell apart the two ways of storing spatial data: **vector** (objects) and **raster** (grids).
+2. Wrangle and map **simple features** with `sf`, `dplyr`, and `geom_sf()`.
+3. Load, transform, and summarize a **raster** with `terra`.
+4. Explain why spatial data need extra care: **coordinate systems, scale, and neighbors**.
+5. Use **simulation** to see what spatial dependence looks like, and to test for it.
+
+
+## Spatial data = ordinary data + geometry
+
+Most data frames have rows and columns.
+
+Spatial data frames also record **where each row lives**.
+
+| ordinary variable | spatial variable |
+|---|---|
+| population | county boundary |
+| restaurant rating | restaurant location |
+| traffic volume | road segment |
+| temperature | weather station location |
+
+::: {.callout-note}
+A spatial object is usually ordinary data plus a special **geometry** component.
+:::
+
+## Two ways to represent space
+
+::: {.columns}
+::: {.column width="50%"}
+**Vector data = objects**
+
+- **point**: one location
+- **line**: a path or route
+- **polygon**: an area or boundary
+
+One row = one object.
+
+Examples: stores, roads, counties.
+
+In R: `sf`.
+:::
+
+::: {.column width="50%"}
+**Raster data = grid**
+
+- space is divided into equal-sized cells
+- each cell stores a value
+
+One value per cell, like pixels in a photo.
+
+Examples: elevation, temperature, satellite imagery.
+
+In R: `terra` (or `stars`).
+:::
+:::
+
+::: {.callout-note}
+Rule of thumb: **discrete things** → vector. **Quantities that vary continuously over space** → raster.
+:::
+
+## Exercise 1: Vector or raster?
+
+For each example: is it vector (point, line, or polygon) or raster? What is **one row** (or one cell)?
+
+1. Locations of every coffee shop in Durham.
+2. County-level unemployment rates in North Carolina.
+3. Temperature measured at 75 weather stations.
+4. GPS locations from a tagged sea turtle, every hour.
+5. A satellite image measuring vegetation intensity.
+
+## Common spatial file formats
+
+| Format | Common use | R package |
+|---|---|---|
+| Shapefile: `.shp` + friends | older vector GIS data | `sf` |
+| GeoPackage: `.gpkg` | modern vector GIS data | `sf` |
+| GeoJSON: `.geojson` | web maps, APIs | `sf` |
+| CSV with lon/lat columns | point locations | `readr`, then `sf` |
+| GeoTIFF: `.tif` | raster/grid data | `terra` |
+
+::: {.callout-tip}
+For vector data, ask: **can I read this with `sf::st_read()`?**
+For raster data, ask: **can I read this with `terra::rast()`?**
+:::
+
+# Part 1: Vector data with `sf`
+
+## Simple features: the `sf` package
+
+`sf` stands for **simple features**. It gives us spatial data frames that work with `dplyr`, `ggplot2`, and pipes.
+
+```{r}
+nc <- st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+
+nc |> select(NAME, BIR74, SID74)
+```
+
+We only selected three columns... but a fourth one, `geometry`, came along anyway.
+
+## What is inside an `sf` object?
+
+Three ingredients:
+
+1. **ordinary columns** such as `NAME`, `BIR74`, `SID74`
+2. one special **`geometry` column** storing the shapes (it is "sticky": `select()` keeps it)
+3. metadata describing the **coordinate reference system**, or CRS
+
+```{r}
+class(nc)
+st_geometry_type(nc)[1:3]
+```
+
+You generally leave `geometry` alone and work with it through `st_*()` functions: `st_area()`, `st_buffer()`, `st_join()`, ...
+
+## First map: `geom_sf()`
+
+```{r}
+ggplot(nc) +
+  geom_sf() +
+  labs(title = "North Carolina counties")
+```
+
+`geom_sf()` knows how to draw the geometry column, so we do **not** write `aes(x = ..., y = ...)`.
+
+## Mapping an attribute
+
+```{r}
+nc |>
+  mutate(sids_rate = 1000 * SID74 / BIR74) |>
+  ggplot() +
+  geom_sf(aes(fill = sids_rate), color = "white") +
+  scale_fill_viridis_c() +
+  labs(
+    title = "Sudden infant death syndrome (SIDS), 1974–78",
+    fill = "deaths per\n1,000 births"
+  )
+```
+
+For a polygon map, `aes(fill = variable)` creates a **choropleth**.
+
+::: {.callout-tip}
+Map **rates**, not raw counts: bigger counties produce bigger counts. And beware: counties with few births have **noisy** rates, so the most extreme colors are often the smallest counties.
+:::
+
+## Thought exercise: Build a point map
+
+Suppose we have:
+
+```{r}
+#| eval: false
+coffee <- tibble(
+  name = c("A", "B", "C"),
+  longitude = c(-78.91993, -78.93016, -78.93805),
+  latitude = c(36.00932, 36.01158, 36.00346),
+  rating = c(4.6, 4.8, 5.0)
+)
+```
+
+What two steps are needed to turn this into a spatial map?
+
+::: {.fragment}
+1. Convert the longitude/latitude columns into a geometry column.
+2. Plot the resulting `sf` object with `geom_sf()`.
+
+But to do step 1, R needs one more piece of information... (next slide)
+:::
+
+## Coordinate reference systems
+
+A **CRS** tells R what the coordinates mean.
+
+```{r}
+st_crs(nc)$input
+st_is_longlat(nc)
+```
+
+Two broad cases:
+
+- **longitude / latitude**: angles on a round Earth, in degrees
+- **projected coordinates**: the Earth flattened onto a plane, measured in meters or feet
+
+::: {.callout-warning}
+`sf` always reads coordinates as **(x, y) = (longitude, latitude)**. The pair `(36, -79)` read that way is in Antarctica, not Durham!
+:::
+
+## From longitude/latitude columns to `sf`
+
+```{r}
+places <- tibble(
+  place = c("Duke", "UNC", "NC State"),
+  lon = c(-78.9382, -79.0469, -78.6821),
+  lat = c(36.0014, 35.9049, 35.7847)
+)
+
+places_sf <- places |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+`crs = 4326` is the code for plain GPS longitude/latitude (WGS 84), which is what most web and phone data use. Once converted, spatial layers stack like ordinary `ggplot2` layers:
+
+```{r}
+#| fig-height: 3
+ggplot(nc) +
+  geom_sf(fill = "gray95", color = "white") +
+  geom_sf(data = places_sf, size = 4)
+```
+
+## The most common CRS mistake
+
+::: {.callout-warning}
+Do not treat longitude/latitude degrees as ordinary distances. One degree of longitude is about 56 miles in Durham, but 0 miles at the North Pole.
+:::
+
+For distances, areas, and buffers, transform to a suitable **projected** CRS first:
+
+```{r}
+nc_projected <- nc |>
+  st_transform(2264) # NAD83 / North Carolina, units = US feet
+```
+
+| Function | Meaning |
+|---|---|
+| `st_set_crs()` | **label** coordinates that are already in a CRS (numbers unchanged) |
+| `st_transform()` | **convert** coordinates to another CRS (numbers change) |
+
+<!-- ## Exercise 3: What is wrong with this buffer? -->
+
+<!-- Why might this code be wrong? -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- coffee_sf |> -->
+<!--   st_buffer(dist = 1) -->
+<!-- ``` -->
+
+<!-- What does `1` mean? -->
+
+<!-- ::: {.fragment} -->
+<!-- It depends on the CRS. If the data are longitude/latitude, `1` is not "one mile" or "one kilometer." -->
+<!-- ::: -->
+
+<!-- ::: {.fragment} -->
+<!-- **Better workflow:** `st_transform()` to a projected CRS, then buffer using that CRS's units (for EPSG 2264, feet). -->
+<!-- ::: -->
+
+## Wrangling spatial data with `dplyr`
+
+Most `dplyr` verbs work on `sf` objects, and the geometry comes along for the ride.
+
+```{r}
+nc_west <- nc |>
+  filter(NAME %in% c("Buncombe", "Watauga", "Ashe", "Avery", "Mitchell")) |>
+  mutate(region = "mountains") |>
+  select(NAME, region, BIR74, SID74)
+```
+
+When geometry is irrelevant, drop it explicitly (it makes tables smaller and code faster):
+
+```{r}
+nc |>
+  st_drop_geometry() |>
+  select(NAME, BIR74, SID74) |>
+  slice(1:5)
+```
+
+Spatial data are still **data**; use ordinary data tools when appropriate.
+
+## Deriving spatial variables
+
+Geometry can generate new variables: area, length, distance, centroid, ...
+
+```{r}
+nc_features <- nc_projected |>
+  mutate(area_sq_miles = as.numeric(st_area(geometry)) / 5280^2)
+
+nc_features |>
+  st_drop_geometry() |>
+  select(NAME, area_sq_miles) |>
+  arrange(desc(area_sq_miles)) |>
+  slice(1:5)
+```
+
+`st_area()` returns square feet here because EPSG 2264 is in feet; dividing by 5280² converts to square miles.
+
+<!-- ::: {.callout-note} -->
+<!-- `st_centroid()` gives a "center point" of each polygon. Handy, but for oddly shaped polygons it can fall **outside** the polygon. -->
+<!-- ::: -->
+
+## Spatial predicates
+
+A **spatial predicate** asks a TRUE/FALSE geometry question.
+
+| Predicate | Question |
+|---|---|
+| `st_intersects()` | Do these geometries overlap or touch? |
+| `st_within()` | Is A inside B? |
+| `st_contains()` | Does A contain B? |
+| `st_touches()` | Do their boundaries touch (without overlapping)? |
+| `st_is_within_distance()` | Are they close enough? |
+
+These functions turn geometry into **relationships between rows**.
+
+```{r}
+#| echo: false
+#| eval: false
+library(tidyverse)
+library(sf)
+
+coffee <- tibble(
+  name = c("A", "B", "C"),
+  longitude = c(-78.91993, -78.93016, -78.93805),
+  latitude = c(36.00932, 36.01158, 36.00346),
+  rating = c(4.4, 4.5, 5.0)
+)
+
+# 1. Make both layers sf objects, then project to NC State Plane (units = feet)
+coffee_sf <- coffee |>
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+  st_transform(2264)
+
+chapel <- tibble(name = "Duke Chapel", lon = -78.9401, lat = 36.0019) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(2264)
+
+# 2. Ask the yes/no question
+st_is_within_distance(coffee_sf, chapel, dist = 5280, sparse = FALSE)
+#>       [,1]
+#> [1,] FALSE   # A
+#> [2,]  TRUE   # B
+#> [3,]  TRUE   # C
+
+# 3. Use the answer like any logical vector
+coffee_sf |>
+  mutate(near_chapel = st_is_within_distance(geometry, chapel,
+                                             dist = 5280, sparse = FALSE)[, 1])
+```
+
+
+## Spatial joins
+
+An ordinary join matches rows using a key column. A **spatial join** matches rows using a spatial predicate.
+
+```{r}
+places_for_join <- places_sf |>
+  st_transform(st_crs(nc)) # both layers must share a CRS
+
+places_with_county <- st_join(
+  places_for_join,
+  nc |> select(NAME),
+  join = st_within
+)
+
+places_with_county
+```
+
+Question answered: **which county contains each point?**
+
+## Exercise 2
+
+Which coffee shop is within 1 mile of Duke Chapel?
+
+```{r}
+chapel <- tibble(name = "Duke Chapel", lon = -78.9401, lat = 36.0019) |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) |>
+  st_transform(2264)
+```
+
+
+<!-- You have coffee shop points and neighborhood polygons. What operation answers each question? -->
+
+<!-- 1. Which neighborhood contains each coffee shop? -->
+<!-- 2. Which shops are within 1 mile of campus? -->
+<!-- 3. Which neighborhoods touch one another? -->
+<!-- 4. How many shops are in each neighborhood? -->
+
+<!-- ::: {.notes} -->
+<!-- Answers: st_join(shops, neighborhoods, join = st_within); st_is_within_distance() or a buffer in a projected CRS; st_touches(); spatial join, then count() by neighborhood. -->
+<!-- ::: -->
+
+## Buffers: all locations within a distance
+
+```{r}
+#| output-location: column
+places_ncft <- places_sf |>
+  st_transform(2264)
+
+buffers <- places_ncft |>
+  st_buffer(dist = 30 * 5280) # 30 miles, in feet
+
+ggplot() +
+  geom_sf(data = nc_projected,
+          fill = "gray95", color = "white") +
+  geom_sf(data = buffers,
+          fill = NA, linewidth = 1) +
+  geom_sf(data = places_ncft, size = 3) +
+  labs(title = "30-mile buffers")
+```
+
+## Spatial summaries and dissolving boundaries
+
+Which counties intersect any campus buffer? Then, `group_by()` + `summarize()` **merges the shapes** within each group.
+
+::: panel-tabset
+
+## Plots
+
+```{r}
+#| echo: false
+nc_near <- nc_projected |>
+  mutate(near_campus = lengths(st_intersects(geometry, st_union(buffers))) > 0)
+
+nc_dissolved <- nc_near |>
+  group_by(near_campus) |>
+  summarize(n_counties = n())
+
+p1 <- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = "white") +
+  labs(title = "100 counties")
+p2 <- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = "white") +
+  labs(title = "2 dissolved regions")
+p1 + p2 + plot_layout(guides = "collect")
+```
+
+## Code
+```{r}
+#| eval: false
+nc_near <- nc_projected |>
+  mutate(near_campus = lengths(st_intersects(geometry, st_union(buffers))) > 0)
+
+nc_dissolved <- nc_near |>
+  group_by(near_campus) |>
+  summarize(n_counties = n())
+
+p1 <- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = "white") +
+  labs(title = "100 counties")
+p2 <- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = "white") +
+  labs(title = "2 dissolved regions")
+p1 + p2 + plot_layout(guides = "collect")
+```
+::: 
+
+## A spatial debugging checklist
+
+Spatial bugs are usually **data representation bugs**, not syntax bugs. When something fails or looks strange:
+
+1. Are both objects `sf` objects?
+2. Do they have the **same CRS**?
+3. Am I measuring distance or area in a **projected** CRS?
+4. Are the geometries valid?
+5. Did a spatial join create **one-to-many** matches?
+6. Am I mapping a **count** when I need a **rate**?
+
+```{r}
+#| eval: false
+st_crs(x)            # what coordinate system?
+st_geometry_type(x)  # points, lines, polygons?
+st_is_valid(x)       # any broken shapes?
+st_bbox(x)           # does the extent look like the right place?
+ggplot(x) + geom_sf()  # always look at it!
+```
+
+A beautiful map can still encode a poor analysis.
+
+# Part 2: Raster data with `terra`
+
+## A raster is a grid of values
+
+Here is a toy raster: every cell gets one value. Most raster operations transform **every cell at once**.
+
+
+::: panel-tabset
+
+## Plot
+```{r}
+#| echo: false
+raster_grid <- crossing(
+  x = seq(0, 1, length.out = 35),
+  y = seq(0, 1, length.out = 35)
+) |>
+  mutate(value = sin(5 * x) + cos(6 * y))
+
+p_toy <- ggplot(raster_grid, aes(x, y, fill = value)) +
+  geom_raster() + coord_equal() + labs(title = "A toy raster")
+
+p_thresh <- raster_grid |>
+  mutate(high = value > 0.75) |>
+  ggplot(aes(x, y, fill = high)) +
+  geom_raster() + coord_equal() + labs(title = "value > 0.75")
+
+p_toy + p_thresh
+```
+
+## Code
+
+```{r}
+#| eval: false
+raster_grid <- crossing(
+  x = seq(0, 1, length.out = 35),
+  y = seq(0, 1, length.out = 35)
+) |>
+  mutate(value = sin(5 * x) + cos(6 * y))
+
+p_toy <- ggplot(raster_grid, aes(x, y, fill = value)) +
+  geom_raster() + coord_equal() + labs(title = "A toy raster")
+
+p_thresh <- raster_grid |>
+  mutate(high = value > 0.75) |>
+  ggplot(aes(x, y, fill = high)) +
+  geom_raster() + coord_equal() + labs(title = "value > 0.75")
+
+p_toy + p_thresh
+```
+:::
+
+## A real raster: elevation in Luxembourg
+
+`terra` ships with a small example GeoTIFF.
+
+```{r}
+elev <- rast(system.file("ex/elev.tif", package = "terra"))
+elev
+```
+
+Read the printout like a checklist: **dimensions** (rows × columns), **resolution** (size of one cell), **extent** (the bounding box), **coord. ref.** (the CRS), and the value range.
+
+## Plotting a raster with `ggplot2`
+
+One simple route: turn the grid into a data frame with one row per cell.
+
+```{r}
+elev_df <- as.data.frame(elev, xy = TRUE)
+head(elev_df, 3)
+```
+
+```{r}
+#| fig-height: 3.5
+ggplot(elev_df, aes(x, y, fill = elevation)) +
+  geom_raster() +
+  scale_fill_viridis_c() +
+  coord_quickmap() +
+  labs(fill = "meters")
+```
+
+The `tidyterra` package adds `geom_spatraster()` if you'd rather skip this step.
+
+## Resolution is a choice: scale matters
+
+`aggregate()` merges blocks of cells into bigger cells (here, 5 × 5 blocks, averaged).
+
+```{r}
+elev_coarse <- aggregate(elev, fact = 5, fun = "mean", na.rm = TRUE)
+res(elev)
+res(elev_coarse)
+```
+
+```{r}
+#| echo: false
+#| fig-height: 3.5
+plot_elev <- function(r, title) {
+  as.data.frame(r, xy = TRUE) |>
+    ggplot(aes(x, y, fill = elevation)) +
+    geom_raster() +
+    scale_fill_viridis_c(limits = c(140, 550)) +
+    coord_quickmap() +
+    labs(title = title, x = NULL, y = NULL, fill = "meters")
+}
+plot_elev(elev, "original cells") + plot_elev(elev_coarse, "5 × 5 averages") +
+  plot_layout(guides = "collect")
+```
+
+Coarser cells hide local extremes. The **scale** you analyze at can change your answer.
+
+## Vector meets raster
+
+A classic question: **what is the average raster value inside each polygon?**
+
+::: panel-tabset
+
+## Plot
+```{r}
+#| echo: false
+#| warning: false
+lux <- st_read(system.file("ex/lux.shp", package = "terra"), quiet = TRUE)
+
+lux_elev <- terra::extract(elev, vect(lux), fun = mean, na.rm = TRUE)
+
+lux |>
+  mutate(mean_elev = lux_elev$elevation) |>
+  ggplot() +
+  geom_sf(aes(fill = mean_elev), color = "white") +
+  scale_fill_viridis_c() +
+  labs(title = "Average elevation by canton", fill = "meters")
+```
+
+## Code
+
+```{r}
+#| eval: false
+lux <- st_read(system.file("ex/lux.shp", package = "terra"), quiet = TRUE)
+
+lux_elev <- terra::extract(elev, vect(lux), fun = mean, na.rm = TRUE)
+
+lux |>
+  mutate(mean_elev = lux_elev$elevation) |>
+  ggplot() +
+  geom_sf(aes(fill = mean_elev), color = "white") +
+  scale_fill_viridis_c() +
+  labs(title = "Average elevation by canton", fill = "meters")
+```
+
+:::
+
+`sf` handles the polygons, `terra` handles the grid, and `vect()` passes shapes between them. (Both layers must share a CRS; check first!)
+
+<!-- # Part 3: Spatial statistics, by simulation -->
+
+# Part 3: Spatial correlation
+
+## Why statisticians care about space
+
+Intro statistics usually assumes observations are **independent**. Spatial data often aren't:
+
+> Observations close together in space tend to be more alike than observations far apart.
+
+- Nearby houses have similar prices.
+- Nearby temperatures are similar.
+- Nearby counties have similar disease rates.
+
+This is sometimes called **Tobler's first law of geography**. It means location carries statistical information, and nearby observations partly **repeat** each other.
+
+<!-- ## Three statistical views of space -->
+
+<!-- | View | Data look like | Example question | -->
+<!-- |---|---|---| -->
+<!-- | **Point pattern** | where events happened | Are trees clustered? | -->
+<!-- | **Areal data** | values attached to regions | Which counties have high rates? | -->
+<!-- | **Geostatistical data** | measurements at chosen locations | What is pollution *between* sensors? | -->
+
+<!-- A fourth setting is **trajectory data**: one object moving through space over time. -->
+
+<!-- ::: {.fragment} -->
+<!-- **Back to Exercise 1:** coffee shops → point pattern; county unemployment → areal; weather stations → geostatistical; turtle → trajectory; satellite image → a gridded (raster) field. -->
+<!-- ::: -->
+
+<!-- ::: {.notes} -->
+<!-- Key distinction for point patterns vs geostatistics: in a point pattern the locations themselves are the random outcome; in geostatistics we chose where to measure and the measured value is the outcome. -->
+<!-- ::: -->
+
+## Simulation: what does spatial structure look like?
+
+Left: values have **nothing** to do with location. Right: values depend smoothly on location, plus a little noise.
+
+```{r}
+#| echo: false
+n <- 300
+simulation1 <- tibble(x = runif(n), y = runif(n),
+                value = rnorm(n))
+simulation2 <- tibble(x = runif(n), y = runif(n),
+                 value = sin(3 * x) + cos(4 * y) + rnorm(n, sd = 0.2))
+
+map_points <- function(df, title) {
+  ggplot(df, aes(x, y, color = value)) +
+    geom_point(size = 2.5) + coord_equal() +
+    scale_color_viridis_c() + labs(title = title)
+}
+map_points(simulation1, "simulation1") + map_points(simulation2, "simulation2")
+```
+
+## Spatial autocorrelation
+
+**Spatial autocorrelation** = values at nearby locations are related to one another.
+
+::: {.columns}
+::: {.column width="50%"}
+**Positive** (most common)
+
+- high near high, low near low
+- smooth patches
+:::
+::: {.column width="50%"}
+**Negative** (rarer)
+
+- high near low
+- checkerboard-like patterns
+:::
+:::
+
+A useful mental model: each location asks its nearest neighbor, **"are you like me?"**
+
+Let's make that question into a number.
+
+## "Are you like your neighbor?"
+
+For each point, find its **nearest neighbor** (with `sf`!) and record the neighbor's value. Then compute an ordinary correlation.
+
+```{r}
+#| label: neighborly
+add_neighbor <- function(df, label) {
+  nn <- st_nearest_feature(st_as_sf(df, coords = c("x", "y")))  # index of nearest other point
+  df |> 
+    mutate(neighbor_value = value[nn], data = label)
+}
+
+nn_pairs <- bind_rows(add_neighbor(simulation1, "no structure"),
+                      add_neighbor(simulation2, "smooth"))
+
+nn_pairs |>
+  group_by(data) |>
+  summarize(r = cor(value, neighbor_value))
+```
+
+<!-- ```{r} -->
+<!-- #| fig-height: 3 -->
+<!-- ggplot(nn_pairs, aes(value, neighbor_value)) + -->
+<!--   geom_point(alpha = 0.4) + facet_wrap(~ data, scales = "free") -->
+<!-- ``` -->
+
+<!-- ## Is that correlation real? Shuffle and see. -->
+
+<!-- If location didn't matter, **shuffling the values among the locations** shouldn't change anything. So: shuffle many times and see what correlations chance alone produces. -->
+
+<!-- ```{r} -->
+<!-- #| label: cor-real -->
+<!-- nn <- st_nearest_feature(st_as_sf(simulation2, coords = c("x", "y"))) -->
+<!-- observed <- cor(simulation2$value, simulation2$value[nn]) -->
+
+<!-- shuffled <- replicate(1000, { -->
+<!--   v <- sample(simulation2$value)  # same values, random locations -->
+<!--   cor(v, v[nn]) -->
+<!-- }) -->
+
+<!-- ggplot(tibble(r = shuffled), aes(r)) + -->
+<!--   geom_histogram(bins = 30) + -->
+<!--   geom_vline(xintercept = observed, color = "red", linewidth = 1.5) + -->
+<!--   labs(x = "neighbor correlation", title = "Gray: shuffled worlds.  Red: our data.") -->
+<!-- ``` -->
+
+<!-- This is the same **permutation (randomization) test** from intro stats. Real tools like Moran's I (`spdep`) are built on this idea. -->
+
+
