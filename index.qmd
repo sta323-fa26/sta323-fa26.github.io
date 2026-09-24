@@ -67,7 +67,7 @@ schedule %>%
 | 4 | Tue Sep 15 | regular expressions | [🗒](/notes/regexp-lecture.html) | [lab 3](/labs/lab3.html) |  |
 |  | Thu Sep 17 | visualization with ggplot2 |  [💻](/slides/lec07.html) |  |  |
 | 5 | Tue Sep 22 | dimension reduction: PCA| [💻](/slides/lec-pca.html)  | [lab 4](/labs/lab4.html) |  |
-|  | Thu Sep 24 | spatial data |  |  |  |
+|  | Thu Sep 24 | spatial data | [💻](/slides/lec-spatial-data.html)  |  |  |
 | 6 | Tue Sep 29 | functionals & purrr  |  |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
 | 7 | Tue Oct 06 |  shiny |  | lab 5 |  | <!-- project workday -->

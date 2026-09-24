@@ -1367,16 +1367,16 @@
   {
     "objectID": "labs/lab4.html",
     "href": "labs/lab4.html",
-    "title": "Lab 4: wrangling the written word",
+    "title": "Lab 4: dream of plots",
     "section": "",
-    "text": "“A [computer keyboard] is to me as a beak is to a hen.” — J. R. R. Tolkien (loosely)\nBy the end of the lab, you will…"
+    "text": "“I dream of plots, and then I plot my dreams”\nVincent van Gogh (loosely)\nBy the end of the lab, you will…"
   },
   {
     "objectID": "labs/lab4.html#exercises",
     "href": "labs/lab4.html#exercises",
-    "title": "Lab 4: wrangling the written word",
+    "title": "Lab 4: dream of plots",
     "section": "Exercises",
-    "text": "Exercises\nFor all exercises, you should respond in the space provided in the template lab-4.qmd. Any task that says “print to the screen”, or “glimpse the data frame” etc. should be reproduced in your qmd and be visible upon rendering.\n\n\n\n\n\n\nNote\n\n\n\nIn this lab, there is only one exercise."
+    "text": "Exercises\nFor all exercises, you should respond in the space provided in the template lab-4.qmd and show all your work. In all answers of type double, three significant figures suffices."
   },
   {
     "objectID": "labs/lab4.html#exercise",
@@ -1388,14 +1388,14 @@
   {
     "objectID": "labs/lab4.html#style-guidelines",
     "href": "labs/lab4.html#style-guidelines",
-    "title": "Lab 4: wrangling the written word",
+    "title": "Lab 4: dream of plots",
     "section": "Style guidelines",
     "text": "Style guidelines\nAll assignments in this course must employ proper coding style, as outlined below:\n\nAll code should obey the 80 character limit per line (i.e. no code should run off the page when rendering or require scrolling). To enable a vertical line in the RStudio IDE that helps guide this, see the style guidelines from lab 0 or ask a member of the teaching team for help.\nAll commas should be followed by a space.\nAll binary operators should be surrounded by space. For example x + y is appropriate. x+y is not.\nAll pipes %&gt;% or |&gt; as well as ggplot layers + should be followed by a new line.\nYou should be consistent with stylistic choices, e.g. only use 1 of = vs &lt;- and %&gt;% vs |&gt;\nYour name should be at the top (in the YAML) of each document under “author:”\nAll code chunks should be named (with names that don’t have spaces, e.g. ex-1, ex-2 etc.)\nFile names in your GitHub repo such as lab-x.qmd must not be changed and left as provided. Additionally, your repo must pass certain basic checks. The results of these checks are visible on GitHub via the badges at the top of your README and the actions tab. These are meant to give you feedback around the structure and reproducibility of your repository and assignment - they do not assess the correctness of your work. You should consider them a necessary but not sufficient condition when turning in your work - passing all of the checks simply means your have met a minimum standard of reproducibility for the assignment.\n\nFundamentally, the check is making sure 1) you only have the files you should in your repository, 2) your .qmd renders.\nIf you have any questions about style, please ask a member of the teaching team."
   },
   {
     "objectID": "labs/lab4.html#submitting-your-lab",
     "href": "labs/lab4.html#submitting-your-lab",
-    "title": "Lab 4: wrangling the written word",
+    "title": "Lab 4: dream of plots",
     "section": "Submitting your lab",
     "text": "Submitting your lab\nTo submit your assignment, simply commit and push your completed lab-x.qmd to your GitHub repo. Your most recent commit 48 hours after the assignment deadline will be graded, and any applicable late penalty will be applied (see the syllabus). For this reason, do not push commits after you are satisfied with your work, or a late penalty will be applied."
   },
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -4912,5 +4912,264 @@
     "title": "Principal Component Analysis",
     "section": "Further reading",
     "text": "Further reading\nThis lecture is inspired by\n\nFriendly, Michael, Georges Monette, and John Fox. “Elliptical insights: understanding statistical methods through elliptical geometry.” (2013): 1-39.\n\nFor further reading on principal component analysis in action, see\n\nNovembre, John, et al. “Genes mirror geography within Europe.” Nature 456.7218 (2008): 98-101.\n\nand an associated news article discussing the work."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#today",
+    "href": "slides/lec-spatial-data.html#today",
+    "title": "Spatial data",
+    "section": "Today",
+    "text": "Today\nBy the end, you should be able to:\n\nTell apart the two ways of storing spatial data: vector (objects) and raster (grids).\nWrangle and map simple features with sf, dplyr, and geom_sf().\nLoad, transform, and summarize a raster with terra.\nExplain why spatial data need extra care: coordinate systems, scale, and neighbors.\nUse simulation to see what spatial dependence looks like, and to test for it."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#spatial-data-ordinary-data-geometry",
+    "href": "slides/lec-spatial-data.html#spatial-data-ordinary-data-geometry",
+    "title": "Spatial data",
+    "section": "Spatial data = ordinary data + geometry",
+    "text": "Spatial data = ordinary data + geometry\nMost data frames have rows and columns.\nSpatial data frames also record where each row lives.\n\n\n\nordinary variable\nspatial variable\n\n\n\n\npopulation\ncounty boundary\n\n\nrestaurant rating\nrestaurant location\n\n\ntraffic volume\nroad segment\n\n\ntemperature\nweather station location\n\n\n\n\n\n\n\n\n\nNote\n\n\nA spatial object is usually ordinary data plus a special geometry component."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#two-ways-to-represent-space",
+    "href": "slides/lec-spatial-data.html#two-ways-to-represent-space",
+    "title": "Spatial data",
+    "section": "Two ways to represent space",
+    "text": "Two ways to represent space\n\n\nVector data = objects\n\npoint: one location\nline: a path or route\npolygon: an area or boundary\n\nOne row = one object.\nExamples: stores, roads, counties.\nIn R: sf.\n\nRaster data = grid\n\nspace is divided into equal-sized cells\neach cell stores a value\n\nOne value per cell, like pixels in a photo.\nExamples: elevation, temperature, satellite imagery.\nIn R: terra (or stars).\n\n\n\n\n\n\n\nNote\n\n\nRule of thumb: discrete things → vector. Quantities that vary continuously over space → raster."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#exercise-1-vector-or-raster",
+    "href": "slides/lec-spatial-data.html#exercise-1-vector-or-raster",
+    "title": "Spatial data",
+    "section": "Exercise 1: Vector or raster?",
+    "text": "Exercise 1: Vector or raster?\nFor each example: is it vector (point, line, or polygon) or raster? What is one row (or one cell)?\n\nLocations of every coffee shop in Durham.\nCounty-level unemployment rates in North Carolina.\nTemperature measured at 75 weather stations.\nGPS locations from a tagged sea turtle, every hour.\nA satellite image measuring vegetation intensity."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#common-spatial-file-formats",
+    "href": "slides/lec-spatial-data.html#common-spatial-file-formats",
+    "title": "Spatial data",
+    "section": "Common spatial file formats",
+    "text": "Common spatial file formats\n\n\n\nFormat\nCommon use\nR package\n\n\n\n\nShapefile: .shp + friends\nolder vector GIS data\nsf\n\n\nGeoPackage: .gpkg\nmodern vector GIS data\nsf\n\n\nGeoJSON: .geojson\nweb maps, APIs\nsf\n\n\nCSV with lon/lat columns\npoint locations\nreadr, then sf\n\n\nGeoTIFF: .tif\nraster/grid data\nterra\n\n\n\n\n\n\n\n\n\nTip\n\n\nFor vector data, ask: can I read this with sf::st_read()? For raster data, ask: can I read this with terra::rast()?"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#simple-features-the-sf-package",
+    "href": "slides/lec-spatial-data.html#simple-features-the-sf-package",
+    "title": "Spatial data",
+    "section": "Simple features: the sf package",
+    "text": "Simple features: the sf package\nsf stands for simple features. It gives us spatial data frames that work with dplyr, ggplot2, and pipes.\n\nnc &lt;- st_read(system.file(\"shape/nc.shp\", package = \"sf\"), quiet = TRUE)\n\nnc |&gt; select(NAME, BIR74, SID74)\n\nSimple feature collection with 100 features and 3 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -84.32385 ymin: 33.88199 xmax: -75.45698 ymax: 36.58965\nGeodetic CRS:  NAD27\nFirst 10 features:\n          NAME BIR74 SID74                       geometry\n1         Ashe  1091     1 MULTIPOLYGON (((-81.47276 3...\n2    Alleghany   487     0 MULTIPOLYGON (((-81.23989 3...\n3        Surry  3188     5 MULTIPOLYGON (((-80.45634 3...\n4    Currituck   508     1 MULTIPOLYGON (((-76.00897 3...\n5  Northampton  1421     9 MULTIPOLYGON (((-77.21767 3...\n6     Hertford  1452     7 MULTIPOLYGON (((-76.74506 3...\n7       Camden   286     0 MULTIPOLYGON (((-76.00897 3...\n8        Gates   420     0 MULTIPOLYGON (((-76.56251 3...\n9       Warren   968     4 MULTIPOLYGON (((-78.30876 3...\n10      Stokes  1612     1 MULTIPOLYGON (((-80.02567 3...\n\n\nWe only selected three columns… but a fourth one, geometry, came along anyway."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#what-is-inside-an-sf-object",
+    "href": "slides/lec-spatial-data.html#what-is-inside-an-sf-object",
+    "title": "Spatial data",
+    "section": "What is inside an sf object?",
+    "text": "What is inside an sf object?\nThree ingredients:\n\nordinary columns such as NAME, BIR74, SID74\none special geometry column storing the shapes (it is “sticky”: select() keeps it)\nmetadata describing the coordinate reference system, or CRS\n\n\nclass(nc)\n\n[1] \"sf\"         \"data.frame\"\n\nst_geometry_type(nc)[1:3]\n\n[1] MULTIPOLYGON MULTIPOLYGON MULTIPOLYGON\n18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE\n\n\nYou generally leave geometry alone and work with it through st_*() functions: st_area(), st_buffer(), st_join(), …"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#first-map-geom_sf",
+    "href": "slides/lec-spatial-data.html#first-map-geom_sf",
+    "title": "Spatial data",
+    "section": "First map: geom_sf()",
+    "text": "First map: geom_sf()\n\nggplot(nc) +\n  geom_sf() +\n  labs(title = \"North Carolina counties\")\n\n\ngeom_sf() knows how to draw the geometry column, so we do not write aes(x = ..., y = ...)."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#mapping-an-attribute",
+    "href": "slides/lec-spatial-data.html#mapping-an-attribute",
+    "title": "Spatial data",
+    "section": "Mapping an attribute",
+    "text": "Mapping an attribute\n\nnc |&gt;\n  mutate(sids_rate = 1000 * SID74 / BIR74) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = sids_rate), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(\n    title = \"Sudden infant death syndrome (SIDS), 1974–78\",\n    fill = \"deaths per\\n1,000 births\"\n  )\n\n\nFor a polygon map, aes(fill = variable) creates a choropleth.\n\n\n\n\n\n\nTip\n\n\nMap rates, not raw counts: bigger counties produce bigger counts. And beware: counties with few births have noisy rates, so the most extreme colors are often the smallest counties."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#thought-exercise-build-a-point-map",
+    "href": "slides/lec-spatial-data.html#thought-exercise-build-a-point-map",
+    "title": "Spatial data",
+    "section": "Thought exercise: Build a point map",
+    "text": "Thought exercise: Build a point map\nSuppose we have:\n\ncoffee &lt;- tibble(\n  name = c(\"A\", \"B\", \"C\"),\n  longitude = c(-78.91993, -78.93016, -78.93805),\n  latitude = c(36.00932, 36.01158, 36.00346),\n  rating = c(4.6, 4.8, 5.0)\n)\n\nWhat two steps are needed to turn this into a spatial map?\n\n\nConvert the longitude/latitude columns into a geometry column.\nPlot the resulting sf object with geom_sf().\n\nBut to do step 1, R needs one more piece of information… (next slide)"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#coordinate-reference-systems",
+    "href": "slides/lec-spatial-data.html#coordinate-reference-systems",
+    "title": "Spatial data",
+    "section": "Coordinate reference systems",
+    "text": "Coordinate reference systems\nA CRS tells R what the coordinates mean.\n\nst_crs(nc)$input\n\n[1] \"NAD27\"\n\nst_is_longlat(nc)\n\n[1] TRUE\n\n\nTwo broad cases:\n\nlongitude / latitude: angles on a round Earth, in degrees\nprojected coordinates: the Earth flattened onto a plane, measured in meters or feet\n\n\n\n\n\n\n\nWarning\n\n\nsf always reads coordinates as (x, y) = (longitude, latitude). The pair (36, -79) read that way is in Antarctica, not Durham!"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#from-longitudelatitude-columns-to-sf",
+    "href": "slides/lec-spatial-data.html#from-longitudelatitude-columns-to-sf",
+    "title": "Spatial data",
+    "section": "From longitude/latitude columns to sf",
+    "text": "From longitude/latitude columns to sf\n\nplaces &lt;- tibble(\n  place = c(\"Duke\", \"UNC\", \"NC State\"),\n  lon = c(-78.9382, -79.0469, -78.6821),\n  lat = c(36.0014, 35.9049, 35.7847)\n)\n\nplaces_sf &lt;- places |&gt;\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = 4326)\n\ncrs = 4326 is the code for plain GPS longitude/latitude (WGS 84), which is what most web and phone data use. Once converted, spatial layers stack like ordinary ggplot2 layers:\n\nggplot(nc) +\n  geom_sf(fill = \"gray95\", color = \"white\") +\n  geom_sf(data = places_sf, size = 4)"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#the-most-common-crs-mistake",
+    "href": "slides/lec-spatial-data.html#the-most-common-crs-mistake",
+    "title": "Spatial data",
+    "section": "The most common CRS mistake",
+    "text": "The most common CRS mistake\n\n\n\n\n\n\nWarning\n\n\nDo not treat longitude/latitude degrees as ordinary distances. One degree of longitude is about 56 miles in Durham, but 0 miles at the North Pole.\n\n\n\nFor distances, areas, and buffers, transform to a suitable projected CRS first:\n\nnc_projected &lt;- nc |&gt;\n  st_transform(2264) # NAD83 / North Carolina, units = US feet\n\n\n\n\n\n\n\n\nFunction\nMeaning\n\n\n\n\nst_set_crs()\nlabel coordinates that are already in a CRS (numbers unchanged)\n\n\nst_transform()\nconvert coordinates to another CRS (numbers change)"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#wrangling-spatial-data-with-dplyr",
+    "href": "slides/lec-spatial-data.html#wrangling-spatial-data-with-dplyr",
+    "title": "Spatial data",
+    "section": "Wrangling spatial data with dplyr",
+    "text": "Wrangling spatial data with dplyr\nMost dplyr verbs work on sf objects, and the geometry comes along for the ride.\n\nnc_west &lt;- nc |&gt;\n  filter(NAME %in% c(\"Buncombe\", \"Watauga\", \"Ashe\", \"Avery\", \"Mitchell\")) |&gt;\n  mutate(region = \"mountains\") |&gt;\n  select(NAME, region, BIR74, SID74)\n\nWhen geometry is irrelevant, drop it explicitly (it makes tables smaller and code faster):\n\nnc |&gt;\n  st_drop_geometry() |&gt;\n  select(NAME, BIR74, SID74) |&gt;\n  slice(1:5)\n\n         NAME BIR74 SID74\n1        Ashe  1091     1\n2   Alleghany   487     0\n3       Surry  3188     5\n4   Currituck   508     1\n5 Northampton  1421     9\n\n\nSpatial data are still data; use ordinary data tools when appropriate."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#deriving-spatial-variables",
+    "href": "slides/lec-spatial-data.html#deriving-spatial-variables",
+    "title": "Spatial data",
+    "section": "Deriving spatial variables",
+    "text": "Deriving spatial variables\nGeometry can generate new variables: area, length, distance, centroid, …\n\nnc_features &lt;- nc_projected |&gt;\n  mutate(area_sq_miles = as.numeric(st_area(geometry)) / 5280^2)\n\nnc_features |&gt;\n  st_drop_geometry() |&gt;\n  select(NAME, area_sq_miles) |&gt;\n  arrange(desc(area_sq_miles)) |&gt;\n  slice(1:5)\n\n      NAME area_sq_miles\n1 Columbus      946.0813\n2  Robeson      941.7914\n3  Sampson      941.0856\n4   Bladen      883.5617\n5     Wake      847.2055\n\n\nst_area() returns square feet here because EPSG 2264 is in feet; dividing by 5280² converts to square miles."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#spatial-predicates",
+    "href": "slides/lec-spatial-data.html#spatial-predicates",
+    "title": "Spatial data",
+    "section": "Spatial predicates",
+    "text": "Spatial predicates\nA spatial predicate asks a TRUE/FALSE geometry question.\n\n\n\nPredicate\nQuestion\n\n\n\n\nst_intersects()\nDo these geometries overlap or touch?\n\n\nst_within()\nIs A inside B?\n\n\nst_contains()\nDoes A contain B?\n\n\nst_touches()\nDo their boundaries touch (without overlapping)?\n\n\nst_is_within_distance()\nAre they close enough?\n\n\n\nThese functions turn geometry into relationships between rows."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#spatial-joins",
+    "href": "slides/lec-spatial-data.html#spatial-joins",
+    "title": "Spatial data",
+    "section": "Spatial joins",
+    "text": "Spatial joins\nAn ordinary join matches rows using a key column. A spatial join matches rows using a spatial predicate.\n\nplaces_for_join &lt;- places_sf |&gt;\n  st_transform(st_crs(nc)) # both layers must share a CRS\n\nplaces_with_county &lt;- st_join(\n  places_for_join,\n  nc |&gt; select(NAME),\n  join = st_within\n)\n\nplaces_with_county\n\nSimple feature collection with 3 features and 2 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: -79.04715 ymin: 35.78461 xmax: -78.68236 ymax: 36.00131\nGeodetic CRS:  NAD27\n# A tibble: 3 × 3\n  place                geometry NAME  \n* &lt;chr&gt;             &lt;POINT [°]&gt; &lt;chr&gt; \n1 Duke     (-78.93845 36.00131) Durham\n2 UNC      (-79.04715 35.90481) Orange\n3 NC State (-78.68236 35.78461) Wake  \n\n\nQuestion answered: which county contains each point?"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#exercise-2",
+    "href": "slides/lec-spatial-data.html#exercise-2",
+    "title": "Spatial data",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nWhich coffee shop is within 1 mile of Duke Chapel?\n\nchapel &lt;- tibble(name = \"Duke Chapel\", lon = -78.9401, lat = 36.0019) |&gt;\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = 4326) |&gt;\n  st_transform(2264)"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#buffers-all-locations-within-a-distance",
+    "href": "slides/lec-spatial-data.html#buffers-all-locations-within-a-distance",
+    "title": "Spatial data",
+    "section": "Buffers: all locations within a distance",
+    "text": "Buffers: all locations within a distance\n\n\nplaces_ncft &lt;- places_sf |&gt;\n  st_transform(2264)\n\nbuffers &lt;- places_ncft |&gt;\n  st_buffer(dist = 30 * 5280) # 30 miles, in feet\n\nggplot() +\n  geom_sf(data = nc_projected,\n          fill = \"gray95\", color = \"white\") +\n  geom_sf(data = buffers,\n          fill = NA, linewidth = 1) +\n  geom_sf(data = places_ncft, size = 3) +\n  labs(title = \"30-mile buffers\")"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#spatial-summaries-and-dissolving-boundaries",
+    "href": "slides/lec-spatial-data.html#spatial-summaries-and-dissolving-boundaries",
+    "title": "Spatial data",
+    "section": "Spatial summaries and dissolving boundaries",
+    "text": "Spatial summaries and dissolving boundaries\nWhich counties intersect any campus buffer? Then, group_by() + summarize() merges the shapes within each group.\n\nPlotsCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnc_near &lt;- nc_projected |&gt;\n  mutate(near_campus = lengths(st_intersects(geometry, st_union(buffers))) &gt; 0)\n\nnc_dissolved &lt;- nc_near |&gt;\n  group_by(near_campus) |&gt;\n  summarize(n_counties = n())\n\np1 &lt;- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"100 counties\")\np2 &lt;- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"2 dissolved regions\")\np1 + p2 + plot_layout(guides = \"collect\")"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#a-spatial-debugging-checklist",
+    "href": "slides/lec-spatial-data.html#a-spatial-debugging-checklist",
+    "title": "Spatial data",
+    "section": "A spatial debugging checklist",
+    "text": "A spatial debugging checklist\nSpatial bugs are usually data representation bugs, not syntax bugs. When something fails or looks strange:\n\nAre both objects sf objects?\nDo they have the same CRS?\nAm I measuring distance or area in a projected CRS?\nAre the geometries valid?\nDid a spatial join create one-to-many matches?\nAm I mapping a count when I need a rate?\n\n\nst_crs(x)            # what coordinate system?\nst_geometry_type(x)  # points, lines, polygons?\nst_is_valid(x)       # any broken shapes?\nst_bbox(x)           # does the extent look like the right place?\nggplot(x) + geom_sf()  # always look at it!\n\nA beautiful map can still encode a poor analysis."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#a-raster-is-a-grid-of-values",
+    "href": "slides/lec-spatial-data.html#a-raster-is-a-grid-of-values",
+    "title": "Spatial data",
+    "section": "A raster is a grid of values",
+    "text": "A raster is a grid of values\nHere is a toy raster: every cell gets one value. Most raster operations transform every cell at once.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nraster_grid &lt;- crossing(\n  x = seq(0, 1, length.out = 35),\n  y = seq(0, 1, length.out = 35)\n) |&gt;\n  mutate(value = sin(5 * x) + cos(6 * y))\n\np_toy &lt;- ggplot(raster_grid, aes(x, y, fill = value)) +\n  geom_raster() + coord_equal() + labs(title = \"A toy raster\")\n\np_thresh &lt;- raster_grid |&gt;\n  mutate(high = value &gt; 0.75) |&gt;\n  ggplot(aes(x, y, fill = high)) +\n  geom_raster() + coord_equal() + labs(title = \"value &gt; 0.75\")\n\np_toy + p_thresh"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#a-real-raster-elevation-in-luxembourg",
+    "href": "slides/lec-spatial-data.html#a-real-raster-elevation-in-luxembourg",
+    "title": "Spatial data",
+    "section": "A real raster: elevation in Luxembourg",
+    "text": "A real raster: elevation in Luxembourg\nterra ships with a small example GeoTIFF.\n\nelev &lt;- rast(system.file(\"ex/elev.tif\", package = \"terra\"))\nelev\n\nclass       : SpatRaster \nsize        : 90, 95, 1  (nrow, ncol, nlyr)\nresolution  : 0.008333333, 0.008333333  (x, y)\nextent      : 5.741667, 6.533333, 49.44167, 50.19167  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 \nsource      : elev.tif \nname        : elevation \nmin value   :       141 \nmax value   :       547 \n\n\nRead the printout like a checklist: dimensions (rows × columns), resolution (size of one cell), extent (the bounding box), coord. ref. (the CRS), and the value range."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#plotting-a-raster-with-ggplot2",
+    "href": "slides/lec-spatial-data.html#plotting-a-raster-with-ggplot2",
+    "title": "Spatial data",
+    "section": "Plotting a raster with ggplot2",
+    "text": "Plotting a raster with ggplot2\nOne simple route: turn the grid into a data frame with one row per cell.\n\nelev_df &lt;- as.data.frame(elev, xy = TRUE)\nhead(elev_df, 3)\n\n           x        y elevation\n127 6.004167 50.17917       529\n128 6.012500 50.17917       542\n129 6.020833 50.17917       547\n\n\n\nggplot(elev_df, aes(x, y, fill = elevation)) +\n  geom_raster() +\n  scale_fill_viridis_c() +\n  coord_quickmap() +\n  labs(fill = \"meters\")\n\n\nThe tidyterra package adds geom_spatraster() if you’d rather skip this step."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#resolution-is-a-choice-scale-matters",
+    "href": "slides/lec-spatial-data.html#resolution-is-a-choice-scale-matters",
+    "title": "Spatial data",
+    "section": "Resolution is a choice: scale matters",
+    "text": "Resolution is a choice: scale matters\naggregate() merges blocks of cells into bigger cells (here, 5 × 5 blocks, averaged).\n\nelev_coarse &lt;- aggregate(elev, fact = 5, fun = \"mean\", na.rm = TRUE)\nres(elev)\n\n[1] 0.008333333 0.008333333\n\nres(elev_coarse)\n\n[1] 0.04166667 0.04166667\n\n\n\nCoarser cells hide local extremes. The scale you analyze at can change your answer."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#vector-meets-raster",
+    "href": "slides/lec-spatial-data.html#vector-meets-raster",
+    "title": "Spatial data",
+    "section": "Vector meets raster",
+    "text": "Vector meets raster\nA classic question: what is the average raster value inside each polygon?\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlux &lt;- st_read(system.file(\"ex/lux.shp\", package = \"terra\"), quiet = TRUE)\n\nlux_elev &lt;- terra::extract(elev, vect(lux), fun = mean, na.rm = TRUE)\n\nlux |&gt;\n  mutate(mean_elev = lux_elev$elevation) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = mean_elev), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(title = \"Average elevation by canton\", fill = \"meters\")\n\n\n\n\nsf handles the polygons, terra handles the grid, and vect() passes shapes between them. (Both layers must share a CRS; check first!)"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#why-statisticians-care-about-space",
+    "href": "slides/lec-spatial-data.html#why-statisticians-care-about-space",
+    "title": "Spatial data",
+    "section": "Why statisticians care about space",
+    "text": "Why statisticians care about space\nIntro statistics usually assumes observations are independent. Spatial data often aren’t:\n\nObservations close together in space tend to be more alike than observations far apart.\n\n\nNearby houses have similar prices.\nNearby temperatures are similar.\nNearby counties have similar disease rates.\n\nThis is sometimes called Tobler’s first law of geography. It means location carries statistical information, and nearby observations partly repeat each other."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#simulation-what-does-spatial-structure-look-like",
+    "href": "slides/lec-spatial-data.html#simulation-what-does-spatial-structure-look-like",
+    "title": "Spatial data",
+    "section": "Simulation: what does spatial structure look like?",
+    "text": "Simulation: what does spatial structure look like?\nLeft: values have nothing to do with location. Right: values depend smoothly on location, plus a little noise."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#spatial-autocorrelation",
+    "href": "slides/lec-spatial-data.html#spatial-autocorrelation",
+    "title": "Spatial data",
+    "section": "Spatial autocorrelation",
+    "text": "Spatial autocorrelation\nSpatial autocorrelation = values at nearby locations are related to one another.\n\n\nPositive (most common)\n\nhigh near high, low near low\nsmooth patches\n\n\nNegative (rarer)\n\nhigh near low\ncheckerboard-like patterns\n\n\nA useful mental model: each location asks its nearest neighbor, “are you like me?”\nLet’s make that question into a number."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#are-you-like-your-neighbor",
+    "href": "slides/lec-spatial-data.html#are-you-like-your-neighbor",
+    "title": "Spatial data",
+    "section": "“Are you like your neighbor?”",
+    "text": "“Are you like your neighbor?”\nFor each point, find its nearest neighbor (with sf!) and record the neighbor’s value. Then compute an ordinary correlation.\n\nadd_neighbor &lt;- function(df, label) {\n  nn &lt;- st_nearest_feature(st_as_sf(df, coords = c(\"x\", \"y\")))  # index of nearest other point\n  df |&gt; \n    mutate(neighbor_value = value[nn], data = label)\n}\n\nnn_pairs &lt;- bind_rows(add_neighbor(simulation1, \"no structure\"),\n                      add_neighbor(simulation2, \"smooth\"))\n\nnn_pairs |&gt;\n  group_by(data) |&gt;\n  summarize(r = cor(value, neighbor_value))\n\n# A tibble: 2 × 2\n  data               r\n  &lt;chr&gt;          &lt;dbl&gt;\n1 no structure -0.0884\n2 smooth        0.923"
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#further-reading",
+    "href": "slides/lec-spatial-data.html#further-reading",
+    "title": "Spatial data",
+    "section": "Further reading",
+    "text": "Further reading\n\nGeocomputation with R (Lovelace, Nowosad & Muenchow): https://r.geocompx.org\nSpatial Data Science with Applications in R (Pebesma & Bivand): https://r-spatial.org/book"
+  },
+  {
+    "objectID": "labs/lab4.html#the-data",
+    "href": "labs/lab4.html#the-data",
+    "title": "Lab 4: dream of plots",
+    "section": "The data",
+    "text": "The data\nThe SNP data set and population labels data set are sourced from the Novembre lab GitHub repo.\n\nsnp_pca.rds\nLoad the data using readRDS. The data are stored as a large matrix. Rows are individuals (observations), and columns are specific loci where SNPs (single nucleotide polymorphisms) occur. Each cell contains a 0, 1, or 2, indicating how many copies of a particular allele the individual has at that SNP site. A value of 0 means the individual is homozygous for the other allele (0 copies of the counted allele), a value of 1 means the individual is heterozygous (1 copy), and a value of 2 means the individual is homozygous for the counted allele (2 copies). Some individuals have a missing genotype at a given SNP; these are represented as NA.\n\n\npopulation_labels.csv\nThis data set contains two columns: IID which contains an individuals unique ID and population which is a label that tells which population the individual belongs to.\n\n\npop_locations.csv\nThis data set contains three columns: Population (the population in question) and longitude, latitude which describe where the populations come from. This data was sourced from Table 1 of Hollenbach et al. (2012)."
+  },
+  {
+    "objectID": "labs/lab4.html#examine-the-snp-data",
+    "href": "labs/lab4.html#examine-the-snp-data",
+    "title": "Lab 4: dream of plots",
+    "section": "1. Examine the SNP data",
+    "text": "1. Examine the SNP data\nAnswer the following questions about the SNP data set: How many individuals are in the data set? How many SNP sites per individual? How many total observed vs missing cells in the matrix? Verify that SNPs only take values 0, 1, 2 or missing."
+  },
+  {
+    "objectID": "labs/lab4.html#principal-component-analysis",
+    "href": "labs/lab4.html#principal-component-analysis",
+    "title": "Lab 4: dream of plots",
+    "section": "2. Principal Component Analysis",
+    "text": "2. Principal Component Analysis\nAgain using the SNP data set: impute missing values with the column means. Next, run PCA. Save the first two principal components as a data.frame named df with the unique ids as row names. Show the output of the following:\nglimpse(df)"
+  },
+  {
+    "objectID": "labs/lab4.html#plot",
+    "href": "labs/lab4.html#plot",
+    "title": "Lab 4: dream of plots",
+    "section": "3. Plot",
+    "text": "3. Plot\nUsing ggplot, create a scatter plot of the first two principal components and color the points by population. If any population values are missing, the legend should instead read: “Unknown” (instead of ‘NA’). In all plots you make, the title should be informative, the axes labeled (e.g. “PC1” and “PC2” here) and the background uncolored (change the theme from the default gray). Make sure the color scheme is colorblind friendly, but still clearly distinguishes meaningfully between populations.\n\n\n\n\n\n\nHint\n\n\n\nYou’ll need to do some data wrangling to join the population_labels data set to the SNP data set prior to creating the plot. Regular expressions and left_join may be useful here. Check out scale_color_brewer function for some discrete category color palette options."
+  },
+  {
+    "objectID": "labs/lab4.html#functional-plotting-with-ggproto",
+    "href": "labs/lab4.html#functional-plotting-with-ggproto",
+    "title": "Lab 4: dream of plots",
+    "section": "4. Functional plotting with ggproto",
+    "text": "4. Functional plotting with ggproto\nSave your plot from part 3 as plot_ex3 and write a ggproto function geom_ball that\n\ntakes in an x, y and color aesthetic and computes the median x and y values for each “group” assigned via the coloring. Do not compute a median for the missing group.\nfind which point in the “group” has the farthest Euclidean distance from from the median coordinates.\ndraw a circle for each group on the plot, using matching color scheme, centered at the median and with a radius that passes through the farthest point\n\nShow the output of the code below:\nplot_ex3 + \n geom_ball()\nDo any individuals fall into multiple plotted balls? If so, what do you think this might mean?"
+  },
+  {
+    "objectID": "labs/lab4.html#reflect-to-match-the-map",
+    "href": "labs/lab4.html#reflect-to-match-the-map",
+    "title": "Lab 4: dream of plots",
+    "section": "5. Reflect to match the map",
+    "text": "5. Reflect to match the map\nLoad the sf and rnaturalearth packages at the top of your qmd file. Next use the provided code below as a template to plot a map of part of Europe.\n\neurope &lt;- ne_countries(\n  scale = \"medium\",\n  returnclass = \"sf\"\n)\n\n\np2 &lt;- ggplot(europe) +\n  geom_sf(fill = \"grey95\", color = \"grey70\") +\n  coord_sf(\n    xlim = c(-15, 45),\n    ylim = c(35, 65)\n  )\n\n\n\n\n\n\n\nHint\n\n\n\nThe coordinates in pop_locations are longitude and latitude measured in decimal degrees. When converting these coordinates to an sf object, for purposes of plotting, you will need to specify an appropriate coordinate reference system. Determine the EPSG code commonly used for standard longitude/latitude coordinates and supply it to st_as_sf(), e.g.\npop_locations_sf &lt;- st_as_sf(\n  pop_locations,\n  coords = c(\"longitude\", \"latitude\"),\n  crs = ____\n)\n\n\nNext, plot the each population as a point overlaid on the map using an appropriate geometry (e.g. geom_sf) and color each population using the identical color scheme you used in exercise 4. Display the plot side-by-side with your plot from exercise 3 using the patchwork package. Reflect the principal components and/or change the axes of your plot from exercise 4 so the two plots look similar. Make sure there are no redundant legends.\nFrom what region(s) on the map do you think the Unknown population comes?\n\n\n\n\n\n\nHint\n\n\n\nTo use colors consistently across plots, you will want to define the color palette separately and then use a function such as scale_color_manual()."
   }
 ]
