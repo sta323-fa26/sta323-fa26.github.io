@@ -4974,7 +4974,7 @@
     "href": "slides/lec-spatial-data.html#mapping-an-attribute",
     "title": "Spatial data",
     "section": "Mapping an attribute",
-    "text": "Mapping an attribute\n\nnc |&gt;\n  mutate(sids_rate = 1000 * SID74 / BIR74) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = sids_rate), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(\n    title = \"Sudden infant death syndrome (SIDS), 1974–78\",\n    fill = \"deaths per\\n1,000 births\"\n  )\n\n\nFor a polygon map, aes(fill = variable) creates a choropleth.\n\n\n\n\n\n\nTip\n\n\nMap rates, not raw counts: bigger counties produce bigger counts. And beware: counties with few births have noisy rates, so the most extreme colors are often the smallest counties."
+    "text": "Mapping an attribute\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnc |&gt;\n  mutate(sids_rate = 1000 * SID74 / BIR74) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = sids_rate), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(\n    title = \"Sudden infant death syndrome (SIDS), 1974–78\",\n    fill = \"deaths per\\n1,000 births\"\n  )\n\nFor a polygon map, aes(fill = variable) creates a choropleth.\n\n\n\n\n\n\nTip\n\n\nMap rates, not raw counts: bigger counties produce bigger counts. And beware: counties with few births have noisy rates, so the most extreme colors are often the smallest counties."
   },
   {
     "objectID": "slides/lec-spatial-data.html#thought-exercise-build-a-point-map",
@@ -5051,7 +5051,7 @@
     "href": "slides/lec-spatial-data.html#spatial-summaries-and-dissolving-boundaries",
     "title": "Spatial data",
     "section": "Spatial summaries and dissolving boundaries",
-    "text": "Spatial summaries and dissolving boundaries\nWhich counties intersect any campus buffer? Then, group_by() + summarize() merges the shapes within each group.\n\nPlotsCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnc_near &lt;- nc_projected |&gt;\n  mutate(near_campus = lengths(st_intersects(geometry, st_union(buffers))) &gt; 0)\n\nnc_dissolved &lt;- nc_near |&gt;\n  group_by(near_campus) |&gt;\n  summarize(n_counties = n())\n\np1 &lt;- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"100 counties\")\np2 &lt;- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"2 dissolved regions\")\np1 + p2 + plot_layout(guides = \"collect\")"
+    "text": "Spatial summaries and dissolving boundaries\nWhich counties intersect any campus buffer? Then, group_by() + summarize() merges the shapes within each group.\n\nPlotsCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnc_near &lt;- nc_projected |&gt;\n  mutate(near_campus = lengths(st_intersects(geometry, st_union(buffers))) &gt; 0)\n\nnc_dissolved &lt;- nc_near |&gt;\n  group_by(near_campus) |&gt;\n  summarize(n_counties = n())\n\np1 &lt;- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"100 counties\")\np2 &lt;- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = \"white\") +\n  labs(title = \"2 dissolved regions\")\np1 / p2 + plot_layout(guides = \"collect\")"
   },
   {
     "objectID": "slides/lec-spatial-data.html#a-spatial-debugging-checklist",
@@ -5079,7 +5079,7 @@
     "href": "slides/lec-spatial-data.html#plotting-a-raster-with-ggplot2",
     "title": "Spatial data",
     "section": "Plotting a raster with ggplot2",
-    "text": "Plotting a raster with ggplot2\nOne simple route: turn the grid into a data frame with one row per cell.\n\nelev_df &lt;- as.data.frame(elev, xy = TRUE)\nhead(elev_df, 3)\n\n           x        y elevation\n127 6.004167 50.17917       529\n128 6.012500 50.17917       542\n129 6.020833 50.17917       547\n\n\n\nggplot(elev_df, aes(x, y, fill = elevation)) +\n  geom_raster() +\n  scale_fill_viridis_c() +\n  coord_quickmap() +\n  labs(fill = \"meters\")\n\n\nThe tidyterra package adds geom_spatraster() if you’d rather skip this step."
+    "text": "Plotting a raster with ggplot2\nOne simple route: turn the grid into a data frame with one row per cell.\n\nelev_df &lt;- as.data.frame(elev, xy = TRUE)\nhead(elev_df, 3)\n\n           x        y elevation\n127 6.004167 50.17917       529\n128 6.012500 50.17917       542\n129 6.020833 50.17917       547\n\n\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot(elev_df, aes(x, y, fill = elevation)) +\n  geom_raster() +\n  scale_fill_viridis_c() +\n  coord_quickmap() +\n  labs(fill = \"meters\")\n\nThe tidyterra package adds geom_spatraster() if you’d rather skip this step."
   },
   {
     "objectID": "slides/lec-spatial-data.html#resolution-is-a-choice-scale-matters",
@@ -5093,7 +5093,7 @@
     "href": "slides/lec-spatial-data.html#vector-meets-raster",
     "title": "Spatial data",
     "section": "Vector meets raster",
-    "text": "Vector meets raster\nA classic question: what is the average raster value inside each polygon?\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlux &lt;- st_read(system.file(\"ex/lux.shp\", package = \"terra\"), quiet = TRUE)\n\nlux_elev &lt;- terra::extract(elev, vect(lux), fun = mean, na.rm = TRUE)\n\nlux |&gt;\n  mutate(mean_elev = lux_elev$elevation) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = mean_elev), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(title = \"Average elevation by canton\", fill = \"meters\")\n\n\n\n\nsf handles the polygons, terra handles the grid, and vect() passes shapes between them. (Both layers must share a CRS; check first!)"
+    "text": "Vector meets raster\nA classic question: what is the average raster value inside each polygon?\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlux &lt;- st_read(system.file(\"ex/lux.shp\", package = \"terra\"), quiet = TRUE)\n\nlux_elev &lt;- terra::extract(elev, vect(lux), fun = mean, na.rm = TRUE)\n\nlux |&gt;\n  mutate(mean_elev = lux_elev$elevation) |&gt;\n  ggplot() +\n  geom_sf(aes(fill = mean_elev), color = \"white\") +\n  scale_fill_viridis_c() +\n  labs(title = \"Average elevation by canton\", fill = \"meters\")\n\nsf handles the polygons, terra handles the grid, and vect() passes shapes between them. (Both layers must share a CRS; check first!)"
   },
   {
     "objectID": "slides/lec-spatial-data.html#why-statisticians-care-about-space",
@@ -5107,7 +5107,7 @@
     "href": "slides/lec-spatial-data.html#simulation-what-does-spatial-structure-look-like",
     "title": "Spatial data",
     "section": "Simulation: what does spatial structure look like?",
-    "text": "Simulation: what does spatial structure look like?\nLeft: values have nothing to do with location. Right: values depend smoothly on location, plus a little noise."
+    "text": "Simulation: what does spatial structure look like?\nLeft: values have nothing to do with location. Right: values depend smoothly on location, plus a little noise.\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn &lt;- 300\nsimulation1 &lt;- tibble(x = runif(n), y = runif(n),\n                value = rnorm(n))\nsimulation2 &lt;- tibble(x = runif(n), y = runif(n),\n                 value = sin(3 * x) + cos(4 * y) + rnorm(n, sd = 0.2))\n\nmap_points &lt;- function(df, title) {\n  ggplot(df, aes(x, y, color = value)) +\n    geom_point(size = 2.5) + coord_equal() +\n    scale_color_viridis_c() + labs(title = title)\n}\nmap_points(simulation1, \"simulation1\") + map_points(simulation2, \"simulation2\")"
   },
   {
     "objectID": "slides/lec-spatial-data.html#spatial-autocorrelation",
@@ -5171,5 +5171,12 @@
     "title": "Lab 4: dream of plots",
     "section": "5. Reflect to match the map",
     "text": "5. Reflect to match the map\nLoad the sf and rnaturalearth packages at the top of your qmd file. Next use the provided code below as a template to plot a map of part of Europe.\n\neurope &lt;- ne_countries(\n  scale = \"medium\",\n  returnclass = \"sf\"\n)\n\n\np2 &lt;- ggplot(europe) +\n  geom_sf(fill = \"grey95\", color = \"grey70\") +\n  coord_sf(\n    xlim = c(-15, 45),\n    ylim = c(35, 65)\n  )\n\n\n\n\n\n\n\nHint\n\n\n\nThe coordinates in pop_locations are longitude and latitude measured in decimal degrees. When converting these coordinates to an sf object, for purposes of plotting, you will need to specify an appropriate coordinate reference system. Determine the EPSG code commonly used for standard longitude/latitude coordinates and supply it to st_as_sf(), e.g.\npop_locations_sf &lt;- st_as_sf(\n  pop_locations,\n  coords = c(\"longitude\", \"latitude\"),\n  crs = ____\n)\n\n\nNext, plot the each population as a point overlaid on the map using an appropriate geometry (e.g. geom_sf) and color each population using the identical color scheme you used in exercise 4. Display the plot side-by-side with your plot from exercise 3 using the patchwork package. Reflect the principal components and/or change the axes of your plot from exercise 4 so the two plots look similar. Make sure there are no redundant legends.\nFrom what region(s) on the map do you think the Unknown population comes?\n\n\n\n\n\n\nHint\n\n\n\nTo use colors consistently across plots, you will want to define the color palette separately and then use a function such as scale_color_manual()."
+  },
+  {
+    "objectID": "slides/lec-spatial-data.html#code-5",
+    "href": "slides/lec-spatial-data.html#code-5",
+    "title": "Spatial data",
+    "section": "Code",
+    "text": "Code"
   }
 ]

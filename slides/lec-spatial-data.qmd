@@ -151,7 +151,11 @@ ggplot(nc) +
 
 ## Mapping an attribute
 
+::: panel-tabset
+
+## plot
 ```{r}
+#| echo: false
 nc |>
   mutate(sids_rate = 1000 * SID74 / BIR74) |>
   ggplot() +
@@ -163,10 +167,27 @@ nc |>
   )
 ```
 
+## code
+
+```{r}
+#| eval: false
+nc |>
+  mutate(sids_rate = 1000 * SID74 / BIR74) |>
+  ggplot() +
+  geom_sf(aes(fill = sids_rate), color = "white") +
+  scale_fill_viridis_c() +
+  labs(
+    title = "Sudden infant death syndrome (SIDS), 1974–78",
+    fill = "deaths per\n1,000 births"
+  )
+```
+
+
 For a polygon map, `aes(fill = variable)` creates a **choropleth**.
 
 ::: {.callout-tip}
 Map **rates**, not raw counts: bigger counties produce bigger counts. And beware: counties with few births have **noisy** rates, so the most extreme colors are often the smallest counties.
+:::
 :::
 
 ## Thought exercise: Build a point map
@@ -444,7 +465,7 @@ p1 <- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = "white") +
   labs(title = "100 counties")
 p2 <- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = "white") +
   labs(title = "2 dissolved regions")
-p1 + p2 + plot_layout(guides = "collect")
+p1 / p2 + plot_layout(guides = "collect")
 ```
 
 ## Code
@@ -461,7 +482,7 @@ p1 <- ggplot(nc_near) + geom_sf(aes(fill = near_campus), color = "white") +
   labs(title = "100 counties")
 p2 <- ggplot(nc_dissolved) + geom_sf(aes(fill = near_campus), color = "white") +
   labs(title = "2 dissolved regions")
-p1 + p2 + plot_layout(guides = "collect")
+p1 / p2 + plot_layout(guides = "collect")
 ```
 ::: 
 
@@ -558,7 +579,22 @@ elev_df <- as.data.frame(elev, xy = TRUE)
 head(elev_df, 3)
 ```
 
+::: panel-tabset
+
+## Plot
 ```{r}
+#| echo: false
+#| fig-height: 3.5
+ggplot(elev_df, aes(x, y, fill = elevation)) +
+  geom_raster() +
+  scale_fill_viridis_c() +
+  coord_quickmap() +
+  labs(fill = "meters")
+```
+
+## Code
+```{r}
+#| eval: false
 #| fig-height: 3.5
 ggplot(elev_df, aes(x, y, fill = elevation)) +
   geom_raster() +
@@ -568,6 +604,7 @@ ggplot(elev_df, aes(x, y, fill = elevation)) +
 ```
 
 The `tidyterra` package adds `geom_spatraster()` if you'd rather skip this step.
+:::
 
 ## Resolution is a choice: scale matters
 
@@ -634,9 +671,11 @@ lux |>
   labs(title = "Average elevation by canton", fill = "meters")
 ```
 
-:::
 
 `sf` handles the polygons, `terra` handles the grid, and `vect()` passes shapes between them. (Both layers must share a CRS; check first!)
+
+
+:::
 
 <!-- # Part 3: Spatial statistics, by simulation -->
 
@@ -676,6 +715,9 @@ This is sometimes called **Tobler's first law of geography**. It means location 
 
 Left: values have **nothing** to do with location. Right: values depend smoothly on location, plus a little noise.
 
+::: panel-tabset 
+
+## Plot
 ```{r}
 #| echo: false
 n <- 300
@@ -691,6 +733,25 @@ map_points <- function(df, title) {
 }
 map_points(simulation1, "simulation1") + map_points(simulation2, "simulation2")
 ```
+
+## Code
+
+```{r}
+#| eval: false
+n <- 300
+simulation1 <- tibble(x = runif(n), y = runif(n),
+                value = rnorm(n))
+simulation2 <- tibble(x = runif(n), y = runif(n),
+                 value = sin(3 * x) + cos(4 * y) + rnorm(n, sd = 0.2))
+
+map_points <- function(df, title) {
+  ggplot(df, aes(x, y, color = value)) +
+    geom_point(size = 2.5) + coord_equal() +
+    scale_color_viridis_c() + labs(title = title)
+}
+map_points(simulation1, "simulation1") + map_points(simulation2, "simulation2")
+```
+:::
 
 ## Spatial autocorrelation
 
