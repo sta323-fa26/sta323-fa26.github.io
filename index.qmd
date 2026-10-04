@@ -80,7 +80,7 @@ schedule %>%
 |  | Thu Oct 29 |  |  |  |  |
 | 11 | Tue Nov 03 |  |  | project workday |  |
 |  | Thu Nov 05 |  |  |  |  |
-| 12 | Tue Nov 10 |  |  | lab 7 |  |
+| 12 | Tue Nov 10 |  |  |  |  | <!-- lab 7 -->
 |  | Thu Nov 12 |  |  |  |  |
 | 13 | Tue Nov 17 | exam 2 |  |  |  |
 |  | Thu Nov 19 |  |  |  |  |
