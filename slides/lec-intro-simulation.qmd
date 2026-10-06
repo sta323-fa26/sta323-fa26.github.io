@@ -1,0 +1,930 @@
+---
+title: "Simulation in R"
+author: "Dr. Alexander Fisher"
+execute:
+  warning: true
+format: 
+    revealjs:
+      smaller: true
+---
+
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(palmerpenguins)
+library(patchwork)
+
+set.seed(323)
+theme_set(theme_minimal(base_size = 18))
+
+penguins_clean <- penguins |>
+  drop_na(species, island, bill_length_mm, flipper_length_mm,
+          body_mass_g, sex) |>
+  mutate(
+    large_penguin = body_mass_g >= 4500,
+    species = fct_drop(species),
+    island = fct_drop(island),
+    sex = fct_drop(sex)
+  )
+
+group_counts <- penguins_clean |>
+  count(species, island, name = "n_penguins")
+```
+
+## Today
+
+By the end, you should be able to:
+
+1. Explain why simulation is useful in statistical computing.
+2. Describe a variable's **support**: the values it can take.
+3. Simulate categorical, binary, count, and continuous data.
+4. Use observed summaries to create simulated data that are "like" real data.
+5. Use Monte Carlo simulation to approximate quantities.
+
+
+## Why simulation? 
+
+Statisticians want to make inferences from data. Simulation lets us
+
+1. construct measures of uncertainty/reliability (e.g. confidence intervals via bootstrapping)
+2. approximate quantities that are difficult to calculate analytically (e.g. integrals using Monte Carlo)
+3. generate samples from complicated distributions (e.g. Markov chain Monte Carlo)
+4. construct reference distributions for statistical tests (e.g. sample from the null distribution)
+5. study the behavior of statistical methods (e.g. bias, power, type I error)
+6. validate models (simulate from a fitted/proposed model and see whether simulated data resemble the observed data)
+
+. . .
+
+and much more!
+
+## A lighter starting point
+
+We do not need to start with formal probability theory.
+
+To simulate data, we need to specify:
+
+1. the **support**: what values can occur, and
+2. the **distribution**: how frequently different values occur.
+
+::: {.callout-note}
+A data generative model is a rule for generating data with a particular support.
+:::
+
+
+## Random seeds
+
+Simulations use pseudo-random number generators, so the exact simulated values may change each time
+we run the code.
+
+```{r}
+set.seed(323)
+rnorm(5)
+```
+
+. . .
+
+A **random seed** makes the random results reproducible.
+
+```{r}
+set.seed(323)
+rnorm(5)
+```
+
+::: {.callout-note}
+Set the seed once near the beginning of an analysis, not before every line of
+simulation code.
+:::
+
+
+## Our running example
+
+The `palmerpenguins` data contain measurements on penguins observed near
+Palmer Station, Antarctica.
+
+The version we'll work with:
+
+```{r}
+#| eval: false
+#| label: subset-penguin
+library(tidyverse)
+library(palmerpenguins)
+
+set.seed(323)
+theme_set(theme_minimal(base_size = 18))
+
+penguins_clean <- penguins |>
+  drop_na(species, island, bill_length_mm, flipper_length_mm,
+          body_mass_g, sex) |>
+  mutate(
+    large_penguin = body_mass_g >= 4500,
+    species = fct_drop(species),
+    island = fct_drop(island),
+    sex = fct_drop(sex)
+  )
+
+group_counts <- penguins_clean |>
+  count(species, island, name = "n_penguins")
+```
+
+## Look at the data
+
+```{r}
+penguins_clean |>
+  glimpse()
+```
+
+Question for today:
+
+> Can we use simulation to create artificial penguin data that look like the
+> real data?
+
+## Support in the penguin data
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+p1 <- penguins_clean |>
+  ggplot(aes(x = species)) +
+  geom_bar() +
+  labs(x = "Species", y = "Count")
+
+p2 <- penguins_clean |>
+  mutate(large_penguin = if_else(large_penguin, "yes", "no")) |>
+  ggplot(aes(x = large_penguin)) +
+  geom_bar() +
+  labs(x = "Mass at least 4500g?", y = "Count")
+
+p3 <- group_counts |>
+  ggplot(aes(x = n_penguins)) +
+  geom_histogram(binwidth = 10, boundary = 0, color = "white") +
+  labs(x = "Penguins per species-island group", y = "Count")
+
+p4 <- penguins_clean |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250, color = "white") +
+  labs(x = "Body mass (g)", y = "Count")
+
+(p1 | p2) / (p3 | p4)
+```
+
+## code
+
+```{r}
+#| eval: false
+p1 <- penguins_clean |>
+  ggplot(aes(x = species)) +
+  geom_bar() +
+  labs(x = "Species", y = "Count")
+
+p2 <- penguins_clean |>
+  mutate(large_penguin = if_else(large_penguin, "yes", "no")) |>
+  ggplot(aes(x = large_penguin)) +
+  geom_bar() +
+  labs(x = "Mass at least 4500g?", y = "Count")
+
+p3 <- group_counts |>
+  ggplot(aes(x = n_penguins)) +
+  geom_histogram(binwidth = 10, boundary = 0, color = "white") +
+  labs(x = "Penguins per species-island group", y = "Count")
+
+p4 <- penguins_clean |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250, color = "white") +
+  labs(x = "Body mass (g)", y = "Count")
+
+(p1 | p2) / (p3 | p4)
+```
+:::
+
+## Variable type versus distribution
+
+| Variable | Support | One possible data generative model | Intuition |
+|---|---|---|---|
+| species | categorical | `sample()` | choose among labels |
+| large? | binary | `rbinom(size = 1)` | one trial, success/failure |
+| # large in 20 | 0, 1, ..., 20 | `rbinom(size = 20)` | 20 independent trials |
+| # events | 0, 1, 2, ... | `rpois()` | events occurring at a rate |
+| body mass | real numbers | `rnorm()` | values near a center |
+
+::: {.callout-warning}
+A variable type is not a distribution. An integer could be binomial, Poisson, or
+something else.
+:::
+
+## Distributions are data generative modeling choices
+
+`rbinom()` is natural when we count successes from a fixed number of
+independent trials with the same probability of success.
+
+Example:
+
+> In a group of 20 penguins, how many have body mass at least 4500g?
+
+. . .
+
+`rpois()` is natural when we count events occurring at some average **rate**.
+
+Example:
+
+> How many penguins are observed in a survey period?
+
+## Simulating categorical data
+
+A categorical variable takes one of several labels.
+
+```{r}
+sample(
+  x = c("Adelie", "Chinstrap", "Gentoo"),
+  size = 10,
+  replace = TRUE
+)
+```
+
+Use `prob =` when some categories should occur more often.
+
+```{r}
+sample(c("Adelie", "Chinstrap", "Gentoo"),
+       size = 10, replace = TRUE, prob = c(.44, .20, .36))
+```
+
+## From real proportions to simulated species
+::: {.columns}
+::: {.column width="50%"}
+```{r}
+species_probs <- penguins_clean |>
+  count(species) |>
+  mutate(prob = n / sum(n))
+
+species_probs
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+sim_species <- sample(
+  x = species_probs$species,
+  size = nrow(penguins_clean),
+  replace = TRUE,
+  prob = species_probs$prob
+)
+
+tibble(species = sim_species) |>
+  count(species) |>
+  mutate(prop = n / sum(n))
+```
+:::
+:::
+
+## Simulating binomial data
+
+The binomial distribution counts successes in a fixed number of independent
+trials with the same probability of success.
+
+```{r}
+rbinom(n = 10, size = 1, prob = .30)
+```
+
+With `size = 1`, this is binary 0/1 data.
+
+```{r}
+rbinom(n = 10, size = 20, prob = .30)
+```
+
+With `size = 20`, this is count data with support 0, 1, ..., 20.
+
+## Estimate a binomial probability from data
+
+```{r}
+p_large <- mean(penguins_clean$large_penguin)
+p_large
+```
+
+For a 0/1 variable, the mean is the proportion of 1s.
+
+```{r}
+sim_large <- rbinom(
+  n = nrow(penguins_clean),
+  size = 1,
+  prob = p_large
+)
+
+mean(sim_large)
+```
+
+## A binomial count simulation
+
+Suppose we repeatedly sample groups of 20 penguins.
+
+How many penguins in each group have body mass at least 4500g?
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+binomial_counts <- tibble(
+  n_large = rbinom(n = 1000, size = 20, prob = p_large)
+)
+
+binomial_counts |>
+  ggplot(aes(x = n_large)) +
+  geom_histogram(binwidth = 1, boundary = -.5, color = "white") +
+  labs(x = "Number of large penguins in a group of 20",
+       y = "Count")
+```
+
+## code
+
+```{r}
+#| eval: false
+binomial_counts <- tibble(
+  n_large = rbinom(n = 1000, size = 20, prob = p_large)
+)
+
+binomial_counts |>
+  ggplot(aes(x = n_large)) +
+  geom_histogram(binwidth = 1, boundary = -.5, color = "white") +
+  labs(x = "Number of large penguins in a group of 20",
+       y = "Count")
+```
+:::
+
+## Simulating counts with a Poisson data generative model
+
+Count variables often have support
+
+\[
+0,1,2,3,\ldots
+\]
+
+A Poisson data generative model is often used for events occurring at an average **rate**.
+
+```{r}
+rpois(n = 20, lambda = 3)
+```
+
+Here, `lambda` controls the mean and variance of the count.
+
+## Exercise 1
+
+Show that when the number of trials is large and the success probability is small, a
+Poisson distribution can approximate a binomial distribution.
+
+
+<!-- ## Poisson approximation to the binomial -->
+
+<!-- When `size` is large and `prob` is small, -->
+
+<!-- \[ -->
+<!-- \text{Binomial}(n,p) \approx \text{Poisson}(np). -->
+<!-- \] -->
+
+<!-- ::: panel-tabset -->
+<!-- ## plot -->
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| message: false -->
+<!-- approx_counts <- tibble( -->
+<!--   value = c(rbinom(10000, size = 100, prob = .03), -->
+<!--             rpois(10000, lambda = 100 * .03)), -->
+<!--   distribution = rep(c("binomial", "poisson"), each = 10000) -->
+<!-- ) -->
+
+<!-- approx_counts |> -->
+<!--   ggplot(aes(x = value)) + -->
+<!--   geom_histogram(binwidth = 1, boundary = -.5, color = "white") + -->
+<!--   facet_wrap(~ distribution, ncol = 1) + -->
+<!--   labs(x = "Count", y = "Frequency") -->
+<!-- ``` -->
+
+<!-- ## code -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- approx_counts <- tibble( -->
+<!--   value = c(rbinom(10000, size = 100, prob = .03), -->
+<!--             rpois(10000, lambda = 100 * .03)), -->
+<!--   distribution = rep(c("binomial", "poisson"), each = 10000) -->
+<!-- ) -->
+
+<!-- approx_counts |> -->
+<!--   ggplot(aes(x = value)) + -->
+<!--   geom_histogram(binwidth = 1, boundary = -.5, color = "white") + -->
+<!--   facet_wrap(~ distribution, ncol = 1) + -->
+<!--   labs(x = "Count", y = "Frequency") -->
+<!-- ``` -->
+<!-- ::: -->
+
+## A Poisson data generative model
+
+Suppose we count how many penguins are observed in each species-island group.
+
+```{r}
+group_counts
+```
+
+
+```{r}
+rpois(n = 10, lambda = group_counts$n_penguins)
+```
+
+::: {.callout-note}
+- The `rpois` (and other data generative functions) are vectorized. 
+- Vector recycling occurs when there is a mismatch between the number being simulated and the length of the input parameter vector.
+:::
+
+## Simulating continuous data
+
+Examples:
+
+- body mass
+- flipper length
+- bill length
+
+For unimodal, symmetric distributions, the normal is a good candidate
+
+```{r}
+rnorm(n = 10, mean = 4000, sd = 500)
+```
+
+## R's four function prefixes
+
+Many distributions in R have four related functions.
+
+| Prefix | Meaning | Example |
+|---|---|---|
+| `r` | random generation | `rnorm()` |
+| `d` | density (continuous) or probability (discrete) | `dnorm()` |
+| `p` | cumulative probability | `pnorm()` |
+| `q` | quantiles | `qnorm()` |
+
+
+## What does a density show?
+
+::: columns
+
+::: {.column width="50%"}
+For a continuous variable, the density curve shows where values are relatively
+common.
+
+- intervals have probability
+- exact points do not
+- total area under the curve is 1
+
+::: {.callout-note}
+The density is high where simulated values are more likely to appear.
+:::
+
+:::
+::: {.column width="50%"}
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+tibble(x = seq(2500, 6500, length.out = 200)) |>
+  ggplot(aes(x = x)) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 4200, sd = 850)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "A normal density curve")
+```
+
+## code
+
+```{r}
+#| eval: false
+tibble(x = seq(2500, 6500, length.out = 200)) |>
+  ggplot(aes(x = x)) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 4200, sd = 850)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "A normal density curve")
+```
+:::
+
+:::
+:::
+
+## Compare a density to simulated values
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+sim_body <- tibble(
+  body_mass_g = rnorm(1000, mean = 4200, sd = 850)
+)
+
+sim_body |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 250, color = "white") +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 4200, sd = 850)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Simulated data and the density used to generate them")
+```
+
+## code
+
+```{r}
+#| eval: false
+sim_body <- tibble(
+  body_mass_g = rnorm(1000, mean = 4200, sd = 850)
+)
+
+sim_body |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 250, color = "white") +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 4200, sd = 850)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Simulated data and the density used to generate them")
+```
+:::
+
+
+## Is this normal a good fit?
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+body_mean <- mean(penguins_clean$body_mass_g)
+body_sd <- sd(penguins_clean$body_mass_g)
+
+penguins_clean |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 250, color = "white") +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = body_mean, sd = body_sd)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Observed body masses and one normal data generative model")
+```
+
+## code
+
+```{r}
+#| eval: false
+body_mean <- mean(penguins_clean$body_mass_g)
+body_sd <- sd(penguins_clean$body_mass_g)
+
+penguins_clean |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 250, color = "white") +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = body_mean, sd = body_sd)
+  ) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Observed body masses and one normal data generative model")
+```
+:::
+
+
+## Simulating data like the data
+
+Suppose we want to create artificial data that are **like** the observed data.
+
+One simple strategy:
+
+1. choose a data generative model,
+2. estimate its parameters using summaries of the observed data,
+3. simulate new data from that estimated distribution,
+4. compare simulated data with observed data.
+
+This is the main idea behind a simple **method of moments** approach.
+
+## Method of moments, informally
+
+A **moment** is a summary of a distribution.
+
+For today:
+
+- match the observed mean
+- match the observed variance
+
+## Fit and simulate a normal body-mass data generative model
+
+```{r}
+body_moments <- penguins_clean |>
+  summarize(
+    mean_body = mean(body_mass_g),
+    sd_body = sd(body_mass_g),
+    n = n()
+  )
+
+sim_penguins_1 <- tibble(
+  body_mass_g = rnorm(body_moments$n,
+                      body_moments$mean_body,
+                      body_moments$sd_body)
+)
+
+body_moments
+```
+
+## Did the simulation work?
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+observed_body <- penguins_clean |>
+  transmute(source = "observed", body_mass_g)
+
+sim_body_1 <- sim_penguins_1 |>
+  transmute(source = "simulated", body_mass_g)
+
+bind_rows(observed_body, sim_body_1) |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250, color = "white") +
+  facet_wrap(~ source, ncol = 1) +
+  labs(x = "Body mass (g)", y = "Count",
+       title = "Observed data versus one simulated data set")
+```
+
+## code
+
+```{r}
+#| eval: false
+observed_body <- penguins_clean |>
+  transmute(source = "observed", body_mass_g)
+
+sim_body_1 <- sim_penguins_1 |>
+  transmute(source = "simulated", body_mass_g)
+
+bind_rows(observed_body, sim_body_1) |>
+  ggplot(aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250, color = "white") +
+  facet_wrap(~ source, ncol = 1) +
+  labs(x = "Body mass (g)", y = "Count",
+       title = "Observed data versus one simulated data set")
+```
+:::
+
+## A problem with the first simulation
+
+Penguin body mass has structure.
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+penguins_clean |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(x = "Species", y = "Body mass (g)",
+       title = "Body mass differs by species")
+```
+
+## code
+
+```{r}
+#| eval: false
+penguins_clean |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(x = "Species", y = "Body mass (g)",
+       title = "Body mass differs by species")
+```
+:::
+
+One normal curve for all penguins ignores this structure.
+
+## Match and simulate within species
+
+```{r}
+species_moments <- penguins_clean |>
+  group_by(species) |>
+  summarize(n = n(),
+            mean_body = mean(body_mass_g),
+            sd_body = sd(body_mass_g),
+            .groups = "drop")
+
+sim_penguins_2 <- species_moments |>
+  rowwise() |>
+  mutate(body_mass_g = list(rnorm(n, mean_body, sd_body))) |>
+  unnest(body_mass_g) |>
+  select(species, body_mass_g)
+
+species_moments
+```
+
+## Compare observed and simulated data
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+observed_by_species <- penguins_clean |>
+  transmute(source = "observed", species, body_mass_g)
+
+sim_by_species <- sim_penguins_2 |>
+  mutate(source = "simulated")
+
+bind_rows(observed_by_species, sim_by_species) |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  facet_wrap(~ source) +
+  labs(x = "Species", y = "Body mass (g)",
+       title = "A better simulation: match summaries within species")
+```
+
+## code
+
+```{r}
+#| eval: false
+observed_by_species <- penguins_clean |>
+  transmute(source = "observed", species, body_mass_g)
+
+sim_by_species <- sim_penguins_2 |>
+  mutate(source = "simulated")
+
+bind_rows(observed_by_species, sim_by_species) |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  facet_wrap(~ source) +
+  labs(x = "Species", y = "Body mass (g)",
+       title = "A better simulation: match summaries within species")
+```
+:::
+
+## Exercise 2
+
+Use method of moments to simulate flipper lengths within species.
+
+<!-- 1. Compute the observed mean and standard deviation of `flipper_length_mm` -->
+<!--    within each species. -->
+<!-- 2. Simulate one artificial flipper length for each observed penguin. -->
+<!-- 3. Make a plot comparing observed and simulated flipper lengths. -->
+
+## Simulating a whole toy data set
+
+We can combine several pieces:
+
+1. simulate species using observed species proportions,
+2. simulate body mass using species-specific normal data generative models,
+3. combine the simulated variables into one data frame.
+
+```{r}
+sim_penguins_3 <- tibble(
+  species = sample(species_probs$species, nrow(penguins_clean),
+                   replace = TRUE, prob = species_probs$prob)
+) |>
+  left_join(species_moments, by = "species") |>
+  mutate(body_mass_g = rnorm(n(), mean_body, sd_body)) |>
+  select(species, body_mass_g)
+```
+
+## Model checking by simulation
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+#| message: false
+obs_plot <- observed_by_species |>
+  mutate(source = "observed")
+
+sim_plot <- sim_penguins_3 |>
+  mutate(source = "simulated")
+
+bind_rows(obs_plot, sim_plot) |>
+  ggplot(aes(x = body_mass_g, fill = species)) +
+  geom_density(alpha = .45) +
+  facet_wrap(~ source, ncol = 1) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Does the simulated data look like the observed data?")
+```
+
+## code
+
+```{r}
+#| eval: false
+obs_plot <- observed_by_species |>
+  mutate(source = "observed")
+
+sim_plot <- sim_penguins_3 |>
+  mutate(source = "simulated")
+
+bind_rows(obs_plot, sim_plot) |>
+  ggplot(aes(x = body_mass_g, fill = species)) +
+  geom_density(alpha = .45) +
+  facet_wrap(~ source, ncol = 1) +
+  labs(x = "Body mass (g)", y = "Density",
+       title = "Does the simulated data look like the observed data?")
+```
+:::
+
+## What did we build?
+
+We built a data generative model:
+
+1. choose a species,
+2. generate a body mass from a species-specific distribution.
+
+```{r}
+#| eval: false
+species <- sample(species_values, size = n, replace = TRUE,
+                  prob = species_probs)
+
+body_mass <- rnorm(n, mean = species_mean[species],
+                   sd = species_sd[species])
+```
+
+::: {.callout-note}
+Simulation forces us to be explicit about our assumptions.
+:::
+
+
+## Monte Carlo approximation
+
+Monte Carlo approximation means:
+
+> approximate a quantity using many random simulations.
+
+The usual pattern is:
+
+1. simulate many values,
+2. calculate something from each simulated value,
+3. compute the mean of the results.
+
+This turns difficult mathematical calculations into computing problems.
+
+. . . 
+
+The key idea is that integrals are means, and means are integrals!
+
+
+# Toy example: estimating $\pi$
+
+## The picture to have in mind
+
+```{r}
+#| fig-height: 4
+#| echo: false
+#| warning: false
+#| message: false
+#| eval: true
+library(ggplot2)
+set.seed(2)
+
+# Create a data frame with values for x and y coordinates
+df = data.frame(x = cos(seq(0, 2*pi, length.out = 100)), 
+                 y = sin(seq(0, 2*pi, length.out = 100)))
+
+df2 = data.frame(x = runif(50, min = -1, max = 1),
+                 y = runif(50, min = -1, max = 1))
+
+# Create a ggplot object with the data frame
+ggplot(df, aes(x, y)) + 
+  geom_path(size = 0.5) +
+  coord_equal() +
+  geom_rect(aes(xmin = -1, xmax = 1, ymin = -1, ymax = 1), 
+                   fill = NA, color = "black") +
+  geom_point(data = df2, aes(x = x, y = y)) +
+  theme_bw()
+```
+
+-   The area of the unit circle, $A_\text{circle} = \pi$. We'll pretend we don't know and want to estimate $A_\text{circle}$
+
+-   50 random points thrown into the box defined by coordinates (-1, -1), (-1, 1), (1, -1), (1, 1)
+
+-   39 points land inside, 11 points outside
+
+-   $\frac{39}{50} \approx \frac{A_\text{circle}}{A_\text{box}}$
+
+-   $A_{\text{circle}} \approx .78 \cdot 4 = 3.12$
