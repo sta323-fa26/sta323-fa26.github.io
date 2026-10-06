@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nshiny\n\nlab 5\n\n\n\n\nThu Oct 08\nAPIs\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\nlab 7\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\nlab 5\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -5178,5 +5178,271 @@
     "title": "Spatial data",
     "section": "Code",
     "text": "Code"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#today",
+    "href": "slides/lec-intro-simulation.html#today",
+    "title": "Simulation in R",
+    "section": "Today",
+    "text": "Today\nBy the end, you should be able to:\n\nExplain why simulation is useful in statistical computing.\nDescribe a variable’s support: the values it can take.\nSimulate categorical, binary, count, and continuous data.\nUse observed summaries to create simulated data that are “like” real data.\nUse Monte Carlo simulation to approximate quantities."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#why-simulation",
+    "href": "slides/lec-intro-simulation.html#why-simulation",
+    "title": "Simulation in R",
+    "section": "Why simulation?",
+    "text": "Why simulation?\nStatisticians want to make inferences from data. Simulation lets us\n\nconstruct measures of uncertainty/reliability (e.g. confidence intervals via bootstrapping)\napproximate quantities that are difficult to calculate analytically (e.g. integrals using Monte Carlo)\ngenerate samples from complicated distributions (e.g. Markov chain Monte Carlo)\nconstruct reference distributions for statistical tests (e.g. sample from the null distribution)\nstudy the behavior of statistical methods (e.g. bias, power, type I error)\nvalidate models (simulate from a fitted/proposed model and see whether simulated data resemble the observed data)\n\n\nand much more!"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#a-lighter-starting-point",
+    "href": "slides/lec-intro-simulation.html#a-lighter-starting-point",
+    "title": "Simulation in R",
+    "section": "A lighter starting point",
+    "text": "A lighter starting point\nWe do not need to start with formal probability theory.\nTo simulate data, we need to specify:\n\nthe support: what values can occur, and\nthe distribution: how frequently different values occur.\n\n\n\n\n\n\n\nNote\n\n\nA data generative model is a rule for generating data with a particular support."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#random-seeds",
+    "href": "slides/lec-intro-simulation.html#random-seeds",
+    "title": "Simulation in R",
+    "section": "Random seeds",
+    "text": "Random seeds\nSimulations use pseudo-random number generators, so the exact simulated values may change each time we run the code.\n\nset.seed(323)\nrnorm(5)\n\n[1] -0.5332687  1.2148825  0.7528894  0.2158501  0.8886568\n\n\n\nA random seed makes the random results reproducible.\n\nset.seed(323)\nrnorm(5)\n\n[1] -0.5332687  1.2148825  0.7528894  0.2158501  0.8886568\n\n\n\n\n\n\n\n\nNote\n\n\nSet the seed once near the beginning of an analysis, not before every line of simulation code."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#our-running-example",
+    "href": "slides/lec-intro-simulation.html#our-running-example",
+    "title": "Simulation in R",
+    "section": "Our running example",
+    "text": "Our running example\nThe palmerpenguins data contain measurements on penguins observed near Palmer Station, Antarctica.\nThe version we’ll work with:\n\nlibrary(tidyverse)\nlibrary(palmerpenguins)\n\nset.seed(323)\ntheme_set(theme_minimal(base_size = 18))\n\npenguins_clean &lt;- penguins |&gt;\n  drop_na(species, island, bill_length_mm, flipper_length_mm,\n          body_mass_g, sex) |&gt;\n  mutate(\n    large_penguin = body_mass_g &gt;= 4500,\n    species = fct_drop(species),\n    island = fct_drop(island),\n    sex = fct_drop(sex)\n  )\n\ngroup_counts &lt;- penguins_clean |&gt;\n  count(species, island, name = \"n_penguins\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#look-at-the-data",
+    "href": "slides/lec-intro-simulation.html#look-at-the-data",
+    "title": "Simulation in R",
+    "section": "Look at the data",
+    "text": "Look at the data\n\npenguins_clean |&gt;\n  glimpse()\n\nRows: 333\nColumns: 9\n$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…\n$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…\n$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38.6…\n$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21.2…\n$ flipper_length_mm &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 18…\n$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 3800…\n$ sex               &lt;fct&gt; male, female, female, female, male, female, male, fe…\n$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…\n$ large_penguin     &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALS…\n\n\nQuestion for today:\n\nCan we use simulation to create artificial penguin data that look like the real data?"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#support-in-the-penguin-data",
+    "href": "slides/lec-intro-simulation.html#support-in-the-penguin-data",
+    "title": "Simulation in R",
+    "section": "Support in the penguin data",
+    "text": "Support in the penguin data\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\np1 &lt;- penguins_clean |&gt;\n  ggplot(aes(x = species)) +\n  geom_bar() +\n  labs(x = \"Species\", y = \"Count\")\n\np2 &lt;- penguins_clean |&gt;\n  mutate(large_penguin = if_else(large_penguin, \"yes\", \"no\")) |&gt;\n  ggplot(aes(x = large_penguin)) +\n  geom_bar() +\n  labs(x = \"Mass at least 4500g?\", y = \"Count\")\n\np3 &lt;- group_counts |&gt;\n  ggplot(aes(x = n_penguins)) +\n  geom_histogram(binwidth = 10, boundary = 0, color = \"white\") +\n  labs(x = \"Penguins per species-island group\", y = \"Count\")\n\np4 &lt;- penguins_clean |&gt;\n  ggplot(aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 250, color = \"white\") +\n  labs(x = \"Body mass (g)\", y = \"Count\")\n\n(p1 | p2) / (p3 | p4)"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#variable-type-versus-distribution",
+    "href": "slides/lec-intro-simulation.html#variable-type-versus-distribution",
+    "title": "Simulation in R",
+    "section": "Variable type versus distribution",
+    "text": "Variable type versus distribution\n\n\n\n\n\n\n\n\n\nVariable\nSupport\nOne possible data generative model\nIntuition\n\n\n\n\nspecies\ncategorical\nsample()\nchoose among labels\n\n\nlarge?\nbinary\nrbinom(size = 1)\none trial, success/failure\n\n\n# large in 20\n0, 1, …, 20\nrbinom(size = 20)\n20 independent trials\n\n\n# events\n0, 1, 2, …\nrpois()\nevents occurring at a rate\n\n\nbody mass\nreal numbers\nrnorm()\nvalues near a center\n\n\n\n\n\n\n\n\n\nWarning\n\n\nA variable type is not a distribution. An integer could be binomial, Poisson, or something else."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#distributions-are-data-generative-modeling-choices",
+    "href": "slides/lec-intro-simulation.html#distributions-are-data-generative-modeling-choices",
+    "title": "Simulation in R",
+    "section": "Distributions are data generative modeling choices",
+    "text": "Distributions are data generative modeling choices\nrbinom() is natural when we count successes from a fixed number of independent trials with the same probability of success.\nExample:\n\nIn a group of 20 penguins, how many have body mass at least 4500g?\n\n\nrpois() is natural when we count events occurring at some average rate.\nExample:\n\nHow many penguins are observed in a survey period?"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-categorical-data",
+    "href": "slides/lec-intro-simulation.html#simulating-categorical-data",
+    "title": "Simulation in R",
+    "section": "Simulating categorical data",
+    "text": "Simulating categorical data\nA categorical variable takes one of several labels.\n\nsample(\n  x = c(\"Adelie\", \"Chinstrap\", \"Gentoo\"),\n  size = 10,\n  replace = TRUE\n)\n\n [1] \"Gentoo\"    \"Chinstrap\" \"Adelie\"    \"Chinstrap\" \"Adelie\"    \"Chinstrap\"\n [7] \"Gentoo\"    \"Adelie\"    \"Gentoo\"    \"Gentoo\"   \n\n\nUse prob = when some categories should occur more often.\n\nsample(c(\"Adelie\", \"Chinstrap\", \"Gentoo\"),\n       size = 10, replace = TRUE, prob = c(.44, .20, .36))\n\n [1] \"Gentoo\"    \"Gentoo\"    \"Chinstrap\" \"Adelie\"    \"Adelie\"    \"Gentoo\"   \n [7] \"Adelie\"    \"Adelie\"    \"Adelie\"    \"Gentoo\""
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#from-real-proportions-to-simulated-species",
+    "href": "slides/lec-intro-simulation.html#from-real-proportions-to-simulated-species",
+    "title": "Simulation in R",
+    "section": "From real proportions to simulated species",
+    "text": "From real proportions to simulated species\n\n\n\nspecies_probs &lt;- penguins_clean |&gt;\n  count(species) |&gt;\n  mutate(prob = n / sum(n))\n\nspecies_probs\n\n# A tibble: 3 × 3\n  species       n  prob\n  &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;\n1 Adelie      146 0.438\n2 Chinstrap    68 0.204\n3 Gentoo      119 0.357\n\n\n\n\nsim_species &lt;- sample(\n  x = species_probs$species,\n  size = nrow(penguins_clean),\n  replace = TRUE,\n  prob = species_probs$prob\n)\n\ntibble(species = sim_species) |&gt;\n  count(species) |&gt;\n  mutate(prop = n / sum(n))\n\n# A tibble: 3 × 3\n  species       n  prop\n  &lt;fct&gt;     &lt;int&gt; &lt;dbl&gt;\n1 Adelie      137 0.411\n2 Chinstrap    68 0.204\n3 Gentoo      128 0.384"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-binomial-data",
+    "href": "slides/lec-intro-simulation.html#simulating-binomial-data",
+    "title": "Simulation in R",
+    "section": "Simulating binomial data",
+    "text": "Simulating binomial data\nThe binomial distribution counts successes in a fixed number of independent trials with the same probability of success.\n\nrbinom(n = 10, size = 1, prob = .30)\n\n [1] 0 1 0 0 0 1 1 0 1 1\n\n\nWith size = 1, this is binary 0/1 data.\n\nrbinom(n = 10, size = 20, prob = .30)\n\n [1]  5  8  5  8  8 11  5  5  6  3\n\n\nWith size = 20, this is count data with support 0, 1, …, 20."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#estimate-a-binomial-probability-from-data",
+    "href": "slides/lec-intro-simulation.html#estimate-a-binomial-probability-from-data",
+    "title": "Simulation in R",
+    "section": "Estimate a binomial probability from data",
+    "text": "Estimate a binomial probability from data\n\np_large &lt;- mean(penguins_clean$large_penguin)\np_large\n\n[1] 0.3453453\n\n\nFor a 0/1 variable, the mean is the proportion of 1s.\n\nsim_large &lt;- rbinom(\n  n = nrow(penguins_clean),\n  size = 1,\n  prob = p_large\n)\n\nmean(sim_large)\n\n[1] 0.3663664"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#a-binomial-count-simulation",
+    "href": "slides/lec-intro-simulation.html#a-binomial-count-simulation",
+    "title": "Simulation in R",
+    "section": "A binomial count simulation",
+    "text": "A binomial count simulation\nSuppose we repeatedly sample groups of 20 penguins.\nHow many penguins in each group have body mass at least 4500g?\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbinomial_counts &lt;- tibble(\n  n_large = rbinom(n = 1000, size = 20, prob = p_large)\n)\n\nbinomial_counts |&gt;\n  ggplot(aes(x = n_large)) +\n  geom_histogram(binwidth = 1, boundary = -.5, color = \"white\") +\n  labs(x = \"Number of large penguins in a group of 20\",\n       y = \"Count\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-counts-with-a-poisson-data-generative-model",
+    "href": "slides/lec-intro-simulation.html#simulating-counts-with-a-poisson-data-generative-model",
+    "title": "Simulation in R",
+    "section": "Simulating counts with a Poisson data generative model",
+    "text": "Simulating counts with a Poisson data generative model\nCount variables often have support\n[ 0,1,2,3, ]\nA Poisson data generative model is often used for events occurring at an average rate.\n\nrpois(n = 20, lambda = 3)\n\n [1] 1 3 4 2 4 4 2 3 4 2 3 1 2 7 3 3 5 3 4 3\n\n\nHere, lambda controls the mean and variance of the count."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#exercise-1",
+    "href": "slides/lec-intro-simulation.html#exercise-1",
+    "title": "Simulation in R",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nShow that when the number of trials is large and the success probability is small, a Poisson distribution can approximate a binomial distribution."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#a-poisson-data-generative-model",
+    "href": "slides/lec-intro-simulation.html#a-poisson-data-generative-model",
+    "title": "Simulation in R",
+    "section": "A Poisson data generative model",
+    "text": "A Poisson data generative model\nSuppose we count how many penguins are observed in each species-island group.\n\ngroup_counts\n\n# A tibble: 5 × 3\n  species   island    n_penguins\n  &lt;fct&gt;     &lt;fct&gt;          &lt;int&gt;\n1 Adelie    Biscoe            44\n2 Adelie    Dream             55\n3 Adelie    Torgersen         47\n4 Chinstrap Dream             68\n5 Gentoo    Biscoe           119\n\n\n\nrpois(n = 10, lambda = group_counts$n_penguins)\n\n [1]  42  59  47  62 104  45  64  42  71 104\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe rpois (and other data generative functions) are vectorized.\nVector recycling occurs when there is a mismatch between the number being simulated and the length of the input parameter vector."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-continuous-data",
+    "href": "slides/lec-intro-simulation.html#simulating-continuous-data",
+    "title": "Simulation in R",
+    "section": "Simulating continuous data",
+    "text": "Simulating continuous data\nExamples:\n\nbody mass\nflipper length\nbill length\n\nFor unimodal, symmetric distributions, the normal is a good candidate\n\nrnorm(n = 10, mean = 4000, sd = 500)\n\n [1] 3792.617 4220.156 3922.147 4853.024 3266.565 3087.861 4202.295 4615.812\n [9] 4465.088 5146.835"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#rs-four-function-prefixes",
+    "href": "slides/lec-intro-simulation.html#rs-four-function-prefixes",
+    "title": "Simulation in R",
+    "section": "R’s four function prefixes",
+    "text": "R’s four function prefixes\nMany distributions in R have four related functions.\n\n\n\nPrefix\nMeaning\nExample\n\n\n\n\nr\nrandom generation\nrnorm()\n\n\nd\ndensity (continuous) or probability (discrete)\ndnorm()\n\n\np\ncumulative probability\npnorm()\n\n\nq\nquantiles\nqnorm()"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#what-does-a-density-show",
+    "href": "slides/lec-intro-simulation.html#what-does-a-density-show",
+    "title": "Simulation in R",
+    "section": "What does a density show?",
+    "text": "What does a density show?\n\n\nFor a continuous variable, the density curve shows where values are relatively common.\n\nintervals have probability\nexact points do not\ntotal area under the curve is 1\n\n\n\n\n\n\n\nNote\n\n\nThe density is high where simulated values are more likely to appear.\n\n\n\n\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntibble(x = seq(2500, 6500, length.out = 200)) |&gt;\n  ggplot(aes(x = x)) +\n  stat_function(\n    fun = dnorm,\n    args = list(mean = 4200, sd = 850)\n  ) +\n  labs(x = \"Body mass (g)\", y = \"Density\",\n       title = \"A normal density curve\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#compare-a-density-to-simulated-values",
+    "href": "slides/lec-intro-simulation.html#compare-a-density-to-simulated-values",
+    "title": "Simulation in R",
+    "section": "Compare a density to simulated values",
+    "text": "Compare a density to simulated values\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsim_body &lt;- tibble(\n  body_mass_g = rnorm(1000, mean = 4200, sd = 850)\n)\n\nsim_body |&gt;\n  ggplot(aes(x = body_mass_g)) +\n  geom_histogram(aes(y = after_stat(density)),\n                 binwidth = 250, color = \"white\") +\n  stat_function(\n    fun = dnorm,\n    args = list(mean = 4200, sd = 850)\n  ) +\n  labs(x = \"Body mass (g)\", y = \"Density\",\n       title = \"Simulated data and the density used to generate them\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#is-this-normal-a-good-fit",
+    "href": "slides/lec-intro-simulation.html#is-this-normal-a-good-fit",
+    "title": "Simulation in R",
+    "section": "Is this normal a good fit?",
+    "text": "Is this normal a good fit?\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbody_mean &lt;- mean(penguins_clean$body_mass_g)\nbody_sd &lt;- sd(penguins_clean$body_mass_g)\n\npenguins_clean |&gt;\n  ggplot(aes(x = body_mass_g)) +\n  geom_histogram(aes(y = after_stat(density)),\n                 binwidth = 250, color = \"white\") +\n  stat_function(\n    fun = dnorm,\n    args = list(mean = body_mean, sd = body_sd)\n  ) +\n  labs(x = \"Body mass (g)\", y = \"Density\",\n       title = \"Observed body masses and one normal data generative model\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-data-like-the-data",
+    "href": "slides/lec-intro-simulation.html#simulating-data-like-the-data",
+    "title": "Simulation in R",
+    "section": "Simulating data like the data",
+    "text": "Simulating data like the data\nSuppose we want to create artificial data that are like the observed data.\nOne simple strategy:\n\nchoose a data generative model,\nestimate its parameters using summaries of the observed data,\nsimulate new data from that estimated distribution,\ncompare simulated data with observed data.\n\nThis is the main idea behind a simple method of moments approach."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#method-of-moments-informally",
+    "href": "slides/lec-intro-simulation.html#method-of-moments-informally",
+    "title": "Simulation in R",
+    "section": "Method of moments, informally",
+    "text": "Method of moments, informally\nA moment is a summary of a distribution.\nFor today:\n\nmatch the observed mean\nmatch the observed variance"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#fit-and-simulate-a-normal-body-mass-data-generative-model",
+    "href": "slides/lec-intro-simulation.html#fit-and-simulate-a-normal-body-mass-data-generative-model",
+    "title": "Simulation in R",
+    "section": "Fit and simulate a normal body-mass data generative model",
+    "text": "Fit and simulate a normal body-mass data generative model\n\nbody_moments &lt;- penguins_clean |&gt;\n  summarize(\n    mean_body = mean(body_mass_g),\n    sd_body = sd(body_mass_g),\n    n = n()\n  )\n\nsim_penguins_1 &lt;- tibble(\n  body_mass_g = rnorm(body_moments$n,\n                      body_moments$mean_body,\n                      body_moments$sd_body)\n)\n\nbody_moments\n\n# A tibble: 1 × 3\n  mean_body sd_body     n\n      &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;\n1     4207.    805.   333"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#did-the-simulation-work",
+    "href": "slides/lec-intro-simulation.html#did-the-simulation-work",
+    "title": "Simulation in R",
+    "section": "Did the simulation work?",
+    "text": "Did the simulation work?\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nobserved_body &lt;- penguins_clean |&gt;\n  transmute(source = \"observed\", body_mass_g)\n\nsim_body_1 &lt;- sim_penguins_1 |&gt;\n  transmute(source = \"simulated\", body_mass_g)\n\nbind_rows(observed_body, sim_body_1) |&gt;\n  ggplot(aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 250, color = \"white\") +\n  facet_wrap(~ source, ncol = 1) +\n  labs(x = \"Body mass (g)\", y = \"Count\",\n       title = \"Observed data versus one simulated data set\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#a-problem-with-the-first-simulation",
+    "href": "slides/lec-intro-simulation.html#a-problem-with-the-first-simulation",
+    "title": "Simulation in R",
+    "section": "A problem with the first simulation",
+    "text": "A problem with the first simulation\nPenguin body mass has structure.\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npenguins_clean |&gt;\n  ggplot(aes(x = species, y = body_mass_g)) +\n  geom_boxplot() +\n  labs(x = \"Species\", y = \"Body mass (g)\",\n       title = \"Body mass differs by species\")\n\n\n\n\nOne normal curve for all penguins ignores this structure."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#match-and-simulate-within-species",
+    "href": "slides/lec-intro-simulation.html#match-and-simulate-within-species",
+    "title": "Simulation in R",
+    "section": "Match and simulate within species",
+    "text": "Match and simulate within species\n\nspecies_moments &lt;- penguins_clean |&gt;\n  group_by(species) |&gt;\n  summarize(n = n(),\n            mean_body = mean(body_mass_g),\n            sd_body = sd(body_mass_g),\n            .groups = \"drop\")\n\nsim_penguins_2 &lt;- species_moments |&gt;\n  rowwise() |&gt;\n  mutate(body_mass_g = list(rnorm(n, mean_body, sd_body))) |&gt;\n  unnest(body_mass_g) |&gt;\n  select(species, body_mass_g)\n\nspecies_moments\n\n# A tibble: 3 × 4\n  species       n mean_body sd_body\n  &lt;fct&gt;     &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n1 Adelie      146     3706.    459.\n2 Chinstrap    68     3733.    384.\n3 Gentoo      119     5092.    501."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#compare-observed-and-simulated-data",
+    "href": "slides/lec-intro-simulation.html#compare-observed-and-simulated-data",
+    "title": "Simulation in R",
+    "section": "Compare observed and simulated data",
+    "text": "Compare observed and simulated data\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nobserved_by_species &lt;- penguins_clean |&gt;\n  transmute(source = \"observed\", species, body_mass_g)\n\nsim_by_species &lt;- sim_penguins_2 |&gt;\n  mutate(source = \"simulated\")\n\nbind_rows(observed_by_species, sim_by_species) |&gt;\n  ggplot(aes(x = species, y = body_mass_g)) +\n  geom_boxplot() +\n  facet_wrap(~ source) +\n  labs(x = \"Species\", y = \"Body mass (g)\",\n       title = \"A better simulation: match summaries within species\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#exercise-2",
+    "href": "slides/lec-intro-simulation.html#exercise-2",
+    "title": "Simulation in R",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nUse method of moments to simulate flipper lengths within species."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#simulating-a-whole-toy-data-set",
+    "href": "slides/lec-intro-simulation.html#simulating-a-whole-toy-data-set",
+    "title": "Simulation in R",
+    "section": "Simulating a whole toy data set",
+    "text": "Simulating a whole toy data set\nWe can combine several pieces:\n\nsimulate species using observed species proportions,\nsimulate body mass using species-specific normal data generative models,\ncombine the simulated variables into one data frame.\n\n\nsim_penguins_3 &lt;- tibble(\n  species = sample(species_probs$species, nrow(penguins_clean),\n                   replace = TRUE, prob = species_probs$prob)\n) |&gt;\n  left_join(species_moments, by = \"species\") |&gt;\n  mutate(body_mass_g = rnorm(n(), mean_body, sd_body)) |&gt;\n  select(species, body_mass_g)"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#model-checking-by-simulation",
+    "href": "slides/lec-intro-simulation.html#model-checking-by-simulation",
+    "title": "Simulation in R",
+    "section": "Model checking by simulation",
+    "text": "Model checking by simulation\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nobs_plot &lt;- observed_by_species |&gt;\n  mutate(source = \"observed\")\n\nsim_plot &lt;- sim_penguins_3 |&gt;\n  mutate(source = \"simulated\")\n\nbind_rows(obs_plot, sim_plot) |&gt;\n  ggplot(aes(x = body_mass_g, fill = species)) +\n  geom_density(alpha = .45) +\n  facet_wrap(~ source, ncol = 1) +\n  labs(x = \"Body mass (g)\", y = \"Density\",\n       title = \"Does the simulated data look like the observed data?\")"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#what-did-we-build",
+    "href": "slides/lec-intro-simulation.html#what-did-we-build",
+    "title": "Simulation in R",
+    "section": "What did we build?",
+    "text": "What did we build?\nWe built a data generative model:\n\nchoose a species,\ngenerate a body mass from a species-specific distribution.\n\n\nspecies &lt;- sample(species_values, size = n, replace = TRUE,\n                  prob = species_probs)\n\nbody_mass &lt;- rnorm(n, mean = species_mean[species],\n                   sd = species_sd[species])\n\n\n\n\n\n\n\nNote\n\n\nSimulation forces us to be explicit about our assumptions."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#monte-carlo-approximation",
+    "href": "slides/lec-intro-simulation.html#monte-carlo-approximation",
+    "title": "Simulation in R",
+    "section": "Monte Carlo approximation",
+    "text": "Monte Carlo approximation\nMonte Carlo approximation means:\n\napproximate a quantity using many random simulations.\n\nThe usual pattern is:\n\nsimulate many values,\ncalculate something from each simulated value,\ncompute the mean of the results.\n\nThis turns difficult mathematical calculations into computing problems.\n\nThe key idea is that integrals are means, and means are integrals!"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#the-picture-to-have-in-mind",
+    "href": "slides/lec-intro-simulation.html#the-picture-to-have-in-mind",
+    "title": "Simulation in R",
+    "section": "The picture to have in mind",
+    "text": "The picture to have in mind\n\n\nThe area of the unit circle, \\(A_\\text{circle} = \\pi\\). We’ll pretend we don’t know and want to estimate \\(A_\\text{circle}\\)\n50 random points thrown into the box defined by coordinates (-1, -1), (-1, 1), (1, -1), (1, 1)\n39 points land inside, 11 points outside\n\\(\\frac{39}{50} \\approx \\frac{A_\\text{circle}}{A_\\text{box}}\\)\n\\(A_{\\text{circle}} \\approx .78 \\cdot 4 = 3.12\\)"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#monte-carlo-a-history",
+    "href": "slides/lec-intro-simulation.html#monte-carlo-a-history",
+    "title": "Simulation in R",
+    "section": "Monte Carlo: a history",
+    "text": "Monte Carlo: a history\n\n\n\nStanisław Ulam developed the idea behind Monte Carlo while recovering in the hospital in 1946, thinking about estimating solitaire outcomes by repeatedly playing simulated games."
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#why-monte-carlo",
+    "href": "slides/lec-intro-simulation.html#why-monte-carlo",
+    "title": "Simulation in R",
+    "section": "Why Monte Carlo?",
+    "text": "Why Monte Carlo?\nConsider computing the integral\n\\[\nV = \\int h(x) p(x) dx\n\\] where \\(p(x)\\) is a density.\n\nWe could perform numerical integration by computing the Rieman sum of \\(h(x)p(x)\\) over some fine grid of \\(x\\).\nIf \\(h(x)p(x)\\) is bounded, then a grid of mesh size \\(\\delta &gt; 0\\) gives an \\(\\mathcal{O}(\\delta)\\) approximation error.\nIf \\(x\\) is one dimensional, then a grid of mesh size \\(\\delta\\) requires \\(N = \\frac{1}{\\delta}\\) many grid points.\n\n\n\nIf \\(x\\) has dimension \\(p\\), then we need \\(N = \\left(\\frac{1}{\\delta}\\right)^p\\) grid points.\n\n\n\nBy CLT, \\(\\hat{V}_n = \\frac{1}{N} \\sum_{i = 1}^N h(X_i)\\) where \\(X_i \\overset{\\mathrm{iid}}{\\sim} p(x)\\) converges to \\(V\\) at the rate \\(\\sqrt{N}\\), irrespective of \\(p\\)!"
+  },
+  {
+    "objectID": "slides/lec-intro-simulation.html#the-curse-blessing-of-dimensionality",
+    "href": "slides/lec-intro-simulation.html#the-curse-blessing-of-dimensionality",
+    "title": "Simulation in R",
+    "section": "The curse (blessing) of dimensionality ",
+    "text": "The curse (blessing) of dimensionality \nFigure from Betancourt, Michael. “A conceptual introduction to Hamiltonian Monte Carlo.” arXiv preprint arXiv:1701.02434 (2017)."
   }
 ]
