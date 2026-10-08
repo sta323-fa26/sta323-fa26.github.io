@@ -5640,5 +5640,19 @@
     "title": "Markov chains",
     "section": "A biological example",
     "text": "A biological example\nDNA is written using four nucleotide states:\n\\[\n\\{A,C,G,T\\}.\n\\]\nSuppose an ancestral sequence contains\nA C G T T A C G A\nAfter evolutionary time passes, a descendant might contain\nA C A T T G C G A\nWe want a model for\n\\[\nP(\\text{descendant nucleotide}\\mid\n\\text{ancestral nucleotide},\\text{time}).\n\\]"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#when-are-we-guaranteed-stationarity",
+    "href": "slides/lec-Markov-chains.html#when-are-we-guaranteed-stationarity",
+    "title": "Markov chains",
+    "section": "When are we guaranteed stationarity?",
+    "text": "When are we guaranteed stationarity?\nFor a countable-state Markov chain,\n\\[\n\\text{irreducible + positive recurrent}\n\\implies\n\\text{unique stationary distribution}.\n\\]\nThe contrapositive is also true:\n\\[\n\\text{no unique stationary distribution}\n\\implies\n\\text{not irreducible or not positive recurrent}.\n\\]\nBut the converse is not true:\n\\[\n\\text{unique stationary distribution}\n\\nRightarrow  \n\\text{irreducible + positive recurrent}.\n\\]\nA related example is the simple symmetric random walk on the integers:\n\\[\nX_{t+1} =\n\\begin{cases}\nX_t + 1, & \\text{with probability } 1/2,\\\\\nX_t - 1, & \\text{with probability } 1/2.\n\\end{cases}\n\\]\nThis chain is:\nirreducible and recurrent, but not positive recurrent.\nIn fact, the expected return time to any state is infinite. Therefore it has no stationary probability distribution. So recurrence alone is not enough: we need positive recurrence."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#definitions",
+    "href": "slides/lec-Markov-chains.html#definitions",
+    "title": "Markov chains",
+    "section": "Definitions",
+    "text": "Definitions\n\n\n\n\n\n\nDefinition\n\n\nIrreducible: Every state can be reached from every other state with positive probability in some finite number of steps.\n\n\n\n\n\n\n\n\n\nDefinition\n\n\nRecurrent: Starting from any state, the chain returns to that state eventually with probability 1.\n\n\n\n\n\n\n\n\n\nDefinition\n\n\nPositive recurrent: The chain is recurrent and the expected amount of time until returning to every state is finite."
   }
 ]

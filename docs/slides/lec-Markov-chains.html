@@ -669,6 +669,80 @@ from        Dry       Wet
 </div>
 </div>
 </section>
+<section id="definitions" class="slide level2">
+<h2>Definitions</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Irreducible</strong>: Every state can be reached from every other state with positive probability in some finite number of steps.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Recurrent</strong>: Starting from any state, the chain returns to that state eventually with probability 1.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Positive recurrent</strong>: The chain is recurrent and the expected amount of time until returning to every state is finite.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="when-are-we-guaranteed-stationarity" class="slide level2">
+<h2>When are we guaranteed stationarity?</h2>
+<p>For a countable-state Markov chain,</p>
+<p><span class="math display">\[
+\text{irreducible + positive recurrent}
+\implies
+\text{unique stationary distribution}.
+\]</span></p>
+<p>The contrapositive is also true:</p>
+<p><span class="math display">\[
+\text{no unique stationary distribution}
+\implies
+\text{not irreducible or not positive recurrent}.
+\]</span></p>
+<p>But the <strong>converse is not true</strong>:</p>
+<p><span class="math display">\[
+\text{unique stationary distribution}
+\nRightarrow  
+\text{irreducible + positive recurrent}.
+\]</span></p>
+<p>A related example is the simple symmetric random walk on the integers:</p>
+<p><span class="math display">\[
+X_{t+1} =
+\begin{cases}
+X_t + 1, &amp; \text{with probability } 1/2,\\
+X_t - 1, &amp; \text{with probability } 1/2.
+\end{cases}
+\]</span></p>
+<p>This chain is:</p>
+<p>irreducible and recurrent, but <strong>not positive recurrent</strong>.</p>
+<p>In fact, the expected return time to any state is infinite. Therefore it has <strong>no stationary probability distribution</strong>. So recurrence alone is not enough: we need <strong>positive</strong> recurrence.</p>
+</section>
 <section>
 <section id="continuous-states" class="title-slide slide level1 center">
 <h1>Continuous states</h1>

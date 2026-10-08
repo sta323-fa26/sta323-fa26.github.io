@@ -533,6 +533,65 @@ This connection between a Markov chain and its stationary distribution is the
 central idea behind **Markov chain Monte Carlo (MCMC)**.
 :::
 
+## Definitions
+
+::: callout-note
+## Definition
+**Irreducible**: Every state can be reached from every other state with positive probability in some finite number of steps.
+:::
+
+::: callout-note
+## Definition
+**Recurrent**: Starting from any state, the chain returns to that state eventually with probability 1. 
+:::
+
+::: callout-note
+## Definition
+**Positive recurrent**: The chain is recurrent and the expected amount of time until returning to every state is finite.
+:::
+
+## When are we guaranteed stationarity?
+
+For a countable-state Markov chain,
+
+$$
+\text{irreducible + positive recurrent}
+\implies
+\text{unique stationary distribution}.
+$$
+
+The contrapositive is also true:
+
+$$
+\text{no unique stationary distribution}
+\implies
+\text{not irreducible or not positive recurrent}.
+$$
+
+But the **converse is not true**:
+
+$$
+\text{unique stationary distribution}
+\nRightarrow  
+\text{irreducible + positive recurrent}.
+$$
+
+A related example is the simple symmetric random walk on the integers:
+
+$$
+X_{t+1} =
+\begin{cases}
+X_t + 1, & \text{with probability } 1/2,\\
+X_t - 1, & \text{with probability } 1/2.
+\end{cases}
+$$
+
+This chain is:
+
+irreducible and recurrent, but **not positive recurrent**.
+
+In fact, the expected return time to any state is infinite. Therefore it has **no stationary probability distribution**. So recurrence alone is not enough: we need **positive** recurrence.
+
 # Continuous states
 
 ## Markov models need not have discrete states
