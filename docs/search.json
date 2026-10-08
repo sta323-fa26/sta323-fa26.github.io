@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\n\n\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\nlab 5\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\nlab 5\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -5444,5 +5444,201 @@
     "title": "Simulation in R",
     "section": "The curse (blessing) of dimensionality ",
     "text": "The curse (blessing) of dimensionality \nFigure from Betancourt, Michael. “A conceptual introduction to Hamiltonian Monte Carlo.” arXiv preprint arXiv:1701.02434 (2017)."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#today",
+    "href": "slides/lec-Markov-chains.html#today",
+    "title": "Markov chains",
+    "section": "Today",
+    "text": "Today\nBy the end, you should be able to:\n\nExplain what makes a sequence a Markov chain.\nRepresent a finite-state Markov chain with a transition matrix.\nSimulate Markov chains in R.\nInterpret multi-step and long-run behavior.\nRecognize Brownian diffusion as a continuous-state Markov model.\nSimulate geographic diffusion with mvtnorm::rmvnorm()."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#from-the-previous-lecture",
+    "href": "slides/lec-Markov-chains.html#from-the-previous-lecture",
+    "title": "Markov chains",
+    "section": "From the previous lecture",
+    "text": "From the previous lecture\nLast time, we simulated categorical values using something like\n\nsample(\n  c(\"Dry\", \"Wet\"),\n  size = 10,\n  replace = TRUE,\n  prob = c(.7, .3)\n)\n\n [1] \"Dry\" \"Wet\" \"Wet\" \"Dry\" \"Wet\" \"Dry\" \"Dry\" \"Wet\" \"Wet\" \"Dry\"\n\n\nEvery draw uses the same probabilities.\n\nBut many processes have memory:\n\nIf today is wet, does that change the probability that tomorrow is wet?"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#independent-versus-dependent-simulation",
+    "href": "slides/lec-Markov-chains.html#independent-versus-dependent-simulation",
+    "title": "Markov chains",
+    "section": "Independent versus dependent simulation",
+    "text": "Independent versus dependent simulation\nSuppose weather is either Dry or Wet.\nAn independent model might say\n\\[\nProb(\\text{wet tomorrow}) = 0.3\n\\] no matter what happened today.\nA dependent model might say\n\\[\nProb(\\text{wet tomorrow given wet today}) \\neq Prob(\\text{wet tomorrow given dry today})\n\\]\nThe probability used for the next state depends on the current state."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#the-markov-idea",
+    "href": "slides/lec-Markov-chains.html#the-markov-idea",
+    "title": "Markov chains",
+    "section": "The Markov idea",
+    "text": "The Markov idea\nA Markov chain is a sequence of states\n\\[\nX_0, X_1, X_2, \\ldots\n\\]\nwhere the next state depends on the current state.\nExamples:\n\ntoday’s weather \\(\\rightarrow\\) tomorrow’s weather\na customer’s current status \\(\\rightarrow\\) next month’s status\nan animal’s current habitat \\(\\rightarrow\\) next habitat\na nucleotide \\(\\rightarrow\\) a nucleotide later in evolutionary time"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#the-markov-property",
+    "href": "slides/lec-Markov-chains.html#the-markov-property",
+    "title": "Markov chains",
+    "section": "The Markov property",
+    "text": "The Markov property\nThe defining assumption is\n\\[\nP(X_{t+1} \\mid X_t, X_{t-1}, \\ldots, X_0)\n=\nP(X_{t+1} \\mid X_t).\n\\]\nOnce we know the present state, the earlier history gives no additional information about the next state.\n\n\n\n\n\n\nWarning\n\n\nMarkov does not mean independent.\nUsually \\(X_{t+1}\\) and \\(X_t\\) are strongly dependent."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#a-two-state-weather-model",
+    "href": "slides/lec-Markov-chains.html#a-two-state-weather-model",
+    "title": "Markov chains",
+    "section": "A two-state weather model",
+    "text": "A two-state weather model\nSuppose\n\nif today is Dry, tomorrow is Dry with probability \\(0.85\\)\nif today is Dry, tomorrow is Wet with probability \\(0.15\\)\nif today is Wet, tomorrow is Dry with probability \\(0.40\\)\nif today is Wet, tomorrow is Wet with probability \\(0.60\\)\n\nWe can store all four probabilities together."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#transition-matrix",
+    "href": "slides/lec-Markov-chains.html#transition-matrix",
+    "title": "Markov chains",
+    "section": "Transition matrix",
+    "text": "Transition matrix\n\nMathIn R\n\n\n\\[\nP =\n\\begin{pmatrix}\n0.85 & 0.15 \\\\\n0.40 & 0.60\n\\end{pmatrix}\n\\]\n\n\n\nstates &lt;- c(\"Dry\", \"Wet\")\n\nP_weather &lt;- matrix(\n  c(.85, .15,\n    .40, .60),\n  nrow = 2,\n  byrow = TRUE,\n  dimnames = list(from = states, to = states)\n)\n\n\n\n\nRows describe the state now and columns describe the state next.\n\n\n\nFrom / To\nDry\nWet\n\n\n\n\nDry\n0.85\n0.15\n\n\nWet\n0.40\n0.60\n\n\n\n\n\n\n\n\n\nNote\n\n\nEvery row of a transition matrix sums to 1."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#store-the-transition-matrix-in-r",
+    "href": "slides/lec-Markov-chains.html#store-the-transition-matrix-in-r",
+    "title": "Markov chains",
+    "section": "Store the transition matrix in R",
+    "text": "Store the transition matrix in R\n\nP_weather\n\n     to\nfrom   Dry  Wet\n  Dry 0.85 0.15\n  Wet 0.40 0.60\n\n\nBecause we gave the rows and columns names, we can ask for the probabilities associated with the current state.\n\nP_weather[\"Dry\", ]\n\n Dry  Wet \n0.85 0.15 \n\nP_weather[\"Wet\", ]\n\nDry Wet \n0.4 0.6"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#simulate-one-transition",
+    "href": "slides/lec-Markov-chains.html#simulate-one-transition",
+    "title": "Markov chains",
+    "section": "Simulate one transition",
+    "text": "Simulate one transition\nSuppose today is Dry.\n\ncurrent &lt;- \"Dry\"\n\nsample(\n  states,\n  size = 1,\n  prob = P_weather[current, ]\n)\n\n[1] \"Dry\"\n\n\nThe key difference from our previous simulation lecture:\n\nprob = now depends on the current state."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#simulate-an-entire-markov-chain",
+    "href": "slides/lec-Markov-chains.html#simulate-an-entire-markov-chain",
+    "title": "Markov chains",
+    "section": "Simulate an entire Markov chain",
+    "text": "Simulate an entire Markov chain\n\nsimulate_chain &lt;- function(P, initial, n_steps = 100) {\n  states &lt;- rownames(P)\n\n  chain &lt;- character(n_steps + 1)\n  chain[1] &lt;- initial\n\n  for (t in seq_len(n_steps)) {\n    chain[t + 1] &lt;- sample(\n      states,\n      size = 1,\n      prob = P[chain[t], ]\n    )\n  }\n\n  chain\n}\n\nAt every step:\n\nlook at the current state,\nretrieve the corresponding row of \\(P\\),\nsimulate the next state."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#one-simulated-weather-sequence",
+    "href": "slides/lec-Markov-chains.html#one-simulated-weather-sequence",
+    "title": "Markov chains",
+    "section": "One simulated weather sequence",
+    "text": "One simulated weather sequence\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nweather_path &lt;- simulate_chain(\n  P_weather,\n  initial = \"Dry\",\n  n_steps = 80\n)\n\ntibble(\n  day = 0:80,\n  state = factor(weather_path, levels = states)\n) |&gt;\n  ggplot(aes(x = day, y = state, group = 1)) +\n  geom_line() +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#exercise-1",
+    "href": "slides/lec-Markov-chains.html#exercise-1",
+    "title": "Markov chains",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nModify the transition matrix so weather is more persistent:\n\nDry \\(\\rightarrow\\) Dry has probability \\(0.95\\)\nWet \\(\\rightarrow\\) Wet has probability \\(0.90\\)\n\nThen:\n\nconstruct the new transition matrix,\nsimulate 80 days,\ncompare the sequence with the previous simulation.\n\nWhat changes visually?"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#more-than-one-step-ahead",
+    "href": "slides/lec-Markov-chains.html#more-than-one-step-ahead",
+    "title": "Markov chains",
+    "section": "More than one step ahead",
+    "text": "More than one step ahead\nThe transition matrix tells us what happens one step ahead.\nWhat is the probability of going from Dry today to Wet two days from now?\nThere are two possible paths:\n\\[\n\\text{Dry}\\rightarrow\\text{Dry}\\rightarrow\\text{Wet}\n\\]\nor\n\\[\n\\text{Dry}\\rightarrow\\text{Wet}\\rightarrow\\text{Wet}.\n\\]\nSo\n\\[\nP(\\text{Dry}\\rightarrow\\text{Wet in 2 steps})\n=\n(.85)(.15)+(.15)(.60)\n=\n0.2175.\n\\]"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#matrix-multiplication-does-the-bookkeeping",
+    "href": "slides/lec-Markov-chains.html#matrix-multiplication-does-the-bookkeeping",
+    "title": "Markov chains",
+    "section": "Matrix multiplication does the bookkeeping",
+    "text": "Matrix multiplication does the bookkeeping\n\nP_weather %*% P_weather\n\n     to\nfrom     Dry    Wet\n  Dry 0.7825 0.2175\n  Wet 0.5800 0.4200\n\n\nThe resulting matrix contains all two-step transition probabilities.\nMore generally,\n\\[\nP^k\n\\]\ncontains the \\(k\\)-step transition probabilities.\n\n\n\n\n\n\nWarning\n\n\nIn R, P^2 squares each entry separately.\nUse %*% for matrix multiplication."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#computing-pk",
+    "href": "slides/lec-Markov-chains.html#computing-pk",
+    "title": "Markov chains",
+    "section": "Computing \\(P^k\\)",
+    "text": "Computing \\(P^k\\)\n\nManuallyexpm\n\n\n\nmatrix_power &lt;- function(P, k) {\n  out &lt;- diag(nrow(P))\n\n  for (i in seq_len(k)) {\n    out &lt;- out %*% P\n  }\n\n  dimnames(out) &lt;- dimnames(P)\n  out\n}\n\n\n\n\nlibrary(expm)\n\nP_weather %^% 10\n\n     to\nfrom        Dry       Wet\n  Dry 0.7273656 0.2726344\n  Wet 0.7270251 0.2729749\n\n\n\n\n\nFor example:\n\nmatrix_power(P_weather, 10)\n\n     to\nfrom        Dry       Wet\n  Dry 0.7273656 0.2726344\n  Wet 0.7270251 0.2729749\n\n\nNotice how the two rows are becoming similar."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#long-run-behavior",
+    "href": "slides/lec-Markov-chains.html#long-run-behavior",
+    "title": "Markov chains",
+    "section": "Long-run behavior",
+    "text": "Long-run behavior\nSimulate the weather chain for a long time.\n\nlong_chain &lt;- simulate_chain(\n  P_weather,\n  initial = \"Dry\",\n  n_steps = 10000\n)\n\nprop.table(table(long_chain))\n\nlong_chain\n      Dry       Wet \n0.7340266 0.2659734 \n\n\nEven though the weather is dependent from day to day, its long-run fraction of time in each state can settle down."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#stationary-distribution",
+    "href": "slides/lec-Markov-chains.html#stationary-distribution",
+    "title": "Markov chains",
+    "section": "Stationary distribution",
+    "text": "Stationary distribution\nA distribution \\(\\pi\\) is stationary when\n\\[\n\\pi = \\pi P.\n\\]\nInterpretation:\n\nIf the chain currently follows distribution \\(\\pi\\), one more transition leaves the distribution unchanged.\n\nWe can find it computationally by repeatedly applying the transition matrix.\n\npi &lt;- c(.5, .5)\n\nfor (i in 1:100) {\n  pi &lt;- as.numeric(pi %*% P_weather)\n}\n\nset_names(pi, states)\n\n      Dry       Wet \n0.7272727 0.2727273"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#simulation-and-the-stationary-distribution",
+    "href": "slides/lec-Markov-chains.html#simulation-and-the-stationary-distribution",
+    "title": "Markov chains",
+    "section": "Simulation and the stationary distribution",
+    "text": "Simulation and the stationary distribution\nFor this chain, the long-run proportions from simulation should be close to the stationary probabilities.\n\nsim_prop &lt;- prop.table(table(long_chain))\n\ntibble(\n  state = states,\n  stationary = pi,\n  simulated = as.numeric(sim_prop)\n)\n\n# A tibble: 2 × 3\n  state stationary simulated\n  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;\n1 Dry        0.727     0.734\n2 Wet        0.273     0.266\n\n\n\n\n\n\n\n\nNote\n\n\nThis connection between a Markov chain and its stationary distribution is the central idea behind Markov chain Monte Carlo (MCMC)."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#markov-models-need-not-have-discrete-states",
+    "href": "slides/lec-Markov-chains.html#markov-models-need-not-have-discrete-states",
+    "title": "Markov chains",
+    "section": "Markov models need not have discrete states",
+    "text": "Markov models need not have discrete states\nSo far the state was one of two labels.\nBut the state could instead be a pair of continuous coordinates:\n\\[\nX_t =\n\\begin{pmatrix}\nx_t \\\\\ny_t\n\\end{pmatrix}.\n\\]\nFor example, \\(X_t\\) could be the geographic position of an organism at time \\(t\\)."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#brownian-diffusion",
+    "href": "slides/lec-Markov-chains.html#brownian-diffusion",
+    "title": "Markov chains",
+    "section": "Brownian diffusion",
+    "text": "Brownian diffusion\nA simple diffusion model says\nPosition at time \\(t + \\Delta t\\) given position at time \\(t\\) is drawn from a multivariate normal distribution (mvtnorm::rmvnorm(x_t, mean = c(0, 0), Sigma)), centered on the position at time \\(t\\).\n\n\n\n\n\nEquivalently, we can write\n\\[\nX_{t+\\Delta t} = X_t + \\epsilon_t,\n\\qquad\n\\epsilon_t \\sim N_2(0,\\Sigma\\Delta t).\n\\]\nThe next location depends on the current location, but not on the entire path.\nThat is the Markov property again."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#simulating-a-2d-step-with-rmvnorm",
+    "href": "slides/lec-Markov-chains.html#simulating-a-2d-step-with-rmvnorm",
+    "title": "Markov chains",
+    "section": "Simulating a 2D step with rmvnorm()",
+    "text": "Simulating a 2D step with rmvnorm()\nThe mvtnorm package generates multivariate normal random variables.\n\nSigma_geo\n\n     [,1] [,2]\n[1,] 1.20 0.45\n[2,] 0.45 0.70\n\n\n\nrmvnorm(\n  n = 5,\n  mean = c(0, 0),\n  sigma = Sigma_geo\n)\n\n           [,1]        [,2]\n[1,]  0.8086949  0.33257555\n[2,] -0.1248763 -0.01255564\n[3,] -0.8008799 -0.30697312\n[4,] -1.3274625 -1.98580172\n[5,]  0.5062548 -0.97120554\n\n\nEach row is a possible 2D displacement.\nThe covariance matrix controls the direction and magnitude of spread."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#simulating-geographic-diffusion",
+    "href": "slides/lec-Markov-chains.html#simulating-geographic-diffusion",
+    "title": "Markov chains",
+    "section": "Simulating geographic diffusion",
+    "text": "Simulating geographic diffusion\nWe will measure location relative to the starting point:\n\n\\(x\\): kilometers east/west\n\\(y\\): kilometers north/south\n\n\nsimulate_brownian &lt;- function(n_steps = 100,\n                              start = c(0, 0),\n                              sigma = diag(2),\n                              dt = 1) {\n\n  locations &lt;- matrix(\n    NA,\n    nrow = n_steps + 1,\n    ncol = 2\n  )\n\n  locations[1, ] &lt;- start\n\n  for (t in 1:n_steps) {\n\n    move &lt;- rmvnorm(\n      1,\n      mean = c(0, 0),\n      sigma = sigma * dt\n    )\n\n    locations[t + 1, ] &lt;- locations[t, ] + move\n  }\n\n  tibble(\n    step = 0:n_steps,\n    east_km = locations[, 1],\n    north_km = locations[, 2]\n  )\n}"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#one-diffusion-path",
+    "href": "slides/lec-Markov-chains.html#one-diffusion-path",
+    "title": "Markov chains",
+    "section": "One diffusion path",
+    "text": "One diffusion path\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbrownian_path &lt;- simulate_brownian(\n  n_steps = 100,\n  sigma = Sigma_geo\n)\n\nbrownian_path |&gt;\n  ggplot(aes(x = east_km, y = north_km)) +\n  geom_path() +\n  coord_equal()"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#many-possible-geographic-histories",
+    "href": "slides/lec-Markov-chains.html#many-possible-geographic-histories",
+    "title": "Markov chains",
+    "section": "Many possible geographic histories",
+    "text": "Many possible geographic histories\n\nplotcode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nbrownian_paths &lt;- map_dfr(\n  1:25,\n  function(id) {\n    simulate_brownian(\n      n_steps = 100,\n      sigma = Sigma_geo\n    ) |&gt;\n      mutate(path = factor(id))\n  }\n)\n\nbrownian_paths |&gt;\n  ggplot(aes(east_km, north_km, group = path)) +\n  geom_path(alpha = .35) +\n  coord_equal()"
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#what-does-sigma-do",
+    "href": "slides/lec-Markov-chains.html#what-does-sigma-do",
+    "title": "Markov chains",
+    "section": "What does \\(\\Sigma\\) do?",
+    "text": "What does \\(\\Sigma\\) do?\nFor\n\\[\n\\Sigma =\n\\begin{pmatrix}\n1.2 & 0.45 \\\\\n0.45 & 0.7\n\\end{pmatrix},\n\\]\n\n\\(1.2\\): east/west variance per unit time\n\\(0.7\\): north/south variance per unit time\n\\(0.45\\): correlation between east/west and north/south displacement\n\n\n\n\n\n\n\nNote\n\n\nFor real geographic analyses over nontrivial distances, work in an appropriate projected coordinate system rather than directly adding normal noise to longitude and latitude."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#exercise-2",
+    "href": "slides/lec-Markov-chains.html#exercise-2",
+    "title": "Markov chains",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nChange the diffusion model so spread is much greater east/west than north/south.\n\nChoose a new covariance matrix \\(\\Sigma\\).\nSimulate 25 paths.\nPlot them.\nExplain how your choice of \\(\\Sigma\\) appears in the plot.\n\nOptional: set the off-diagonal covariance to zero and compare."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#discrete-time-versus-continuous-time",
+    "href": "slides/lec-Markov-chains.html#discrete-time-versus-continuous-time",
+    "title": "Markov chains",
+    "section": "Discrete time versus continuous time",
+    "text": "Discrete time versus continuous time\nOur weather chain changed at fixed steps:\n\\[\nt=0,1,2,3,\\ldots\n\\]\nBut many processes evolve continuously.\nFor nucleotide evolution, a substitution can occur at any point in time.\nThis leads to a continuous-time Markov chain."
+  },
+  {
+    "objectID": "slides/lec-Markov-chains.html#a-biological-example",
+    "href": "slides/lec-Markov-chains.html#a-biological-example",
+    "title": "Markov chains",
+    "section": "A biological example",
+    "text": "A biological example\nDNA is written using four nucleotide states:\n\\[\n\\{A,C,G,T\\}.\n\\]\nSuppose an ancestral sequence contains\nA C G T T A C G A\nAfter evolutionary time passes, a descendant might contain\nA C A T T G C G A\nWe want a model for\n\\[\nP(\\text{descendant nucleotide}\\mid\n\\text{ancestral nucleotide},\\text{time}).\n\\]"
   }
 ]

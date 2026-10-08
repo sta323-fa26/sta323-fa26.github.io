@@ -71,7 +71,7 @@ schedule %>%
 | 6 | Tue Sep 29 | functionals & purrr  | [💻](/slides/lec08.html) |  |  |
 |  | Thu Oct 01 | exam 1 |  |  |  |
 | 7 | Tue Oct 06 |  intro to simulation | [💻](/slides/lec-intro-simulation.html) | project workday|  | <!-- project workday -->
-|  | Thu Oct 08 |  |  |  |  |
+|  | Thu Oct 08 | Markov chains | [💻](/slides/lec-Markov-chains.html)   |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  | lab 5  |  |
 |  | Thu Oct 15 |  |  |  |  |
 | 9 | Tue Oct 20 |  |  |  | mp presentations |
