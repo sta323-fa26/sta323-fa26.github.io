@@ -888,8 +888,41 @@ This turns difficult mathematical calculations into computing problems.
 
 The key idea is that integrals are means, and means are integrals!
 
+## Monte Carlo: a history
 
-# Toy example: estimating $\pi$
+![](https://www.gamesweb.dk/cdn/shop/files/Games_kabale_16-9.jpg?v=1670929997&width=2400){fig-alt="A solitaire card game in progress." width="75%"}
+
+. . .
+
+- **Stanisław Ulam** developed the idea behind Monte Carlo while recovering in the hospital in **1946**, thinking about estimating solitaire outcomes by repeatedly playing simulated games.
+
+
+## Why Monte Carlo?
+
+Consider computing the integral
+
+$$
+V = \int h(x) p(x) dx
+$$ where $p(x)$ is a density.
+
+-   We could perform numerical integration by computing the Rieman sum of $h(x)p(x)$ over some fine grid of $x$.
+
+-   If $h(x)p(x)$ is bounded, then a grid of mesh size $\delta > 0$ gives an $\mathcal{O}(\delta)$ approximation error.
+
+-   If $x$ is one dimensional, then a grid of mesh size $\delta$ requires $N = \frac{1}{\delta}$ many grid points.
+
+. . .
+
+-   If $x$ has dimension $p$, then we need $N = \left(\frac{1}{\delta}\right)^p$ grid points.
+
+. . .
+
+By CLT, $\hat{V}_n = \frac{1}{N} \sum_{i = 1}^N h(X_i)$ where $X_i \overset{\mathrm{iid}}{\sim} p(x)$ converges to $V$ at the rate $\sqrt{N}$, irrespective of $p$!
+
+## The curse (blessing) of dimensionality  ![](images/Screen%20Shot%202023-03-24%20at%201.45.21%20AM.png)
+
+Figure from [Betancourt, Michael. "A conceptual introduction to Hamiltonian Monte Carlo." arXiv preprint arXiv:1701.02434 (2017).](https://arxiv.org/pdf/1701.02434.pdf)
+
 
 ## The picture to have in mind
 
