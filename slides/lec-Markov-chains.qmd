@@ -1,0 +1,1170 @@
+---
+title: "Markov chains"
+author: "Dr. Alexander Fisher"
+execute:
+  warning: true
+format: 
+    revealjs:
+      smaller: true
+---
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(mvtnorm)
+
+set.seed(323)
+theme_set(theme_minimal(base_size = 18))
+
+states <- c("Dry", "Wet")
+
+P_weather <- matrix(
+  c(.85, .15,
+    .40, .60),
+  nrow = 2,
+  byrow = TRUE,
+  dimnames = list(from = states, to = states)
+)
+
+simulate_chain <- function(P, initial, n_steps = 100) {
+  states <- rownames(P)
+
+  chain <- character(n_steps + 1)
+  chain[1] <- initial
+
+  for (t in seq_len(n_steps)) {
+    chain[t + 1] <- sample(
+      states,
+      size = 1,
+      prob = P[chain[t], ]
+    )
+  }
+
+  chain
+}
+
+matrix_power <- function(P, k) {
+  out <- diag(nrow(P))
+
+  for (i in seq_len(k)) {
+    out <- out %*% P
+  }
+
+  dimnames(out) <- dimnames(P)
+  out
+}
+
+Sigma_geo <- matrix(
+  c(1.2, .45,
+    .45, .7),
+  nrow = 2,
+  byrow = TRUE
+)
+
+simulate_brownian <- function(n_steps = 100,
+                              start = c(0, 0),
+                              sigma = diag(2),
+                              dt = 1) {
+
+  locations <- matrix(
+    NA,
+    nrow = n_steps + 1,
+    ncol = 2
+  )
+
+  locations[1, ] <- start
+
+  for (t in 1:n_steps) {
+
+    move <- rmvnorm(
+      1,
+      mean = c(0, 0),
+      sigma = sigma * dt
+    )
+
+    locations[t + 1, ] <- locations[t, ] + move
+  }
+
+  tibble(
+    step = 0:n_steps,
+    east_km = locations[, 1],
+    north_km = locations[, 2]
+  )
+}
+
+nucleotides <- c("A", "C", "G", "T")
+
+jc_P <- function(d) {
+  p_same <- 1 / 4 + 3 / 4 * exp(-4 * d / 3)
+  p_other <- 1 / 4 - 1 / 4 * exp(-4 * d / 3)
+
+  P <- matrix(
+    p_other,
+    nrow = 4,
+    ncol = 4,
+    dimnames = list(from = nucleotides, to = nucleotides)
+  )
+
+  diag(P) <- p_same
+  P
+}
+
+simulate_jc_sequence <- function(ancestor, d) {
+  P <- jc_P(d)
+
+  map_chr(
+    ancestor,
+    function(base) {
+      sample(nucleotides, size = 1, prob = P[base, ])
+    }
+  )
+}
+```
+
+## Today
+
+By the end, you should be able to:
+
+1. Explain what makes a sequence a **Markov chain**.
+2. Represent a finite-state Markov chain with a transition matrix.
+3. Simulate Markov chains in R.
+4. Interpret multi-step and long-run behavior.
+5. Recognize Brownian diffusion as a continuous-state Markov model.
+6. Simulate geographic diffusion with `mvtnorm::rmvnorm()`.
+
+## From the previous lecture
+
+Last time, we simulated categorical values using something like
+
+```{r}
+sample(
+  c("Dry", "Wet"),
+  size = 10,
+  replace = TRUE,
+  prob = c(.7, .3)
+)
+```
+
+Every draw uses the **same probabilities**.
+
+. . .
+
+But many processes have memory:
+
+> If today is wet, does that change the probability that tomorrow is wet?
+
+## Independent versus dependent simulation
+
+Suppose weather is either **Dry** or **Wet**.
+
+An independent model might say
+
+$$
+Prob(\text{wet tomorrow}) = 0.3
+$$
+no matter what happened today.
+
+A dependent model might say
+
+$$ 
+Prob(\text{wet tomorrow given wet today}) \neq Prob(\text{wet tomorrow given dry today})
+$$
+
+The probability used for the next state depends on the current state.
+
+## The Markov idea
+
+A **Markov chain** is a sequence of states
+
+$$
+X_0, X_1, X_2, \ldots
+$$
+
+where the next state depends on the current state.
+
+Examples:
+
+- today's weather $\rightarrow$ tomorrow's weather
+- a customer's current status $\rightarrow$ next month's status
+- an animal's current habitat $\rightarrow$ next habitat
+- a nucleotide $\rightarrow$ a nucleotide later in evolutionary time
+
+## The Markov property
+
+The defining assumption is
+
+$$
+P(X_{t+1} \mid X_t, X_{t-1}, \ldots, X_0)
+=
+P(X_{t+1} \mid X_t).
+$$
+
+Once we know the **present state**, the earlier history gives no additional
+information about the next state.
+
+::: {.callout-warning}
+Markov does **not** mean independent.
+
+Usually $X_{t+1}$ and $X_t$ are strongly dependent.
+:::
+
+## A two-state weather model
+
+Suppose
+
+- if today is **Dry**, tomorrow is Dry with probability $0.85$
+- if today is **Dry**, tomorrow is Wet with probability $0.15$
+- if today is **Wet**, tomorrow is Dry with probability $0.40$
+- if today is **Wet**, tomorrow is Wet with probability $0.60$
+
+We can store all four probabilities together.
+
+## Transition matrix
+
+::: panel-tabset
+
+## Math
+
+$$
+P =
+\begin{pmatrix}
+0.85 & 0.15 \\
+0.40 & 0.60
+\end{pmatrix}
+$$
+
+## In R
+
+```{r}
+states <- c("Dry", "Wet")
+
+P_weather <- matrix(
+  c(.85, .15,
+    .40, .60),
+  nrow = 2,
+  byrow = TRUE,
+  dimnames = list(from = states, to = states)
+)
+```
+:::
+
+
+
+Rows describe the state **now** and columns describe the state **next**.
+
+| From / To | Dry | Wet |
+|---|---:|---:|
+| Dry | 0.85 | 0.15 |
+| Wet | 0.40 | 0.60 |
+
+::: {.callout-note}
+Every row of a transition matrix sums to 1.
+:::
+
+## Store the transition matrix in R
+
+```{r}
+P_weather
+```
+
+Because we gave the rows and columns names, we can ask for the probabilities
+associated with the current state.
+
+```{r}
+P_weather["Dry", ]
+P_weather["Wet", ]
+```
+
+## Simulate one transition
+
+Suppose today is Dry.
+
+```{r}
+current <- "Dry"
+
+sample(
+  states,
+  size = 1,
+  prob = P_weather[current, ]
+)
+```
+
+The key difference from our previous simulation lecture:
+
+> `prob =` now depends on the current state.
+
+## Simulate an entire Markov chain
+
+```{r}
+#| eval: false
+simulate_chain <- function(P, initial, n_steps = 100) {
+  states <- rownames(P)
+
+  chain <- character(n_steps + 1)
+  chain[1] <- initial
+
+  for (t in seq_len(n_steps)) {
+    chain[t + 1] <- sample(
+      states,
+      size = 1,
+      prob = P[chain[t], ]
+    )
+  }
+
+  chain
+}
+```
+
+At every step:
+
+1. look at the current state,
+2. retrieve the corresponding row of $P$,
+3. simulate the next state.
+
+## One simulated weather sequence
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+weather_path <- simulate_chain(
+  P_weather,
+  initial = "Dry",
+  n_steps = 80
+)
+
+tibble(
+  day = 0:80,
+  state = factor(weather_path, levels = states)
+) |>
+  ggplot(aes(x = day, y = state, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    x = "Day",
+    y = NULL,
+    title = "One realization of the Markov chain"
+  )
+```
+
+## code
+
+```{r}
+#| eval: false
+weather_path <- simulate_chain(
+  P_weather,
+  initial = "Dry",
+  n_steps = 80
+)
+
+tibble(
+  day = 0:80,
+  state = factor(weather_path, levels = states)
+) |>
+  ggplot(aes(x = day, y = state, group = 1)) +
+  geom_line() +
+  geom_point()
+```
+:::
+
+## Exercise 1
+
+Modify the transition matrix so weather is **more persistent**:
+
+- Dry $\rightarrow$ Dry has probability $0.95$
+- Wet $\rightarrow$ Wet has probability $0.90$
+
+Then:
+
+1. construct the new transition matrix,
+2. simulate 80 days,
+3. compare the sequence with the previous simulation.
+
+What changes visually?
+
+## More than one step ahead
+
+The transition matrix tells us what happens **one step** ahead.
+
+What is the probability of going from Dry today to Wet **two days from now**?
+
+There are two possible paths:
+
+$$
+\text{Dry}\rightarrow\text{Dry}\rightarrow\text{Wet}
+$$
+
+or
+
+$$
+\text{Dry}\rightarrow\text{Wet}\rightarrow\text{Wet}.
+$$
+
+So
+
+$$
+P(\text{Dry}\rightarrow\text{Wet in 2 steps})
+=
+(.85)(.15)+(.15)(.60)
+=
+0.2175.
+$$
+
+## Matrix multiplication does the bookkeeping
+
+```{r}
+P_weather %*% P_weather
+```
+
+The resulting matrix contains all **two-step transition probabilities**.
+
+More generally,
+
+$$
+P^k
+$$
+
+contains the $k$-step transition probabilities.
+
+::: {.callout-warning}
+In R, `P^2` squares each entry separately.
+
+Use `%*%` for matrix multiplication.
+:::
+
+## Computing $P^k$
+
+::: panel-tabset 
+
+## Manually 
+```{r}
+#| eval: false
+matrix_power <- function(P, k) {
+  out <- diag(nrow(P))
+
+  for (i in seq_len(k)) {
+    out <- out %*% P
+  }
+
+  dimnames(out) <- dimnames(P)
+  out
+}
+```
+
+## expm
+
+```{r}
+#| message: FALSE
+#| warning: false
+library(expm)
+
+P_weather %^% 10
+```
+:::
+
+For example:
+
+```{r}
+matrix_power(P_weather, 10)
+```
+
+Notice how the two rows are becoming similar.
+
+## Long-run behavior
+
+Simulate the weather chain for a long time.
+
+```{r}
+long_chain <- simulate_chain(
+  P_weather,
+  initial = "Dry",
+  n_steps = 10000
+)
+
+prop.table(table(long_chain))
+```
+
+Even though the weather is dependent from day to day, its **long-run fraction**
+of time in each state can settle down.
+
+## Stationary distribution
+
+A distribution $\pi$ is **stationary** when
+
+$$
+\pi = \pi P.
+$$
+
+Interpretation:
+
+> If the chain currently follows distribution $\pi$, one more transition
+> leaves the distribution unchanged.
+
+We can find it computationally by repeatedly applying the transition matrix.
+
+```{r}
+pi <- c(.5, .5)
+
+for (i in 1:100) {
+  pi <- as.numeric(pi %*% P_weather)
+}
+
+set_names(pi, states)
+```
+
+## Simulation and the stationary distribution
+
+For this chain, the long-run proportions from simulation should be close to
+the stationary probabilities.
+
+```{r}
+sim_prop <- prop.table(table(long_chain))
+
+tibble(
+  state = states,
+  stationary = pi,
+  simulated = as.numeric(sim_prop)
+)
+```
+
+::: {.callout-note}
+This connection between a Markov chain and its stationary distribution is the
+central idea behind **Markov chain Monte Carlo (MCMC)**.
+:::
+
+# Continuous states
+
+## Markov models need not have discrete states
+
+So far the state was one of two labels.
+
+But the state could instead be a pair of continuous coordinates:
+
+$$
+X_t =
+\begin{pmatrix}
+x_t \\
+y_t
+\end{pmatrix}.
+$$
+
+For example, $X_t$ could be the geographic position of an organism at time
+$t$.
+
+## Brownian diffusion
+
+A simple diffusion model says
+
+Position at time $t + \Delta t$ given position at time $t$ is drawn from a multivariate normal distribution (`mvtnorm::rmvnorm(x_t, mean = c(0, 0), Sigma)`), centered on the position at time $t$. 
+
+
+<!-- $$ -->
+<!-- X_{t+\Delta t}\mid X_t -->
+<!-- \sim -->
+<!-- N_2(X_t,\Sigma \Delta t). -->
+<!-- $$ -->
+
+Equivalently, we can write 
+
+$$
+X_{t+\Delta t} = X_t + \epsilon_t,
+\qquad
+\epsilon_t \sim N_2(0,\Sigma\Delta t).
+$$
+
+The next location depends on the current location, but not on the entire path.
+
+That is the Markov property again.
+
+## Simulating a 2D step with `rmvnorm()`
+
+The `mvtnorm` package generates multivariate normal random variables.
+
+```{r}
+Sigma_geo
+```
+
+```{r}
+rmvnorm(
+  n = 5,
+  mean = c(0, 0),
+  sigma = Sigma_geo
+)
+```
+
+Each row is a possible 2D displacement.
+
+The covariance matrix controls the direction and magnitude of spread.
+
+## Simulating geographic diffusion
+
+We will measure location relative to the starting point:
+
+- $x$: kilometers east/west
+- $y$: kilometers north/south
+
+```{r}
+#| eval: false
+simulate_brownian <- function(n_steps = 100,
+                              start = c(0, 0),
+                              sigma = diag(2),
+                              dt = 1) {
+
+  locations <- matrix(
+    NA,
+    nrow = n_steps + 1,
+    ncol = 2
+  )
+
+  locations[1, ] <- start
+
+  for (t in 1:n_steps) {
+
+    move <- rmvnorm(
+      1,
+      mean = c(0, 0),
+      sigma = sigma * dt
+    )
+
+    locations[t + 1, ] <- locations[t, ] + move
+  }
+
+  tibble(
+    step = 0:n_steps,
+    east_km = locations[, 1],
+    north_km = locations[, 2]
+  )
+}
+```
+
+## One diffusion path
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+brownian_path <- simulate_brownian(
+  n_steps = 100,
+  sigma = Sigma_geo
+)
+
+brownian_path |>
+  ggplot(aes(x = east_km, y = north_km)) +
+  geom_path() +
+  geom_point(data = slice_head(brownian_path, n = 1), size = 3) +
+  geom_point(data = slice_tail(brownian_path, n = 1), size = 3) +
+  coord_equal() +
+  labs(
+    x = "Kilometers east/west",
+    y = "Kilometers north/south",
+    title = "One Brownian diffusion path"
+  )
+```
+
+## code
+
+```{r}
+#| eval: false
+brownian_path <- simulate_brownian(
+  n_steps = 100,
+  sigma = Sigma_geo
+)
+
+brownian_path |>
+  ggplot(aes(x = east_km, y = north_km)) +
+  geom_path() +
+  coord_equal()
+```
+:::
+
+## Many possible geographic histories
+
+::: panel-tabset
+## plot
+
+```{r}
+#| echo: false
+brownian_paths <- map_dfr(
+  1:25,
+  function(id) {
+    simulate_brownian(
+      n_steps = 100,
+      sigma = Sigma_geo
+    ) |>
+      mutate(path = factor(id))
+  }
+)
+
+brownian_paths |>
+  ggplot(aes(
+    x = east_km,
+    y = north_km,
+    group = path
+  )) +
+  geom_path(alpha = .35) +
+  coord_equal() +
+  labs(
+    x = "Kilometers east/west",
+    y = "Kilometers north/south",
+    title = "25 simulated diffusion histories"
+  )
+```
+
+## code
+
+```{r}
+#| eval: false
+brownian_paths <- map_dfr(
+  1:25,
+  function(id) {
+    simulate_brownian(
+      n_steps = 100,
+      sigma = Sigma_geo
+    ) |>
+      mutate(path = factor(id))
+  }
+)
+
+brownian_paths |>
+  ggplot(aes(east_km, north_km, group = path)) +
+  geom_path(alpha = .35) +
+  coord_equal()
+```
+:::
+
+## What does $\Sigma$ do?
+
+For
+
+$$
+\Sigma =
+\begin{pmatrix}
+1.2 & 0.45 \\
+0.45 & 0.7
+\end{pmatrix},
+$$
+
+- $1.2$: east/west variance per unit time
+- $0.7$: north/south variance per unit time
+- $0.45$: correlation between east/west and north/south displacement
+
+::: {.callout-note}
+For real geographic analyses over nontrivial distances, work in an appropriate
+projected coordinate system rather than directly adding normal noise to
+longitude and latitude.
+:::
+
+## Exercise 2
+
+Change the diffusion model so spread is much greater east/west than
+north/south.
+
+1. Choose a new covariance matrix $\Sigma$.
+2. Simulate 25 paths.
+3. Plot them.
+4. Explain how your choice of $\Sigma$ appears in the plot.
+
+Optional: set the off-diagonal covariance to zero and compare.
+
+# Bonus / next time
+
+## Discrete time versus continuous time
+
+Our weather chain changed at fixed steps:
+
+$$
+t=0,1,2,3,\ldots
+$$
+
+But many processes evolve continuously.
+
+For nucleotide evolution, a substitution can occur at **any point in time**.
+
+This leads to a **continuous-time Markov chain**.
+
+## A biological example
+
+DNA is written using four nucleotide states:
+
+$$
+\{A,C,G,T\}.
+$$
+
+Suppose an ancestral sequence contains
+
+```text
+A C G T T A C G A
+```
+
+After evolutionary time passes, a descendant might contain
+
+```text
+A C A T T G C G A
+```
+
+We want a model for
+
+$$
+P(\text{descendant nucleotide}\mid
+\text{ancestral nucleotide},\text{time}).
+$$
+
+<!-- ## Jukes--Cantor 1969 -->
+
+<!-- The Jukes--Cantor model is the simplest standard model of nucleotide -->
+<!-- substitution. -->
+
+<!-- Its main assumptions are: -->
+
+<!-- 1. the four states are $A,C,G,T$, -->
+<!-- 2. all three possible substitutions away from a nucleotide occur at the same rate, -->
+<!-- 3. the long-run nucleotide frequencies are all $1/4$, -->
+<!-- 4. different sites are modeled independently in the basic model. -->
+
+<!-- This is a continuous-time Markov chain. -->
+
+<!-- ## From transition probabilities to transition rates -->
+
+<!-- For continuous-time chains we use a **rate matrix** $Q$. -->
+
+<!-- We will parameterize the model so $\mu$ is the total substitution rate away -->
+<!-- from the current nucleotide: -->
+
+<!-- $$ -->
+<!-- Q -->
+<!-- = -->
+<!-- \mu -->
+<!-- \begin{pmatrix} -->
+<!-- -1 & 1/3 & 1/3 & 1/3\\ -->
+<!-- 1/3 & -1 & 1/3 & 1/3\\ -->
+<!-- 1/3 & 1/3 & -1 & 1/3\\ -->
+<!-- 1/3 & 1/3 & 1/3 & -1 -->
+<!-- \end{pmatrix}. -->
+<!-- $$ -->
+
+<!-- ::: {.callout-warning} -->
+<!-- A rate matrix is **not** a probability matrix. -->
+
+<!-- Its rows sum to 0, not 1. -->
+<!-- ::: -->
+
+<!-- ## From rates to probabilities -->
+
+<!-- For a continuous-time Markov chain, -->
+
+<!-- $$ -->
+<!-- P(t)=e^{Qt}. -->
+<!-- $$ -->
+
+<!-- You do **not** need to compute the matrix exponential by hand. -->
+
+<!-- For Jukes--Cantor we get a simple closed form. -->
+
+<!-- Let -->
+
+<!-- $$ -->
+<!-- d=\mu t -->
+<!-- $$ -->
+
+<!-- be the expected number of substitutions per site along the branch. -->
+
+<!-- ## Jukes--Cantor transition probabilities -->
+
+<!-- Define -->
+
+<!-- $$ -->
+<!-- s(d)=\frac14+\frac34e^{-4d/3} -->
+<!-- $$ -->
+
+<!-- and -->
+
+<!-- $$ -->
+<!-- r(d)=\frac14-\frac14e^{-4d/3}. -->
+<!-- $$ -->
+
+<!-- Then -->
+
+<!-- $$ -->
+<!-- P(d)= -->
+<!-- \begin{pmatrix} -->
+<!-- s&r&r&r\\ -->
+<!-- r&s&r&r\\ -->
+<!-- r&r&s&r\\ -->
+<!-- r&r&r&s -->
+<!-- \end{pmatrix}. -->
+<!-- $$ -->
+
+<!-- - $s(d)$: probability the nucleotide is the same after time $d$ -->
+<!-- - $r(d)$: probability of changing to any **specific** other nucleotide -->
+
+<!-- ## Check the limiting cases -->
+
+<!-- When $d=0$, -->
+
+<!-- $$ -->
+<!-- s(0)=1,\qquad r(0)=0. -->
+<!-- $$ -->
+
+<!-- So nothing has had time to change. -->
+
+<!-- . . . -->
+
+<!-- As $d\rightarrow\infty$, -->
+
+<!-- $$ -->
+<!-- s(d)\rightarrow\frac14, -->
+<!-- \qquad -->
+<!-- r(d)\rightarrow\frac14. -->
+<!-- $$ -->
+
+<!-- Eventually the process forgets where it started. -->
+
+<!-- The stationary distribution is -->
+
+<!-- $$ -->
+<!-- \pi=(1/4,1/4,1/4,1/4). -->
+<!-- $$ -->
+
+<!-- ## Implement $P(d)$ in R -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- jc_P <- function(d) { -->
+<!--   p_same <- 1 / 4 + 3 / 4 * exp(-4 * d / 3) -->
+<!--   p_other <- 1 / 4 - 1 / 4 * exp(-4 * d / 3) -->
+
+<!--   P <- matrix( -->
+<!--     p_other, -->
+<!--     nrow = 4, -->
+<!--     ncol = 4, -->
+<!--     dimnames = list( -->
+<!--       from = nucleotides, -->
+<!--       to = nucleotides -->
+<!--     ) -->
+<!--   ) -->
+
+<!--   diag(P) <- p_same -->
+<!--   P -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- For example: -->
+
+<!-- ```{r} -->
+<!-- round(jc_P(.5), 3) -->
+<!-- ``` -->
+
+<!-- ## How substitution probabilities change with time -->
+
+<!-- ::: panel-tabset -->
+<!-- ## plot -->
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- jc_curve <- tibble( -->
+<!--   d = seq(0, 4, length.out = 300), -->
+<!--   same = 1 / 4 + 3 / 4 * exp(-4 * d / 3), -->
+<!--   different = 3 / 4 * (1 - exp(-4 * d / 3)) -->
+<!-- ) |> -->
+<!--   pivot_longer( -->
+<!--     cols = c(same, different), -->
+<!--     names_to = "outcome", -->
+<!--     values_to = "probability" -->
+<!--   ) -->
+
+<!-- jc_curve |> -->
+<!--   ggplot(aes(x = d, y = probability, linetype = outcome)) + -->
+<!--   geom_line(linewidth = 1.1) + -->
+<!--   labs( -->
+<!--     x = "Expected substitutions per site, d", -->
+<!--     y = "Probability", -->
+<!--     linetype = NULL, -->
+<!--     title = "Jukes–Cantor: observed differences saturate" -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- ## code -->
+
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- tibble( -->
+<!--   d = seq(0, 4, length.out = 300), -->
+<!--   same = 1 / 4 + 3 / 4 * exp(-4 * d / 3), -->
+<!--   different = 3 / 4 * (1 - exp(-4 * d / 3)) -->
+<!-- ) |> -->
+<!--   pivot_longer( -->
+<!--     cols = c(same, different), -->
+<!--     names_to = "outcome", -->
+<!--     values_to = "probability" -->
+<!--   ) |> -->
+<!--   ggplot(aes(d, probability, linetype = outcome)) + -->
+<!--   geom_line() -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- ## Simulate one nucleotide along a branch -->
+
+<!-- Suppose the ancestral nucleotide is `A` and the branch length is $d=0.5$. -->
+
+<!-- ```{r} -->
+<!-- P <- jc_P(.5) -->
+
+<!-- P["A", ] -->
+<!-- ``` -->
+
+<!-- Then simulate the descendant nucleotide: -->
+
+<!-- ```{r} -->
+<!-- sample( -->
+<!--   nucleotides, -->
+<!--   size = 1, -->
+<!--   prob = P["A", ] -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- This is exactly the same computational pattern as the weather Markov chain. -->
+
+<!-- ## Simulate an entire DNA sequence -->
+
+<!-- ```{r} -->
+<!-- ancestor <- sample( -->
+<!--   nucleotides, -->
+<!--   size = 1000, -->
+<!--   replace = TRUE -->
+<!-- ) -->
+
+<!-- descendant <- simulate_jc_sequence( -->
+<!--   ancestor, -->
+<!--   d = .5 -->
+<!-- ) -->
+
+<!-- mean(ancestor != descendant) -->
+<!-- ``` -->
+
+<!-- The theoretical probability that a site differs is -->
+
+<!-- $$ -->
+<!-- p_{\text{different}} -->
+<!-- = -->
+<!-- \frac34\left(1-e^{-4d/3}\right). -->
+<!-- $$ -->
+
+<!-- For $d=0.5$: -->
+
+<!-- ```{r} -->
+<!-- 3 / 4 * (1 - exp(-4 * .5 / 3)) -->
+<!-- ``` -->
+
+<!-- ## Why observed differences underestimate change -->
+
+<!-- A site can change more than once: -->
+
+<!-- $$ -->
+<!-- A\rightarrow G\rightarrow A -->
+<!-- $$ -->
+
+<!-- or -->
+
+<!-- $$ -->
+<!-- A\rightarrow C\rightarrow T. -->
+<!-- $$ -->
+
+<!-- If we compare only the ancestor and descendant: -->
+
+<!-- - the first site looks unchanged, -->
+<!-- - the second site shows only one difference, -->
+
+<!-- even though both experienced multiple substitutions. -->
+
+<!-- This is why the raw fraction of different sites is not the same thing as the -->
+<!-- number of substitutions per site. -->
+
+<!-- ## The Jukes--Cantor correction -->
+
+<!-- Let $p$ be the observed fraction of sites that differ. -->
+
+<!-- Under Jukes--Cantor, -->
+
+<!-- $$ -->
+<!-- p -->
+<!-- = -->
+<!-- \frac34\left(1-e^{-4d/3}\right). -->
+<!-- $$ -->
+
+<!-- Solving for $d$, -->
+
+<!-- $$ -->
+<!-- \boxed{ -->
+<!-- d -->
+<!-- = -->
+<!-- -\frac34 -->
+<!-- \log\left(1-\frac43p\right) -->
+<!-- } -->
+<!-- $$ -->
+
+<!-- This corrects for unobserved multiple substitutions. -->
+
+<!-- ## Example -->
+
+<!-- Suppose two aligned sequences differ at 30% of sites. -->
+
+<!-- The naive distance is -->
+
+<!-- $$ -->
+<!-- p=0.30. -->
+<!-- $$ -->
+
+<!-- The Jukes--Cantor corrected distance is -->
+
+<!-- ```{r} -->
+<!-- p <- .30 -->
+<!-- -3 / 4 * log(1 - 4 * p / 3) -->
+<!-- ``` -->
+
+<!-- So the model estimates about $0.383$ substitutions per site rather than -->
+<!-- $0.30$. -->
+
+<!-- ## Exercise 3 -->
+
+<!-- Simulate nucleotide evolution under Jukes--Cantor. -->
+
+<!-- 1. Generate an ancestral sequence of 2000 nucleotides. -->
+<!-- 2. Simulate descendants using $d=0.1$, $d=0.5$, and $d=2$. -->
+<!-- 3. For each value of $d$, calculate the fraction of sites that differ. -->
+<!-- 4. Compare each result with -->
+
+<!-- $$ -->
+<!-- \frac34\left(1-e^{-4d/3}\right). -->
+<!-- $$ -->
+
+<!-- What happens to the observed fraction of differences as $d$ becomes very -->
+<!-- large? -->
+
+<!-- ## One idea, several models -->
+
+<!-- | Model | State | Next state depends on | Transition rule | -->
+<!-- |---|---|---|---| -->
+<!-- | Weather chain | Dry / Wet | current weather | row of $P$ | -->
+<!-- | Brownian diffusion | $(x,y)$ | current location | multivariate normal | -->
+<!-- | Jukes--Cantor | A / C / G / T | current nucleotide + elapsed time | $P(d)$ | -->
+
+<!-- The common idea is the **Markov property**: -->
+
+<!-- > Given the present, the next transition does not require the full past. -->
+
+<!-- ## Takeaways -->
+
+<!-- 1. Markov chains let us simulate **dependent sequences**. -->
+<!-- 2. A transition matrix summarizes one-step probabilities for finite-state chains. -->
+<!-- 3. Repeated transitions reveal multi-step and stationary behavior. -->
+<!-- 4. Brownian diffusion extends the Markov idea to continuous geographic states. -->
+<!-- 5. Jukes--Cantor extends it to continuous time for nucleotide substitution. -->
+<!-- 6. Simulation turns all of these models into explicit algorithms. -->
+
+<!-- ## Sources -->
+
+<!-- - Jukes, T. H. & Cantor, C. R. (1969). *Evolution of Protein Molecules*. In H. N. Munro (Ed.), *Mammalian Protein Metabolism*, Vol. III, pp. 21--132. Academic Press. DOI: 10.1016/B978-1-4832-3211-9.50009-7 -->
+<!-- - `mvtnorm` package documentation: <https://CRAN.R-project.org/package=mvtnorm> -->
+<!-- - Background on nucleotide Markov models: <https://cran.r-project.org/web/packages/phangorn/vignettes/AdvancedFeatures.html> -->
