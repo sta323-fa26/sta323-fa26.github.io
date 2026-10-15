@@ -483,6 +483,11 @@ r=0.8,
 <span id="cb7-13"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section>
+<section id="toy-example" class="title-slide slide level1 center">
+<h1>Toy example</h1>
+
+</section>
 <section id="a-simple-target" class="slide level2">
 <h2>A simple target</h2>
 <p>Before returning to cryptanalysis, consider</p>
@@ -547,18 +552,18 @@ N(X_t,\sigma^2).
 <!-- # metropolis <- function(n_steps = 5000, -->
 <!-- #                        start = 0, -->
 <!-- #                        proposal_sd = 1) { -->
-<!-- #  -->
+<!-- # -->
 <!-- #   x <- numeric(n_steps) -->
 <!-- #   accepted <- logical(n_steps) -->
 <!-- #   x[1] <- start -->
-<!-- #  -->
+<!-- # -->
 <!-- #   for (t in 2:n_steps) { -->
-<!-- #  -->
+<!-- # -->
 <!-- #     proposal <- rnorm(1, x[t - 1], proposal_sd) -->
-<!-- #  -->
+<!-- # -->
 <!-- #     log_ratio <- log(target_score(proposal)) - -->
 <!-- #       log(target_score(x[t - 1])) -->
-<!-- #  -->
+<!-- # -->
 <!-- #     if (log(runif(1)) < log_ratio) { -->
 <!-- #       x[t] <- proposal -->
 <!-- #       accepted[t] <- TRUE -->
@@ -566,53 +571,82 @@ N(X_t,\sigma^2).
 <!-- #       x[t] <- x[t - 1] -->
 <!-- #     } -->
 <!-- #   } -->
-<!-- #  -->
+<!-- # -->
 <!-- #   tibble(iteration = 1:n_steps, x, accepted) -->
 <!-- # } -->
 <!-- # ``` -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">set.seed</span>(<span class="dv">323</span>)</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>metropolis <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n_steps =</span> <span class="dv">5000</span>,</span>
-<span id="cb10-4"><a></a>                       <span class="at">start =</span> <span class="dv">0</span>,</span>
-<span id="cb10-5"><a></a>                       <span class="at">proposal_sd =</span> <span class="dv">1</span>) {</span>
-<span id="cb10-6"><a></a>  theta_s <span class="ot">=</span> start <span class="co"># starting point</span></span>
-<span id="cb10-7"><a></a>  THETA <span class="ot">=</span> <span class="cn">NULL</span> <span class="co"># empty object to save iterations in</span></span>
-<span id="cb10-8"><a></a>  S <span class="ot">=</span> n_steps <span class="co"># number of iterations</span></span>
-<span id="cb10-9"><a></a>  delta <span class="ot">=</span> proposal_sd <span class="co"># proposal sd</span></span>
-<span id="cb10-10"><a></a>  accept <span class="ot">=</span> <span class="dv">0</span> <span class="co"># keep track of acceptance rate</span></span>
-<span id="cb10-11"><a></a>  ACCEPTED <span class="ot">=</span> <span class="cn">NULL</span></span>
-<span id="cb10-12"><a></a>  </span>
-<span id="cb10-13"><a></a>  <span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>S) {</span>
-<span id="cb10-14"><a></a>    </span>
-<span id="cb10-15"><a></a>    accepted <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
-<span id="cb10-16"><a></a>    <span class="co"># log everything for numerical stability #</span></span>
-<span id="cb10-17"><a></a>    </span>
-<span id="cb10-18"><a></a>    <span class="do">### generate proposal and compute ratio r </span><span class="al">###</span></span>
-<span id="cb10-19"><a></a>    theta_proposal <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> theta_s, <span class="at">sd =</span> delta)</span>
-<span id="cb10-20"><a></a>    log.r <span class="ot">=</span> <span class="fu">dnorm</span>(theta_proposal,</span>
-<span id="cb10-21"><a></a>                  <span class="at">mean =</span> <span class="dv">10</span>,</span>
-<span id="cb10-22"><a></a>                  <span class="at">sd =</span> <span class="dv">1</span>,</span>
-<span id="cb10-23"><a></a>                  <span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">-</span></span>
-<span id="cb10-24"><a></a>      <span class="fu">dnorm</span>(theta_s,</span>
-<span id="cb10-25"><a></a>            <span class="at">mean =</span> <span class="dv">10</span>,</span>
-<span id="cb10-26"><a></a>            <span class="at">sd =</span> <span class="dv">1</span>,</span>
-<span id="cb10-27"><a></a>            <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-28"><a></a>    </span>
-<span id="cb10-29"><a></a>    <span class="do">### accept or reject proposal and add to chain </span><span class="al">###</span></span>
-<span id="cb10-30"><a></a>    <span class="cf">if</span> (<span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>)) <span class="sc">&lt;</span> log.r)  {</span>
-<span id="cb10-31"><a></a>      theta_s <span class="ot">=</span> theta_proposal</span>
-<span id="cb10-32"><a></a>      accepted <span class="ot">=</span> <span class="cn">TRUE</span></span>
-<span id="cb10-33"><a></a>    }</span>
-<span id="cb10-34"><a></a>    THETA <span class="ot">=</span> <span class="fu">c</span>(THETA, theta_s)</span>
-<span id="cb10-35"><a></a>    ACCEPTED <span class="ot">&lt;-</span> <span class="fu">c</span>(ACCEPTED, accepted)</span>
-<span id="cb10-36"><a></a>  }</span>
-<span id="cb10-37"><a></a>  <span class="fu">tibble</span>(<span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span>n_steps, THETA, <span class="at">accepted =</span> ACCEPTED) </span>
-<span id="cb10-38"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>log_target_score <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb10-2"><a></a>  <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">*</span> (x <span class="sc">-</span> <span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb10-3"><a></a>}</span>
+<span id="cb10-4"><a></a></span>
+<span id="cb10-5"><a></a>metropolis <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n_steps =</span> <span class="dv">5000</span>,</span>
+<span id="cb10-6"><a></a>                       <span class="at">start =</span> <span class="dv">0</span>,</span>
+<span id="cb10-7"><a></a>                       <span class="at">proposal_sd =</span> <span class="dv">1</span>) {</span>
+<span id="cb10-8"><a></a></span>
+<span id="cb10-9"><a></a>  x <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_steps) <span class="co"># something to save state of chain</span></span>
+<span id="cb10-10"><a></a>  accepted <span class="ot">&lt;-</span> <span class="fu">logical</span>(n_steps) <span class="co"># something to save whether accepted or not</span></span>
+<span id="cb10-11"><a></a>  x[<span class="dv">1</span>] <span class="ot">&lt;-</span> start <span class="co"># starting position of chain</span></span>
+<span id="cb10-12"><a></a></span>
+<span id="cb10-13"><a></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_steps) {</span>
+<span id="cb10-14"><a></a>    proposal <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, x[t <span class="sc">-</span> <span class="dv">1</span>], proposal_sd)</span>
+<span id="cb10-15"><a></a></span>
+<span id="cb10-16"><a></a>    log_ratio <span class="ot">&lt;-</span> <span class="fu">log_target_score</span>(proposal) <span class="sc">-</span></span>
+<span id="cb10-17"><a></a>      <span class="fu">log_target_score</span>(x[t <span class="sc">-</span> <span class="dv">1</span>])</span>
+<span id="cb10-18"><a></a></span>
+<span id="cb10-19"><a></a>    <span class="cf">if</span> (<span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>)) <span class="sc">&lt;</span> log_ratio) {</span>
+<span id="cb10-20"><a></a>      x[t] <span class="ot">&lt;-</span> proposal</span>
+<span id="cb10-21"><a></a>      accepted[t] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb10-22"><a></a>    } <span class="cf">else</span> {</span>
+<span id="cb10-23"><a></a>      x[t] <span class="ot">&lt;-</span> x[t <span class="sc">-</span> <span class="dv">1</span>]</span>
+<span id="cb10-24"><a></a>    }</span>
+<span id="cb10-25"><a></a>  }</span>
+<span id="cb10-26"><a></a></span>
+<span id="cb10-27"><a></a>  <span class="fu">tibble</span>(<span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span>n_steps, x, accepted)</span>
+<span id="cb10-28"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: true -->
+<!-- set.seed(323) -->
+<!-- metropolis <- function(n_steps = 5000, -->
+<!--                        start = 0, -->
+<!--                        proposal_sd = 1) { -->
+<!--   theta_s = start # starting point -->
+<!--   THETA = NULL # empty object to save iterations in -->
+<!--   S = n_steps # number of iterations -->
+<!--   delta = proposal_sd # proposal sd -->
+<!--   accept = 0 # keep track of acceptance rate -->
+<!--   ACCEPTED = NULL -->
+<!--   for (s in 1:S) { -->
+<!--     accepted <- FALSE -->
+<!--     # log everything for numerical stability # -->
+<!--     ### generate proposal and compute ratio r ### -->
+<!--     theta_proposal = rnorm(1, mean = theta_s, sd = delta) -->
+<!--     log.r = dnorm(theta_proposal, -->
+<!--                   mean = 10, -->
+<!--                   sd = 1, -->
+<!--                   log = TRUE) - -->
+<!--       dnorm(theta_s, -->
+<!--             mean = 10, -->
+<!--             sd = 1, -->
+<!--             log = TRUE) -->
+<!--     ### accept or reject proposal and add to chain ### -->
+<!--     if (log(runif(1)) < log.r)  { -->
+<!--       theta_s = theta_proposal -->
+<!--       accepted = TRUE -->
+<!--     } -->
+<!--     THETA = c(THETA, theta_s) -->
+<!--     ACCEPTED <- c(ACCEPTED, accepted) -->
+<!--   } -->
+<!--   tibble(iteration = 1:n_steps, THETA, accepted = ACCEPTED)  -->
+<!-- } -->
+<!-- ``` -->
 </section>
 <section id="run-the-chain" class="slide level2">
 <h2>Run the chain</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>chain <span class="ot">&lt;-</span> <span class="fu">metropolis</span>(</span>
 <span id="cb11-2"><a></a>  <span class="at">n_steps =</span> <span class="dv">5000</span>,</span>
@@ -623,40 +657,95 @@ N(X_t,\sigma^2).
 <span id="cb11-7"><a></a>chain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5,000 × 3
-   iteration THETA accepted
+   iteration     x accepted
        &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt;   
  1         1 -3    FALSE   
  2         2 -3    FALSE   
- 3         3 -2.78 TRUE    
- 4         4 -2.56 TRUE    
- 5         5 -2.42 TRUE    
- 6         6 -2.33 TRUE    
- 7         7 -1.94 TRUE    
- 8         8 -1.94 FALSE   
- 9         9 -1.80 TRUE    
-10        10 -1.93 TRUE    
+ 3         3 -3    FALSE   
+ 4         4 -2.78 TRUE    
+ 5         5 -2.56 TRUE    
+ 6         6 -2.42 TRUE    
+ 7         7 -2.33 TRUE    
+ 8         8 -1.94 TRUE    
+ 9         9 -1.94 FALSE   
+10        10 -1.80 TRUE    
 # ℹ 4,990 more rows</code></pre>
 </div>
 </div>
-<p>These simulations are <strong>dependent</strong>.</p>
-<p>Each state was generated using the previous state.</p>
-<p>The hope is that their long-run distribution is still the target distribution.</p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>These simulations are <strong>dependent</strong>.</p></li>
+<li><p>Each state was generated using the previous state.</p></li>
+<li><p>The hope is that their long-run distribution is still the target distribution.</p></li>
+</ul>
+</div></div>
 </section>
-<section id="choose-delta" class="slide level2">
-<h2>Choose delta</h2>
-<p>We have to choose <span class="math inline">\(\delta\)</span>. How should we choose it? Let’s gain some intuition by trying out three different values of <span class="math inline">\(\delta\)</span>.</p>
-<p>Let’s look at how various <span class="math inline">\(\delta\)</span> let us sample the target:</p>
+<section id="do-we-reach-the-target" class="slide level2">
+<h2>Do we reach the target?</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span class="math inline">\(\delta = 0.1\)</span></a></li><li><a href="#tabset-2-2"><span class="math inline">\(\delta = 1\)</span></a></li><li><a href="#tabset-2-3"><span class="math inline">\(\delta = 4\)</span></a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Plot</a></li><li><a href="#tabset-2-2">Code</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
-<p><img src="images/metropolis-normal-delta-point1.gif" width="300" height="300"></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 </div>
 <div id="tabset-2-2">
-<p><img src="images/metropolis-normal-1.gif" width="300" height="300"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>chain <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb13-4"><a></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
+<span id="cb13-5"><a></a>    <span class="at">bins =</span> <span class="dv">40</span></span>
+<span id="cb13-6"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb13-7"><a></a>  <span class="fu">stat_function</span>(</span>
+<span id="cb13-8"><a></a>    <span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb13-9"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb13-10"><a></a>  ) <span class="sc">+</span></span>
+<span id="cb13-11"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-12"><a></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb13-13"><a></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
+<span id="cb13-14"><a></a>    <span class="at">title =</span> <span class="st">"Markov chain histogram"</span></span>
+<span id="cb13-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tabset-2-3">
-<p><img src="images/metropolis-normal-delta4.gif" width="300" height="300"></p>
+</div>
+</div>
+</div>
+<p>The histogram should approximately follow the target shape.</p>
+</section>
+<section id="acceptance-rate" class="slide level2">
+<h2>Acceptance rate</h2>
+<p>The <strong>acceptance rate</strong> is the fraction of proposed moves that were accepted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">mean</span>(chain<span class="sc">$</span>accepted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7012</code></pre>
+</div>
+</div>
+<p>Very low acceptance can mean the chain is repeatedly proposing moves that are too large.</p>
+<p>Very high acceptance can occur when proposed moves are so small that the chain moves only very slowly.</p>
+</section>
+<section id="different-proposal-standard-deviation" class="slide level2">
+<h2>Different proposal standard deviation</h2>
+<!-- We have to choose the proposal standard deviation, $\delta$. How should we choose it? Let's gain some intuition by trying out three different values of $\delta$. -->
+<!-- Let's look at how various $\delta$ let us sample the target: -->
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1"><span class="math inline">\(\delta = 0.1\)</span></a></li><li><a href="#tabset-3-2"><span class="math inline">\(\delta = 1\)</span></a></li><li><a href="#tabset-3-3"><span class="math inline">\(\delta = 4\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<p><img src="images/metropolis-normal-delta-point1.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"></p>
+</div>
+<div id="tabset-3-2">
+<p><img src="images/metropolis-normal-1.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"></p>
+</div>
+<div id="tabset-3-3">
+<p><img src="images/metropolis-normal-delta4.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"></p>
 </div>
 </div>
 </div>
@@ -665,42 +754,42 @@ N(X_t,\sigma^2).
 <h2>Trace plots</h2>
 <p>Let’s look at the trace plots for each <span class="math inline">\(\delta\)</span>. A <strong>traceplot</strong> shows the state of the chain against iteration.</p>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">delta = 0.1</a></li><li><a href="#tabset-3-2">delta = 1</a></li><li><a href="#tabset-3-3">delta = 4</a></li><li><a href="#tabset-3-4">table</a></li></ul>
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">delta = 0.1</a></li><li><a href="#tabset-4-2">delta = 1</a></li><li><a href="#tabset-4-3">delta = 4</a></li><li><a href="#tabset-4-4">table</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1">
+<div id="tabset-4-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-3-2">
+<div id="tabset-4-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-3-3">
+<div id="tabset-4-3">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-3-4">
+<div id="tabset-4-4">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -722,6 +811,7 @@ N(X_t,\sigma^2).
 </table>
 </div>
 </div>
+<p>Want: traceplots to look like fuzzy caterpillars.</p>
 </div>
 </div>
 </div>
@@ -734,20 +824,28 @@ N(X_t,\sigma^2).
 </div><div class="column" style="width:50%;">
 <p><img data-src="images/pond.png" style="width:100.0%"></p>
 </div></div>
+</section></section>
+<section>
+<section id="mcmc-vocab" class="title-slide slide level1 center">
+<h1>MCMC Vocab</h1>
+
 </section>
-<section id="stationary-does-not-automatically-mean-convergence" class="slide level2">
-<h2>Stationary does not automatically mean convergence</h2>
-<p>A distribution <span class="math inline">\(\pi\)</span> is stationary if</p>
-<p><span class="math display">\[
-\pi = \pi P.
-\]</span></p>
-<p>But a chain must also be able to explore its state space properly.</p>
-<p>Two important properties are:</p>
+<section id="will-we-reach-stationarity" class="slide level2">
+<h2>Will we reach stationarity?</h2>
+<p>For the Markov chains we consider, <strong>irreducibility</strong>, <strong>positive recurrence</strong>, and <strong>aperiodicity</strong> guarantee a unique stationary distribution and convergence to it in infinite time.</p>
+<div class="fragment">
+<p>Recall:</p>
 <ul>
-<li><strong>irreducible:</strong> every state can eventually be reached from every other state,</li>
-<li><strong>aperiodic:</strong> the chain is not forced to revisit states only at regularly spaced times.</li>
+<li><p>irreducible: every state can eventually be reached from every other state</p></li>
+<li><p>positive recurrence: starting from any state, the chain returns to that state eventually with probability 1.</p></li>
 </ul>
-<p>These conditions prevent important ways a chain can fail to explore.</p>
+</div>
+<div class="fragment">
+<p>New:</p>
+<ul>
+<li>aperiodic: the chain is not forced to revisit states only at regularly spaced times.</li>
+</ul>
+</div>
 </section>
 <section id="why-metropolis-often-gives-aperiodicity" class="slide level2">
 <h2>Why Metropolis often gives aperiodicity</h2>
@@ -757,36 +855,6 @@ X_{t+1}=X_t.
 \]</span></p>
 <p>The chain can remain in the same state.</p>
 <p>For an irreducible chain, the ability to stay put is a simple way to obtain aperiodicity.</p>
-<p>So rejection is not merely wasted computation, it is part of the Markov chain we intentionally construct to guarantee aperiodicity.</p>
-</section>
-<section id="the-practical-convergence-story" class="slide level2">
-<h2>The practical convergence story</h2>
-<p>For the chains we use, we want:</p>
-<ul>
-<li>the desired stationary distribution,</li>
-<li>the ability to reach all relevant regions,</li>
-<li>no forced cyclic behavior.</li>
-</ul>
-<p>Then, after running long enough,</p>
-<p><span class="math display">\[
-\text{distribution of }X_t
-\longrightarrow
-\pi.
-\]</span></p>
-<p>Long-run averages from the chain can then approximate averages under <span class="math inline">\(\pi\)</span>.</p>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>There are more technical conditions behind MCMC convergence. Here we focus on the computational intuition and practical warning signs.</p>
-</div>
-</div>
-</div>
 <!-- ## Traceplots -->
 <!-- A **traceplot** shows the state of the chain against iteration. -->
 <!-- ```{r} -->
@@ -804,51 +872,18 @@ X_{t+1}=X_t.
 </section>
 <section id="starting-values-and-burn-in" class="slide level2">
 <h2>Starting values and burn-in</h2>
-<p>Our chain deliberately started far from the center of the target.</p>
+<p>Our chain started far from the center of the target.</p>
 <p>Early iterations can therefore reflect the arbitrary starting value.</p>
 <p>A common strategy is to discard an initial portion:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>burn_in <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>chain_kept <span class="ot">&lt;-</span> chain <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">filter</span>(iteration <span class="sc">&gt;</span> burn_in)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>burn_in <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb16-2"><a></a></span>
+<span id="cb16-3"><a></a>chain_kept <span class="ot">&lt;-</span> chain <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a></a>  <span class="fu">filter</span>(iteration <span class="sc">&gt;</span> burn_in)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This discarded portion is called <strong>burn-in</strong> or <strong>warm-up</strong>.</p>
 <p>There is no universal correct number of iterations to discard.</p>
-</section>
-<section id="did-we-reach-the-target" class="slide level2">
-<h2>Did we reach the target?</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>chain_kept <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> THETA)) <span class="sc">+</span></span>
-<span id="cb14-3"><a></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb14-4"><a></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
-<span id="cb14-5"><a></a>    <span class="at">bins =</span> <span class="dv">40</span></span>
-<span id="cb14-6"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb14-7"><a></a>  <span class="fu">stat_function</span>(</span>
-<span id="cb14-8"><a></a>    <span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb14-9"><a></a>    <span class="at">linewidth =</span> <span class="dv">1</span></span>
-<span id="cb14-10"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb14-11"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-12"><a></a>    <span class="at">x =</span> <span class="st">"x"</span>,</span>
-<span id="cb14-13"><a></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb14-14"><a></a>    <span class="at">title =</span> <span class="st">"MCMC draws after warm-up"</span></span>
-<span id="cb14-15"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"><p>The histogram should approximately follow the target shape.</p>
-</section>
-<section id="acceptance-rate" class="slide level2">
-<h2>Acceptance rate</h2>
-<p>The <strong>acceptance rate</strong> is the fraction of proposed moves that were accepted.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">mean</span>(chain<span class="sc">$</span>accepted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7012</code></pre>
-</div>
-</div>
-<p>Very low acceptance can mean the chain is repeatedly proposing moves that are too large.</p>
-<p>Very high acceptance can occur when proposed moves are so small that the chain moves only very slowly.</p>
+<p>Practically, we might examine the traceplot to visually inspect when we plausibly reach stationarity.</p>
 <!-- Acceptance rate is a diagnostic, not necessarily a goal by itself. -->
 <!-- ## Proposal size changes the behavior -->
 <!-- ```{r} -->
@@ -899,30 +934,33 @@ X_{t+1}=X_t.
 <span id="cb17-13"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If all chains eventually explore the same region, that is reassuring.</p>
-</section>
-<section id="compare-the-chains" class="slide level2">
-<h2>Compare the chains</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>chains <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">ggplot</span>(</span>
-<span id="cb18-3"><a></a>    <span class="fu">aes</span>(</span>
-<span id="cb18-4"><a></a>      <span class="at">x =</span> iteration,</span>
-<span id="cb18-5"><a></a>      <span class="at">y =</span> THETA,</span>
-<span id="cb18-6"><a></a>      <span class="at">group =</span> start</span>
-<span id="cb18-7"><a></a>    )</span>
-<span id="cb18-8"><a></a>  ) <span class="sc">+</span></span>
-<span id="cb18-9"><a></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb18-10"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> start, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a></a>  <span class="fu">labs</span>(</span>
-<span id="cb18-12"><a></a>    <span class="at">x =</span> <span class="st">"Iteration"</span>,</span>
-<span id="cb18-13"><a></a>    <span class="at">y =</span> <span class="st">"State"</span></span>
-<span id="cb18-14"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- ## Compare the chains -->
+<!-- ```{r} -->
+<!-- chains |> -->
+<!--   ggplot( -->
+<!--     aes( -->
+<!--       x = iteration, -->
+<!--       y = x, -->
+<!--       group = start -->
+<!--     ) -->
+<!--   ) + -->
+<!--   geom_line(alpha = .6) + -->
+<!--   facet_wrap(~ start, ncol = 1) + -->
+<!--   labs( -->
+<!--     x = "Iteration", -->
+<!--     y = "State" -->
+<!--   ) -->
+<!-- ``` -->
+<!-- If chains started in different places remain in completely different regions, -->
+<!-- we may be concerned. -->
+</section></section>
+<section>
+<section id="return-to-cryptanalysis-example" class="title-slide slide level1 center">
+<h1>Return to cryptanalysis example</h1>
 
-</div>
-<img data-src="lec-mcmc_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"><p>If chains started in different places remain in completely different regions, we may be concerned.</p>
 </section>
-<section id="back-to-cryptanalysis-the-state-and-proposal" class="slide level2">
-<h2>Back to cryptanalysis: the state and proposal</h2>
+<section id="cryptanalysis-the-state-and-proposal" class="slide level2">
+<h2>Cryptanalysis: the state and proposal</h2>
 <p>For the substitution cipher,</p>
 <p><span class="math display">\[
 X_t
@@ -942,62 +980,44 @@ X_t
 <p>We need a score that rewards English-looking text.</p>
 <p>One approach uses frequencies of neighboring letters.</p>
 <p>Common patterns such as</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a></a>TH  HE  IN  ER  AN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb18-1"><a></a>TH  HE  IN  ER  AN</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>receive higher scores than unusual patterns such as</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb20-1"><a></a>QZ  ZX  JQ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb19-1"><a></a>QZ  ZX  JQ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Combine these contributions across the decoded message to obtain an <strong>English log-score</strong>.</p>
-</section>
-<section id="acceptance-using-log-scores" class="slide level2">
-<h2>Acceptance using log scores</h2>
-<p>Suppose the current and proposed log-scores are</p>
-<p><span class="math display">\[
-\ell
-\quad\text{and}\quad
-\ell^\star.
-\]</span></p>
-<p>The score ratio is</p>
-<p><span class="math display">\[
-\exp(\ell^\star-\ell).
-\]</span></p>
-<p>So accept the proposed key with probability</p>
-<p><span class="math display">\[
-\min\left(1,\exp(\ell^\star-\ell)\right).
-\]</span></p>
-<p>A better decoding is always accepted; a worse decoding sometimes is.</p>
 </section>
 <section id="cryptanalysis-pseudocode" class="slide level2">
 <h2>Cryptanalysis pseudocode</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>current_key <span class="ot">&lt;-</span> initial_key</span>
-<span id="cb21-2"><a></a>current_score <span class="ot">&lt;-</span> <span class="fu">score</span>(<span class="fu">decode</span>(ciphertext, current_key))</span>
-<span id="cb21-3"><a></a></span>
-<span id="cb21-4"><a></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_steps) {</span>
-<span id="cb21-5"><a></a></span>
-<span id="cb21-6"><a></a>  proposed_key <span class="ot">&lt;-</span> <span class="fu">swap_two_letters</span>(current_key)</span>
-<span id="cb21-7"><a></a></span>
-<span id="cb21-8"><a></a>  proposed_score <span class="ot">&lt;-</span></span>
-<span id="cb21-9"><a></a>    <span class="fu">score</span>(<span class="fu">decode</span>(ciphertext, proposed_key))</span>
-<span id="cb21-10"><a></a></span>
-<span id="cb21-11"><a></a>  accept_prob <span class="ot">&lt;-</span> <span class="fu">min</span>(</span>
-<span id="cb21-12"><a></a>    <span class="dv">1</span>,</span>
-<span id="cb21-13"><a></a>    <span class="fu">exp</span>(proposed_score <span class="sc">-</span> current_score)</span>
-<span id="cb21-14"><a></a>  )</span>
-<span id="cb21-15"><a></a></span>
-<span id="cb21-16"><a></a>  <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> accept_prob) {</span>
-<span id="cb21-17"><a></a>    current_key <span class="ot">&lt;-</span> proposed_key</span>
-<span id="cb21-18"><a></a>    current_score <span class="ot">&lt;-</span> proposed_score</span>
-<span id="cb21-19"><a></a>  }</span>
-<span id="cb21-20"><a></a></span>
-<span id="cb21-21"><a></a>  chain[[t]] <span class="ot">&lt;-</span> current_key</span>
-<span id="cb21-22"><a></a>  scores[t] <span class="ot">&lt;-</span> current_score</span>
-<span id="cb21-23"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>current_key <span class="ot">&lt;-</span> initial_key</span>
+<span id="cb20-2"><a></a>current_score <span class="ot">&lt;-</span> <span class="fu">score</span>(<span class="fu">decode</span>(ciphertext, current_key))</span>
+<span id="cb20-3"><a></a></span>
+<span id="cb20-4"><a></a><span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_steps) {</span>
+<span id="cb20-5"><a></a></span>
+<span id="cb20-6"><a></a>  proposed_key <span class="ot">&lt;-</span> <span class="fu">swap_two_letters</span>(current_key)</span>
+<span id="cb20-7"><a></a></span>
+<span id="cb20-8"><a></a>  proposed_score <span class="ot">&lt;-</span></span>
+<span id="cb20-9"><a></a>    <span class="fu">score</span>(<span class="fu">decode</span>(ciphertext, proposed_key))</span>
+<span id="cb20-10"><a></a></span>
+<span id="cb20-11"><a></a>  accept_prob <span class="ot">&lt;-</span> <span class="fu">min</span>(</span>
+<span id="cb20-12"><a></a>    <span class="dv">1</span>,</span>
+<span id="cb20-13"><a></a>    <span class="fu">exp</span>(proposed_score <span class="sc">-</span> current_score)</span>
+<span id="cb20-14"><a></a>  )</span>
+<span id="cb20-15"><a></a></span>
+<span id="cb20-16"><a></a>  <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> accept_prob) {</span>
+<span id="cb20-17"><a></a>    current_key <span class="ot">&lt;-</span> proposed_key</span>
+<span id="cb20-18"><a></a>    current_score <span class="ot">&lt;-</span> proposed_score</span>
+<span id="cb20-19"><a></a>  }</span>
+<span id="cb20-20"><a></a></span>
+<span id="cb20-21"><a></a>  chain[[t]] <span class="ot">&lt;-</span> current_key</span>
+<span id="cb20-22"><a></a>  scores[t] <span class="ot">&lt;-</span> current_score</span>
+<span id="cb20-23"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="try-it-yourself" class="slide level2">
 <h2>Try it yourself</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">download.file</span>(<span class="at">url =</span> <span class="st">"https://sta323-fa26.github.io/scripts/cryptanalysis.qmd"</span>,</span>
-<span id="cb22-2"><a></a>              <span class="at">destfile =</span> <span class="st">"cryptanalysis.qmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">download.file</span>(<span class="at">url =</span> <span class="st">"https://sta323-fa26.github.io/scripts/cryptanalysis.qmd"</span>,</span>
+<span id="cb21-2"><a></a>              <span class="at">destfile =</span> <span class="st">"cryptanalysis.qmd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-should-we-plot" class="slide level2">
@@ -1005,12 +1025,12 @@ X_t
 <p>The state is a 26-letter permutation, so a direct traceplot of the state is not useful.</p>
 <p>Instead, plot the <strong>English score</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">tibble</span>(</span>
-<span id="cb23-2"><a></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span>n_steps,</span>
-<span id="cb23-3"><a></a>  <span class="at">score =</span> scores</span>
-<span id="cb23-4"><a></a>) <span class="sc">|&gt;</span></span>
-<span id="cb23-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(iteration, score)) <span class="sc">+</span></span>
-<span id="cb23-6"><a></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">tibble</span>(</span>
+<span id="cb22-2"><a></a>  <span class="at">iteration =</span> <span class="dv">1</span><span class="sc">:</span>n_steps,</span>
+<span id="cb22-3"><a></a>  <span class="at">score =</span> scores</span>
+<span id="cb22-4"><a></a>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(iteration, score)) <span class="sc">+</span></span>
+<span id="cb22-6"><a></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We want to see the chain reach and continue exploring high-scoring keys.</p>
 </section>
@@ -1032,8 +1052,8 @@ X_t
 <p>The beginning of the chain mostly describes its trip away from that arbitrary starting key.</p>
 <p>We may discard an initial section:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>kept_scores <span class="ot">&lt;-</span> scores[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>burn_in)]</span>
-<span id="cb24-2"><a></a>kept_keys <span class="ot">&lt;-</span> chain[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>burn_in)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>kept_scores <span class="ot">&lt;-</span> scores[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>burn_in)]</span>
+<span id="cb23-2"><a></a>kept_keys <span class="ot">&lt;-</span> chain[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>burn_in)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The traceplot should help us judge whether the early behavior looks different from the later behavior.</p>
 </section>
@@ -1041,8 +1061,8 @@ X_t
 <h2>MCMC or optimization?</h2>
 <p>For cryptanalysis, we may care most about the <strong>best key found</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>best_iteration <span class="ot">&lt;-</span> <span class="fu">which.max</span>(scores)</span>
-<span id="cb25-2"><a></a>best_key <span class="ot">&lt;-</span> chain[[best_iteration]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>best_iteration <span class="ot">&lt;-</span> <span class="fu">which.max</span>(scores)</span>
+<span id="cb24-2"><a></a>best_key <span class="ot">&lt;-</span> chain[[best_iteration]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So this application has an optimization flavor.</p>
 <p>But MCMC’s defining goal is broader:</p>
@@ -1062,10 +1082,7 @@ X_t
 <blockquote>
 <p>The simulated values are dependent because they come from a Markov chain.</p>
 </blockquote>
-<p>Hence:</p>
-<blockquote>
-<p><strong>Markov chain Monte Carlo</strong></p>
-</blockquote>
+<p>Hence: “Markov chain Monte Carlo”</p>
 <!-- ## Exercise -->
 <!-- Return to the cryptanalysis problem. -->
 <!-- Suppose your chain has a very low acceptance rate and its score traceplot has -->
@@ -1084,7 +1101,7 @@ X_t
 </ul>
 
 
-</section>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

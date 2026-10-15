@@ -5793,14 +5793,14 @@
     "href": "slides/lec-mcmc.html#a-complete-metropolis-function",
     "title": "Markov chain Monte Carlo",
     "section": "A complete Metropolis function",
-    "text": "A complete Metropolis function\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nset.seed(323)\n\nmetropolis &lt;- function(n_steps = 5000,\n                       start = 0,\n                       proposal_sd = 1) {\n  theta_s = start # starting point\n  THETA = NULL # empty object to save iterations in\n  S = n_steps # number of iterations\n  delta = proposal_sd # proposal sd\n  accept = 0 # keep track of acceptance rate\n  ACCEPTED = NULL\n  \n  for (s in 1:S) {\n    \n    accepted &lt;- FALSE\n    # log everything for numerical stability #\n    \n    ### generate proposal and compute ratio r ###\n    theta_proposal = rnorm(1, mean = theta_s, sd = delta)\n    log.r = dnorm(theta_proposal,\n                  mean = 10,\n                  sd = 1,\n                  log = TRUE) -\n      dnorm(theta_s,\n            mean = 10,\n            sd = 1,\n            log = TRUE)\n    \n    ### accept or reject proposal and add to chain ###\n    if (log(runif(1)) &lt; log.r)  {\n      theta_s = theta_proposal\n      accepted = TRUE\n    }\n    THETA = c(THETA, theta_s)\n    ACCEPTED &lt;- c(ACCEPTED, accepted)\n  }\n  tibble(iteration = 1:n_steps, THETA, accepted = ACCEPTED) \n}"
+    "text": "A complete Metropolis function\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlog_target_score &lt;- function(x) {\n  -0.5 * (x - 10)^2\n}\n\nmetropolis &lt;- function(n_steps = 5000,\n                       start = 0,\n                       proposal_sd = 1) {\n\n  x &lt;- numeric(n_steps) # something to save state of chain\n  accepted &lt;- logical(n_steps) # something to save whether accepted or not\n  x[1] &lt;- start # starting position of chain\n\n  for (t in 2:n_steps) {\n    proposal &lt;- rnorm(1, x[t - 1], proposal_sd)\n\n    log_ratio &lt;- log_target_score(proposal) -\n      log_target_score(x[t - 1])\n\n    if (log(runif(1)) &lt; log_ratio) {\n      x[t] &lt;- proposal\n      accepted[t] &lt;- TRUE\n    } else {\n      x[t] &lt;- x[t - 1]\n    }\n  }\n\n  tibble(iteration = 1:n_steps, x, accepted)\n}"
   },
   {
     "objectID": "slides/lec-mcmc.html#run-the-chain",
     "href": "slides/lec-mcmc.html#run-the-chain",
     "title": "Markov chain Monte Carlo",
     "section": "Run the chain",
-    "text": "Run the chain\n\nchain &lt;- metropolis(\n  n_steps = 5000,\n  start = -3,\n  proposal_sd = 1\n)\n\nchain\n\n# A tibble: 5,000 × 3\n   iteration THETA accepted\n       &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt;   \n 1         1 -3    FALSE   \n 2         2 -3    FALSE   \n 3         3 -2.78 TRUE    \n 4         4 -2.56 TRUE    \n 5         5 -2.42 TRUE    \n 6         6 -2.33 TRUE    \n 7         7 -1.94 TRUE    \n 8         8 -1.94 FALSE   \n 9         9 -1.80 TRUE    \n10        10 -1.93 TRUE    \n# ℹ 4,990 more rows\n\n\nThese simulations are dependent.\nEach state was generated using the previous state.\nThe hope is that their long-run distribution is still the target distribution."
+    "text": "Run the chain\n\n\n\nchain &lt;- metropolis(\n  n_steps = 5000,\n  start = -3,\n  proposal_sd = 1\n)\n\nchain\n\n# A tibble: 5,000 × 3\n   iteration     x accepted\n       &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt;   \n 1         1 -3    FALSE   \n 2         2 -3    FALSE   \n 3         3 -3    FALSE   \n 4         4 -2.78 TRUE    \n 5         5 -2.56 TRUE    \n 6         6 -2.42 TRUE    \n 7         7 -2.33 TRUE    \n 8         8 -1.94 TRUE    \n 9         9 -1.94 FALSE   \n10        10 -1.80 TRUE    \n# ℹ 4,990 more rows\n\n\n\n\nThese simulations are dependent.\nEach state was generated using the previous state.\nThe hope is that their long-run distribution is still the target distribution."
   },
   {
     "objectID": "slides/lec-mcmc.html#stationary-does-not-automatically-mean-convergence",
@@ -5814,7 +5814,7 @@
     "href": "slides/lec-mcmc.html#why-metropolis-often-gives-aperiodicity",
     "title": "Markov chain Monte Carlo",
     "section": "Why Metropolis often gives aperiodicity",
-    "text": "Why Metropolis often gives aperiodicity\nWhen a Metropolis proposal is rejected,\n\\[\nX_{t+1}=X_t.\n\\]\nThe chain can remain in the same state.\nFor an irreducible chain, the ability to stay put is a simple way to obtain aperiodicity.\nSo rejection is not merely wasted computation, it is part of the Markov chain we intentionally construct to guarantee aperiodicity."
+    "text": "Why Metropolis often gives aperiodicity\nWhen a Metropolis proposal is rejected,\n\\[\nX_{t+1}=X_t.\n\\]\nThe chain can remain in the same state.\nFor an irreducible chain, the ability to stay put is a simple way to obtain aperiodicity."
   },
   {
     "objectID": "slides/lec-mcmc.html#the-practical-convergence-story",
@@ -5835,14 +5835,14 @@
     "href": "slides/lec-mcmc.html#starting-values-and-burn-in",
     "title": "Markov chain Monte Carlo",
     "section": "Starting values and burn-in",
-    "text": "Starting values and burn-in\nOur chain deliberately started far from the center of the target.\nEarly iterations can therefore reflect the arbitrary starting value.\nA common strategy is to discard an initial portion:\n\nburn_in &lt;- 500\n\nchain_kept &lt;- chain |&gt;\n  filter(iteration &gt; burn_in)\n\nThis discarded portion is called burn-in or warm-up.\nThere is no universal correct number of iterations to discard."
+    "text": "Starting values and burn-in\nOur chain started far from the center of the target.\nEarly iterations can therefore reflect the arbitrary starting value.\nA common strategy is to discard an initial portion:\n\nburn_in &lt;- 500\n\nchain_kept &lt;- chain |&gt;\n  filter(iteration &gt; burn_in)\n\nThis discarded portion is called burn-in or warm-up.\nThere is no universal correct number of iterations to discard.\nPractically, we might examine the traceplot to visually inspect when we plausibly reach stationarity."
   },
   {
     "objectID": "slides/lec-mcmc.html#did-we-reach-the-target",
     "href": "slides/lec-mcmc.html#did-we-reach-the-target",
     "title": "Markov chain Monte Carlo",
     "section": "Did we reach the target?",
-    "text": "Did we reach the target?\n\nchain_kept |&gt;\n  ggplot(aes(x = THETA)) +\n  geom_histogram(\n    aes(y = after_stat(density)),\n    bins = 40\n  ) +\n  stat_function(\n    fun = function(x) dnorm(x, mean = 10, sd = 1),\n    linewidth = 1\n  ) +\n  labs(\n    x = \"x\",\n    y = \"Density\",\n    title = \"MCMC draws after warm-up\"\n  )\n\n\nThe histogram should approximately follow the target shape."
+    "text": "Did we reach the target?\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nchain |&gt;\n  ggplot(aes(x = x)) +\n  geom_histogram(\n    aes(y = after_stat(density)),\n    bins = 40\n  ) +\n  stat_function(\n    fun = function(x) dnorm(x, mean = 10, sd = 1),\n    linewidth = 1\n  ) +\n  labs(\n    x = \"x\",\n    y = \"Density\",\n    title = \"Markov chain histogram\"\n  )\n\n\n\n\nThe histogram should approximately follow the target shape."
   },
   {
     "objectID": "slides/lec-mcmc.html#acceptance-rate",
@@ -5877,7 +5877,7 @@
     "href": "slides/lec-mcmc.html#compare-the-chains",
     "title": "Markov chain Monte Carlo",
     "section": "Compare the chains",
-    "text": "Compare the chains\n\nchains |&gt;\n  ggplot(\n    aes(\n      x = iteration,\n      y = THETA,\n      group = start\n    )\n  ) +\n  geom_line(alpha = .6) +\n  facet_wrap(~ start, ncol = 1) +\n  labs(\n    x = \"Iteration\",\n    y = \"State\"\n  )\n\n\nIf chains started in different places remain in completely different regions, we may be concerned."
+    "text": "Compare the chains\n\nchains |&gt;\n  ggplot(\n    aes(\n      x = iteration,\n      y = x,\n      group = start\n    )\n  ) +\n  geom_line(alpha = .6) +\n  facet_wrap(~ start, ncol = 1) +\n  labs(\n    x = \"Iteration\",\n    y = \"State\"\n  )\n\n\nIf chains started in different places remain in completely different regions, we may be concerned."
   },
   {
     "objectID": "slides/lec-mcmc.html#back-to-cryptanalysis-the-state-and-proposal",
@@ -5940,7 +5940,7 @@
     "href": "slides/lec-mcmc.html#why-this-is-monte-carlo",
     "title": "Markov chain Monte Carlo",
     "section": "Why this is Monte Carlo",
-    "text": "Why this is Monte Carlo\nOnce the chain is exploring its stationary distribution, we can estimate an average under the target using\n\\[\n\\frac{1}{N}\n\\sum_{t=1}^N h(X_t).\n\\]\nThis looks like ordinary Monte Carlo.\nThe key difference is:\n\nThe simulated values are dependent because they come from a Markov chain.\n\nHence:\n\nMarkov chain Monte Carlo"
+    "text": "Why this is Monte Carlo\nOnce the chain is exploring its stationary distribution, we can estimate an average under the target using\n\\[\n\\frac{1}{N}\n\\sum_{t=1}^N h(X_t).\n\\]\nThis looks like ordinary Monte Carlo.\nThe key difference is:\n\nThe simulated values are dependent because they come from a Markov chain.\n\nHence: “Markov chain Monte Carlo”"
   },
   {
     "objectID": "slides/lec-mcmc.html#exercise-1",
@@ -6003,7 +6003,7 @@
     "href": "slides/lec-mcmc.html#trace-plots",
     "title": "Markov chain Monte Carlo",
     "section": "Trace plots",
-    "text": "Trace plots\nLet’s look at the trace plots for each \\(\\delta\\). A traceplot shows the state of the chain against iteration.\n\ndelta = 0.1delta = 1delta = 4table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcceptance rate for each delta\n\n\n0.1\n1\n4\n\n\n\n\n0.96\n0.7\n0.29"
+    "text": "Trace plots\nLet’s look at the trace plots for each \\(\\delta\\). A traceplot shows the state of the chain against iteration.\n\ndelta = 0.1delta = 1delta = 4table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcceptance rate for each delta\n\n\n0.1\n1\n4\n\n\n\n\n0.96\n0.7\n0.29\n\n\n\n\n\nWant: traceplots to look like fuzzy caterpillars."
   },
   {
     "objectID": "slides/lec-mcmc.html#intuition-blind-monkey-on-an-island",
@@ -6025,5 +6025,54 @@
     "title": "Markov chain Monte Carlo",
     "section": "Try it yourself",
     "text": "Try it yourself\n\ndownload.file(url = \"https://sta323-fa26.github.io/scripts/cryptanalysis.qmd\",\n              destfile = \"cryptanalysis.qmd\")"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#choose-proposal-sd",
+    "href": "slides/lec-mcmc.html#choose-proposal-sd",
+    "title": "Markov chain Monte Carlo",
+    "section": "Choose proposal sd",
+    "text": "Choose proposal sd\nWe have to choose the proposal standard deviation, \\(\\delta\\). How should we choose it? Let’s gain some intuition by trying out three different values of \\(\\delta\\).\nLet’s look at how various \\(\\delta\\) let us sample the target:\n\n\\(\\delta = 0.1\\)\\(\\delta = 1\\)\\(\\delta = 4\\)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#do-we-reach-the-target",
+    "href": "slides/lec-mcmc.html#do-we-reach-the-target",
+    "title": "Markov chain Monte Carlo",
+    "section": "Do we reach the target?",
+    "text": "Do we reach the target?\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nchain |&gt;\n  ggplot(aes(x = x)) +\n  geom_histogram(\n    aes(y = after_stat(density)),\n    bins = 40\n  ) +\n  stat_function(\n    fun = function(x) dnorm(x, mean = 10, sd = 1),\n    linewidth = 1\n  ) +\n  labs(\n    x = \"x\",\n    y = \"Density\",\n    title = \"Markov chain histogram\"\n  )\n\n\n\n\nThe histogram should approximately follow the target shape."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#proposal-standard-deviation",
+    "href": "slides/lec-mcmc.html#proposal-standard-deviation",
+    "title": "Markov chain Monte Carlo",
+    "section": "Proposal standard deviation",
+    "text": "Proposal standard deviation\nWe have to choose the proposal standard deviation, \\(\\delta\\). How should we choose it? Let’s gain some intuition by trying out three different values of \\(\\delta\\).\nLet’s look at how various \\(\\delta\\) let us sample the target:\n\n\\(\\delta = 0.1\\)\\(\\delta = 1\\)\\(\\delta = 4\\)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#different-proposal-standard-deviation-delta",
+    "href": "slides/lec-mcmc.html#different-proposal-standard-deviation-delta",
+    "title": "Markov chain Monte Carlo",
+    "section": "Different proposal standard deviation (\\(\\delta\\))",
+    "text": "Different proposal standard deviation (\\(\\delta\\))\n\n\n\n\\(\\delta = 0.1\\)\\(\\delta = 1\\)\\(\\delta = 4\\)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#different-proposal-standard-deviation",
+    "href": "slides/lec-mcmc.html#different-proposal-standard-deviation",
+    "title": "Markov chain Monte Carlo",
+    "section": "Different proposal standard deviation",
+    "text": "Different proposal standard deviation\n\n\n\n\\(\\delta = 0.1\\)\\(\\delta = 1\\)\\(\\delta = 4\\)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#will-we-reach-stationarity",
+    "href": "slides/lec-mcmc.html#will-we-reach-stationarity",
+    "title": "Markov chain Monte Carlo",
+    "section": "Will we reach stationarity?",
+    "text": "Will we reach stationarity?\nFor the Markov chains we consider, irreducibility, positive recurrence, and aperiodicity guarantee a unique stationary distribution and convergence to it in infinite time.\n\nRecall:\n\nirreducible: every state can eventually be reached from every other state\npositive recurrence: starting from any state, the chain returns to that state eventually with probability 1.\n\n\n\nNew:\n\naperiodic: the chain is not forced to revisit states only at regularly spaced times."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#cryptanalysis-the-state-and-proposal",
+    "href": "slides/lec-mcmc.html#cryptanalysis-the-state-and-proposal",
+    "title": "Markov chain Monte Carlo",
+    "section": "Cryptanalysis: the state and proposal",
+    "text": "Cryptanalysis: the state and proposal\nFor the substitution cipher,\n\\[\nX_t\n=\n\\text{current substitution key}.\n\\]\nA simple proposal is:\n\nPick two letters at random and swap their assignments.\n\nAny permutation can be transformed into any other permutation through a sequence of swaps.\nSo this proposal can, in principle, reach every possible key.\nThat gives us irreducibility."
   }
 ]

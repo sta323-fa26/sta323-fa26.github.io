@@ -381,6 +381,7 @@ for (t in 2:n_steps) {
 }
 ```
 
+# Toy example
 
 ## A simple target
 
@@ -400,9 +401,9 @@ $$
 ## Plot
 ```{r}
 #| echo: false
-tibble(x = seq(-3, 9, length.out = 300)) |>
+tibble(x = seq(5, 15, length.out = 300)) |>
   ggplot(aes(x = x)) +
-  stat_function(fun = target_score, linewidth = 1) +
+  stat_function(fun = dnorm, args = list(mean = 10, sd = 1), linewidth = 1) +
   labs(
     y = "Target score",
     title = "Where should the chain spend its time?"
@@ -453,18 +454,18 @@ This is a **random-walk proposal**.
 <!-- # metropolis <- function(n_steps = 5000, -->
 <!-- #                        start = 0, -->
 <!-- #                        proposal_sd = 1) { -->
-<!-- #  -->
+<!-- # -->
 <!-- #   x <- numeric(n_steps) -->
 <!-- #   accepted <- logical(n_steps) -->
 <!-- #   x[1] <- start -->
-<!-- #  -->
+<!-- # -->
 <!-- #   for (t in 2:n_steps) { -->
-<!-- #  -->
+<!-- # -->
 <!-- #     proposal <- rnorm(1, x[t - 1], proposal_sd) -->
-<!-- #  -->
+<!-- # -->
 <!-- #     log_ratio <- log(target_score(proposal)) - -->
 <!-- #       log(target_score(x[t - 1])) -->
-<!-- #  -->
+<!-- # -->
 <!-- #     if (log(runif(1)) < log_ratio) { -->
 <!-- #       x[t] <- proposal -->
 <!-- #       accepted[t] <- TRUE -->
@@ -472,57 +473,92 @@ This is a **random-walk proposal**.
 <!-- #       x[t] <- x[t - 1] -->
 <!-- #     } -->
 <!-- #   } -->
-<!-- #  -->
+<!-- # -->
 <!-- #   tibble(iteration = 1:n_steps, x, accepted) -->
 <!-- # } -->
 <!-- # ``` -->
 
-
 ```{r}
-#| echo: true
-#| eval: true
-set.seed(323)
+log_target_score <- function(x) {
+  -0.5 * (x - 10)^2
+}
 
 metropolis <- function(n_steps = 5000,
                        start = 0,
                        proposal_sd = 1) {
-  theta_s = start # starting point
-  THETA = NULL # empty object to save iterations in
-  S = n_steps # number of iterations
-  delta = proposal_sd # proposal sd
-  accept = 0 # keep track of acceptance rate
-  ACCEPTED = NULL
-  
-  for (s in 1:S) {
-    
-    accepted <- FALSE
-    # log everything for numerical stability #
-    
-    ### generate proposal and compute ratio r ###
-    theta_proposal = rnorm(1, mean = theta_s, sd = delta)
-    log.r = dnorm(theta_proposal,
-                  mean = 10,
-                  sd = 1,
-                  log = TRUE) -
-      dnorm(theta_s,
-            mean = 10,
-            sd = 1,
-            log = TRUE)
-    
-    ### accept or reject proposal and add to chain ###
-    if (log(runif(1)) < log.r)  {
-      theta_s = theta_proposal
-      accepted = TRUE
+
+  x <- numeric(n_steps) # something to save state of chain
+  accepted <- logical(n_steps) # something to save whether accepted or not
+  x[1] <- start # starting position of chain
+
+  for (t in 2:n_steps) {
+    proposal <- rnorm(1, x[t - 1], proposal_sd)
+
+    log_ratio <- log_target_score(proposal) -
+      log_target_score(x[t - 1])
+
+    if (log(runif(1)) < log_ratio) {
+      x[t] <- proposal
+      accepted[t] <- TRUE
+    } else {
+      x[t] <- x[t - 1]
     }
-    THETA = c(THETA, theta_s)
-    ACCEPTED <- c(ACCEPTED, accepted)
   }
-  tibble(iteration = 1:n_steps, THETA, accepted = ACCEPTED) 
+
+  tibble(iteration = 1:n_steps, x, accepted)
 }
 ```
 
+
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: true -->
+<!-- set.seed(323) -->
+
+<!-- metropolis <- function(n_steps = 5000, -->
+<!--                        start = 0, -->
+<!--                        proposal_sd = 1) { -->
+<!--   theta_s = start # starting point -->
+<!--   THETA = NULL # empty object to save iterations in -->
+<!--   S = n_steps # number of iterations -->
+<!--   delta = proposal_sd # proposal sd -->
+<!--   accept = 0 # keep track of acceptance rate -->
+<!--   ACCEPTED = NULL -->
+
+<!--   for (s in 1:S) { -->
+
+<!--     accepted <- FALSE -->
+<!--     # log everything for numerical stability # -->
+
+<!--     ### generate proposal and compute ratio r ### -->
+<!--     theta_proposal = rnorm(1, mean = theta_s, sd = delta) -->
+<!--     log.r = dnorm(theta_proposal, -->
+<!--                   mean = 10, -->
+<!--                   sd = 1, -->
+<!--                   log = TRUE) - -->
+<!--       dnorm(theta_s, -->
+<!--             mean = 10, -->
+<!--             sd = 1, -->
+<!--             log = TRUE) -->
+
+<!--     ### accept or reject proposal and add to chain ### -->
+<!--     if (log(runif(1)) < log.r)  { -->
+<!--       theta_s = theta_proposal -->
+<!--       accepted = TRUE -->
+<!--     } -->
+<!--     THETA = c(THETA, theta_s) -->
+<!--     ACCEPTED <- c(ACCEPTED, accepted) -->
+<!--   } -->
+<!--   tibble(iteration = 1:n_steps, THETA, accepted = ACCEPTED)  -->
+<!-- } -->
+<!-- ``` -->
+
 ## Run the chain
 
+:::: {.columns}
+
+::: {.column width="50%"}
 ```{r}
 chain <- metropolis(
   n_steps = 5000,
@@ -533,16 +569,82 @@ chain <- metropolis(
 chain
 ```
 
-These simulations are **dependent**.
+:::
 
-Each state was generated using the previous state.
+::: {.column width="50%"}
+- These simulations are **dependent**.
 
-The hope is that their long-run distribution is still the target distribution.
+- Each state was generated using the previous state.
 
+- The hope is that their long-run distribution is still the target distribution.
+:::
 
-## Choose delta
+::::
 
-We have to choose $\delta$. How should we choose it? Let's gain some intuition by trying out three different values of $\delta$.
+## Do we reach the target?
+
+::: panel-tabset
+## Plot
+```{r}
+#| echo: false
+chain |>
+  ggplot(aes(x = x)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 40
+  ) +
+  stat_function(
+    fun = function(x) dnorm(x, mean = 10, sd = 1),
+    linewidth = 1
+  ) +
+  labs(
+    x = "x",
+    y = "Density",
+    title = "Markov chain histogram"
+  )
+```
+
+## Code
+```{r}
+#| echo: true
+#| eval: false
+chain |>
+  ggplot(aes(x = x)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 40
+  ) +
+  stat_function(
+    fun = function(x) dnorm(x, mean = 10, sd = 1),
+    linewidth = 1
+  ) +
+  labs(
+    x = "x",
+    y = "Density",
+    title = "Markov chain histogram"
+  )
+```
+:::
+
+The histogram should approximately follow the target shape.
+
+## Acceptance rate
+
+The **acceptance rate** is the fraction of proposed moves that were accepted.
+
+```{r}
+mean(chain$accepted)
+```
+
+Very low acceptance can mean the chain is repeatedly proposing moves that are
+too large.
+
+Very high acceptance can occur when proposed moves are so small that the chain
+moves only very slowly.
+
+## Different proposal standard deviation
+
+<!-- We have to choose the proposal standard deviation, $\delta$. How should we choose it? Let's gain some intuition by trying out three different values of $\delta$. -->
 
 ```{r}
 #| echo: false
@@ -770,20 +872,20 @@ outdir = getwd()
 )
 ```
 
-Let's look at how various $\delta$ let us sample the target:
+<!-- Let's look at how various $\delta$ let us sample the target: -->
 
 ::: panel-tabset
 ## $\delta = 0.1$
 
-<img src="images/metropolis-normal-delta-point1.gif" width="300" height="300"/>
+<img src="images/metropolis-normal-delta-point1.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"/>
 
 ## $\delta = 1$
 
-<img src="images/metropolis-normal-1.gif" width="300" height="300"/>
+<img src="images/metropolis-normal-1.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"/>
 
 ## $\delta = 4$
 
-<img src="images/metropolis-normal-delta4.gif" width="300" height="300"/>
+<img src="images/metropolis-normal-delta4.gif" style="display:block; margin:auto; height:85vh; max-width:100%; object-fit:contain;"/>
 :::
 
 ## Trace plots
@@ -887,18 +989,18 @@ p3 = df %>%
 
 ```{r}
 #| echo: false
-p1
+p3
 ```
 
 ## delta = 1
 ```{r}
 #| echo: false
-p2
+p1
 ```
 ## delta = 4
 ```{r}
 #| echo: false
-p3
+p2
 ```
 
 ## table
@@ -913,7 +1015,10 @@ df_accept %>%
         )
 ```
 
+Want: traceplots to look like fuzzy caterpillars.
 :::
+
+
 
 
 ## Intuition: blind monkey on an island
@@ -930,24 +1035,27 @@ df_accept %>%
 
 ::::
 
+# MCMC Vocab
 
-## Stationary does not automatically mean convergence
+## Will we reach stationarity?
 
-A distribution $\pi$ is stationary if
+For the Markov chains we consider, **irreducibility**, **positive recurrence**, and **aperiodicity** guarantee a unique stationary distribution and convergence to it in infinite time.
 
-$$
-\pi = \pi P.
-$$
+. . . 
 
-But a chain must also be able to explore its state space properly.
+Recall:
 
-Two important properties are:
+- irreducible: every state can eventually be reached from every other state
 
-- **irreducible:** every state can eventually be reached from every other state,
-- **aperiodic:** the chain is not forced to revisit states only at regularly
+- positive recurrence: starting from any state, the chain returns to that state eventually with probability 1. 
+
+. . . 
+
+New: 
+
+- aperiodic: the chain is not forced to revisit states only at regularly
   spaced times.
 
-These conditions prevent important ways a chain can fail to explore.
 
 ## Why Metropolis often gives aperiodicity
 
@@ -961,31 +1069,6 @@ The chain can remain in the same state.
 
 For an irreducible chain, the ability to stay put is a simple way to obtain
 aperiodicity.
-
-So rejection is not merely wasted computation, it is part of the Markov chain we intentionally construct to guarantee aperiodicity.
-
-## The practical convergence story
-
-For the chains we use, we want:
-
-- the desired stationary distribution,
-- the ability to reach all relevant regions,
-- no forced cyclic behavior.
-
-Then, after running long enough,
-
-$$
-\text{distribution of }X_t
-\longrightarrow
-\pi.
-$$
-
-Long-run averages from the chain can then approximate averages under $\pi$.
-
-::: {.callout-note}
-There are more technical conditions behind MCMC convergence. Here we focus on
-the computational intuition and practical warning signs.
-:::
 
 <!-- ## Traceplots -->
 
@@ -1007,7 +1090,7 @@ the computational intuition and practical warning signs.
 
 ## Starting values and burn-in
 
-Our chain deliberately started far from the center of the target.
+Our chain started far from the center of the target.
 
 Early iterations can therefore reflect the arbitrary starting value.
 
@@ -1024,41 +1107,8 @@ This discarded portion is called **burn-in** or **warm-up**.
 
 There is no universal correct number of iterations to discard.
 
-## Did we reach the target?
+Practically, we might examine the traceplot to visually inspect when we plausibly reach stationarity.
 
-```{r}
-chain_kept |>
-  ggplot(aes(x = THETA)) +
-  geom_histogram(
-    aes(y = after_stat(density)),
-    bins = 40
-  ) +
-  stat_function(
-    fun = function(x) dnorm(x, mean = 10, sd = 1),
-    linewidth = 1
-  ) +
-  labs(
-    x = "x",
-    y = "Density",
-    title = "MCMC draws after warm-up"
-  )
-```
-
-The histogram should approximately follow the target shape.
-
-## Acceptance rate
-
-The **acceptance rate** is the fraction of proposed moves that were accepted.
-
-```{r}
-mean(chain$accepted)
-```
-
-Very low acceptance can mean the chain is repeatedly proposing moves that are
-too large.
-
-Very high acceptance can occur when proposed moves are so small that the chain
-moves only very slowly.
 
 <!-- Acceptance rate is a diagnostic, not necessarily a goal by itself. -->
 
@@ -1123,29 +1173,31 @@ chains <- map_dfr(
 
 If all chains eventually explore the same region, that is reassuring.
 
-## Compare the chains
+<!-- ## Compare the chains -->
 
-```{r}
-chains |>
-  ggplot(
-    aes(
-      x = iteration,
-      y = THETA,
-      group = start
-    )
-  ) +
-  geom_line(alpha = .6) +
-  facet_wrap(~ start, ncol = 1) +
-  labs(
-    x = "Iteration",
-    y = "State"
-  )
-```
+<!-- ```{r} -->
+<!-- chains |> -->
+<!--   ggplot( -->
+<!--     aes( -->
+<!--       x = iteration, -->
+<!--       y = x, -->
+<!--       group = start -->
+<!--     ) -->
+<!--   ) + -->
+<!--   geom_line(alpha = .6) + -->
+<!--   facet_wrap(~ start, ncol = 1) + -->
+<!--   labs( -->
+<!--     x = "Iteration", -->
+<!--     y = "State" -->
+<!--   ) -->
+<!-- ``` -->
 
-If chains started in different places remain in completely different regions,
-we may be concerned.
+<!-- If chains started in different places remain in completely different regions, -->
+<!-- we may be concerned. -->
 
-## Back to cryptanalysis: the state and proposal
+# Return to cryptanalysis example 
+
+## Cryptanalysis: the state and proposal
 
 For the substitution cipher,
 
@@ -1186,30 +1238,6 @@ QZ  ZX  JQ
 
 Combine these contributions across the decoded message to obtain an
 **English log-score**.
-
-## Acceptance using log scores
-
-Suppose the current and proposed log-scores are
-
-$$
-\ell
-\quad\text{and}\quad
-\ell^\star.
-$$
-
-The score ratio is
-
-$$
-\exp(\ell^\star-\ell).
-$$
-
-So accept the proposed key with probability
-
-$$
-\min\left(1,\exp(\ell^\star-\ell)\right).
-$$
-
-A better decoding is always accepted; a worse decoding sometimes is.
 
 ## Cryptanalysis pseudocode
 
@@ -1331,9 +1359,7 @@ The key difference is:
 
 > The simulated values are dependent because they come from a Markov chain.
 
-Hence:
-
-> **Markov chain Monte Carlo**
+Hence: "Markov chain Monte Carlo"
 
 <!-- ## Exercise -->
 
