@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\nlab 5\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\n\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\nproject workday\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\n\n\n\n\n\n\n9\nTue Oct 20\n\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\n\n\n\n\n\n\n10\nTue Oct 27\n\n\nlab 6\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n11\nTue Nov 03\n\n\n\n\n\n\n\nThu Nov 05\n\n\n\n\n\n\n12\nTue Nov 10\n\n\n\n\n\n\n\nThu Nov 12\n\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\n\n\n\n\n\nThu Nov 19\n\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -5654,5 +5654,376 @@
     "title": "Markov chains",
     "section": "Definitions",
     "text": "Definitions\n\n\n\n\n\n\nDefinition\n\n\nIrreducible: Every state can be reached from every other state with positive probability in some finite number of steps.\n\n\n\n\n\n\n\n\n\nDefinition\n\n\nRecurrent: Starting from any state, the chain returns to that state eventually with probability 1.\n\n\n\n\n\n\n\n\n\nDefinition\n\n\nPositive recurrent: The chain is recurrent and the expected amount of time until returning to every state is finite."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#basic-terminology",
+    "href": "slides/lec-mcmc.html#basic-terminology",
+    "title": "Markov chain Monte Carlo",
+    "section": "Basic terminology",
+    "text": "Basic terminology\n\ncryptography: making secret messages (encryption)\n\nsubstitution\ntransposition\n\ncryptanalysis: breaking secret messages (decryption)\ncryptology: the study of cryptography and cryptanalysis\n\n\n\nplain text: the actual message\ncipher text: the encrypted message\nkey: information to encode (or decode) cryptographic key\nsymmetric (same key for encryption and decryption)\nasymmetric (different key to encrypt and decrypt)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#motivation",
+    "href": "slides/lec-mcmc.html#motivation",
+    "title": "Markov chain Monte Carlo",
+    "section": "Motivation",
+    "text": "Motivation\n\nDiaconis, Persi. “The Markov chain Monte Carlo revolution.” Bulletin of the American Mathematical Society 46.2 (2009): 179-205."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#substitution-cipher",
+    "href": "slides/lec-mcmc.html#substitution-cipher",
+    "title": "Markov chain Monte Carlo",
+    "section": "Substitution cipher",
+    "text": "Substitution cipher\n\nIdea: each character of plaintext is substituted with another character\n\n\nExample:\n\n\n\n\n\nFrom https://en.wikipedia.org/wiki/Substitution_cipher"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#exercise",
+    "href": "slides/lec-mcmc.html#exercise",
+    "title": "Markov chain Monte Carlo",
+    "section": "Exercise",
+    "text": "Exercise\nReturn to the cryptanalysis problem.\nSuppose your chain has a very low acceptance rate and its score traceplot has long flat stretches.\nDiscuss with a neighbor:\n\nWhat is likely happening to the proposed keys?\nHow could you change the proposal mechanism?\nWhy would accepting only proposals with a higher English score be risky?\nWhy might running several chains from different random keys be useful?"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#today",
+    "href": "slides/lec-mcmc.html#today",
+    "title": "Markov chain Monte Carlo",
+    "section": "Today",
+    "text": "Today\nBy the end, you should be able to:\n\nExplain why we might use a Markov chain for Monte Carlo simulation.\nDescribe the Metropolis algorithm in words and code.\nExplain the roles of irreducibility, aperiodicity, and stationarity.\nUse traceplots and acceptance rates to recognize obvious problems.\nExplain burn-in and why starting values can matter.\nDescribe how MCMC can be used to break a substitution cipher."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#a-cryptanalysis-problem",
+    "href": "slides/lec-mcmc.html#a-cryptanalysis-problem",
+    "title": "Markov chain Monte Carlo",
+    "section": "A cryptanalysis problem",
+    "text": "A cryptanalysis problem\nSuppose we intercept the following encrypted message:\nREART COSFRA COS AU DR UT EUA AU DR ACOA BL ACR MIRLABUE\nZCRACRT ABL EUDFRT BE ACR SBEV AU LIPPRT ACR LFBENL ...\nAssume it was encrypted using a substitution cipher:\n\nEvery plaintext letter is consistently replaced by another letter.\n\nOur goal is to recover the key."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#brute-force",
+    "href": "slides/lec-mcmc.html#brute-force",
+    "title": "Markov chain Monte Carlo",
+    "section": "Brute force?",
+    "text": "Brute force?\nA substitution key is a permutation of the alphabet.\nThere are\n\\[\n26!\n\\]\npossible keys.\n\nfactorial(26)\n\n[1] 4.032915e+26\n\n\nThat is about\n\\[\n4 \\times 10^{26}\n\\]\npossibilities.\nTrying every key is not realistic."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#some-keys-are-much-better-than-others",
+    "href": "slides/lec-mcmc.html#some-keys-are-much-better-than-others",
+    "title": "Markov chain Monte Carlo",
+    "section": "Some keys are much better than others",
+    "text": "Some keys are much better than others\nSuppose one candidate key produces\nTHERE IS NO WAR IN BA SING SE\nand another produces\nZITKT OL FG CQK OF WQ LOFU LT\nThe first looks much more like English.\nWe can create a numerical score:\n\\[\nS(\\text{key})\n=\n\\text{how English-like is the decoded text?}\n\\]\nHigher score = more plausible key."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#instead-of-searching-every-key",
+    "href": "slides/lec-mcmc.html#instead-of-searching-every-key",
+    "title": "Markov chain Monte Carlo",
+    "section": "Instead of searching every key",
+    "text": "Instead of searching every key\nWe could:\n\nStart with one candidate key.\nMake a small random change.\nDecode the message.\nCompare the new score with the current score.\nDecide whether to move to the new key.\nRepeat.\n\nThis creates a sequence of candidate keys.\n\nIf the moves in “key space” are only based on the current position, the sequence will be a Markov chain."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#recall-the-markov-property",
+    "href": "slides/lec-mcmc.html#recall-the-markov-property",
+    "title": "Markov chain Monte Carlo",
+    "section": "Recall: the Markov property",
+    "text": "Recall: the Markov property\nA Markov chain is a sequence\n\\[\nX_1, X_2, X_3, \\ldots\n\\]\nwhere the next state depends on the current state:\n\\[\nP(X_{t+1}\\mid X_t,X_{t-1},\\ldots)\n=\nP(X_{t+1}\\mid X_t).\n\\]\nFor cryptanalysis,\n\\[\nX_t = \\text{candidate key at iteration } t.\n\\]"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#recall-stationary-distributions",
+    "href": "slides/lec-mcmc.html#recall-stationary-distributions",
+    "title": "Markov chain Monte Carlo",
+    "section": "Recall: stationary distributions",
+    "text": "Recall: stationary distributions\nFor a long Markov chain, the fraction of time spent in state \\(j\\) can estimate its stationary probability:\n\\[\n\\widehat{\\pi}_j\n=\n\\frac{\\text{number of visits to state }j}\n     {\\text{number of iterations}}.\n\\]\nThis suggests a powerful idea:\n\nWhat if we construct a chain whose stationary distribution favors the states we want to find?"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#markov-chain-monte-carlo",
+    "href": "slides/lec-mcmc.html#markov-chain-monte-carlo",
+    "title": "Markov chain Monte Carlo",
+    "section": "Markov chain Monte Carlo",
+    "text": "Markov chain Monte Carlo\nMarkov chain Monte Carlo (MCMC) means:\n\nConstruct a Markov chain whose long-run distribution is a distribution we want to explore.\n\nThen use the states visited by the chain as simulated draws.\nFor cryptanalysis, we want:\n\nhigh-scoring keys visited often,\nlow-scoring keys visited rarely."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#a-target-distribution",
+    "href": "slides/lec-mcmc.html#a-target-distribution",
+    "title": "Markov chain Monte Carlo",
+    "section": "A target distribution",
+    "text": "A target distribution\nSuppose every possible state \\(x\\) has a nonnegative score\n\\[\nf(x).\n\\]\nWe want stationary probabilities proportional to those scores:\n\\[\n\\pi(x) \\propto f(x).\n\\]\nThe symbol \\(\\propto\\) means proportional to.\nWe do not need to know the constant that makes all the probabilities sum to 1."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#why-proportional-is-enough",
+    "href": "slides/lec-mcmc.html#why-proportional-is-enough",
+    "title": "Markov chain Monte Carlo",
+    "section": "Why proportional is enough",
+    "text": "Why proportional is enough\nSuppose\n\\[\n\\pi(x)\n=\n\\frac{f(x)}{C}\n\\]\nfor some unknown constant \\(C\\).\nThen\n\\[\n\\frac{\\pi(x^\\star)}{\\pi(x)}\n=\n\\frac{f(x^\\star)}{f(x)}.\n\\]\nThe unknown constant cancels.\nThat is one reason MCMC is useful when a target is easy to score but hard to sample from directly."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#one-metropolis-step",
+    "href": "slides/lec-mcmc.html#one-metropolis-step",
+    "title": "Markov chain Monte Carlo",
+    "section": "One Metropolis step",
+    "text": "One Metropolis step\nSuppose the chain is currently at \\(x\\).\n\nPropose a nearby state \\(x^\\star\\).\nCalculate\n\n\\[\nr\n=\n\\frac{f(x^\\star)}{f(x)}.\n\\]\n\nAccept the proposal with probability\n\n\\[\n\\min(1,r).\n\\]\nOtherwise, remain at \\(x\\)."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#why-accept-worse-proposals",
+    "href": "slides/lec-mcmc.html#why-accept-worse-proposals",
+    "title": "Markov chain Monte Carlo",
+    "section": "Why accept worse proposals?",
+    "text": "Why accept worse proposals?\nIf \\(f(x^\\star) &gt; f(x)\\), then \\(r&gt;1\\), so the proposal is always accepted.\nIf \\(f(x^\\star) &lt; f(x)\\), it can still be accepted.\nFor example, if\n\\[\nr=0.8,\n\\]\nwe accept the worse proposal with probability \\(0.8\\).\nIf we accepted only improvements, we could become trapped at a local optimum."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#the-metropolis-algorithm-in-r",
+    "href": "slides/lec-mcmc.html#the-metropolis-algorithm-in-r",
+    "title": "Markov chain Monte Carlo",
+    "section": "The Metropolis algorithm in R",
+    "text": "The Metropolis algorithm in R\n\nfor (t in 2:n_steps) {\n\n  proposal &lt;- propose(current)\n\n  ratio &lt;- target_score(proposal) /\n    target_score(current)\n\n  accept_prob &lt;- min(1, ratio)\n\n  if (runif(1) &lt; accept_prob) {\n    current &lt;- proposal\n  }\n\n  chain[t] &lt;- current\n}\n\nAfter a rejection, current does not change."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#a-simple-target",
+    "href": "slides/lec-mcmc.html#a-simple-target",
+    "title": "Markov chain Monte Carlo",
+    "section": "A simple target",
+    "text": "A simple target\nBefore returning to cryptanalysis, consider\n\\[\nf(x)\n=\n\\exp\\left[\n-\\frac{1}{2}\n\\left({x-10}\\right)^2\n\\right].\n\\]\n\nPlotCode\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntibble(x = seq(-3, 9, length.out = 300)) |&gt;\n  ggplot(aes(x = x)) +\n  stat_function(fun = target_score, linewidth = 1) +\n  labs(\n    y = \"Target score\",\n    title = \"Where should the chain spend its time?\"\n  )\n\n\n\n\nThe target is largest near \\(x=10\\)."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#propose-a-nearby-state",
+    "href": "slides/lec-mcmc.html#propose-a-nearby-state",
+    "title": "Markov chain Monte Carlo",
+    "section": "Propose a nearby state",
+    "text": "Propose a nearby state\nUse a random step around the current position:\n\\[\nX^\\star\n\\sim\nN(X_t,\\sigma^2).\n\\]\n\nproposal &lt;- rnorm(\n  1,\n  mean = current,\n  sd = proposal_sd\n)\n\nThis is a random-walk proposal."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#a-complete-metropolis-function",
+    "href": "slides/lec-mcmc.html#a-complete-metropolis-function",
+    "title": "Markov chain Monte Carlo",
+    "section": "A complete Metropolis function",
+    "text": "A complete Metropolis function\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nset.seed(323)\n\nmetropolis &lt;- function(n_steps = 5000,\n                       start = 0,\n                       proposal_sd = 1) {\n  theta_s = start # starting point\n  THETA = NULL # empty object to save iterations in\n  S = n_steps # number of iterations\n  delta = proposal_sd # proposal sd\n  accept = 0 # keep track of acceptance rate\n  ACCEPTED = NULL\n  \n  for (s in 1:S) {\n    \n    accepted &lt;- FALSE\n    # log everything for numerical stability #\n    \n    ### generate proposal and compute ratio r ###\n    theta_proposal = rnorm(1, mean = theta_s, sd = delta)\n    log.r = dnorm(theta_proposal,\n                  mean = 10,\n                  sd = 1,\n                  log = TRUE) -\n      dnorm(theta_s,\n            mean = 10,\n            sd = 1,\n            log = TRUE)\n    \n    ### accept or reject proposal and add to chain ###\n    if (log(runif(1)) &lt; log.r)  {\n      theta_s = theta_proposal\n      accepted = TRUE\n    }\n    THETA = c(THETA, theta_s)\n    ACCEPTED &lt;- c(ACCEPTED, accepted)\n  }\n  tibble(iteration = 1:n_steps, THETA, accepted = ACCEPTED) \n}"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#run-the-chain",
+    "href": "slides/lec-mcmc.html#run-the-chain",
+    "title": "Markov chain Monte Carlo",
+    "section": "Run the chain",
+    "text": "Run the chain\n\nchain &lt;- metropolis(\n  n_steps = 5000,\n  start = -3,\n  proposal_sd = 1\n)\n\nchain\n\n# A tibble: 5,000 × 3\n   iteration THETA accepted\n       &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt;   \n 1         1 -3    FALSE   \n 2         2 -3    FALSE   \n 3         3 -2.78 TRUE    \n 4         4 -2.56 TRUE    \n 5         5 -2.42 TRUE    \n 6         6 -2.33 TRUE    \n 7         7 -1.94 TRUE    \n 8         8 -1.94 FALSE   \n 9         9 -1.80 TRUE    \n10        10 -1.93 TRUE    \n# ℹ 4,990 more rows\n\n\nThese simulations are dependent.\nEach state was generated using the previous state.\nThe hope is that their long-run distribution is still the target distribution."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#stationary-does-not-automatically-mean-convergence",
+    "href": "slides/lec-mcmc.html#stationary-does-not-automatically-mean-convergence",
+    "title": "Markov chain Monte Carlo",
+    "section": "Stationary does not automatically mean convergence",
+    "text": "Stationary does not automatically mean convergence\nA distribution \\(\\pi\\) is stationary if\n\\[\n\\pi = \\pi P.\n\\]\nBut a chain must also be able to explore its state space properly.\nTwo important properties are:\n\nirreducible: every state can eventually be reached from every other state,\naperiodic: the chain is not forced to revisit states only at regularly spaced times.\n\nThese conditions prevent important ways a chain can fail to explore."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#why-metropolis-often-gives-aperiodicity",
+    "href": "slides/lec-mcmc.html#why-metropolis-often-gives-aperiodicity",
+    "title": "Markov chain Monte Carlo",
+    "section": "Why Metropolis often gives aperiodicity",
+    "text": "Why Metropolis often gives aperiodicity\nWhen a Metropolis proposal is rejected,\n\\[\nX_{t+1}=X_t.\n\\]\nThe chain can remain in the same state.\nFor an irreducible chain, the ability to stay put is a simple way to obtain aperiodicity.\nSo rejection is not merely wasted computation, it is part of the Markov chain we intentionally construct to guarantee aperiodicity."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#the-practical-convergence-story",
+    "href": "slides/lec-mcmc.html#the-practical-convergence-story",
+    "title": "Markov chain Monte Carlo",
+    "section": "The practical convergence story",
+    "text": "The practical convergence story\nFor the chains we use, we want:\n\nthe desired stationary distribution,\nthe ability to reach all relevant regions,\nno forced cyclic behavior.\n\nThen, after running long enough,\n\\[\n\\text{distribution of }X_t\n\\longrightarrow\n\\pi.\n\\]\nLong-run averages from the chain can then approximate averages under \\(\\pi\\).\n\n\n\n\n\n\nNote\n\n\nThere are more technical conditions behind MCMC convergence. Here we focus on the computational intuition and practical warning signs."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#traceplots",
+    "href": "slides/lec-mcmc.html#traceplots",
+    "title": "Markov chain Monte Carlo",
+    "section": "Traceplots",
+    "text": "Traceplots\nA traceplot shows the state of the chain against iteration.\n\nchain |&gt;\n  ggplot(aes(x = iteration, y = x)) +\n  geom_line() +\n  labs(\n    x = \"Iteration\",\n    y = \"State\",\n    title = \"Traceplot\"\n  )\n\n\nA useful chain should repeatedly move around the important region rather than remaining stuck in one place."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#starting-values-and-burn-in",
+    "href": "slides/lec-mcmc.html#starting-values-and-burn-in",
+    "title": "Markov chain Monte Carlo",
+    "section": "Starting values and burn-in",
+    "text": "Starting values and burn-in\nOur chain deliberately started far from the center of the target.\nEarly iterations can therefore reflect the arbitrary starting value.\nA common strategy is to discard an initial portion:\n\nburn_in &lt;- 500\n\nchain_kept &lt;- chain |&gt;\n  filter(iteration &gt; burn_in)\n\nThis discarded portion is called burn-in or warm-up.\nThere is no universal correct number of iterations to discard."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#did-we-reach-the-target",
+    "href": "slides/lec-mcmc.html#did-we-reach-the-target",
+    "title": "Markov chain Monte Carlo",
+    "section": "Did we reach the target?",
+    "text": "Did we reach the target?\n\nchain_kept |&gt;\n  ggplot(aes(x = THETA)) +\n  geom_histogram(\n    aes(y = after_stat(density)),\n    bins = 40\n  ) +\n  stat_function(\n    fun = function(x) dnorm(x, mean = 10, sd = 1),\n    linewidth = 1\n  ) +\n  labs(\n    x = \"x\",\n    y = \"Density\",\n    title = \"MCMC draws after warm-up\"\n  )\n\n\nThe histogram should approximately follow the target shape."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#acceptance-rate",
+    "href": "slides/lec-mcmc.html#acceptance-rate",
+    "title": "Markov chain Monte Carlo",
+    "section": "Acceptance rate",
+    "text": "Acceptance rate\nThe acceptance rate is the fraction of proposed moves that were accepted.\n\nmean(chain$accepted)\n\n[1] 0.7012\n\n\nVery low acceptance can mean the chain is repeatedly proposing moves that are too large.\nVery high acceptance can occur when proposed moves are so small that the chain moves only very slowly."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#proposal-size-changes-the-behavior",
+    "href": "slides/lec-mcmc.html#proposal-size-changes-the-behavior",
+    "title": "Markov chain Monte Carlo",
+    "section": "Proposal size changes the behavior",
+    "text": "Proposal size changes the behavior\n\nlarge_steps &lt;- metropolis(\n  n_steps = 3000,\n  proposal_sd = 20\n)\n\nsmall_steps &lt;- metropolis(\n  n_steps = 3000,\n  proposal_sd = .03\n)\n\nLarge steps:\n\nmany rejections,\nlong flat stretches.\n\nTiny steps:\n\nmany acceptances,\nslow movement through the target.\n\nBoth can lead to poor exploration."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#mixing",
+    "href": "slides/lec-mcmc.html#mixing",
+    "title": "Markov chain Monte Carlo",
+    "section": "Mixing",
+    "text": "Mixing\nA chain mixes well when it moves efficiently through the important parts of the target distribution.\nWarning signs of poor mixing include:\n\nlong flat stretches,\nvery slow wandering,\nimportant regions visited only rarely.\n\nNo single plot or statistic proves that a chain has mixed well."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#multiple-starting-values",
+    "href": "slides/lec-mcmc.html#multiple-starting-values",
+    "title": "Markov chain Monte Carlo",
+    "section": "Multiple starting values",
+    "text": "Multiple starting values\nRun several chains from very different places:\n\nstarts &lt;- c(-8, 0, 8, 15)\n\nchains &lt;- map_dfr(\n  starts,\n  function(s) {\n    metropolis(\n      n_steps = 2500,\n      start = s,\n      proposal_sd = 1\n    ) |&gt;\n      mutate(start = factor(s))\n  }\n)\n\nIf all chains eventually explore the same region, that is reassuring."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#compare-the-chains",
+    "href": "slides/lec-mcmc.html#compare-the-chains",
+    "title": "Markov chain Monte Carlo",
+    "section": "Compare the chains",
+    "text": "Compare the chains\n\nchains |&gt;\n  ggplot(\n    aes(\n      x = iteration,\n      y = THETA,\n      group = start\n    )\n  ) +\n  geom_line(alpha = .6) +\n  facet_wrap(~ start, ncol = 1) +\n  labs(\n    x = \"Iteration\",\n    y = \"State\"\n  )\n\n\nIf chains started in different places remain in completely different regions, we may be concerned."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#back-to-cryptanalysis-the-state-and-proposal",
+    "href": "slides/lec-mcmc.html#back-to-cryptanalysis-the-state-and-proposal",
+    "title": "Markov chain Monte Carlo",
+    "section": "Back to cryptanalysis: the state and proposal",
+    "text": "Back to cryptanalysis: the state and proposal\nFor the substitution cipher,\n\\[\nX_t\n=\n\\text{current substitution key}.\n\\]\nA simple proposal is:\n\nPick two letters at random and swap their assignments.\n\nAny permutation can be transformed into any other permutation through a sequence of swaps.\nSo this proposal can, in principle, reach every possible key.\nThat gives us irreducibility."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#score-the-decoded-message",
+    "href": "slides/lec-mcmc.html#score-the-decoded-message",
+    "title": "Markov chain Monte Carlo",
+    "section": "Score the decoded message",
+    "text": "Score the decoded message\nWe need a score that rewards English-looking text.\nOne approach uses frequencies of neighboring letters.\nCommon patterns such as\nTH  HE  IN  ER  AN\nreceive higher scores than unusual patterns such as\nQZ  ZX  JQ\nCombine these contributions across the decoded message to obtain an English log-score."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#acceptance-using-log-scores",
+    "href": "slides/lec-mcmc.html#acceptance-using-log-scores",
+    "title": "Markov chain Monte Carlo",
+    "section": "Acceptance using log scores",
+    "text": "Acceptance using log scores\nSuppose the current and proposed log-scores are\n\\[\n\\ell\n\\quad\\text{and}\\quad\n\\ell^\\star.\n\\]\nThe score ratio is\n\\[\n\\exp(\\ell^\\star-\\ell).\n\\]\nSo accept the proposed key with probability\n\\[\n\\min\\left(1,\\exp(\\ell^\\star-\\ell)\\right).\n\\]\nA better decoding is always accepted; a worse decoding sometimes is."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#cryptanalysis-pseudocode",
+    "href": "slides/lec-mcmc.html#cryptanalysis-pseudocode",
+    "title": "Markov chain Monte Carlo",
+    "section": "Cryptanalysis pseudocode",
+    "text": "Cryptanalysis pseudocode\n\ncurrent_key &lt;- initial_key\ncurrent_score &lt;- score(decode(ciphertext, current_key))\n\nfor (t in 2:n_steps) {\n\n  proposed_key &lt;- swap_two_letters(current_key)\n\n  proposed_score &lt;-\n    score(decode(ciphertext, proposed_key))\n\n  accept_prob &lt;- min(\n    1,\n    exp(proposed_score - current_score)\n  )\n\n  if (runif(1) &lt; accept_prob) {\n    current_key &lt;- proposed_key\n    current_score &lt;- proposed_score\n  }\n\n  chain[[t]] &lt;- current_key\n  scores[t] &lt;- current_score\n}"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#what-should-we-plot",
+    "href": "slides/lec-mcmc.html#what-should-we-plot",
+    "title": "Markov chain Monte Carlo",
+    "section": "What should we plot?",
+    "text": "What should we plot?\nThe state is a 26-letter permutation, so a direct traceplot of the state is not useful.\nInstead, plot the English score:\n\ntibble(\n  iteration = 1:n_steps,\n  score = scores\n) |&gt;\n  ggplot(aes(iteration, score)) +\n  geom_line()\n\nWe want to see the chain reach and continue exploring high-scoring keys."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#diagnostics-for-the-cipher-chain",
+    "href": "slides/lec-mcmc.html#diagnostics-for-the-cipher-chain",
+    "title": "Markov chain Monte Carlo",
+    "section": "Diagnostics for the cipher chain",
+    "text": "Diagnostics for the cipher chain\nUseful checks include:\n\nTraceplot: does the English score settle into a high-scoring region?\nAcceptance rate: are nearly all swaps rejected?\nMultiple starts: do different random keys find similar decryptions?\nBest decoded text: does it actually look like English?\nLonger run: does running longer materially change the result?\n\nFor cryptanalysis, the decoded text itself is an unusually useful diagnostic."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#burn-in-for-the-cipher",
+    "href": "slides/lec-mcmc.html#burn-in-for-the-cipher",
+    "title": "Markov chain Monte Carlo",
+    "section": "Burn-in for the cipher",
+    "text": "Burn-in for the cipher\nA random starting key usually decodes to nonsense.\nThe beginning of the chain mostly describes its trip away from that arbitrary starting key.\nWe may discard an initial section:\n\nkept_scores &lt;- scores[-(1:burn_in)]\nkept_keys &lt;- chain[-(1:burn_in)]\n\nThe traceplot should help us judge whether the early behavior looks different from the later behavior."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#mcmc-or-optimization",
+    "href": "slides/lec-mcmc.html#mcmc-or-optimization",
+    "title": "Markov chain Monte Carlo",
+    "section": "MCMC or optimization?",
+    "text": "MCMC or optimization?\nFor cryptanalysis, we may care most about the best key found:\n\nbest_iteration &lt;- which.max(scores)\nbest_key &lt;- chain[[best_iteration]]\n\nSo this application has an optimization flavor.\nBut MCMC’s defining goal is broader:\n\nConstruct a chain with a chosen stationary distribution and use its visited states for Monte Carlo calculations."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#why-this-is-monte-carlo",
+    "href": "slides/lec-mcmc.html#why-this-is-monte-carlo",
+    "title": "Markov chain Monte Carlo",
+    "section": "Why this is Monte Carlo",
+    "text": "Why this is Monte Carlo\nOnce the chain is exploring its stationary distribution, we can estimate an average under the target using\n\\[\n\\frac{1}{N}\n\\sum_{t=1}^N h(X_t).\n\\]\nThis looks like ordinary Monte Carlo.\nThe key difference is:\n\nThe simulated values are dependent because they come from a Markov chain.\n\nHence:\n\nMarkov chain Monte Carlo"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#exercise-1",
+    "href": "slides/lec-mcmc.html#exercise-1",
+    "title": "Markov chain Monte Carlo",
+    "section": "Exercise",
+    "text": "Exercise\nReturn to the cryptanalysis problem.\nSuppose your chain has a very low acceptance rate and its score traceplot has long flat stretches.\nDiscuss with a neighbor:\n\nWhat is likely happening to the proposed keys?\nHow could you change the proposal mechanism?\nWhy would accepting only proposals with a higher English score be risky?\nWhy might running several chains from different random keys be useful?"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#takeaways",
+    "href": "slides/lec-mcmc.html#takeaways",
+    "title": "Markov chain Monte Carlo",
+    "section": "Takeaways",
+    "text": "Takeaways\n\nMCMC constructs a Markov chain whose stationary distribution is a target we want to explore.\nMetropolis proposes a move and sometimes rejects it.\nAccepting some worse moves prevents the method from becoming simple hill climbing.\nIrreducibility and aperiodicity help ensure the chain can explore properly.\nBurn-in reduces the influence of an arbitrary starting value.\nTraceplots, acceptance rates, and multiple starts can reveal obvious problems.\nIn cryptanalysis, states are substitution keys and the target favors English-looking decryptions."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#sources",
+    "href": "slides/lec-mcmc.html#sources",
+    "title": "Markov chain Monte Carlo",
+    "section": "Sources",
+    "text": "Sources\n\nDiaconis, P. (2009). “The Markov chain Monte Carlo revolution.” Bulletin of the American Mathematical Society, 46(2), 179–205.\nMetropolis, N., Rosenbluth, A. W., Rosenbluth, M. N., Teller, A. H., & Teller, E. (1953). “Equation of state calculations by fast computing machines.” Journal of Chemical Physics, 21, 1087–1092."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#basic-cryptology-terminology",
+    "href": "slides/lec-mcmc.html#basic-cryptology-terminology",
+    "title": "Markov chain Monte Carlo",
+    "section": "Basic cryptology terminology",
+    "text": "Basic cryptology terminology\n\ncryptography: making secret messages (encryption)\n\nsubstitution\ntransposition\n\ncryptanalysis: breaking secret messages (decryption)\ncryptology: the study of cryptography and cryptanalysis\n\n\n\nplain text: the actual message\ncipher text: the encrypted message\nkey: information to encode (or decode) cryptographic key\nsymmetric (same key for encryption and decryption)\nasymmetric (different key to encrypt and decrypt)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#brute-force-approach",
+    "href": "slides/lec-mcmc.html#brute-force-approach",
+    "title": "Markov chain Monte Carlo",
+    "section": "Brute force approach?",
+    "text": "Brute force approach?\n\n\n\n\n\n\n\n\n\n\n\n\nTrying every possible key is known as a “brute force” approach.\n\n\nSince every key is a permutation of the alphabet, there are\n\\[\n26!\n\\]\npossible keys.\n\nfactorial(26)\n\n[1] 4.032915e+26\n\n\nIf you’re computer could “try” 1 million keys per second, it would still take 4.6677252^{15} years to try every possible key and guarantee a solution.\n\n\n\nChat with your neighbor and develop a strategy better than the brute force approach."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#a-note-on-numerical-stability",
+    "href": "slides/lec-mcmc.html#a-note-on-numerical-stability",
+    "title": "Markov chain Monte Carlo",
+    "section": "A note on numerical stability",
+    "text": "A note on numerical stability\nPractically, we want to avoid computing\n  ratio &lt;- target_score(proposal) /\n    target_score(current)\ndirectly, because it could be numerically unstable for very small/large target_score(). To make things more stable, we always log the ratio and modify the code as such:\n\nfor (t in 2:n_steps) {\n\n  proposal &lt;- propose(current)\n\n  log_ratio &lt;- log_target_score(proposal) -\n    log_target_score(current)\n\n  if (log(runif(1)) &lt; log_ratio) {\n    current &lt;- proposal\n  }\n\n  chain[t] &lt;- current\n}"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#the-blind-monkey-on-an-island",
+    "href": "slides/lec-mcmc.html#the-blind-monkey-on-an-island",
+    "title": "Markov chain Monte Carlo",
+    "section": "The blind monkey on an island",
+    "text": "The blind monkey on an island"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#choose-delta",
+    "href": "slides/lec-mcmc.html#choose-delta",
+    "title": "Markov chain Monte Carlo",
+    "section": "Choose delta",
+    "text": "Choose delta\nWe have to choose \\(\\delta\\). How should we choose it? Let’s gain some intuition by trying out three different values of \\(\\delta\\).\nLet’s look at how various \\(\\delta\\) let us sample the target:\n\n\\(\\delta = 0.1\\)\\(\\delta = 1\\)\\(\\delta = 4\\)"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#trace-plots",
+    "href": "slides/lec-mcmc.html#trace-plots",
+    "title": "Markov chain Monte Carlo",
+    "section": "Trace plots",
+    "text": "Trace plots\nLet’s look at the trace plots for each \\(\\delta\\). A traceplot shows the state of the chain against iteration.\n\ndelta = 0.1delta = 1delta = 4table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcceptance rate for each delta\n\n\n0.1\n1\n4\n\n\n\n\n0.96\n0.7\n0.29"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#intuition-blind-monkey-on-an-island",
+    "href": "slides/lec-mcmc.html#intuition-blind-monkey-on-an-island",
+    "title": "Markov chain Monte Carlo",
+    "section": "Intuition: blind monkey on an island",
+    "text": "Intuition: blind monkey on an island"
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#references",
+    "href": "slides/lec-mcmc.html#references",
+    "title": "Markov chain Monte Carlo",
+    "section": "References",
+    "text": "References\n\nDiaconis, P. (2009). “The Markov chain Monte Carlo revolution.” Bulletin of the American Mathematical Society, 46(2), 179–205.\nMetropolis, N., Rosenbluth, A. W., Rosenbluth, M. N., Teller, A. H., & Teller, E. (1953). “Equation of state calculations by fast computing machines.” Journal of Chemical Physics, 21, 1087–1092."
+  },
+  {
+    "objectID": "slides/lec-mcmc.html#try-it-yourself",
+    "href": "slides/lec-mcmc.html#try-it-yourself",
+    "title": "Markov chain Monte Carlo",
+    "section": "Try it yourself",
+    "text": "Try it yourself\n\ndownload.file(url = \"https://sta323-fa26.github.io/scripts/cryptanalysis.qmd\",\n              destfile = \"cryptanalysis.qmd\")"
   }
 ]
