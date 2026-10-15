@@ -73,7 +73,7 @@ schedule %>%
 | 7 | Tue Oct 06 |  intro to simulation | [💻](/slides/lec-intro-simulation.html) | project workday|  | <!-- project workday -->
 |  | Thu Oct 08 | Markov chains | [💻](/slides/lec-Markov-chains.html)   |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |   |  |
-|  | Thu Oct 15 |  |  |  |  |
+|  | Thu Oct 15 | MCMC | [💻](/slides/lec-mcmc.html) |  |  |
 | 9 | Tue Oct 20 |  |  | lab 5  | mp presentations |
 |  | Thu Oct 22 |  |  |  |  |
 | 10 | Tue Oct 27 |  |  | lab 6 | |
