@@ -67,7 +67,7 @@ score <- function(decoded) {
 
 set.seed(360)
 accept = 0
-S = 10000
+S = 5000
 ## one possible starting guess:
 # key = sample(alphabet, size = 27, replace = FALSE)
 
@@ -76,7 +76,7 @@ key = alphabet
 
 best_guess = decode(key, cipher_text)
 score_max = score(best_guess)
-
+SCORES <- NULL
 for (s in 1:S) {
   ## change 2 characters
   proposal = sample(1:26, 2) # select 2 letters to switch
@@ -101,7 +101,16 @@ for (s in 1:S) {
     best_guess = decode(prop.key, cipher_text)
   }
   
+  SCORES <- c(SCORES, score_current)
+  
   if(s %% 100 == 0){
     cat("iteration ", s, ": ", decode(key, cipher_text), "\n")
   }
 }
+
+
+## PLOT 
+data.frame(score = SCORES, iteration = 1:length(SCORES)) |>
+  ggplot(aes(x = iteration, y = score)) +
+  geom_line()
+
