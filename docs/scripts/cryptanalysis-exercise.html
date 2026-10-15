@@ -206,8 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>trans.prob.mat <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(<span class="st">"https://sta602-sp26.github.io/data/trans-prob-mat.rds"</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cipher_text <span class="ot">=</span> <span class="fu">readLines</span>(<span class="st">"https://sta602-sp26.github.io/data/ciphertext.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>trans.prob.mat <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">url</span>(<span class="st">"https://sta323-fa26.github.io/data/trans-prob-mat.rds"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>cipher_text <span class="ot">=</span> <span class="fu">readLines</span>(<span class="st">"https://sta323-fa26.github.io/data/ciphertext.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here is a secret message to decrypt:</p>
 <div class="cell">
@@ -222,7 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
 <ul>
 <li><p>What should be the sum of a row of <code>trans.prob.mat</code>? Check this for each row of the data frame.</p></li>
-<li><p>Create a heatmapof character frequency, where the y-axis is the first letter and the x-axis is the second letter in a two letter chain. Hint: <code>as.table()</code> will give character frequencies in a way amenable to <code>ggplot2</code> plotting. Check out <code>geom_tile()</code> for the heatmap.</p></li>
+<li><p>Create a heatmap of character frequency, where the y-axis is the first letter and the x-axis is the second letter in a two letter chain. Hint: <code>as.table()</code> will give character frequencies in a way amenable to <code>ggplot2</code> plotting. Check out <code>geom_tile()</code> for the heatmap.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

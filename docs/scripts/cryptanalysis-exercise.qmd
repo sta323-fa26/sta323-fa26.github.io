@@ -12,8 +12,8 @@ execute:
 ```{r load-data}
 #| eval: true
 # load the data
-trans.prob.mat = readRDS(url("https://sta323-sp26.github.io/data/trans-prob-mat.rds"))
-cipher_text = readLines("https://sta323-sp26.github.io/data/ciphertext.txt")
+trans.prob.mat = readRDS(url("https://sta323-fa26.github.io/data/trans-prob-mat.rds"))
+cipher_text = readLines("https://sta323-fa26.github.io/data/ciphertext.txt")
 ```
 
 Here is a secret message to decrypt:
