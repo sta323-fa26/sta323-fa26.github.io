@@ -1274,7 +1274,7 @@ for (t in 2:n_steps) {
 #| eval: false
 download.file(
   url = "https://sta323-fa26.github.io/scripts/cryptanalysis-exercise.qmd",
-              destfile = "cryptanalysis.qmd")
+              destfile = "cryptanalysis-exercise.qmd")
 ```
 
 

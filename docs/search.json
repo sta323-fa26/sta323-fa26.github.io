@@ -6024,7 +6024,7 @@
     "href": "slides/lec-mcmc.html#try-it-yourself",
     "title": "Markov chain Monte Carlo",
     "section": "Try it yourself",
-    "text": "Try it yourself\n\ndownload.file(\n  url = \"https://sta323-fa26.github.io/scripts/cryptanalysis-exercise.qmd\",\n              destfile = \"cryptanalysis.qmd\")"
+    "text": "Try it yourself\n\ndownload.file(\n  url = \"https://sta323-fa26.github.io/scripts/cryptanalysis-exercise.qmd\",\n              destfile = \"cryptanalysis-exercise.qmd\")"
   },
   {
     "objectID": "slides/lec-mcmc.html#choose-proposal-sd",
