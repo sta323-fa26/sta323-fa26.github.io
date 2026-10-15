@@ -1,7 +1,7 @@
 
 # load the data
 trans.prob.mat = readRDS("data/trans-prob-mat.rds")
-cipher_text = readLines("https://sta602-sp26.github.io/data/ciphertext.txt")
+cipher_text = readLines("https://sta323-fa26.github.io/data/ciphertext.txt")
 
 # trans.prob.mat |>
 #   as.matrix() |>

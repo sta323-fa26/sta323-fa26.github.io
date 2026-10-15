@@ -73,18 +73,18 @@ schedule %>%
 | 7 | Tue Oct 06 |  intro to simulation | [💻](/slides/lec-intro-simulation.html) | project workday|  | <!-- project workday -->
 |  | Thu Oct 08 | Markov chains | [💻](/slides/lec-Markov-chains.html)   |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |   |  |
-|  | Thu Oct 15 | MCMC | [💻](/slides/lec-mcmc.html) |  |  |
-| 9 | Tue Oct 20 |  |  | lab 5  | mp presentations |
-|  | Thu Oct 22 |  |  |  |  |
-| 10 | Tue Oct 27 |  |  | lab 6 | |
-|  | Thu Oct 29 |  |  |  |  |
-| 11 | Tue Nov 03 |  |  |  |  | <!--project workday -->
-|  | Thu Nov 05 |  |  |  |  |
-| 12 | Tue Nov 10 |  |  |  |  | <!-- lab 7 -->
-|  | Thu Nov 12 |  |  |  |  |
-| 13 | Tue Nov 17 | exam 2 |  |  |  |
-|  | Thu Nov 19 |  |  |  |  |
-| 14 | Tue Nov 24 |  |  | project workday |  |
+|  | Thu Oct 15 | Markov chain Monte Carlo | [💻](/slides/lec-mcmc.html) |  |  |
+| 9 | Tue Oct 20 | MCMC example |  | lab 5  | mp presentations |
+|  | Thu Oct 22 | complexity and parallelization |  |  |  |
+| 10 | Tue Oct 27 | databases and dplyr|  |  | |
+|  | Thu Oct 29 | duckDB and SQL |  |  |  |
+| 11 | Tue Nov 03 | biglm  |  | lab 6 |  | <!--project workday -->
+|  | Thu Nov 05 | R packages |  |  |  |
+| 12 | Tue Nov 10 | testthat |  |  |  | <!-- lab 7 -->
+|  | Thu Nov 12 | APIs |  |  |  |
+| 13 | Tue Nov 17 | exam 2 |  | no lab |  |
+|  | Thu Nov 19 | shiny I |  |  |  |
+| 14 | Tue Nov 24 | shiny II |  | project workday |  |
 |  | Thu Nov 26 | NO CLASS |  |  |  |
 | 15 | Tue Dec 01 | project presentations |  |  | fp presentations |
 |  | Thu Dec 03 |  |  |  |  |
