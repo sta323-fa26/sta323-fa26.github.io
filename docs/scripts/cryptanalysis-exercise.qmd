@@ -1,0 +1,77 @@
+---
+title: "Cryptanalysis"
+subtitle: "STA 323"
+editor: source
+format: html
+execute:
+  error: true
+---
+
+## Load the data
+
+```{r load-data}
+#| eval: true
+# load the data
+trans.prob.mat = readRDS(url("https://sta323-sp26.github.io/data/trans-prob-mat.rds"))
+cipher_text = readLines("https://sta323-sp26.github.io/data/ciphertext.txt")
+```
+
+Here is a secret message to decrypt:
+
+```{r}
+cipher_text
+```
+
+To score different keys, we have constructed a frequency table from all the 2-tuples of characters in the book *War and Peace* by Leo Tolstoy. The result is a data frame, `trans.prob.mat`, loaded in the code chunk above. We include the whitespace character as a 27th character in our alphabet. The row denotes the first English letter in a 2 character sequence while columns determine the second letter in the character sequence.
+
+## Exercise 1 
+
+- What should be the sum of a row of `trans.prob.mat`? Check this for each row of the data frame.
+
+- Create a heatmap of character frequency, where the y-axis is the first letter and the x-axis is the second letter in a two letter chain. Hint: `as.table()` will give character frequencies in a way amenable to `ggplot2` plotting. Check out `geom_tile()` for the heatmap.
+
+```{r frequency-plot}
+# code here
+```
+
+## Exercise 2
+
+Explain what the function below does.
+
+```{r}
+#| label: score-function
+ 
+score <- function(decoded) {
+  logprob <- 0
+  prevletter <- "SPACE"
+  for (i in 1:nchar(decoded)) {
+    curletter <- substring(decoded, i, i)
+    if(curletter == " ") {
+      curletter <- "SPACE"
+    }
+    logprob <- logprob + log(trans.prob.mat[rownames(trans.prob.mat) == prevletter,
+                                             colnames(trans.prob.mat) == curletter])
+    prevletter <- curletter
+  }
+  return(logprob)
+} 
+```
+
+## Exercise 3
+
+Write a function `decode`
+
+```{r}
+## alphabet with space
+alphabet <- c(LETTERS, " ")
+
+## decode: decrypt ciphertext using a key and return the decoded text
+
+decode <- function(key, coded) {
+# code here
+}
+```
+
+## Exercise 4
+
+Write a function `mcmcAttack(chainLength = 500, secret_message, starting_key)` that takes a `secret_message` and tries to break it by running MCMC, creating a chain of length `chainLength` and using `starting_key` as a starting point.

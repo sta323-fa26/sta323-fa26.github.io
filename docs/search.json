@@ -1257,7 +1257,7 @@
     "href": "scripts/cryptanalysis.html#load-the-data",
     "title": "Cryptanalysis",
     "section": "Load the data",
-    "text": "Load the data\n\nwarandpeace = readLines(\n  \"https://sta323-sp23.github.io/data/warandpeace.txt\")\nfrequency = read.table(\n  \"https://sta323-sp23.github.io/data/frequencies.txt\")\ncolnames(frequency) = c(toupper(letters), \"\") # edit column names\nsecret_message = readLines(\n  \"https://sta323-sp23.github.io/data/ciphertext.txt\")"
+    "text": "Load the data\n\nwarandpeace = readLines(\n  \"https://sta323-fa26.github.io/data/warandpeace.txt\")\nfrequency = read.table(\n  \"https://sta323-fa26.github.io/data/frequencies.txt\")\ncolnames(frequency) = c(toupper(letters), \"\") # edit column names\nsecret_message = readLines(\n  \"https://sta323-fa26.github.io/data/ciphertext.txt\")"
   },
   {
     "objectID": "scripts/cryptanalysis.html#exercise",
@@ -6024,7 +6024,7 @@
     "href": "slides/lec-mcmc.html#try-it-yourself",
     "title": "Markov chain Monte Carlo",
     "section": "Try it yourself",
-    "text": "Try it yourself\n\ndownload.file(url = \"https://sta323-fa26.github.io/scripts/cryptanalysis.qmd\",\n              destfile = \"cryptanalysis.qmd\")"
+    "text": "Try it yourself\n\ndownload.file(\n  url = \"https://sta323-fa26.github.io/scripts/cryptanalysis-exercise.qmd\",\n              destfile = \"cryptanalysis.qmd\")"
   },
   {
     "objectID": "slides/lec-mcmc.html#choose-proposal-sd",
@@ -6066,7 +6066,7 @@
     "href": "slides/lec-mcmc.html#will-we-reach-stationarity",
     "title": "Markov chain Monte Carlo",
     "section": "Will we reach stationarity?",
-    "text": "Will we reach stationarity?\nFor the Markov chains we consider, irreducibility, positive recurrence, and aperiodicity guarantee a unique stationary distribution and convergence to it in infinite time.\n\nRecall:\n\nirreducible: every state can eventually be reached from every other state\npositive recurrence: starting from any state, the chain returns to that state eventually with probability 1.\n\n\n\nNew:\n\naperiodic: the chain is not forced to revisit states only at regularly spaced times."
+    "text": "Will we reach stationarity?\nFor a discrete state Markov chain, such as the cryptanalysis example we consider, irreducibility, positive recurrence, and aperiodicity guarantee a unique stationary distribution and convergence to it in infinite time.\n\nRecall:\n\nirreducible: every state can eventually be reached from every other state\npositive recurrence: starting from any state, the chain returns to that state eventually with probability 1.\n\n\n\nNew:\n\naperiodic: the chain is not forced to revisit states only at regularly spaced times."
   },
   {
     "objectID": "slides/lec-mcmc.html#cryptanalysis-the-state-and-proposal",
@@ -6074,5 +6074,47 @@
     "title": "Markov chain Monte Carlo",
     "section": "Cryptanalysis: the state and proposal",
     "text": "Cryptanalysis: the state and proposal\nFor the substitution cipher,\n\\[\nX_t\n=\n\\text{current substitution key}.\n\\]\nA simple proposal is:\n\nPick two letters at random and swap their assignments.\n\nAny permutation can be transformed into any other permutation through a sequence of swaps.\nSo this proposal can, in principle, reach every possible key.\nThat gives us irreducibility."
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html",
+    "href": "scripts/cryptanalysis-exercise.html",
+    "title": "Cryptanalysis",
+    "section": "",
+    "text": "# load the data\ntrans.prob.mat = readRDS(url(\"https://sta602-sp26.github.io/data/trans-prob-mat.rds\"))\ncipher_text = readLines(\"https://sta602-sp26.github.io/data/ciphertext.txt\")\n\nHere is a secret message to decrypt:\n\ncipher_text\n\n[1] \"REART COSFRA COS AU DR UT EUA AU DR ACOA BL ACR MIRLABUE ZCRACRT ABL EUDFRT BE ACR SBEV AU LIPPRT ACR LFBENL OEV OTTUZL UP UIATONRUIL PUTAIER UT AU AOQR OTSL ONOBELA O LRO UP ATUIDFRL OEV DK UGGULBEN REV ACRS\"\n\n\nTo score different keys, we have constructed a frequency table from all the 2-tuples of characters in the book War and Peace by Leo Tolstoy. The result is a data frame, trans.prob.mat, loaded in the code chunk above. We include the whitespace character as a 27th character in our alphabet. The row denotes the first English letter in a 2 character sequence while columns determine the second letter in the character sequence."
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html#load-the-data",
+    "href": "scripts/cryptanalysis-exercise.html#load-the-data",
+    "title": "Cryptanalysis",
+    "section": "",
+    "text": "# load the data\ntrans.prob.mat = readRDS(url(\"https://sta602-sp26.github.io/data/trans-prob-mat.rds\"))\ncipher_text = readLines(\"https://sta602-sp26.github.io/data/ciphertext.txt\")\n\nHere is a secret message to decrypt:\n\ncipher_text\n\n[1] \"REART COSFRA COS AU DR UT EUA AU DR ACOA BL ACR MIRLABUE ZCRACRT ABL EUDFRT BE ACR SBEV AU LIPPRT ACR LFBENL OEV OTTUZL UP UIATONRUIL PUTAIER UT AU AOQR OTSL ONOBELA O LRO UP ATUIDFRL OEV DK UGGULBEN REV ACRS\"\n\n\nTo score different keys, we have constructed a frequency table from all the 2-tuples of characters in the book War and Peace by Leo Tolstoy. The result is a data frame, trans.prob.mat, loaded in the code chunk above. We include the whitespace character as a 27th character in our alphabet. The row denotes the first English letter in a 2 character sequence while columns determine the second letter in the character sequence."
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html#exercise-1",
+    "href": "scripts/cryptanalysis-exercise.html#exercise-1",
+    "title": "Cryptanalysis",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nWhat should be the sum of a row of trans.prob.mat? Check this for each row of the data frame.\nCreate a heatmapof character frequency, where the y-axis is the first letter and the x-axis is the second letter in a two letter chain. Hint: as.table() will give character frequencies in a way amenable to ggplot2 plotting. Check out geom_tile() for the heatmap.\n\n\n# code here"
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html#exercise-2",
+    "href": "scripts/cryptanalysis-exercise.html#exercise-2",
+    "title": "Cryptanalysis",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nExplain what the function below does.\n\nscore &lt;- function(decoded) {\n  logprob &lt;- 0\n  prevletter &lt;- \"SPACE\"\n  for (i in 1:nchar(decoded)) {\n    curletter &lt;- substring(decoded, i, i)\n    if(curletter == \" \") {\n      curletter &lt;- \"SPACE\"\n    }\n    logprob &lt;- logprob + log(trans.prob.mat[rownames(trans.prob.mat) == prevletter,\n                                             colnames(trans.prob.mat) == curletter])\n    prevletter &lt;- curletter\n  }\n  return(logprob)\n}"
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html#exercise-3",
+    "href": "scripts/cryptanalysis-exercise.html#exercise-3",
+    "title": "Cryptanalysis",
+    "section": "Exercise 3",
+    "text": "Exercise 3\nWrite a function decode\n\n## alphabet with space\nalphabet &lt;- c(LETTERS, \" \")\n\n## decode: decrypt ciphertext using a key and return the decoded text\n\ndecode &lt;- function(key, coded) {\n# code here\n}"
+  },
+  {
+    "objectID": "scripts/cryptanalysis-exercise.html#exercise-4",
+    "href": "scripts/cryptanalysis-exercise.html#exercise-4",
+    "title": "Cryptanalysis",
+    "section": "Exercise 4",
+    "text": "Exercise 4\nWrite a function mcmcAttack(chainLength = 500, secret_message, starting_key) that takes a secret_message and tries to break it by running MCMC, creating a chain of length chainLength and using starting_key as a starting point."
   }
 ]

@@ -1039,7 +1039,7 @@ Want: traceplots to look like fuzzy caterpillars.
 
 ## Will we reach stationarity?
 
-For the Markov chains we consider, **irreducibility**, **positive recurrence**, and **aperiodicity** guarantee a unique stationary distribution and convergence to it in infinite time.
+For a discrete state Markov chain, such as the cryptanalysis example we consider, **irreducibility**, **positive recurrence**, and **aperiodicity** guarantee a unique stationary distribution and convergence to it in infinite time.
 
 . . . 
 
@@ -1272,7 +1272,8 @@ for (t in 2:n_steps) {
 
 ```{r}
 #| eval: false
-download.file(url = "https://sta323-fa26.github.io/scripts/cryptanalysis.qmd",
+download.file(
+  url = "https://sta323-fa26.github.io/scripts/cryptanalysis-exercise.qmd",
               destfile = "cryptanalysis.qmd")
 ```
 
