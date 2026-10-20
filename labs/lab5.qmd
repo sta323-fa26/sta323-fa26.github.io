@@ -1,164 +1,310 @@
 ---
-title: "Lab 5: Where's zero?"
-subtitle: "Due Friday, October 17 5:00pm"  
+title: "Lab 5: Surf the web"
+subtitle: "Due Monday, November 2 at 5:00pm"  
 editor: source
 execute:
   eval: false
 ---
 
-> "The root of [the function] is bitter [when unsolvable via Newton-Raphson] but the fruit is sweet"
-> -- Aristotle
+> "I surf, therefore I am."
+> -- René Descartes
+
 
 By the end of the lab, you will...
 
-- write likelihoods
-- compute MLEs using Newton's method
+- Simulate a Markov chain and estimate its long-run distribution.
+- Use simulation to construct PageRank and study Monte Carlo convergence.
+- Compare a random-surfer model with paths taken by real people.
 
 ::: callout-warning
-Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is "accidentally" pushed.
+Make sure everyone in your team knows when to stop committing! After 5pm on
+the due date will result in late penalty applying for the team, even if a
+commit is "accidentally" pushed.
 :::
 
 # Getting started
 
--   In the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa25/lab-5-team_name.git` where `team_name` is replaced with your team name (see the excel signup sheet in box or your github).
+- In the *terminal* tab, type `cd ~` to navigate to your home directory. Next,
+  clone your lab repository from the course GitHub organization.
 
--   Navigate to your `lab-5` folder and open the `.Rproj` file.
+- Navigate to your lab folder and open the `.Rproj` file.
 
--   Open the Quarto (`.qmd`) file, change the author name to your team name followed by a colon and then the names of the team members. Note that to make sure your teammates names all render within the 80 character code limit, you can write
+- Open the Quarto (`.qmd`) file and change the author name to your team name
+  followed by a colon and then the names of the team members.
 
-```
-author: |
-    | author 1 
-    | author 2
-    | author 3
-```
-
-## Exercises
-
-For all exercises, you should respond in the space provided in the template `lab-5.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
-
-### 1. Weibull MLE
+A complete list of packages used in this lab is provided below:
 
 ```{r}
-x = c(1.811328, 0.9210481, 1.753609, 0.1971982, 1.957823, 0.9607706, 0.3611815,
-      0.9710981, 1.684854, 1.49811, 0.4599071, 1.18149, 0.04501055, 0.2688005,
-      0.9070787, 0.1067991, 0.8979944, 0.1442192, 0.3690044, 1.250377,
-      0.7919656, 0.2785386, 1.312061, 1.794021, 1.867813, 1.374013, 0.7282234,
-      0.6067082, 1.062187, 0.08889603, 0.5668522, 0.743226, 0.6237324,
-      0.2951361, 0.2185725, 0.8271643, 0.4682848, 0.7791434, 0.2655503,
-      0.5545753, 0.7419484, 0.1427752, 0.3778655, 1.327472, 0.93939,
-      0.9402052, 0.8784793, 0.605618, 0.7390297, 0.7402008)
-```
-
-Assume 
-$$
-x_i
-\overset{\mathrm{iid}}{\sim}
-Weibull(\lambda, k) 
-$$
-Find the maximum likelihood estimates $\hat{k}_{MLE}$ and $\hat{\lambda}_{MLE}$ using Newton's method. In your solution, code Newton's method and all derivatives yourself. Do not use a package or library for this. Show all your work (including writing down any relevant math).
-
-Initialize your algorithm with $k = 2$. Set your stopping tolerance to `0.001` and maximum iterations to `500`. 
-
-Report your estimates $\hat{k}_{MLE}$ and $\hat{\lambda}_{MLE}$.
-
-::: callout-tip
-## Hint
-- You only need to perform Newton's method on the parameter $k$ here.
-:::
-
-
-### 2. visualize Weibull gradient w.r.t $k$
-
-Following up on the previous exercise, let's gain insight into when and how Newton's method can fail.
-
-- Set your starting $k = 4$. What value $k$ converge to? Is this a valid value of $k$?
-
-- To gain insight into this, plot the derivative of the log-likelihood of $k$ from `0.01` to `5`. Why does starting at 4 change the result? 
-
-- Next plot the derivative of the log-likelihood from `-5` to `-0.01`. Be sure to appropriately label your plots, add relevant titles, etc. Combine your plots using [`patchwork`](https://sta323-fa25.github.io/slides/lec07.html#/patchwork). 
-
-- Finally, edit your Newton-Raphson algorithm to "reflect" negative values, i.e. if the updated iterate is negative, force it to be positive. Re-run your Newton's method starting at $k=4$. What does $k$ converge to? Why?
-
-::: callout-tip 
-## Hint
-
-Write the gradient with respect to $k$ as a function of $k$ alone (as in lecture).
-:::
-
-### 3. zero-inflated Poisson
-
-Zero-inflated models allow for frequent zero-valued observations. You observe 100 people at the beach fishing. The number of fish each individual catches is reported in the data `fishing_count` below.
-
-```{r}
-fishing_count = c(0, 0, 0, 3, 0, 3, 5, 0, 8, 1,
-                  0, 0, 0, 0, 3, 4, 0, 4, 8, 0,
-                  0, 0, 4, 0, 0, 6, 4, 0, 4, 0,
-                  0, 0, 0, 0, 4, 8, 4, 0, 0, 0,
-                  7, 3, 0, 2, 0, 0, 7, 7, 5, 0,
-                  0, 0, 7, 6, 0, 3, 0, 0, 0, 5,
-                  4, 1, 0, 0, 0, 0, 0, 0, 0, 8,
-                  0, 5, 0, 3, 0, 0, 3, 0, 0, 2,
-                  0, 5, 0, 7, 7, 0, 1, 0, 2, 7,
-                  0, 2, 4, 0, 0, 1, 5, 0, 0, 0)
-```
-
-- Visualize the distribution of the data using an appropriate visualization. Label axes and describe your plot.
-
-The data can be described as being generated from a zero-inflated mixture model. Let $Y_i$ be the number of fish an individual catches at the beach,
-
-$$
-\begin{aligned}
-p(Y_i = 0) &= p + (1-p) e^{-\lambda}\\
-p(Y_i = y_i) &= \frac{(1 - p)\lambda^{y_i}e^{-\lambda}}{y_i!}, \ \ y_i = 1, 2, 3, \ldots
-\end{aligned}
-$$
-
-- Assume observations $\{Y_i\}$ are independent. Write down the log-likelihood and visualize the log-likelihood as a function of $p$ while fixing $\lambda = 5$. Repeat for $\lambda = 4$ (on the same plot). Based on your plot, which value of $\lambda$ is more likely? Also, assuming these $\lambda$ are sufficiently close to the true $\lambda$, what is (approximately) the MLE of $p$ based on your plot? 
-
-Using this mixture model, compute the maximum likelihood estimates $\hat{p}_{MLE}$ and $\hat{\lambda}_{MLE}$ using Newton's method. In your solution, code Newton's method and all derivatives yourself. Do not use a package or library for this. Show all your work (including writing down any relevant math).
-
-Initialize your algorithm with $\lambda = 2$. Set your stopping tolerance to `0.001` and maximum iterations to `500`.
-
-::: callout-tip
-## Hint
-- To begin, write the likelihood of the data. This is your **objective** function that you wish to maximize.
-
-- You only need to perform Newton's method on the parameter $\lambda$ here.
-:::
-
-```{r}
-#| echo: false
-#| eval: false
-set.seed(4)
-n = 100
-lambda = 4
-p = 0.5
-
-y = rpois(n, lambda = lambda) * rbinom(n, prob = 1 - p, size = 1)
-y %>%
-  hist()
-```
-
-
-```{r}
-#| echo: false
+#| label: packages
 #| eval: false
 library(tidyverse)
-set.seed(1)
-m = 15
-n = rbinom(15, prob = 0.8, size = 10)
-id = seq(1, m)
-n
-
-p = rbeta(15, 0.5, 0.5)
-p
-
-data.frame(id, n, p) %>%
-  mutate(success = rbinom(15, size = n, prob = p))
+library(igraph)
 ```
 
+<!-- ## Exercises -->
 
+<!-- You should **not** use `igraph::page_rank()` until Exercise 4. The purpose of -->
+<!-- Exercises 2 and 3 is to construct PageRank yourself by simulation. -->
+
+## The data
+
+The data in this lab come from the
+[Wikispeedia data set](https://snap.stanford.edu/data/wikispeedia.html)
+published by the Stanford Network Analysis Project (SNAP). Wikispeedia was an
+online game in which a player was given a starting Wikipedia article and a
+target article. The player attempted to reach the target using only hyperlinks
+on the articles they visited.
+
+<!-- The data contain a fixed, condensed version of Wikipedia with 4,604 articles, -->
+<!-- 119,882 directed hyperlinks, and 51,318 completed human navigation paths. -->
+The data contain a fixed, condensed version of Wikipedia with several thousand articles,
+over one hundred thousand directed hyperlinks, and tens of thousands of completed human navigation paths.
+The original data were collected and analyzed by [West et al. (2009)](https://www.cs.mcgill.ca/~jpineau/files/rwest-ijcai09.pdf).
+
+The following files are provided in the `data` folder.
+
+#### `articles.tsv`
+
+A one-column file containing every article in the Wikispeedia network. Article
+names are URL encoded. For example, spaces appear as underscores and some
+special characters are represented using `%` followed by hexadecimal digits.
+Lines beginning with `#` contain metadata rather than observations.
+
+#### `links.tsv`
+
+A two-column file. Each row records a directed hyperlink from `source` to
+`destination`. Thus, the row
+
+```text
+Statistics    Mathematics
+```
+
+would mean that the *Statistics* article contains a hyperlink to the
+*Mathematics* article. A link in the other direction does not automatically
+exist.
+
+#### `paths_finished.tsv`
+
+Each row is one successfully completed Wikispeedia game. The important
+variable for this lab is `path`, which records the sequence of articles named
+in the player's path, separated by semicolons. A `<` indicates that the player
+pressed the back button.
+
+::: callout-tip
+## Reading the files
+
+The files have metadata lines beginning with `#`, but do not have ordinary
+column headers. Useful arguments to `read_tsv()` are therefore `comment` and
+`col_names`. Missing ratings are recorded as `NULL`.
+:::
+
+## 1. Explore the Wikipedia network
+
+Read all three data sets. Name the resulting objects `articles`, `links`, and
+`paths`. Use the following column names:
+
+- `articles`: `article`
+- `links`: `source`, `destination`
+- `paths`: `user`, `timestamp`, `duration`, `path`, `rating`
+
+Answer the following questions.
+
+1. How many articles, directed hyperlinks, and completed human paths are in
+   the data?
+2. Verify that every `source` and `destination` appearing in `links` is also
+   present in `articles`.
+3. For each article, calculate its **in-degree**, the number of hyperlinks
+   pointing *to* that article, and its **out-degree**, the number of hyperlinks
+   pointing *from* that article. Articles with no incoming or outgoing links
+   should receive a degree of zero.
+4. Display the ten articles with the largest in-degree and the ten with the
+   largest out-degree. Briefly describe what kinds of articles tend to appear
+   near the top of each list.
+
+<!-- For displayed results, convert article names to a more readable form. The -->
+<!-- following helper function may be useful. -->
+
+<!-- ```{r} -->
+<!-- #| label: pretty-name -->
+<!-- #| eval: false -->
+<!-- pretty_name <- function(x) { -->
+<!--   x |> -->
+<!--     URLdecode() |> -->
+<!--     str_replace_all("_", " ") -->
+<!-- } -->
+<!-- ``` -->
+
+## 2. Build a random surfer
+
+Suppose a person browses this version of Wikipedia according to the following
+rules.
+
+At each step:
+
+1. With probability 0.15, the surfer jumps to an article chosen uniformly at
+   random from all 4,604 articles.
+2. Otherwise, the surfer follows one outgoing hyperlink chosen uniformly at
+   random from the current article.
+3. If the current article has no outgoing hyperlinks, the surfer must jump to
+   a uniformly selected article.
+
+This defines a Markov chain whose states are Wikipedia articles.
+
+First, use `split()` to construct a list named `outlinks`. Each element should
+contain the destinations reachable in one click from a particular source
+article. For example, `outlinks[["Statistics"]]` should return the articles
+linked from *Statistics*.
+
+Next, write a function
+
+```r
+random_surfer(start, n_steps, jump_prob = 0.15)
+```
+
+that simulates the process. The function should return a character vector of
+length `n_steps + 1`, including the starting article as its first element.
+Your function should use `outlinks` and `articles`, and it should work for
+articles with no outgoing links.
+
+Use `set.seed(323)` and simulate 25 steps beginning at `Statistics`. Display
+all 26 visited articles using readable article names.
+
+Finally, answer: why is this process a Markov chain?
+
+::: callout-tip
+## Hint
+
+For a current article called `current`, `outlinks[[current]]` returns `NULL`
+when no outgoing links are available. The functions `runif()` and `sample()`
+will also be useful.
+:::
+
+## 3. Estimate PageRank by simulation
+
+The long-run fraction of time that the random surfer spends on an article is
+its **PageRank** under this model. In other words, if the surfer visits article
+$j$ a total of $N_j$ times during a long run of $N$ steps, then
+
+$$
+\widehat{\pi}_j = \frac{N_j}{N}
+$$
+
+is a Monte Carlo estimate of the "PageRank" of article $j$.
+
+Use `set.seed(323)` and simulate **251,000 steps** beginning at `Statistics`.
+Discard the first 1,000 visited states before estimating PageRank. Use the
+first 250,000 remaining states for the analyses below.
+
+1. Estimate the PageRank of every article. Articles not visited after the
+   first 1,000 states should receive an estimated PageRank of zero.
+2. Display the 15 articles with the largest estimated PageRank.
+3. Make a bar plot of these 15 estimates. Use readable article names and make
+   the plot publication quality.
+4. In one or two sentences, describe what the most highly ranked articles have
+   in common. Why might a random surfer spend so much time on them?
+
+## 4. Does the simulation converge?
+
+We can calculate PageRank directly using software and use that result to check
+our Monte Carlo approximation. Construct a directed `igraph` object using all
+4,604 articles as vertices and `links` as the edges. Then calculate PageRank
+using
+
+```r
+page_rank(graph, directed = TRUE, damping = 0.85)$vector
+```
+
+The damping value 0.85 corresponds to following a link with probability 0.85
+and making a random jump with probability 0.15.
+
+Using the single 250,000-step chain from Exercise 3, estimate the PageRank
+vector using only the first
+
+$$
+1{,}000,\quad 5{,}000,\quad 25{,}000,\quad 100{,}000,\quad 250{,}000
+$$
+
+post-burn-in states. For each estimate, calculate
+
+$$
+\text{error}
+=
+\sum_j |\widehat{\pi}_j - \pi_j|,
+$$
+
+where $\pi_j$ is the PageRank returned by `igraph`.
+
+Plot error against the number of simulated states. Does the approximation
+improve as the simulation becomes longer? Is the improvement perfectly
+monotone? Explain why or why not.
+
+::: callout-tip
+## Hint
+
+It may be useful to write a small function that takes a vector of visited
+articles and returns a PageRank estimate for **all** articles. Then use a
+functional to apply it to several different chain lengths.
+:::
+
+## 5. Is PageRank just counting links?
+
+An article with many incoming links should tend to receive a high PageRank,
+but PageRank also accounts for *where those links come from*.
+
+Join the exact PageRank from Exercise 4 to the degree summary from Exercise 1.
+Then:
+
+1. Calculate the Spearman correlation between in-degree and PageRank.
+2. Make a scatter plot of in-degree versus PageRank. Because both variables
+   are highly skewed, choose axis transformations that make the relationship
+   easy to inspect.
+3. Rank articles separately by in-degree and PageRank. Identify five articles
+   whose PageRank rank is much better than their in-degree rank, and five for
+   which the reverse is true.
+4. Pick one article from either list and inspect some of the pages linking to
+   it. Give a plausible explanation for why PageRank and in-degree treat this
+   article differently.
+
+Your answer to part 4 should be based on the structure in `links`; you do not
+need to visit the live Wikipedia website.
+
+## 6. Do people actually surf randomly?
+
+PageRank describes a hypothetical random surfer. The Wikispeedia data also
+contain paths taken by real people, giving us a way to assess that model.
+
+Create a data set containing the **intermediate named articles** in every
+completed path:
+
+1. Assign each game a unique ID.
+2. Split `path` at semicolons so there is one token per row.
+3. Remove `<` tokens.
+4. Within each game, remove the first and last named articles. Those articles
+   were assigned by the game as the start and target, rather than selected by
+   the player as intermediate navigation choices.
+
+We will ignore the extra revisit created by a `<` operation. This is a small
+simplification that keeps the focus on the named intermediate articles.
+
+For every article, calculate the number of times it occurs as an intermediate
+article in a completed human path. Join these counts to the exact PageRank
+from Exercise 4.
+
+1. Calculate the Spearman correlation between PageRank and human intermediate
+   visit counts.
+2. Make a plot comparing PageRank rank with human-visit rank. Clearly indicate
+   which direction corresponds to a more highly ranked article.
+3. Identify five articles that humans visit much **more** often than their
+   PageRank rank would suggest and five that humans visit much **less** often.
+4. Based on your analysis, does the random-surfer model capture anything real
+   about how people navigate Wikipedia? Where does it fail?
+5. Human players know the target article. The random surfer does not. Explain
+   why this is important for the Markov assumption. What additional
+   information might you include in the state if you wanted a model of
+   goal-directed human navigation?
+
+Your final response should distinguish between a model being **useful** and a
+model being a literal description of how the human paths were generated.
 
 ## Style guidelines
 
