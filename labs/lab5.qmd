@@ -1,5 +1,5 @@
 ---
-title: "Lab 5: Surf the web"
+title: "Lab 5: Wiki Surf"
 subtitle: "Due Monday, November 2 at 5:00pm"  
 editor: source
 execute:
@@ -121,18 +121,18 @@ Answer the following questions.
    largest out-degree. Briefly describe what kinds of articles tend to appear
    near the top of each list.
 
-<!-- For displayed results, convert article names to a more readable form. The -->
-<!-- following helper function may be useful. -->
+For displayed results, convert article names to a more readable form. The
+following helper function may be useful.
 
-<!-- ```{r} -->
-<!-- #| label: pretty-name -->
-<!-- #| eval: false -->
-<!-- pretty_name <- function(x) { -->
-<!--   x |> -->
-<!--     URLdecode() |> -->
-<!--     str_replace_all("_", " ") -->
-<!-- } -->
-<!-- ``` -->
+```{r}
+#| label: readable_name
+#| eval: false
+readable_name <- function(x) {
+  x |>
+    URLdecode() |>
+    str_replace_all("_", " ")
+}
+```
 
 ## 2. Build a random surfer
 
@@ -150,10 +150,9 @@ At each step:
 
 This defines a Markov chain whose states are Wikipedia articles.
 
-First, use `split()` to construct a list named `outlinks`. Each element should
+First, use `split()` (or another method of your choosing) to construct a list named `outlinks`. Each element should
 contain the destinations reachable in one click from a particular source
-article. For example, `outlinks[["Statistics"]]` should return the articles
-linked from *Statistics*.
+article. For example, `outlinks[["Statistics"]]` should return a 22-element character vector containing the articles linked from *Statistics*.
 
 Next, write a function
 
@@ -197,114 +196,75 @@ first 250,000 remaining states for the analyses below.
 
 1. Estimate the PageRank of every article. Articles not visited after the
    first 1,000 states should receive an estimated PageRank of zero.
-2. Display the 15 articles with the largest estimated PageRank.
-3. Make a bar plot of these 15 estimates. Use readable article names and make
-   the plot publication quality.
-4. In one or two sentences, describe what the most highly ranked articles have
-   in common. Why might a random surfer spend so much time on them?
+2. Display the 15 articles with the largest estimated PageRank. Comment on what kinds of articles have the highest PageRank.
 
-## 4. Does the simulation converge?
-
-We can calculate PageRank directly using software and use that result to check
-our Monte Carlo approximation. Construct a directed `igraph` object using all
-4,604 articles as vertices and `links` as the edges. Then calculate PageRank
-using
-
-```r
-page_rank(graph, directed = TRUE, damping = 0.85)$vector
-```
-
-The damping value 0.85 corresponds to following a link with probability 0.85
-and making a random jump with probability 0.15.
-
-Using the single 250,000-step chain from Exercise 3, estimate the PageRank
-vector using only the first
-
-$$
-1{,}000,\quad 5{,}000,\quad 25{,}000,\quad 100{,}000,\quad 250{,}000
-$$
-
-post-burn-in states. For each estimate, calculate
-
-$$
-\text{error}
-=
-\sum_j |\widehat{\pi}_j - \pi_j|,
-$$
-
-where $\pi_j$ is the PageRank returned by `igraph`.
-
-Plot error against the number of simulated states. Does the approximation
-improve as the simulation becomes longer? Is the improvement perfectly
-monotone? Explain why or why not.
-
-::: callout-tip
-## Hint
-
-It may be useful to write a small function that takes a vector of visited
-articles and returns a PageRank estimate for **all** articles. Then use a
-functional to apply it to several different chain lengths.
-:::
-
-## 5. Is PageRank just counting links?
+## 4. Is PageRank just counting links?
 
 An article with many incoming links should tend to receive a high PageRank,
 but PageRank also accounts for *where those links come from*.
 
-Join the exact PageRank from Exercise 4 to the degree summary from Exercise 1.
+Join the PageRank from Exercise 3 to the degree summary from Exercise 1.
 Then:
 
-1. Calculate the Spearman correlation between in-degree and PageRank.
-2. Make a scatter plot of in-degree versus PageRank. Because both variables
+1. Make a scatter plot of in-degree versus PageRank. Because both variables
    are highly skewed, choose axis transformations that make the relationship
    easy to inspect.
-3. Rank articles separately by in-degree and PageRank. Identify five articles
-   whose PageRank rank is much better than their in-degree rank, and five for
-   which the reverse is true.
-4. Pick one article from either list and inspect some of the pages linking to
-   it. Give a plausible explanation for why PageRank and in-degree treat this
-   article differently.
+2. Rank articles separately by in-degree and PageRank. Hint: `min_rank(desc(in_degree))` can help here. Identify five articles whose PageRank rank is substantially better than their in-degree rank, and five for which the reverse is true. Explain why this might occur.
+3. Compute the rank correlation between in-degree and PageRank.
 
-Your answer to part 4 should be based on the structure in `links`; you do not
-need to visit the live Wikipedia website.
+<!-- 4. Pick one article from either list and inspect some of the pages linking to -->
+<!--    it. Give a plausible explanation for why PageRank and in-degree treat this -->
+<!--    article differently. -->
 
-## 6. Do people actually surf randomly?
+<!-- Your answer to part 4 should be based on the structure in `links`; you do not -->
+<!-- need to visit the live Wikipedia website. -->
+
+## 5. Do people actually surf randomly?
 
 PageRank describes a hypothetical random surfer. The Wikispeedia data also
 contain paths taken by real people, giving us a way to assess that model.
 
-Create a data set containing the **intermediate named articles** in every
+Use the code below to create a data set containing the **intermediate named articles** in every
 completed path:
 
-1. Assign each game a unique ID.
-2. Split `path` at semicolons so there is one token per row.
-3. Remove `<` tokens.
-4. Within each game, remove the first and last named articles. Those articles
-   were assigned by the game as the start and target, rather than selected by
-   the player as intermediate navigation choices.
+```{r}
+#| eval: false
+human_steps <- paths |>
+  mutate(game_id = row_number()) |>
+  select(game_id, path) |>
+  separate_longer_delim(path, delim = ";") |>
+  rename(article = path) |>
+  filter(article != "<") |>
+  group_by(game_id) |>
+  mutate(
+    position = row_number(),
+    n_named = n()
+  ) |>
+  filter(position > 1, position < n_named) |>
+  ungroup()
+```
 
-We will ignore the extra revisit created by a `<` operation. This is a small
-simplification that keeps the focus on the named intermediate articles.
+1. Explain what the code above does by adding comments to it in your `.qmd` file.
 
-For every article, calculate the number of times it occurs as an intermediate
-article in a completed human path. Join these counts to the exact PageRank
-from Exercise 4.
+<!-- 1. Assign each game a unique ID. -->
+<!-- 2. Split `path` at semicolons so there is one token per row. -->
+<!-- 3. Remove `<` tokens. -->
+<!-- 4. Within each game, remove the first and last named articles. Those articles -->
+<!--    were assigned by the game as the start and target, rather than selected by -->
+<!--    the player as intermediate navigation choices. -->
 
-1. Calculate the Spearman correlation between PageRank and human intermediate
+<!-- We will ignore the extra revisit created by a `<` operation. This is a small -->
+<!-- simplification that keeps the focus on the named intermediate articles. -->
+
+For every article, you've calculated the number of times it occurs as an intermediate
+article in a completed human path. Join these counts to the PageRank simulation
+from Exercise 3.
+
+2. Calculate the rank (Spearman) correlation between PageRank and human intermediate
    visit counts.
-2. Make a plot comparing PageRank rank with human-visit rank. Clearly indicate
-   which direction corresponds to a more highly ranked article.
-3. Identify five articles that humans visit much **more** often than their
-   PageRank rank would suggest and five that humans visit much **less** often.
+3. Make a plot comparing PageRank rank with human-visit rank.
 4. Based on your analysis, does the random-surfer model capture anything real
    about how people navigate Wikipedia? Where does it fail?
-5. Human players know the target article. The random surfer does not. Explain
-   why this is important for the Markov assumption. What additional
-   information might you include in the state if you wanted a model of
-   goal-directed human navigation?
-
-Your final response should distinguish between a model being **useful** and a
-model being a literal description of how the human paths were generated.
 
 ## Style guidelines
 

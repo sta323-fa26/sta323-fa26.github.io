@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 5: Where’s zero? – STA323</title>
+<title>Lab 5: Wiki Surf – STA323</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,21 +135,55 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../schedule.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">schedule</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../project.html"> 
-<span class="menu-text">project</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../mini_project.html">
+ <span class="dropdown-text">mini project</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../links.html"> 
-<span class="menu-text">links</span></a>
+        <li>
+    <a class="dropdown-item" href="../project.html">
+ <span class="dropdown-text">final project</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">links</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://cmgr.oit.duke.edu/containers">
+ <span class="dropdown-text">Rstudio containers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://edstem.org/us/courses/103562/">
+ <span class="dropdown-text">Ed discussion</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/sta323-fa26">
+ <span class="dropdown-text">GitHub organization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../git-cheatsheet.html">
+ <span class="dropdown-text">git FAQ</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../links.html">
+ <span class="dropdown-text">all links</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -168,12 +202,12 @@ window.Quarto = {
   <ul>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting started</a>
   <ul class="collapse">
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
-  <ul class="collapse">
-  <li><a href="#weibull-mle" id="toc-weibull-mle" class="nav-link" data-scroll-target="#weibull-mle">1. Weibull MLE</a></li>
-  <li><a href="#visualize-weibull-gradient-w.r.t-k" id="toc-visualize-weibull-gradient-w.r.t-k" class="nav-link" data-scroll-target="#visualize-weibull-gradient-w.r.t-k">2. visualize Weibull gradient w.r.t <span class="math inline">\(k\)</span></a></li>
-  <li><a href="#zero-inflated-poisson" id="toc-zero-inflated-poisson" class="nav-link" data-scroll-target="#zero-inflated-poisson">3. zero-inflated Poisson</a></li>
-  </ul></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The data</a></li>
+  <li><a href="#explore-the-wikipedia-network" id="toc-explore-the-wikipedia-network" class="nav-link" data-scroll-target="#explore-the-wikipedia-network">1. Explore the Wikipedia network</a></li>
+  <li><a href="#build-a-random-surfer" id="toc-build-a-random-surfer" class="nav-link" data-scroll-target="#build-a-random-surfer">2. Build a random surfer</a></li>
+  <li><a href="#estimate-pagerank-by-simulation" id="toc-estimate-pagerank-by-simulation" class="nav-link" data-scroll-target="#estimate-pagerank-by-simulation">3. Estimate PageRank by simulation</a></li>
+  <li><a href="#is-pagerank-just-counting-links" id="toc-is-pagerank-just-counting-links" class="nav-link" data-scroll-target="#is-pagerank-just-counting-links">4. Is PageRank just counting links?</a></li>
+  <li><a href="#do-people-actually-surf-randomly" id="toc-do-people-actually-surf-randomly" class="nav-link" data-scroll-target="#do-people-actually-surf-randomly">5. Do people actually surf randomly?</a></li>
   <li><a href="#style-guidelines" id="toc-style-guidelines" class="nav-link" data-scroll-target="#style-guidelines">Style guidelines</a></li>
   <li><a href="#submitting-your-lab" id="toc-submitting-your-lab" class="nav-link" data-scroll-target="#submitting-your-lab">Submitting your lab</a></li>
   </ul></li>
@@ -185,8 +219,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 5: Where’s zero?</h1>
-<p class="subtitle lead">Due Friday, October 17 5:00pm</p>
+<h1 class="title">Lab 5: Wiki Surf</h1>
+<p class="subtitle lead">Due Monday, November 2 at 5:00pm</p>
 </div>
 
 
@@ -204,12 +238,13 @@ window.Quarto = {
 
 
 <blockquote class="blockquote">
-<p>“The root of [the function] is bitter [when unsolvable via Newton-Raphson] but the fruit is sweet” – Aristotle</p>
+<p>“I surf, therefore I am.” – René Descartes</p>
 </blockquote>
 <p>By the end of the lab, you will…</p>
 <ul>
-<li>write likelihoods</li>
-<li>compute MLEs using Newton’s method</li>
+<li>Simulate a Markov chain and estimate its long-run distribution.</li>
+<li>Use simulation to construct PageRank and study Monte Carlo convergence.</li>
+<li>Compare a random-surfer model with paths taken by real people.</li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -221,42 +256,99 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is “accidentally” pushed.</p>
+<p>Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if a commit is “accidentally” pushed.</p>
 </div>
 </div>
 <section id="getting-started" class="level1">
 <h1>Getting started</h1>
 <ul>
-<li><p>In the <em>terminal</em> tab, type <code>cd ~</code> to navigate to your home directory. Next <code>git clone git@github.com:sta323-fa25/lab-5-team_name.git</code> where <code>team_name</code> is replaced with your team name (see the excel signup sheet in box or your github).</p></li>
-<li><p>Navigate to your <code>lab-5</code> folder and open the <code>.Rproj</code> file.</p></li>
-<li><p>Open the Quarto (<code>.qmd</code>) file, change the author name to your team name followed by a colon and then the names of the team members. Note that to make sure your teammates names all render within the 80 character code limit, you can write</p></li>
+<li><p>In the <em>terminal</em> tab, type <code>cd ~</code> to navigate to your home directory. Next, clone your lab repository from the course GitHub organization.</p></li>
+<li><p>Navigate to your lab folder and open the <code>.Rproj</code> file.</p></li>
+<li><p>Open the Quarto (<code>.qmd</code>) file and change the author name to your team name followed by a colon and then the names of the team members.</p></li>
 </ul>
-<pre><code>author: |
-    | author 1 
-    | author 2
-    | author 3</code></pre>
-<section id="exercises" class="level2">
-<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
-<p>For all exercises, you should respond in the space provided in the template <code>lab-5.qmd</code> and show all your work. In all answers of type <code>double</code>, three significant figures suffices.</p>
-<section id="weibull-mle" class="level3">
-<h3 class="anchored" data-anchor-id="weibull-mle">1. Weibull MLE</h3>
+<p>A complete list of packages used in this lab is provided below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.811328</span>, <span class="fl">0.9210481</span>, <span class="fl">1.753609</span>, <span class="fl">0.1971982</span>, <span class="fl">1.957823</span>, <span class="fl">0.9607706</span>, <span class="fl">0.3611815</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.9710981</span>, <span class="fl">1.684854</span>, <span class="fl">1.49811</span>, <span class="fl">0.4599071</span>, <span class="fl">1.18149</span>, <span class="fl">0.04501055</span>, <span class="fl">0.2688005</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.9070787</span>, <span class="fl">0.1067991</span>, <span class="fl">0.8979944</span>, <span class="fl">0.1442192</span>, <span class="fl">0.3690044</span>, <span class="fl">1.250377</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.7919656</span>, <span class="fl">0.2785386</span>, <span class="fl">1.312061</span>, <span class="fl">1.794021</span>, <span class="fl">1.867813</span>, <span class="fl">1.374013</span>, <span class="fl">0.7282234</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.6067082</span>, <span class="fl">1.062187</span>, <span class="fl">0.08889603</span>, <span class="fl">0.5668522</span>, <span class="fl">0.743226</span>, <span class="fl">0.6237324</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.2951361</span>, <span class="fl">0.2185725</span>, <span class="fl">0.8271643</span>, <span class="fl">0.4682848</span>, <span class="fl">0.7791434</span>, <span class="fl">0.2655503</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.5545753</span>, <span class="fl">0.7419484</span>, <span class="fl">0.1427752</span>, <span class="fl">0.3778655</span>, <span class="fl">1.327472</span>, <span class="fl">0.93939</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.9402052</span>, <span class="fl">0.8784793</span>, <span class="fl">0.605618</span>, <span class="fl">0.7390297</span>, <span class="fl">0.7402008</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Assume <span class="math display">\[
-x_i
-\overset{\mathrm{iid}}{\sim}
-Weibull(\lambda, k)
-\]</span> Find the maximum likelihood estimates <span class="math inline">\(\hat{k}_{MLE}\)</span> and <span class="math inline">\(\hat{\lambda}_{MLE}\)</span> using Newton’s method. In your solution, code Newton’s method and all derivatives yourself. Do not use a package or library for this. Show all your work (including writing down any relevant math).</p>
-<p>Initialize your algorithm with <span class="math inline">\(k = 2\)</span>. Set your stopping tolerance to <code>0.001</code> and maximum iterations to <code>500</code>.</p>
-<p>Report your estimates <span class="math inline">\(\hat{k}_{MLE}\)</span> and <span class="math inline">\(\hat{\lambda}_{MLE}\)</span>.</p>
+<!-- ## Exercises -->
+<!-- You should **not** use `igraph::page_rank()` until Exercise 4. The purpose of -->
+<!-- Exercises 2 and 3 is to construct PageRank yourself by simulation. -->
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>The data in this lab come from the <a href="https://snap.stanford.edu/data/wikispeedia.html">Wikispeedia data set</a> published by the Stanford Network Analysis Project (SNAP). Wikispeedia was an online game in which a player was given a starting Wikipedia article and a target article. The player attempted to reach the target using only hyperlinks on the articles they visited.</p>
+<!-- The data contain a fixed, condensed version of Wikipedia with 4,604 articles, -->
+<!-- 119,882 directed hyperlinks, and 51,318 completed human navigation paths. -->
+<p>The data contain a fixed, condensed version of Wikipedia with several thousand articles, over one hundred thousand directed hyperlinks, and tens of thousands of completed human navigation paths. The original data were collected and analyzed by <a href="https://www.cs.mcgill.ca/~jpineau/files/rwest-ijcai09.pdf">West et al.&nbsp;(2009)</a>.</p>
+<p>The following files are provided in the <code>data</code> folder.</p>
+<section id="articles.tsv" class="level4">
+<h4 class="anchored" data-anchor-id="articles.tsv"><code>articles.tsv</code></h4>
+<p>A one-column file containing every article in the Wikispeedia network. Article names are URL encoded. For example, spaces appear as underscores and some special characters are represented using <code>%</code> followed by hexadecimal digits. Lines beginning with <code>#</code> contain metadata rather than observations.</p>
+</section>
+<section id="links.tsv" class="level4">
+<h4 class="anchored" data-anchor-id="links.tsv"><code>links.tsv</code></h4>
+<p>A two-column file. Each row records a directed hyperlink from <code>source</code> to <code>destination</code>. Thus, the row</p>
+<pre class="text"><code>Statistics    Mathematics</code></pre>
+<p>would mean that the <em>Statistics</em> article contains a hyperlink to the <em>Mathematics</em> article. A link in the other direction does not automatically exist.</p>
+</section>
+<section id="paths_finished.tsv" class="level4">
+<h4 class="anchored" data-anchor-id="paths_finished.tsv"><code>paths_finished.tsv</code></h4>
+<p>Each row is one successfully completed Wikispeedia game. The important variable for this lab is <code>path</code>, which records the sequence of articles named in the player’s path, separated by semicolons. A <code>&lt;</code> indicates that the player pressed the back button.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reading the files
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The files have metadata lines beginning with <code>#</code>, but do not have ordinary column headers. Useful arguments to <code>read_tsv()</code> are therefore <code>comment</code> and <code>col_names</code>. Missing ratings are recorded as <code>NULL</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="explore-the-wikipedia-network" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-wikipedia-network">1. Explore the Wikipedia network</h2>
+<p>Read all three data sets. Name the resulting objects <code>articles</code>, <code>links</code>, and <code>paths</code>. Use the following column names:</p>
+<ul>
+<li><code>articles</code>: <code>article</code></li>
+<li><code>links</code>: <code>source</code>, <code>destination</code></li>
+<li><code>paths</code>: <code>user</code>, <code>timestamp</code>, <code>duration</code>, <code>path</code>, <code>rating</code></li>
+</ul>
+<p>Answer the following questions.</p>
+<ol type="1">
+<li>How many articles, directed hyperlinks, and completed human paths are in the data?</li>
+<li>Verify that every <code>source</code> and <code>destination</code> appearing in <code>links</code> is also present in <code>articles</code>.</li>
+<li>For each article, calculate its <strong>in-degree</strong>, the number of hyperlinks pointing <em>to</em> that article, and its <strong>out-degree</strong>, the number of hyperlinks pointing <em>from</em> that article. Articles with no incoming or outgoing links should receive a degree of zero.</li>
+<li>Display the ten articles with the largest in-degree and the ten with the largest out-degree. Briefly describe what kinds of articles tend to appear near the top of each list.</li>
+</ol>
+<p>For displayed results, convert article names to a more readable form. The following helper function may be useful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>readable_name <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">URLdecode</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="build-a-random-surfer" class="level2">
+<h2 class="anchored" data-anchor-id="build-a-random-surfer">2. Build a random surfer</h2>
+<p>Suppose a person browses this version of Wikipedia according to the following rules.</p>
+<p>At each step:</p>
+<ol type="1">
+<li>With probability 0.15, the surfer jumps to an article chosen uniformly at random from all 4,604 articles.</li>
+<li>Otherwise, the surfer follows one outgoing hyperlink chosen uniformly at random from the current article.</li>
+<li>If the current article has no outgoing hyperlinks, the surfer must jump to a uniformly selected article.</li>
+</ol>
+<p>This defines a Markov chain whose states are Wikipedia articles.</p>
+<p>First, use <code>split()</code> (or another method of your choosing) to construct a list named <code>outlinks</code>. Each element should contain the destinations reachable in one click from a particular source article. For example, <code>outlinks[["Statistics"]]</code> should return a 22-element character vector containing the articles linked from <em>Statistics</em>.</p>
+<p>Next, write a function</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">random_surfer</span>(start, n_steps, <span class="at">jump_prob =</span> <span class="fl">0.15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>that simulates the process. The function should return a character vector of length <code>n_steps + 1</code>, including the starting article as its first element. Your function should use <code>outlinks</code> and <code>articles</code>, and it should work for articles with no outgoing links.</p>
+<p>Use <code>set.seed(323)</code> and simulate 25 steps beginning at <code>Statistics</code>. Display all 26 visited articles using readable article names.</p>
+<p>Finally, answer: why is this process a Markov chain?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -267,82 +359,74 @@ Hint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li>You only need to perform Newton’s method on the parameter <span class="math inline">\(k\)</span> here.</li>
-</ul>
+<p>For a current article called <code>current</code>, <code>outlinks[[current]]</code> returns <code>NULL</code> when no outgoing links are available. The functions <code>runif()</code> and <code>sample()</code> will also be useful.</p>
 </div>
 </div>
 </section>
-<section id="visualize-weibull-gradient-w.r.t-k" class="level3">
-<h3 class="anchored" data-anchor-id="visualize-weibull-gradient-w.r.t-k">2. visualize Weibull gradient w.r.t <span class="math inline">\(k\)</span></h3>
-<p>Following up on the previous exercise, let’s gain insight into when and how Newton’s method can fail.</p>
-<ul>
-<li><p>Set your starting <span class="math inline">\(k = 4\)</span>. What value <span class="math inline">\(k\)</span> converge to? Is this a valid value of <span class="math inline">\(k\)</span>?</p></li>
-<li><p>To gain insight into this, plot the derivative of the log-likelihood of <span class="math inline">\(k\)</span> from <code>0.01</code> to <code>5</code>. Why does starting at 4 change the result?</p></li>
-<li><p>Next plot the derivative of the log-likelihood from <code>-5</code> to <code>-0.01</code>. Be sure to appropriately label your plots, add relevant titles, etc. Combine your plots using <a href="https://sta323-fa25.github.io/slides/lec07.html#/patchwork"><code>patchwork</code></a>.</p></li>
-<li><p>Finally, edit your Newton-Raphson algorithm to “reflect” negative values, i.e.&nbsp;if the updated iterate is negative, force it to be positive. Re-run your Newton’s method starting at <span class="math inline">\(k=4\)</span>. What does <span class="math inline">\(k\)</span> converge to? Why?</p></li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Write the gradient with respect to <span class="math inline">\(k\)</span> as a function of <span class="math inline">\(k\)</span> alone (as in lecture).</p>
-</div>
-</div>
-</section>
-<section id="zero-inflated-poisson" class="level3">
-<h3 class="anchored" data-anchor-id="zero-inflated-poisson">3. zero-inflated Poisson</h3>
-<p>Zero-inflated models allow for frequent zero-valued observations. You observe 100 people at the beach fishing. The number of fish each individual catches is reported in the data <code>fishing_count</code> below.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fishing_count <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">1</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">0</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">0</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">8</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">7</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                  <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Visualize the distribution of the data using an appropriate visualization. Label axes and describe your plot.</li>
-</ul>
-<p>The data can be described as being generated from a zero-inflated mixture model. Let <span class="math inline">\(Y_i\)</span> be the number of fish an individual catches at the beach,</p>
+<section id="estimate-pagerank-by-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="estimate-pagerank-by-simulation">3. Estimate PageRank by simulation</h2>
+<p>The long-run fraction of time that the random surfer spends on an article is its <strong>PageRank</strong> under this model. In other words, if the surfer visits article <span class="math inline">\(j\)</span> a total of <span class="math inline">\(N_j\)</span> times during a long run of <span class="math inline">\(N\)</span> steps, then</p>
 <p><span class="math display">\[
-\begin{aligned}
-p(Y_i = 0) &amp;= p + (1-p) e^{-\lambda}\\
-p(Y_i = y_i) &amp;= \frac{(1 - p)\lambda^{y_i}e^{-\lambda}}{y_i!}, \ \ y_i = 1, 2, 3, \ldots
-\end{aligned}
+\widehat{\pi}_j = \frac{N_j}{N}
 \]</span></p>
-<ul>
-<li>Assume observations <span class="math inline">\(\{Y_i\}\)</span> are independent. Write down the log-likelihood and visualize the log-likelihood as a function of <span class="math inline">\(p\)</span> while fixing <span class="math inline">\(\lambda = 5\)</span>. Repeat for <span class="math inline">\(\lambda = 4\)</span> (on the same plot). Based on your plot, which value of <span class="math inline">\(\lambda\)</span> is more likely? Also, assuming these <span class="math inline">\(\lambda\)</span> are sufficiently close to the true <span class="math inline">\(\lambda\)</span>, what is (approximately) the MLE of <span class="math inline">\(p\)</span> based on your plot?</li>
-</ul>
-<p>Using this mixture model, compute the maximum likelihood estimates <span class="math inline">\(\hat{p}_{MLE}\)</span> and <span class="math inline">\(\hat{\lambda}_{MLE}\)</span> using Newton’s method. In your solution, code Newton’s method and all derivatives yourself. Do not use a package or library for this. Show all your work (including writing down any relevant math).</p>
-<p>Initialize your algorithm with <span class="math inline">\(\lambda = 2\)</span>. Set your stopping tolerance to <code>0.001</code> and maximum iterations to <code>500</code>.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>To begin, write the likelihood of the data. This is your <strong>objective</strong> function that you wish to maximize.</p></li>
-<li><p>You only need to perform Newton’s method on the parameter <span class="math inline">\(\lambda\)</span> here.</p></li>
-</ul>
-</div>
-</div>
+<p>is a Monte Carlo estimate of the “PageRank” of article <span class="math inline">\(j\)</span>.</p>
+<p>Use <code>set.seed(323)</code> and simulate <strong>251,000 steps</strong> beginning at <code>Statistics</code>. Discard the first 1,000 visited states before estimating PageRank. Use the first 250,000 remaining states for the analyses below.</p>
+<ol type="1">
+<li>Estimate the PageRank of every article. Articles not visited after the first 1,000 states should receive an estimated PageRank of zero.</li>
+<li>Display the 15 articles with the largest estimated PageRank. Comment on what kinds of articles have the highest PageRank.</li>
+</ol>
 </section>
+<section id="is-pagerank-just-counting-links" class="level2">
+<h2 class="anchored" data-anchor-id="is-pagerank-just-counting-links">4. Is PageRank just counting links?</h2>
+<p>An article with many incoming links should tend to receive a high PageRank, but PageRank also accounts for <em>where those links come from</em>.</p>
+<p>Join the PageRank from Exercise 3 to the degree summary from Exercise 1. Then:</p>
+<ol type="1">
+<li>Make a scatter plot of in-degree versus PageRank. Because both variables are highly skewed, choose axis transformations that make the relationship easy to inspect.</li>
+<li>Rank articles separately by in-degree and PageRank. Hint: <code>min_rank(desc(in_degree))</code> can help here. Identify five articles whose PageRank rank is substantially better than their in-degree rank, and five for which the reverse is true. Explain why this might occur.</li>
+<li>Compute the rank correlation between in-degree and PageRank.</li>
+</ol>
+<!-- 4. Pick one article from either list and inspect some of the pages linking to -->
+<!--    it. Give a plausible explanation for why PageRank and in-degree treat this -->
+<!--    article differently. -->
+<!-- Your answer to part 4 should be based on the structure in `links`; you do not -->
+<!-- need to visit the live Wikipedia website. -->
+</section>
+<section id="do-people-actually-surf-randomly" class="level2">
+<h2 class="anchored" data-anchor-id="do-people-actually-surf-randomly">5. Do people actually surf randomly?</h2>
+<p>PageRank describes a hypothetical random surfer. The Wikispeedia data also contain paths taken by real people, giving us a way to assess that model.</p>
+<p>Use the code below to create a data set containing the <strong>intermediate named articles</strong> in every completed path:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>human_steps <span class="ot">&lt;-</span> paths <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">game_id =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(game_id, path) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_longer_delim</span>(path, <span class="at">delim =</span> <span class="st">";"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">article =</span> path) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(article <span class="sc">!=</span> <span class="st">"&lt;"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(game_id) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">row_number</span>(),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_named =</span> <span class="fu">n</span>()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">&gt;</span> <span class="dv">1</span>, position <span class="sc">&lt;</span> n_named) <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Explain what the code above does by adding comments to it in your <code>.qmd</code> file.</li>
+</ol>
+<!-- 1. Assign each game a unique ID. -->
+<!-- 2. Split `path` at semicolons so there is one token per row. -->
+<!-- 3. Remove `<` tokens. -->
+<!-- 4. Within each game, remove the first and last named articles. Those articles -->
+<!--    were assigned by the game as the start and target, rather than selected by -->
+<!--    the player as intermediate navigation choices. -->
+<!-- We will ignore the extra revisit created by a `<` operation. This is a small -->
+<!-- simplification that keeps the focus on the named intermediate articles. -->
+<p>For every article, you’ve calculated the number of times it occurs as an intermediate article in a completed human path. Join these counts to the PageRank simulation from Exercise 3.</p>
+<ol start="2" type="1">
+<li>Calculate the rank (Spearman) correlation between PageRank and human intermediate visit counts.</li>
+<li>Make a plot comparing PageRank rank with human-visit rank.</li>
+<li>Based on your analysis, does the random-surfer model capture anything real about how people navigate Wikipedia? Where does it fail?</li>
+</ol>
 </section>
 <section id="style-guidelines" class="level2">
 <h2 class="anchored" data-anchor-id="style-guidelines">Style guidelines</h2>

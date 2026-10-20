@@ -74,7 +74,7 @@ schedule %>%
 |  | Thu Oct 08 | Markov chains | [💻](/slides/lec-Markov-chains.html)   |  |  |
 | 8 | Tue Oct 13 | NO CLASS |  |   |  |
 |  | Thu Oct 15 | Markov chain Monte Carlo | [💻](/slides/lec-mcmc.html) |  |  |
-| 9 | Tue Oct 20 | MCMC example |  | lab 5  | mp presentations |
+| 9 | Tue Oct 20 | MCMC example |  | [lab 5](/labs/lab5.html)  | mp presentations |
 |  | Thu Oct 22 | complexity and parallelization |  |  |  |
 | 10 | Tue Oct 27 | databases and dplyr|  |  | |
 |  | Thu Oct 29 | duckDB and SQL |  |  |  |
