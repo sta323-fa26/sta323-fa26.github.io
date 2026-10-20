@@ -38,7 +38,6 @@ A complete list of packages used in this lab is provided below:
 #| label: packages
 #| eval: false
 library(tidyverse)
-library(igraph)
 ```
 
 <!-- ## Exercises -->
