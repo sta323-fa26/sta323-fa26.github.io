@@ -459,21 +459,21 @@
     "href": "slides/lec10.html#measuring-efficiency-example",
     "title": "Complexity and parallelization",
     "section": "",
-    "text": "Suppose you wish to calculate a likelihood \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some density function dependent on parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
+    "text": "Suppose you wish to calculate a “likelihood”, (e.g. the likelihood of a message decryption) \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some probability of datum \\(x_i\\) given parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
   },
   {
     "objectID": "slides/lec10.html#bench",
     "href": "slides/lec10.html#bench",
     "title": "Complexity and parallelization",
     "section": "bench",
-    "text": "bench\n\nd = tibble(\n  x = runif(10000),\n  y=runif(10000)\n)\n(b = bench::mark(\n  d[d$x &gt; 0.5, ],\n  d[which(d$x &gt; 0.5), ],\n  subset(d, x &gt; 0.5),\n  filter(d, x &gt; 0.5)\n))\n\n# A tibble: 4 × 6\n  expression                 min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]        102.92µs 116.71µs     7998.  252.16KB     21.7\n2 d[which(d$x &gt; 0.5), ]  88.08µs     99µs     9353.   271.9KB     51.1\n3 subset(d, x &gt; 0.5)    145.17µs 160.38µs     5938.   288.2KB     35.0\n4 filter(d, x &gt; 0.5)      2.05ms   2.15ms      454.    2.01MB     12.7"
+    "text": "bench\n\nd = tibble(\n  x = runif(10000),\n  y=runif(10000)\n)\n(b = bench::mark(\n  d[d$x &gt; 0.5, ],\n  d[which(d$x &gt; 0.5), ],\n  subset(d, x &gt; 0.5),\n  filter(d, x &gt; 0.5)\n))\n\n# A tibble: 4 × 6\n  expression                 min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]        115.44µs 166.62µs     4848.        NA    13.6 \n2 d[which(d$x &gt; 0.5), ] 181.22µs 306.82µs     2987.        NA    15.0 \n3 subset(d, x &gt; 0.5)    222.21µs 362.06µs     2448.        NA    13.0 \n4 filter(d, x &gt; 0.5)      1.08ms   1.67ms      548.        NA     8.40"
   },
   {
     "objectID": "slides/lec10.html#bench---relative-results",
     "href": "slides/lec10.html#bench---relative-results",
     "title": "Complexity and parallelization",
     "section": "bench - relative results",
-    "text": "bench - relative results\n\nsummary(b, relative = TRUE)\n\n# A tibble: 4 × 6\n  expression              min median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]         1.17   1.18      17.6      1        1.71\n2 d[which(d$x &gt; 0.5), ]  1      1         20.6      1.08     4.03\n3 subset(d, x &gt; 0.5)     1.65   1.62      13.1      1.14     2.76\n4 filter(d, x &gt; 0.5)    23.2   21.7        1        8.17     1"
+    "text": "bench - relative results\n\nsummary(b, relative = TRUE)\n\n# A tibble: 4 × 6\n  expression              min median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]         1      1         8.85        NA     1.62\n2 d[which(d$x &gt; 0.5), ]  1.57   1.84      5.45        NA     1.78\n3 subset(d, x &gt; 0.5)     1.92   2.17      4.47        NA     1.55\n4 filter(d, x &gt; 0.5)     9.34  10.0       1           NA     1"
   },
   {
     "objectID": "slides/lec10.html#what-is-parallelization",
@@ -522,14 +522,14 @@
     "href": "slides/lec10.html#mcparallel",
     "title": "Complexity and parallelization",
     "section": "mcparallel",
-    "text": "mcparallel\nAsynchronously evaluation of an R expression in a separate process\n\nm = mcparallel(rnorm(1e6))\nn = mcparallel(rbeta(1e6,1,1))\no = mcparallel(rgamma(1e6,1,1))\n\nstr(m)\n\nList of 2\n $ pid: int 12106\n $ fd : int [1:2] 4 7\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\"\n\nstr(n)\n\nList of 2\n $ pid: int 12107\n $ fd : int [1:2] 5 9\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\""
+    "text": "mcparallel\nAsynchronously evaluation of an R expression in a separate process\n\nm = mcparallel(rnorm(1e6))\nn = mcparallel(rbeta(1e6,1,1))\no = mcparallel(rgamma(1e6,1,1))\n\nstr(m)\n\nList of 2\n $ pid: int 63949\n $ fd : int [1:2] 5 8\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\"\n\nstr(n)\n\nList of 2\n $ pid: int 63950\n $ fd : int [1:2] 6 10\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\""
   },
   {
     "objectID": "slides/lec10.html#mccollect",
     "href": "slides/lec10.html#mccollect",
     "title": "Complexity and parallelization",
     "section": "mccollect",
-    "text": "mccollect\nChecks mcparallel objects for completion\n\nstr(mccollect(list(m,n,o)))\n\nList of 3\n $ 12106: num [1:1000000] 1.62 0.904 -1.865 -2.384 -0.16 ...\n $ 12107: num [1:1000000] 0.224 0.241 0.733 0.532 0.129 ...\n $ 12108: num [1:1000000] 0.2199 0.0562 0.3705 0.998 6.7013 ...\n\n\n. . .\n\nmccollect - waiting\n\np = mcparallel(mean(rnorm(1e5)))\nmccollect(p, wait = FALSE, 10) # will retrieve the result (since it's fast)\n\n$`12109`\n[1] 0.001003654\n\nmccollect(p, wait = FALSE) # will signal the job as terminating\n\nWarning in selectChildren(jobs, timeout): cannot wait for child 12109 as it does\nnot exist\n\n\nNULL"
+    "text": "mccollect\nChecks mcparallel objects for completion\n\nstr(mccollect(list(m,n,o)))\n\nList of 3\n $ 63949: num [1:1000000] 0.296 -0.38 0.603 -0.401 -0.682 ...\n $ 63950: num [1:1000000] 0.357 0.402 0.529 0.121 0.286 ...\n $ 63951: num [1:1000000] 0.109 2.091 2.617 1.22 2.584 ...\n\n\n. . .\n\nmccollect - waiting\n\np = mcparallel(mean(rnorm(1e5)))\nmccollect(p, wait = FALSE, 10) # will retrieve the result (since it's fast)\n\n$`63952`\n[1] -0.001729512\n\nmccollect(p, wait = FALSE) # will signal the job as terminating\n\nWarning in selectChildren(jobs, timeout): cannot wait for child 63952 as it\ndoes not exist\n\n\nNULL"
   },
   {
     "objectID": "slides/lec10.html#domc-foreach-1",
@@ -550,7 +550,7 @@
     "href": "slides/lec10.html#serial-and-parallel-with-foreach",
     "title": "Complexity and parallelization",
     "section": "Serial and parallel with foreach()",
-    "text": "Serial and parallel with foreach()\n\n\n\nSequential\n\n%do% single execution\n\n\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 1.653098e-08\n\n[[2]]\n[1] 1.634471e-07\n\n[[3]]\n[1] 2.214219e-07\n\n[[4]]\n[1] 2.998859e-07\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n\n[1] 1.515727e-07 8.847564e-09\n\n\n\n\n\nParallel\n\n%dopar% multicore execution\n\n\nforeach(i = 1:4) %dopar%\n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 1.001172e-08\n\n[[2]]\n[1] 1.653098e-07\n\n[[3]]\n[1] 5.587935e-09\n\n[[4]]\n[1] 1.529232e-06\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n\n[1] 2.444722e-08 1.024455e-08"
+    "text": "Serial and parallel with foreach()\n\n\n\nSequential\n\n%do% single execution\n\n\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 4.167669e-08\n\n[[2]]\n[1] 1.816079e-08\n\n[[3]]\n[1] 3.46452e-07\n\n[[4]]\n[1] 7.357448e-08\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n\n[1] 8.847564e-09 3.515743e-08\n\n\n\n\n\nParallel\n\n%dopar% multicore execution\n\n\nforeach(i = 1:4) %dopar%\n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 1.832377e-07\n\n[[2]]\n[1] 1.769513e-08\n\n[[3]]\n[1] 6.349292e-07\n\n[[4]]\n[1] 9.313226e-09\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n\n[1] 3.376044e-08 1.839362e-08"
   },
   {
     "objectID": "slides/lec10.html#time-comparison",
@@ -599,7 +599,7 @@
     "href": "slides/lec10.html#section",
     "title": "Complexity and parallelization",
     "section": "",
-    "text": "plan(multisession, workers = 8)\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\n\n. . .\nNot sure we are running in parallel?\n. . .\n\nsystem.time({map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.004   0.000   1.138 \n\n\n\nsystem.time({future_map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.043   0.002   0.258 \n\n\n. . .\n\nplan(sequential)"
+    "text": "options(parallelly.localhost.hostname = \"127.0.0.1\")\n\nplan(multisession, workers = 2)\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\n\n. . .\nNot sure we are running in parallel?\n. . .\n\nsystem.time({map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.010   0.000   1.112 \n\n\n\nsystem.time({future_map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.121   0.000   0.692 \n\n\n. . .\n\nplan(sequential)"
   },
   {
     "objectID": "slides/lec10.html#example-1",
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n\n\n\n\n\n11\nTue Nov 03\nbiglm\n\nlab 6\n\n\n\n\nThu Nov 05\nR packages\n\n\n\n\n\n12\nTue Nov 10\ntestthat\n\n\n\n\n\n\nThu Nov 12\nAPIs\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nshiny I\n\n\n\n\n\n14\nTue Nov 24\nshiny II\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n\n\n\n\n\n11\nTue Nov 03\nbiglm\n\nlab 6\n\n\n\n\nThu Nov 05\nR packages\n\n\n\n\n\n12\nTue Nov 10\ntestthat\n\n\n\n\n\n\nThu Nov 12\nAPIs\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nshiny I\n\n\n\n\n\n14\nTue Nov 24\nshiny II\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -3784,7 +3784,7 @@
     "href": "slides/lec10.html",
     "title": "Complexity and parallelization",
     "section": "",
-    "text": "flops or floating point operations measure the efficiency of an algorithm. flops consist of the binary floating point operations: addition, subtraction, multiplication, division and comparison. Individual floating point operations are performed by a single “core” of your computer’s CPU or GPU.\nWe use “big O” \\(\\mathcal{O}(n)\\) notation to denote the complexity of an algorithm. For example,\n\nmatrix-vector multiplication A %*% b, where \\(A\\) is \\(m \\times n\\) and \\(b\\) is \\(n \\times 1\\) takes \\(2mn\\) or \\(\\mathcal{O}(mn)\\) flops.\nmatrix-matrix multiplication A %*% B, where \\(A\\) is \\(m \\times n\\) and \\(B\\) is \\(n \\times p\\) takes \\(2mnp\\) or \\(\\mathcal{O}(mnp)\\) flops.\n\nNotice that in reporting complexity of each example we drop the leading constant “2”.\nA hierarchy of computational complexity (let \\(n\\) be the problem size):\n\n\n\n\n\nexponential order: \\(\\mathcal{O}(b^n)\\)\nNP-hard (horrible)\n\n\npolynomial order: \\(\\mathcal{O}(n^q)\\)\ndoable\n\n\n\\(\\mathcal{O}(n \\log n)\\)\nfast\n\n\nlinear order: \\(\\mathcal{O}(n)\\)\nfast\n\n\nlog order: \\(\\mathcal{O}(\\log n)\\)\nsuper fast\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nSome references count multiplication followed by an addition (fused multiply-add, FMA) as one flop.\n\n\n{This slide adapted from notes by Dr. Hua Zhou}\n\n\n\nSuppose you wish to calculate a likelihood \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some density function dependent on parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
+    "text": "flops or floating point operations measure the efficiency of an algorithm. flops consist of the binary floating point operations: addition, subtraction, multiplication, division and comparison. Individual floating point operations are performed by a single “core” of your computer’s CPU or GPU.\nWe use “big O” \\(\\mathcal{O}(n)\\) notation to denote the complexity of an algorithm. For example,\n\nmatrix-vector multiplication A %*% b, where \\(A\\) is \\(m \\times n\\) and \\(b\\) is \\(n \\times 1\\) takes \\(2mn\\) or \\(\\mathcal{O}(mn)\\) flops.\nmatrix-matrix multiplication A %*% B, where \\(A\\) is \\(m \\times n\\) and \\(B\\) is \\(n \\times p\\) takes \\(2mnp\\) or \\(\\mathcal{O}(mnp)\\) flops.\n\nNotice that in reporting complexity of each example we drop the leading constant “2”.\nA hierarchy of computational complexity (let \\(n\\) be the problem size):\n\n\n\n\n\nexponential order: \\(\\mathcal{O}(b^n)\\)\nNP-hard (horrible)\n\n\npolynomial order: \\(\\mathcal{O}(n^q)\\)\ndoable\n\n\n\\(\\mathcal{O}(n \\log n)\\)\nfast\n\n\nlinear order: \\(\\mathcal{O}(n)\\)\nfast\n\n\nlog order: \\(\\mathcal{O}(\\log n)\\)\nsuper fast\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nSome references count multiplication followed by an addition (fused multiply-add, FMA) as one flop.\n\n\n{This slide adapted from notes by Dr. Hua Zhou}\n\n\n\nSuppose you wish to calculate a “likelihood”, (e.g. the likelihood of a message decryption) \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some probability of datum \\(x_i\\) given parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
   },
   {
     "objectID": "slides/lec12.html",
@@ -6165,5 +6165,40 @@
     "title": "Lab 5: Wiki Surf",
     "section": "5. Do people actually surf randomly?",
     "text": "5. Do people actually surf randomly?\nPageRank describes a hypothetical random surfer. The Wikispeedia data also contain paths taken by real people, giving us a way to assess that model.\nUse the code below to create a data set containing the intermediate named articles in every completed path:\n\nhuman_steps &lt;- paths |&gt;\n  mutate(game_id = row_number()) |&gt;\n  select(game_id, path) |&gt;\n  separate_longer_delim(path, delim = \";\") |&gt;\n  rename(article = path) |&gt;\n  filter(article != \"&lt;\") |&gt;\n  group_by(game_id) |&gt;\n  mutate(\n    position = row_number(),\n    n_named = n()\n  ) |&gt;\n  filter(position &gt; 1, position &lt; n_named) |&gt;\n  ungroup()\n\n\nExplain what the code above does by adding comments to it in your .qmd file.\n\n\n\n\n\n\n\n\n\nFor every article, you’ve calculated the number of times it occurs as an intermediate article in a completed human path. Join these counts to the PageRank simulation from Exercise 3.\n\nCalculate the rank (Spearman) correlation between PageRank and human intermediate visit counts.\nMake a plot comparing PageRank rank with human-visit rank.\nBased on your analysis, does the random-surfer model capture anything real about how people navigate Wikipedia? Where does it fail?"
+  },
+  {
+    "objectID": "slides/lec10.html#setup-metropolis-algo.",
+    "href": "slides/lec10.html#setup-metropolis-algo.",
+    "title": "Complexity and parallelization",
+    "section": "Setup: Metropolis Algo.",
+    "text": "Setup: Metropolis Algo.\nThe following function implements a random-walk Metropolis sampler whose target distribution is \\(N(0,1)\\).\nmh_chain &lt;- function(n = 30000, start = 0) {\n  x &lt;- numeric(n)\n  x[1] &lt;- start\n\n  for (i in 2:n) {\n    proposal &lt;- rnorm(1, mean = x[i - 1], sd = 1)\n    log_ratio &lt;- dnorm(proposal, log = TRUE) -\n      dnorm(x[i - 1], log = TRUE)\n\n    if (log(runif(1)) &lt; log_ratio) {\n      x[i] &lt;- proposal\n    } else {\n      x[i] &lt;- x[i - 1]\n    }\n  }\n  x\n}"
+  },
+  {
+    "objectID": "slides/lec10.html#exercise-run-four-mcmc-chains-in-parallel",
+    "href": "slides/lec10.html#exercise-run-four-mcmc-chains-in-parallel",
+    "title": "Complexity and parallelization",
+    "section": "Exercise: Run four MCMC chains in parallel",
+    "text": "Exercise: Run four MCMC chains in parallel\n\nRun four independent chains, initialized at -5, 0, 5, and 10.\nUse future_map() to run them on two workers.\nCalculate each chain’s mean using its last 10,000 iterations.\nWhy can we parallelize whole chains, but not successive iterations within one chain?\n\nlibrary(future)\nlibrary(furrr)\n\nstarts &lt;- c(-5, 0, 5, 10)\n\n# Your code: choose a plan, call future_map(), and summarize."
+  },
+  {
+    "objectID": "scripts/parallelize-mcmc.html",
+    "href": "scripts/parallelize-mcmc.html",
+    "title": "parallelize-mcmc",
+    "section": "",
+    "text": "library(future)\nlibrary(furrr)\nstarts &lt;- c(-5, 0, 5, 10)\n\nplan(multisession, workers = 2)\nchains &lt;- future_map(\n  starts,\n  \\(s) mh_chain(n = 30000, start = s),\n  .options = furrr_options(seed = 323)\n)\nsapply(chains, \\(x) mean(tail(x, 10000)))\nplan(sequential)\nmultisession launches separate R sessions and works on Windows, macOS, and Linux."
+  },
+  {
+    "objectID": "scripts/parallelize-mcmc.html#solution-windows",
+    "href": "scripts/parallelize-mcmc.html#solution-windows",
+    "title": "parallelize-mcmc",
+    "section": "",
+    "text": "library(future)\nlibrary(furrr)\nstarts &lt;- c(-5, 0, 5, 10)\n\nplan(multisession, workers = 2)\nchains &lt;- future_map(\n  starts,\n  \\(s) mh_chain(n = 30000, start = s),\n  .options = furrr_options(seed = 323)\n)\nsapply(chains, \\(x) mean(tail(x, 10000)))\nplan(sequential)\nmultisession launches separate R sessions and works on Windows, macOS, and Linux."
+  },
+  {
+    "objectID": "scripts/parallelize-mcmc.html#solution-macos-linux-when-forking-is-supported",
+    "href": "scripts/parallelize-mcmc.html#solution-macos-linux-when-forking-is-supported",
+    "title": "parallelize-mcmc",
+    "section": "Solution: macOS / Linux (when forking is supported)",
+    "text": "Solution: macOS / Linux (when forking is supported)\n\n                         &lt;!--   starting_values, --&gt;\n                         &lt;!--   function(starting_value) { --&gt;\n                             &lt;!--     mh_chain(n = 30000, start = starting_value) --&gt;\n                             &lt;!--   }, --&gt;\n                         &lt;!--   .options = furrr_options(seed = 323) --&gt;\n                         &lt;!-- ) --&gt;\nlibrary(future)\nlibrary(furrr)\nstarts &lt;- c(-5, 0, 5, 10)\n\nplan(multicore, workers = 2)\nchains &lt;- future_map(\nstarts,\n\\(s) mh_chain(n = 30000, start = s),\n.options = furrr_options(seed = 323)\n)\nsapply(chains, \\(x) mean(tail(x, 10000)))\nplan(sequential)\nmulticore uses process forking; check parallelly::supportsMulticore() first. In RStudio or other environments where forking is unsupported, use multisession instead.\nKey point: Each chain is sequential; the four chains are independent jobs."
   }
 ]
