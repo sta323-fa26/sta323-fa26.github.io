@@ -1,0 +1,57 @@
+---
+title: "parallelize-mcmc"
+format: html
+---
+
+
+## Solution: Windows
+
+```r
+library(future)
+library(furrr)
+starts <- c(-5, 0, 5, 10)
+
+plan(multisession, workers = 2)
+chains <- future_map(
+  starts,
+  \(s) mh_chain(n = 30000, start = s),
+  .options = furrr_options(seed = 323)
+)
+sapply(chains, \(x) mean(tail(x, 10000)))
+plan(sequential)
+```
+
+`multisession` launches separate R sessions and works on Windows, macOS, and Linux.
+
+## Solution: macOS / Linux (when forking is supported)
+
+<!-- chains <- future_map( -->
+                             <!--   starting_values, -->
+                             <!--   function(starting_value) { -->
+                                 <!--     mh_chain(n = 30000, start = starting_value) -->
+                                 <!--   }, -->
+                             <!--   .options = furrr_options(seed = 323) -->
+                             <!-- ) -->
+  
+  ```r
+library(future)
+library(furrr)
+starts <- c(-5, 0, 5, 10)
+
+plan(multicore, workers = 2)
+chains <- future_map(
+  starts,
+  \(s) mh_chain(n = 30000, start = s),
+  .options = furrr_options(seed = 323)
+)
+sapply(chains, \(x) mean(tail(x, 10000)))
+plan(sequential)
+```
+
+`multicore` uses process forking; check `parallelly::supportsMulticore()` first. In RStudio or other environments where forking is unsupported, use `multisession` instead.
+
+**Key point:** Each chain is sequential; the **four chains** are independent jobs.
+
+
+
+

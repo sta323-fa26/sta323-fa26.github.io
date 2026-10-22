@@ -41,11 +41,11 @@ Some references count multiplication followed by an addition (fused multiply-add
 
 ## Measuring efficiency (example)
 
-Suppose you wish to calculate a likelihood $L(x|\theta)$ for $n$ iid observations: $x = \{x_i\}; i \in \{1, \ldots, n \}$. The likelihood looks like
+Suppose you wish to calculate a "likelihood", (e.g. the likelihood of a message decryption) $L(x|\theta)$ for $n$ iid observations: $x = \{x_i\}; i \in \{1, \ldots, n \}$. The likelihood looks like
 
 $$
 L(x|\theta) = \prod_i^n f(x_i | \theta)
-$$ where $f$ is some density function dependent on parameters $\theta$.
+$$ where $f$ is some probability of datum $x_i$ given parameters $\theta$.
 
 $L(x|\theta)$ has $\mathcal{O}(n)$ complexity, i.e. scales linearly with the number of data points.
 
@@ -445,10 +445,18 @@ future_map_dbl(mtcars, mean)
 
 ##
 
+<!-- # ```{r} -->
+<!-- # plan(multisession, workers = 8) -->
+<!-- # future_map_dbl(mtcars, mean) -->
+<!-- # ``` -->
+
 ```{r}
-plan(multisession, workers = 8)
+options(parallelly.localhost.hostname = "127.0.0.1")
+
+plan(multisession, workers = 2)
 future_map_dbl(mtcars, mean)
 ```
+
 
 . . .
 
@@ -470,10 +478,45 @@ system.time({future_map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})
 plan(sequential)
 ```
 
-## Example
-
-- How could you parallelize the text mining of lab 4?
-
-- Demo
+# Exercise
 
 
+## Setup: Metropolis Algo.
+
+The following function implements a random-walk Metropolis sampler whose target distribution is $N(0,1)$.
+
+```r
+mh_chain <- function(n = 30000, start = 0) {
+  x <- numeric(n)
+  x[1] <- start
+
+  for (i in 2:n) {
+    proposal <- rnorm(1, mean = x[i - 1], sd = 1)
+    log_ratio <- dnorm(proposal, log = TRUE) -
+      dnorm(x[i - 1], log = TRUE)
+
+    if (log(runif(1)) < log_ratio) {
+      x[i] <- proposal
+    } else {
+      x[i] <- x[i - 1]
+    }
+  }
+  x
+}
+```
+
+## Exercise: Run four MCMC chains in parallel
+
+- Run **four independent chains**, initialized at `-5`, `0`, `5`, and `10`.
+- Use `future_map()` to run them on **two workers**.
+- Calculate each chain's mean using its **last 10,000 iterations**.
+- Why can we parallelize *whole chains*, but not successive iterations *within one chain*?
+
+```r
+library(future)
+library(furrr)
+
+starts <- c(-5, 0, 5, 10)
+
+# Your code: choose a plan, call future_map(), and summarize.
+```
