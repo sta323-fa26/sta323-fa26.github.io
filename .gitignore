@@ -16,3 +16,6 @@ quizzes/*
 admin-scripts/build_earthquake*
 admin-scripts/data/*
 docs/admin-scripts/data/*
+data/earthquakes.duckdb
+data/earthquakes-README.md
+admin-scripts/pilot_earthquake*
