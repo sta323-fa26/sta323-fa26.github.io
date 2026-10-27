@@ -1,19 +1,18 @@
 ---
-title: "Lab 6: ascend the likelihood mountain"
-subtitle: "Due Monday November 3 5:00pm"  
+title: "Lab 6: earthquakes"
+subtitle: "Due Monday November 16 5:00pm"  
 editor: source
 execute:
   eval: false
 ---
 
-> "There are two kinds of climbers: those who climb because their heart sings when they're in the mountains, and all the rest."
-> - Alex Lowe
+> "The noblest pleasure is the joy of understanding geology and geophysics."
+> - Leonardo da Vinci (probably)
 
 
 By the end of the lab, you will 
 
-- implement an MM algorithm to rank sports teams
-- construct an MM algorithm from scratch for text document classification
+- TBD 
 
 ::: callout-warning
 Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is "accidentally" pushed.
@@ -27,126 +26,353 @@ Make sure everyone in your team knows when to stop committing! After 5pm on the 
 
 -   Open the Quarto (`.qmd`) file, change the author name to your team name followed by a colon and then the names of the team members.
 
-## Exercises
+## Overview
 
-For all exercises, you should respond in the space provided in the template `lab-6.qmd` and show all your work. In all answers of type `double`, three significant figures suffices.
+In Lab 2, you turned nested earthquake records into a rectangular data set.
+Now we will use those records to investigate two scientific questions:
 
-### 1. rank NBA teams
+1. **Do earthquakes close together in space also occur close together in time,
+   more often than expected if event times were unrelated to locations?**
+2. **How sensitive is that conclusion to the distances and time intervals we use
+   to define "close"?**
 
-For this question, we will use the data set `NBA` that contains all 1230 regular season NBA games, from 2015-2016 and their outcome.
+We will use SQL to select and summarize records, `sf` to identify spatial
+relationships, and parallel simulation to construct a reference distribution.
 
-```{r}
-#| message: false
-#| warning: false
-NBA = read_csv("https://sta323-fa25.github.io/data/NBA_1516.csv")
-team_id = read_csv("https://sta323-fa25.github.io/data/teams.csv")
+### Data and setup
+
+Place `earthquakes.duckdb` into a local folder called "data". The variables needed here are:
+
+| Variable | Meaning |
+|---|---|
+| `id` | Unique earthquake identifier |
+| `time_s` | Event time, in seconds since January 1, 1970, UTC |
+| `longitude`, `latitude` | Epicenter coordinates, in degrees |
+| `mag` | Reported magnitude |
+| `depth` | Reported depth, in kilometers |
+| `place` | Location description |
+| `type` | Event type |
+
+The study region is the rectangle from 125°W to 114°W and 32°N to 42°N.
+Retain offshore events inside this rectangle. Use magnitude 2.5 or greater
+and `type = 'earthquake'` throughout. The supplied `data/region.gpkg` is a
+basemap for plotting; it does not define which events to retain.
+
+Use `DBI`, `duckdb`, `sf`, `tidyverse`, `future`, and `furrr`. The following
+setup imports the source directly into an in-memory DuckDB database:
+
+```r
+library(DBI)
+library(duckdb)
+library(sf)
+library(tidyverse)
+library(future)
+library(furrr)
+
+con <- dbConnect(duckdb(), dbdir = ":memory:")
+dbExecute(con, "
+  CREATE TABLE earthquakes AS
+  SELECT * FROM read_csv_auto('data/earthquakes.csv')
+")
 ```
 
-```{r}
-#| warning: false
-glimpse(NBA)
+Use SQL through `dbGetQuery()` or `dbExecute()` for tasks explicitly labeled
+SQL. Do not collect the entire catalog into R and then perform those tasks
+with `dplyr`. Use ordinary R tables for the repeated simulations.
+
+## Exercise 1 — Define and inspect the study catalog
+
+**Goal:** Establish exactly which events the analysis describes.
+
+### (a) Check the source table
+
+Use SQL to report the number of rows, number of distinct IDs, and number of
+rows with missing IDs, times, coordinates, or magnitudes. Check whether IDs
+are unique. Stop and investigate duplicate IDs rather than silently keeping
+an arbitrary record.
+
+### (b) Select the study events
+
+Use `CREATE TEMP TABLE study_events AS ...` to create a filtered table in
+DuckDB. Apply the region, magnitude, and event-type restrictions above, and
+exclude records missing an ID, event time, coordinate, or magnitude.
+
+Keep only `id`, `time_s`, `longitude`, `latitude`, `mag`, and `depth`. Missing
+depths do not require exclusion because our primary analysis does not use
+depth. Report how many records remain and describe the resulting population
+of recorded events in one sentence.
+
+### (c) Summarize in the database
+
+Use SQL to report the event count, earliest and latest recorded event times,
+and magnitude range. Also report counts by UTC date. You may convert the
+numeric times to readable dates in R after collecting the small summaries.
+
+Hint: DuckDB's `to_timestamp(time_s)` converts epoch seconds to a timestamp.
+Set the database time zone to UTC before extracting dates:
+
+```r
+dbExecute(con, "SET TimeZone = 'UTC'")
 ```
 
-Code book:
+### (d) Map the catalog
 
-- `Home`: unique id for home team
-- `Away`: unique id for away team
-- `Y`: whether the home team won (1) or lost (0)
+Collect the filtered `study_events`, ordered by `id`, into `events`.
+Add `event_index = row_number()` and preserve this order for the rest of the
+lab. Convert longitude and latitude to an `sf` object using CRS 4326, then
+transform it to EPSG:3310 for regional distance calculations in meters.
+Call the projected object `events_sf`.
 
-The `team_id` data set contains a dictionary to map between the unique ids from `NBA` and the actual team name.
+Read the supplied basemap and transform it to the same CRS. Produce a map
+with earthquake magnitude represented by point size. Identify one visible
+pattern, then explain why a map alone cannot answer whether locations and
+times are associated.
 
-Assuming the outcome of each game is independent, we can rank teams and jointly model a home-court advantage in the 2015-2016 season using [the Bradley-Terry model described in class](https://sta323-fa25.github.io/slides/lec14.html#/bradley-terry-with-home-court-advantage).
+## Exercise 2 — Turn spatial proximity into a relational table
 
-#### Ex 1 part a
+**Goal:** Build the reusable spatial relationships and calculate observed
+space–time clustering.
 
-- Implement the MM algorithm, [as described on this slide](https://sta323-fa25.github.io/slides/lec14.html#/iterate) to estimate $\hat{\mathbf{p}}_{MLE}$ and $\hat{\theta}_{MLE}$. Your implementation should be able to be adapted to another data set of identical construction (i.e. don’t hard-code data values into your functions). Start your algorithm with $\theta_0 = 0.5$ and $\mathbf{p} = \mathbf{1}$ where $\mathbf{1}$ is a vector of 30 1s. Run the MM updates for 100 steps (i.e. update each element of $\mathbf{p}$ and $\theta$ 100 times).
+### (a) Find nearby events
 
-:::callout-tip
-## Hint
-- Using your `NBA` data frame, create matrix $A = \{a_{ij}\}$ and matrix $B = \{b_{ij}\}$, as defined on [this slide](https://sta323-fa25.github.io/slides/lec14.html#/bradley-terry-likelihood) from lecture.
-:::
+Use `st_is_within_distance()` to identify events within **100 km** of each
+other. This is the largest distance needed later. The sparse output is a
+list: element `i` contains row indices of events close to event `i`.
 
-- What are the ten highest ranked teams (in order) from the 2015-2016 season according to the Bradley Terry model? Report your estimates $\hat{\mathbf{p}}_{MLE}$ together with the team name and id number for the top ten teams in a table.
+```r
+near <- st_is_within_distance(
+  events_sf,
+  events_sf,
+  dist = 100000
+)
+```
 
-- Is there a home-court advantage? What are the odds of winning at home vs away? What are the log-odds?
+Convert this list into a two-column table named `pairs`, with columns `i`
+and `j`. You may use a loop and `bind_rows()`, or a list-column followed by
+`unnest_longer()`.
 
-#### Ex 1 part b
+Keep only rows where `i < j`. Explain how this removes both self-pairs and
+duplicate unordered pairs. Check that every retained row satisfies this
+condition and that the pair keys are unique.
 
-- Fix $p_1 = 1$ in your algorithm. Construct 100 bootstrap data sets (re-sample from the original `NBA` data set with replacement to create a new data set of equal size) and re-compute $\hat{\mathbf{p}}_{MLE}$ and $\hat{\theta}_{MLE}$ for each. Here we choose `100` for low-computational demand.
+### (b) Calculate pair distances
 
-Report the maximum likelihood estimates (based on the actual, original data set) together with a 95% bootstrap confidence interval associated with each parameter in a 31 row table. Your table should label each row (except the row associated with $\theta$) by the team's actual name (not just the ID).
+Add the distance between each retained pair in kilometers. Calculate only
+the listed distances, rather than creating a full distance matrix:
 
-### 2. text classifier
+```r
+pair_distances <- st_distance(
+  events_sf[pairs$i, ],
+  events_sf[pairs$j, ],
+  by_element = TRUE
+)
 
-In this exercise we will work towards re-creating the classifier of [Ogura, Amano and Kondo (2013)](https://www.hindawi.com/journals/isrn/2013/829630/) by using a gamma-Poisson distribution to model the frequency of words in a document. Read section 3.1 of the article for relevant background about this model.
+pairs$distance_km <- as.numeric(pair_distances) / 1000
+```
 
-<!-- **The data** -->
+Report the number of retained pairs and compare it with the number of all
+possible unordered pairs, `n * (n - 1) / 2`. Explain why the latter grows
+quickly as the catalog grows. If no pairs remain, stop and check your
+filtering, CRS, and units before proceeding.
 
-<!-- To begin, we'll use a slightly more processed version of the data set from lab 4 that has undergone additional cleaning and been formed as a *document term matrix*. -->
+### (c) Join event times onto the pair table using SQL
 
-<!-- ```{r} -->
-<!-- # load data -->
-<!-- ``` -->
+Write the nonspatial tables `pairs` and `events` to DuckDB as `nearby_pairs`
+and `event_lookup`. Join `nearby_pairs` to `event_lookup` twice: once to look
+up the time at `i`, and once to look up the time at `j`.
 
-**The model**
+Use aliases to distinguish the two copies of the event table:
 
-Let $N_d$ be the total number of documents and let $N_v$ be the total number of unique words in all documents under study. In our model, we assert that the number of occurrences, $X_{ij}$ of word $j$ in document $i$ is Poisson with mean $\lambda_j w_i$ where $w_i$ is the number of words in document $i$. Furthermore, we assert $\lambda_j \sim gamma(\alpha_{jc}, \beta_{jc})$, where $\alpha_{jc}$ and $\beta_{jc}$ are parameters specific to word $j$ in a document of class $c$.
+```sql
+FROM nearby_pairs AS p
+JOIN event_lookup AS a ON p.i = a.event_index
+JOIN event_lookup AS b ON p.j = b.event_index
+```
 
-Assuming each document is independent, we write the likelihood
+Calculate each pair's absolute time difference in hours. Use SQL to report:
+
+- The number of pairs within **50 km**.
+- The number of these pairs also within **24 hours**.
+- The proportion of the 50 km pairs also within 24 hours.
+
+Call the second count `T_obs`. For this primary analysis,
 
 $$
-L(\mathbf{\alpha}, \beta) = \prod_{i = 1}^{N_d} \prod_{j = 1}^{N_{v}}
-\frac{\beta_{cj}^{\alpha_{cj}} \Gamma(x_{ij} + \alpha_{cj})w_i^{x_{ij}}}{
-\Gamma(\alpha_{cj}) (w_i + \beta_{cj})^{x_{ij} + \alpha_{cj}} \cdot x_{ij}!
-}.
+T = \sum_{i<j}
+  \mathbf{1}\{d_{ij} \leq 50\text{ km}\}
+  \mathbf{1}\{|t_i-t_j| \leq 24\text{ hours}\}.
 $$
 
-Note that each document $i \in \{1, \ldots, N_d \}$ has one of five class labels (e.g. `comp.sci`) and so $c \in \{1, \ldots 5 \}$. Effectively, this is the same as fitting five different models of the following form to five sets of data (1 data set for each class):
+Here, an indicator is 1 when its condition is true and 0 otherwise.
 
-$$
-L(\mathbf{\alpha}, \beta) = \prod_{i = 1}^{N_d} \prod_{j = 1}^{N_{v}}
-\frac{\beta_{j}^{\alpha_{j}} \Gamma(x_{ij} + \alpha_{j})w_i^{x_{ij}}}{
-\Gamma(\alpha_{j}) (w_i + \beta_{j})^{x_{ij} + \alpha_{j}} \cdot x_{ij}!
-}.
-$$
+### (d) Inspect the result
 
-Note that $\alpha$ and $\beta$ are vectors. Since we wish to compute the maximum likelihood estimates $\hat{\alpha}_{MLE}$ and $\hat{\beta}_{MLE}$, we need to find a function $g$ that minorizes $L(\alpha, \beta)$.
+Display five qualifying pairs with IDs, magnitudes, distances, and time
+differences, ordered by time difference and then IDs. If fewer than five
+qualify, display all of them.
 
-#### part 1
+Explain why `T_obs` alone does not tell us whether there is unusually strong
+space–time clustering. Also explain why a single event may contribute to
+more than one pair without those rows being accidental duplicates.
 
-- To begin, expand the $\Gamma$ function using the property: $\Gamma(x) = (x-1)!$. Next, write the log-likelihood. 
+## Exercise 3 — Construct a permutation reference distribution
 
+**Goal:** Answer the primary scientific question using simulation.
 
-#### part 2
+Our reference model is that, within the selected catalog, the observed event
+times are exchangeable among event locations. Keep the locations fixed and
+randomly reassign the observed times, using every time exactly once in each
+permutation. This preserves the spatial pattern and the overall temporal
+pattern while breaking their association.
 
-- Use [Jensen's inequality](https://sta323-fa25.github.io/slides/lec13.html#/jensens-inequality) and the [supporting line minorization](https://sta323-fa25.github.io/slides/lec13.html#/supporting-line-minorization) to construct $g$. Write down $g(\alpha, \beta | \alpha_n, \beta_n)$. 
+### (a) Write and check the statistic function
 
-::: callout-tip
-## Hint
-In the slides above on Jensen's inequality and the supporting line minorization, $f(x) = -\log x$
-:::
+Write a function with this interface:
 
-#### part 3
-
-Show that the MM update of $\beta_j$ is 
-
-$$
-\beta_{n+1, j} = \frac{N_d \cdot \alpha_{nj}}{
-\sum_{i=1}^{N_d} \frac{x_{ij} + \alpha_{nj}}{w_i + \beta_{nj}}
+```r
+count_close <- function(times, pairs, radius_km = 50, window_h = 24) {
+  # Select pairs within radius_km.
+  # Look up their two times using the i and j indices.
+  # Count pairs whose absolute time difference is <= window_h * 3600.
 }
+```
+
+The vector `times` must follow the fixed row order in `events`. The function
+returns one number and returns zero if no pairs qualify. Verify that using
+the actual event times reproduces `T_obs` from SQL.
+
+As a small check, use times `c(0, 3600, 172800)` and three pairs `(1, 2)`,
+`(1, 3)`, `(2, 3)`, all 10 km apart. For a 24-hour window the count should
+be 1. Explain the result.
+
+### (b) Perform one permutation
+
+Set a seed, shuffle the complete time vector without replacement, and pass
+it to `count_close()`. Explain why you must shuffle times at the **event**
+level, rather than shuffle the two time columns in the pair table separately.
+
+Explain why the pair distances and membership do not need to be recalculated.
+
+### (c) Build a reusable batch function
+
+Write `permute_batch(n_perm, times, pairs)` that returns a numeric vector
+containing `n_perm` permuted values of the statistic. Use a readable `for`
+loop and a preallocated numeric vector. Do not set a seed inside the loop
+or the batch function; the caller will manage reproducible randomness.
+
+Use **999 permutations**, divided into 20 batches. The following creates
+the batch sizes and gives each batch a reproducible random-number stream:
+
+```r
+B <- 999L
+batch_sizes <- rep(B %/% 20L, 20L)
+batch_sizes[seq_len(B %% 20L)] <-
+  batch_sizes[seq_len(B %% 20L)] + 1L
+
+times <- events$time_s
+
+plan(sequential)
+serial_batches <- future_map(
+  batch_sizes,
+  function(n_perm) permute_batch(n_perm, times, pairs),
+  .options = furrr_options(seed = 323)
+)
+null_counts <- unlist(serial_batches, use.names = FALSE)
+```
+
+### (d) Answer the primary question
+
+Plot the permutation distribution and mark `T_obs` with a vertical line.
+Calculate the one-sided Monte Carlo p-value:
+
+$$
+p = \frac{1 + \#\{T_b \geq T_{\mathrm{obs}}\}}{B+1}.
 $$
 
-and that the MM update of $\alpha_j$ is
+Also report the observed count, mean permutation count, and their ratio.
+If the mean permutation count is zero, report the ratio as undefined and
+report the two counts directly. With 999 permutations, the smallest possible
+reported p-value is 0.001; do not report a p-value of zero.
 
-$$
-\alpha_{n+1, j} = \frac{\sum_{i=1}^{N_d} \sum_{k = 0}^{x_{ij} - 1} \frac{\alpha_{nj}}{\alpha_{nj} + k}}{
-\sum_{i = 1}^{N_d} \log \left(\frac{w_i + \beta_{nj}}{\beta_{nj}}\right)
-}
-$$
+Write a short answer to scientific question 1. State what was randomized,
+what was held fixed, and whether the observed count is unusually large under
+this reference model. Do not use a binomial test on the pair indicators:
+different pairs can share earthquakes.
 
-::: callout-note 
-This exercise ends just shy of implementation. If you were to proceed from here, you would compute the MLEs $\hat{\alpha}, \hat{\beta}$ for each class of documents. Next, when observing a new document $d$, you would compute the probability document $d$ is of class $c$: $p(c | d) \propto p(c) \cdot p(d | \alpha_c, \beta_c)$. Repeat this for each class $c$ and subsequently label document $d$ as the most probable class.
-:::
+## Exercise 4 — Scale the computation and check the spatial scale
+
+**Goal:** Evaluate parallel computing and answer the second scientific
+question without rebuilding the expensive spatial relationships.
+
+### (a) Compare sequential and parallel execution
+
+Time the same 20-batch calculation using `plan(sequential)` and
+`plan(multisession, workers = 2)`. Keep the data, batch sizes, function,
+permutation count, and `furrr_options(seed = 323)` identical.
+
+Use elapsed time, for example `system.time(...)[["elapsed"]]`. For each
+plan, run the workload once as a warm-up, then time three repetitions and
+report the median elapsed time. These timings measure an already-started
+worker session; say explicitly that worker startup is excluded. Do not
+include database import, mapping, or pair-table construction in these times.
+
+Check that the sequential and parallel vectors agree using `all.equal()`.
+Report speedup as sequential median time divided by parallel median time.
+You receive full credit for a correct parallel implementation even if it is
+slower. Explain the result in terms of task size, worker overhead, and data
+transfer. Do not add artificial delays to create a speedup.
+
+Only ordinary vectors and tables should enter the workers. Do not pass
+`con` or perform concurrent database writes.
+
+### (b) Investigate the definition of “close”
+
+Repeat the analysis for all six prespecified combinations:
+
+| Spatial distance | Time windows |
+|---|---|
+| 25 km | 6 hours, 24 hours |
+| 50 km | 6 hours, 24 hours |
+| 100 km | 6 hours, 24 hours |
+
+Extend your batch function to return the statistic for all six combinations.
+Within each permutation, shuffle times **once**, then evaluate every
+combination on that same shuffled vector. Use the existing 100 km pair
+table throughout. Run the batches in parallel, with reproducible randomness.
+
+Hint: `tidyr::crossing()` can construct the six settings. Your outer loop
+can iterate over permutations and an inner loop over settings. Parallelize
+only the outer batches; do not create workers inside workers.
+
+### (c) Compare the scientific results
+
+Create one compact table containing distance, time window, observed count,
+mean permutation count, observed-to-expected ratio, and Monte Carlo p-value.
+Include the number of spatial pairs available at each distance; when it is
+zero, label that setting uninformative.
+
+Produce one plot comparing observed-to-expected ratios across the six
+settings. Answer scientific question 2 in a paragraph. Explain why larger
+raw counts at larger thresholds do not by themselves demonstrate stronger
+clustering. Treat these six results as a sensitivity analysis, not six
+independent discoveries or an opportunity to select the smallest p-value.
+
+### (d) Conclude and clean up
+
+Write a final paragraph connecting both scientific questions. Include one
+limitation of the reference model: it assumes that event times can be
+reassigned throughout the study region. Distinct local temporal trends or
+changes in detection could also produce a space–time association. Explain
+why rejecting this null does not uniquely identify an aftershock mechanism.
+
+Finally, explain why keeping only nearby pairs and computing geometry once
+may matter more for scalability than adding workers. Restore sequential
+execution and disconnect from DuckDB at the end of the report:
+
+```r
+plan(sequential)
+dbDisconnect(con, shutdown = TRUE)
+```
 
 ## Style guidelines
 
