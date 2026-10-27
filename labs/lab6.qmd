@@ -12,7 +12,11 @@ execute:
 
 By the end of the lab, you will 
 
-- TBD 
+- Query a global earthquake archive with SQL before collecting a regional subset.
+- Use projected coordinates, spatial predicates, distances, and spatial joins.
+- Construct and interpret a permutation reference distribution.
+- Compare reproducible sequential and parallel computations and assess
+  sensitivity to spatial and temporal thresholds. 
 
 ::: callout-warning
 Make sure everyone in your team knows when to stop committing! After 5pm on the due date will result in late penalty applying for the team, even if commit is "accidentally" pushed.
@@ -20,7 +24,7 @@ Make sure everyone in your team knows when to stop committing! After 5pm on the 
 
 # Getting started
 
--   In the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa25/lab-6-team_name.git` where `team_name` is replaced with your team name (see the excel signup sheet in box or your github).
+-   In the *terminal* tab, type `cd ~` to navigate to your home directory. Next `git clone git@github.com:sta323-fa26/lab-6-team_name.git` where `team_name` is replaced with your team name (see the excel signup sheet in box or your github).
 
 -   Navigate to your `lab-6` folder and open the `.Rproj` file.
 
@@ -29,10 +33,12 @@ Make sure everyone in your team knows when to stop committing! After 5pm on the 
 ## Overview
 
 In Lab 2, you turned nested earthquake records into a rectangular data set.
-Now we will use those records to investigate two scientific questions:
+Now we will query a larger, frozen USGS archive to investigate two scientific
+questions:
 
-1. **Do earthquakes close together in space also occur close together in time,
-   more often than expected if event times were unrelated to locations?**
+1. **Across 2010–2024, do nearby earthquakes occur close together in time
+   more often than expected if times were exchangeable among locations
+   within each calendar year?**
 2. **How sensitive is that conclusion to the distances and time intervals we use
    to define "close"?**
 
@@ -41,11 +47,25 @@ relationships, and parallel simulation to construct a reference distribution.
 
 ### Data and setup
 
-Place `earthquakes.duckdb` into a local folder called "data". The variables needed here are:
+The supplied archive contains **397,964 unique earthquakes** worldwide, with
+magnitude at least 2.5, from January 1, 2010 through December 31, 2024 (UTC).
+It was compiled from cached USGS downloads retrieved on October 23, 2026.
+Five source records with magnitudes below 2.5 were excluded from the main table
+and retained in an audit table. Detection varies across regions and years;
+this is not a complete worldwide census of all earthquakes of magnitude 2.5.
+
+Download `earthquakes.duckdb` file from [Duke box link]() and save it as `data/earthquakes.duckdb` in your team's project. Download it once per working environment; do not track the file with git nor add it to GitHub. 
+
+The database is about 58 MiB. Commit your analysis and download instructions,
+but keep the database out of your team's Git history. Your report should use
+the local file and should not download it again on every render.
+
+The main table is `earthquakes`. The variables needed here are:
 
 | Variable | Meaning |
 |---|---|
 | `id` | Unique earthquake identifier |
+| `time_utc` | Event timestamp in UTC |
 | `time_s` | Event time, in seconds since January 1, 1970, UTC |
 | `longitude`, `latitude` | Epicenter coordinates, in degrees |
 | `mag` | Reported magnitude |
@@ -55,11 +75,19 @@ Place `earthquakes.duckdb` into a local folder called "data". The variables need
 
 The study region is the rectangle from 125°W to 114°W and 32°N to 42°N.
 Retain offshore events inside this rectangle. Use magnitude 2.5 or greater
-and `type = 'earthquake'` throughout. The supplied `data/region.gpkg` is a
-basemap for plotting; it does not define which events to retain.
+and `type = 'earthquake'` throughout. Use the entire observation period:
+**January 1, 2010 inclusive through January 1, 2025 exclusive, in UTC**.
+Organize the regional events into 15 annual catalogs. Only compare pairs of
+events in the **same UTC calendar year**, and shuffle times within years.
+This allows activity and geographic patterns to differ between years.
 
-Use `DBI`, `duckdb`, `sf`, `tidyverse`, `future`, and `furrr`. The following
-setup imports the source directly into an in-memory DuckDB database:
+The primary statistic pools qualifying pairs across all 15 years. We do not
+select a year based on its earthquake count or its p-value. Our boundary rule
+excludes pairs spanning December 31, even if they are less than 24 hours apart;
+state this restriction when describing the population of pairs studied.
+
+Use `DBI`, `duckdb`, `sf`, `tidyverse`, `future`, and `furrr`. Connect directly
+to the existing archive; do not import a CSV or load the full archive into R:
 
 ```r
 library(DBI)
@@ -69,16 +97,26 @@ library(tidyverse)
 library(future)
 library(furrr)
 
-con <- dbConnect(duckdb(), dbdir = ":memory:")
-dbExecute(con, "
-  CREATE TABLE earthquakes AS
-  SELECT * FROM read_csv_auto('data/earthquakes.csv')
-")
+stopifnot(file.exists("data/earthquakes.duckdb"))
+con <- dbConnect(
+  duckdb(),
+  dbdir = "data/earthquakes.duckdb",
+  read_only = TRUE
+)
+dbExecute(con, "SET TimeZone = 'UTC'")
+dbListTables(con)
 ```
 
 Use SQL through `dbGetQuery()` or `dbExecute()` for tasks explicitly labeled
 SQL. Do not collect the entire catalog into R and then perform those tasks
 with `dplyr`. Use ordinary R tables for the repeated simulations.
+
+The archive also includes `archive_metadata` (definition and build details),
+`download_manifest` (source chunks and checksums), `excluded_events` (audited
+exclusions), and `candidate_windows` (monthly counts in the study box).
+Your connection protects these permanent tables. DuckDB still permits
+**temporary tables** on this read-only connection; these disappear when it
+closes. Use temporary tables for all intermediate work.
 
 ## Exercise 1 — Define and inspect the study catalog
 
@@ -86,47 +124,97 @@ with `dplyr`. Use ordinary R tables for the repeated simulations.
 
 ### (a) Check the source table
 
-Use SQL to report the number of rows, number of distinct IDs, and number of
-rows with missing IDs, times, coordinates, or magnitudes. Check whether IDs
-are unique. Stop and investigate duplicate IDs rather than silently keeping
-an arbitrary record.
+Inspect `archive_metadata` with SQL and report the archive's observation
+interval, magnitude threshold, and number of excluded source records. Check
+`download_manifest` for the number of chunks and retrieval-date range. Explain
+why the observation period differs from the retrieval dates.
 
-### (b) Select the study events
+For `earthquakes`, use SQL to report the number of rows, number of distinct
+IDs, and number of rows with missing IDs, times, coordinates, or magnitudes.
+Check whether IDs are unique. Stop and investigate duplicate IDs rather than
+silently keeping an arbitrary record.
 
-Use `CREATE TEMP TABLE study_events AS ...` to create a filtered table in
-DuckDB. Apply the region, magnitude, and event-type restrictions above, and
-exclude records missing an ID, event time, coordinate, or magnitude.
+### (b) Compare global and regional activity with SQL
 
-Keep only `id`, `time_s`, `longitude`, `latitude`, `mag`, and `depth`. Missing
-depths do not require exclusion because our primary analysis does not use
-depth. Report how many records remain and describe the resulting population
-of recorded events in one sentence.
+Create a temporary table `annual_activity` with one row per UTC year. Report:
 
-### (c) Summarize in the database
+- The global number of events.
+- The number inside the study box, using conditional aggregation.
+- The regional share of the global count.
+- The number of possible within-year regional pairs, `n * (n - 1) / 2`.
 
-Use SQL to report the event count, earliest and latest recorded event times,
-and magnitude range. Also report counts by UTC date. You may convert the
-numeric times to readable dates in R after collecting the small summaries.
+Hint: use `EXTRACT(YEAR FROM time_utc)` for the year and
+`COUNT(*) FILTER (WHERE ...)` for conditional counts. Cast to `DOUBLE` when
+calculating proportions if needed. Do not collect the global event records.
 
-Hint: DuckDB's `to_timestamp(time_s)` converts epoch seconds to a timestamp.
-Set the database time zone to UTC before extracting dates:
+Compare the sum of the annual possible-pair counts with the number of pairs
+from treating the entire regional catalog as one group. Explain how grouping
+by year changes both the scientific comparison and the computational workload.
+A larger regional share need not indicate a change in physical earthquake
+risk: recording practices and global activity can also vary.
 
-```r
-dbExecute(con, "SET TimeZone = 'UTC'")
+### (c) Build and describe the annual study catalogs
+
+Use `CREATE TEMP TABLE study_events AS ...` to select the study region,
+observation period, magnitude threshold, and event type in DuckDB. Exclude
+records missing an ID, time, coordinate, or magnitude. Keep `id`, `time_utc`,
+`time_s`, `longitude`, `latitude`, `mag`, `depth`, and an integer `year`.
+Missing depths do not require exclusion because this analysis uses epicenters.
+Check that you retain **24,896 events** and that counts by year agree with
+`annual_activity`.
+
+Use SQL to report each year's event count, first and last event times, and
+magnitude range. Then construct a monthly summary with each month's count,
+its share of its year's total, and its rank by count within that year.
+Use a common table expression (a `WITH` clause) to calculate monthly counts,
+then use window functions such as:
+
+```sql
+SUM(n_events) OVER (PARTITION BY year)
+DENSE_RANK() OVER (PARTITION BY year ORDER BY n_events DESC)
 ```
+
+Include zero-event months if any occur; a calendar table built with
+`generate_series()` and a `LEFT JOIN` is one approach. Check that there are
+180 months and that their counts sum to the regional event count.
+Plot the monthly counts and identify the highest-count month(s) in each year.
+Explain why preserving differences between annual catalogs is useful for the
+permutation analysis. Do not select or discard years based on these summaries.
+
+All dates must be UTC. Keep fractional seconds for time differences. Explain
+which aggregations and filters happened in DuckDB before collection into R.
 
 ### (d) Map the catalog
 
-Collect the filtered `study_events`, ordered by `id`, into `events`.
+Collect only the filtered `study_events`, ordered by `year, id`, into `events`.
 Add `event_index = row_number()` and preserve this order for the rest of the
 lab. Convert longitude and latitude to an `sf` object using CRS 4326, then
 transform it to EPSG:3310 for regional distance calculations in meters.
 Call the projected object `events_sf`.
 
-Read the supplied basemap and transform it to the same CRS. Produce a map
-with earthquake magnitude represented by point size. Identify one visible
-pattern, then explain why a map alone cannot answer whether locations and
-times are associated.
+Construct a grid of 100 km squares covering the projected event locations.
+The grid provides a spatial summary without an additional basemap download:
+
+```r
+grid_geometry <- st_make_grid(events_sf, cellsize = 100000)
+study_grid <- st_sf(
+  cell_id = seq_along(grid_geometry),
+  geometry = grid_geometry
+)
+```
+
+Use `st_join()` with `st_intersects` to attach `cell_id` to each event.
+Keep every event. If an event on a grid boundary matches multiple cells,
+keep the smallest `cell_id` for that event. Check that each event is represented
+once and that none has a missing cell ID. Count events per cell and map the
+counts, including zero-event cells. Overlay the earthquakes with magnitude
+represented by point size.
+
+Do this join in a separate object: preserve the original row order of `events`
+and `events_sf` for pair construction. The grid summarizes locations; it does
+not change which events are in the study catalog. Identify one visible pattern,
+then explain why a spatial map alone cannot answer whether locations and times
+are associated.
 
 ## Exercise 2 — Turn spatial proximity into a relational table
 
@@ -135,25 +223,25 @@ space–time clustering.
 
 ### (a) Find nearby events
 
-Use `st_is_within_distance()` to identify events within **100 km** of each
-other. This is the largest distance needed later. The sparse output is a
-list: element `i` contains row indices of events close to event `i`.
+Split the row indices of `events` by `year`. For each annual catalog, use
+`st_is_within_distance()` to find events within **100 km**, the largest distance
+needed later. Build neighbors separately by year rather than constructing all
+cross-year spatial pairs and discarding them afterward.
 
 ```r
+year_indices <- split(events$event_index, events$year)
+idx <- year_indices[[1]]
 near <- st_is_within_distance(
-  events_sf,
-  events_sf,
-  dist = 100000
+  events_sf[idx, ], events_sf[idx, ], dist = 100000
 )
 ```
 
-Convert this list into a two-column table named `pairs`, with columns `i`
-and `j`. You may use a loop and `bind_rows()`, or a list-column followed by
-`unnest_longer()`.
-
-Keep only rows where `i < j`. Explain how this removes both self-pairs and
-duplicate unordered pairs. Check that every retained row satisfies this
-condition and that the pair keys are unique.
+The sparse list uses positions **within this year's subset**. Convert each
+local pair back to the global row indices with `idx[local_i]` and
+`idx[local_j]`. Combine the annual results into a table `pairs` with columns
+`year`, `i`, and `j`. Keep only `i < j`. Explain how this removes self-pairs
+and duplicate unordered pairs. Check that pair keys are unique and that
+`events$year[i]`, `events$year[j]`, and the pair's `year` agree.
 
 ### (b) Calculate pair distances
 
@@ -170,15 +258,25 @@ pair_distances <- st_distance(
 pairs$distance_km <- as.numeric(pair_distances) / 1000
 ```
 
-Report the number of retained pairs and compare it with the number of all
-possible unordered pairs, `n * (n - 1) / 2`. Explain why the latter grows
-quickly as the catalog grows. If no pairs remain, stop and check your
-filtering, CRS, and units before proceeding.
+Report pair counts by year and in total; compare them with the possible-pair
+counts from Exercise 1. Explain why the latter grow quickly as catalogs grow.
+If no pairs remain, check your filtering, CRS, and units before proceeding.
+For a large annual table, calculate distances in blocks (for example 50,000
+pairs at a time), using `by_element = TRUE` in each block. Do not construct a
+full distance matrix or millions of duplicated geometries at once.
 
 ### (c) Join event times onto the pair table using SQL
 
-Write the nonspatial tables `pairs` and `events` to DuckDB as `nearby_pairs`
-and `event_lookup`. Join `nearby_pairs` to `event_lookup` twice: once to look
+Write the nonspatial tables `pairs` and `events` to DuckDB as temporary
+`nearby_pairs` and `event_lookup` tables. For example:
+
+```r
+dbWriteTable(con, "nearby_pairs", pairs, temporary = TRUE)
+dbWriteTable(con, "event_lookup", events, temporary = TRUE)
+```
+
+If rerunning this chunk, use `overwrite = TRUE` as well as `temporary = TRUE`.
+Join `nearby_pairs` to `event_lookup` twice: once to look
 up the time at `i`, and once to look up the time at `j`.
 
 Use aliases to distinguish the two copies of the event table:
@@ -191,19 +289,27 @@ JOIN event_lookup AS b ON p.j = b.event_index
 
 Calculate each pair's absolute time difference in hours. Use SQL to report:
 
-- The number of pairs within **50 km**.
-- The number of these pairs also within **24 hours**.
-- The proportion of the 50 km pairs also within 24 hours.
+- Each year's number of pairs within **50 km**.
+- Each year's number also within **24 hours**, and their proportion.
+- Each year's share of the total qualifying count.
 
-Call the second count `T_obs`. For this primary analysis,
+Use a `LEFT JOIN` to `annual_activity` so years with no qualifying pairs
+still appear. Use `NULLIF()` to avoid division by zero. Retain zero counts;
+report proportions with a zero denominator as undefined. Which years contribute
+most? Explain why a year with many events or spatial pairs may contribute more.
+
+Sum the annual qualifying counts to obtain the pooled statistic `T_obs`.
+This is a count of pairs, not an equally weighted average of annual effects.
+For this primary analysis,
 
 $$
-T = \sum_{i<j}
+T = \sum_{y=2010}^{2024} \sum_{i<j:\,Y_i=Y_j=y}
   \mathbf{1}\{d_{ij} \leq 50\text{ km}\}
   \mathbf{1}\{|t_i-t_j| \leq 24\text{ hours}\}.
 $$
 
-Here, an indicator is 1 when its condition is true and 0 otherwise.
+Here, `Y_i` is event `i`'s UTC year. An indicator is 1 when its condition is
+true and 0 otherwise.
 
 ### (d) Inspect the result
 
@@ -219,11 +325,14 @@ more than one pair without those rows being accidental duplicates.
 
 **Goal:** Answer the primary scientific question using simulation.
 
-Our reference model is that, within the selected catalog, the observed event
-times are exchangeable among event locations. Keep the locations fixed and
-randomly reassign the observed times, using every time exactly once in each
-permutation. This preserves the spatial pattern and the overall temporal
-pattern while breaking their association.
+Our reference model is that observed times are exchangeable among event
+locations **within each year**. Keep locations and annual membership fixed.
+In each permutation, independently shuffle each year's entire observed time
+vector without replacement, then sum qualifying pair counts across years.
+This preserves every year's spatial pattern, event count, and complete set
+of event times (including seasonal variation and temporal bursts), while
+breaking the within-year association of times with locations. It does not
+assume uniform geographic occurrence or a constant earthquake rate.
 
 ### (a) Write and check the statistic function
 
@@ -247,18 +356,28 @@ be 1. Explain the result.
 
 ### (b) Perform one permutation
 
-Set a seed, shuffle the complete time vector without replacement, and pass
-it to `count_close()`. Explain why you must shuffle times at the **event**
-level, rather than shuffle the two time columns in the pair table separately.
+Write `shuffle_within_year(times, year_indices)`. Copy `times`, then replace
+each annual slice with a permutation of that slice. Use
+`sample.int(length(idx))` to permute positions, including for a one-event year.
+Set a seed in the caller, perform one stratified shuffle, and pass it to
+`count_close()`.
 
-Explain why the pair distances and membership do not need to be recalculated.
+Check that each year's sorted time vector is unchanged after shuffling.
+Explain why shuffling across years or shuffling the two time columns of the
+pair table separately would implement a different reference model. Explain
+why the spatial pairs and distances do not need to be recalculated.
 
 ### (c) Build a reusable batch function
 
-Write `permute_batch(n_perm, times, pairs)` that returns a numeric vector
+Write `permute_batch(n_perm, times, pairs, year_indices)` that returns a vector
 containing `n_perm` permuted values of the statistic. Use a readable `for`
-loop and a preallocated numeric vector. Do not set a seed inside the loop
+loop, a preallocated numeric vector, and one call to
+`shuffle_within_year()` per permutation. Do not set a seed inside the loop
 or the batch function; the caller will manage reproducible randomness.
+
+For the primary analysis, prepare the indices of pairs within 50 km **once**
+outside the permutation loop. Avoid repeatedly filtering a large pair table.
+Keep the complete time vector, including events without any nearby pairs.
 
 Use **999 permutations**, divided into 20 batches. The following creates
 the batch sizes and gives each batch a reproducible random-number stream:
@@ -274,7 +393,9 @@ times <- events$time_s
 plan(sequential)
 serial_batches <- future_map(
   batch_sizes,
-  function(n_perm) permute_batch(n_perm, times, pairs),
+  function(n_perm) {
+    permute_batch(n_perm, times, pairs, year_indices)
+  },
   .options = furrr_options(seed = 323)
 )
 null_counts <- unlist(serial_batches, use.names = FALSE)
@@ -314,7 +435,7 @@ Use elapsed time, for example `system.time(...)[["elapsed"]]`. For each
 plan, run the workload once as a warm-up, then time three repetitions and
 report the median elapsed time. These timings measure an already-started
 worker session; say explicitly that worker startup is excluded. Do not
-include database import, mapping, or pair-table construction in these times.
+include database queries, mapping, or pair-table construction in these times.
 
 Check that the sequential and parallel vectors agree using `all.equal()`.
 Report speedup as sequential median time divided by parallel median time.
@@ -336,10 +457,12 @@ Repeat the analysis for all six prespecified combinations:
 | 100 km | 6 hours, 24 hours |
 
 Extend your batch function to return the statistic for all six combinations.
-Within each permutation, shuffle times **once**, then evaluate every
-combination on that same shuffled vector. Use the existing 100 km pair
-table throughout. Run the batches in parallel, with reproducible randomness.
+Within each permutation, shuffle times **once within every year**, then
+evaluate all six combinations on that same complete stratified shuffle.
+Use the existing 100 km pair table throughout. Run the batches in parallel, with reproducible randomness.
 
+Precompute spatial pair selections outside the loops and calculate absolute
+time differences once per permutation for reuse across settings.
 Hint: `tidyr::crossing()` can construct the six settings. Your outer loop
 can iterate over permutations and an inner loop over settings. Parallelize
 only the outer batches; do not create workers inside workers.
@@ -360,10 +483,13 @@ independent discoveries or an opportunity to select the smallest p-value.
 ### (d) Conclude and clean up
 
 Write a final paragraph connecting both scientific questions. Include one
-limitation of the reference model: it assumes that event times can be
-reassigned throughout the study region. Distinct local temporal trends or
+limitation of the reference model: within each year, it assumes that event
+times can be reassigned throughout the study region. Distinct local temporal trends or
 changes in detection could also produce a space–time association. Explain
 why rejecting this null does not uniquely identify an aftershock mechanism.
+Discuss the exclusion of cross-year pairs and the fact that a pooled pair
+count gives greater influence to years with more qualifying pairs. Distinguish
+evidence of association from a claim that the effect is identical in every year.
 
 Finally, explain why keeping only nearby pairs and computing geometry once
 may matter more for scalability than adding workers. Restore sequential
