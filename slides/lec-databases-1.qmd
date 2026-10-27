@@ -1,0 +1,595 @@
+---
+title: "Databases I"
+author: "Dr. Alexander Fisher"
+execute:
+  warning: true
+format: 
+    revealjs:
+      smaller: true
+---
+
+
+```{r setup}
+#| include: false
+library(dplyr)
+library(dbplyr)
+library(DBI)
+library(RSQLite)
+knitr::opts_chunk$set(fig.align = "center", out.width = "100%")
+options(width = 70)
+# Disposable teaching database: no user files are deleted or overwritten.
+db_path = tempfile(fileext = ".sqlite")
+setup_db = DBI::dbConnect(RSQLite::SQLite(), db_path)
+DBI::dbWriteTable(setup_db, "flights", nycflights13::flights)
+DBI::dbWriteTable(setup_db, "airlines", nycflights13::airlines)
+DBI::dbDisconnect(setup_db)
+```
+
+# The why of databases
+
+
+## Numbers every programmer should know
+
+| Task                                | Timing (ns)       | Timing (μs)       |
+|-------------------------------------|-------------------|-------------------|
+| L1 cache reference                  | 0.5               | 0.0005            |
+| L2 cache reference                  | 7                 | 0.007             |
+| Main memory reference               | 100               | 0.1               |
+| Random seek SSD                     | 150,000           | 150               |
+| Read 1 MB sequentially from memory  | 250,000           | 250               |
+| Read 1 MB sequentially from SSD     | 1,000,000         | 1,000             |
+| Disk seek                           | 10,000,000        | 10,000            |  
+| Read 1 MB sequentially from disk    | 20,000,000        | 20,000            |
+| Send packet CA->Netherlands->CA     | 150,000,000       | 150,000           |
+
+
+::: {.aside}
+From [jboner/latency.txt](https://gist.github.com/jboner/2841832) & [sirupsen/napkin-math](https://github.com/sirupsen/napkin-math) <br/>
+Jeff Dean's original [talk](http://static.googleusercontent.com/media/research.google.com/en/us/people/jeff/stanford-295-talk.pdf) 
+:::
+
+
+## Implications for big data
+
+Let's imagine we have a *10 GB* flat data file and that we want to select certain rows based on a particular criterion (filtering). 
+
+This requires a sequential read across the entire data set.
+
+
+| File Location    | Performance                        | Time        |
+|:-----------------|:-----------------------------------|:------------|
+| in memory        | $10~GB \times (250~\mu s / 1~MB)$  | 2.5 seconds |
+| on disk (SSD)    | $10~GB \times (1~ms / 1~MB)$       | 10 seconds  |
+| on disk (HD)     | $10~GB \times (20~ms / 1~MB)$      | 200 seconds |
+
+<br/>
+
+This is just for *reading* the sequential data, if we make any modifications (*writing*) or the data is fragmented things are much worse. 
+
+
+## Blocks
+
+#### Cost:
+::: {.center}
+ Disk << SSD <<< Memory
+:::
+
+
+#### Speed:
+::: {.center}
+Disk <<< SSD << Memory
+:::
+
+<br/>
+
+::: {.fragment}
+Disk is cheap but slow; memory is fast but limited. 
+
+What do we do when our data doesn't fit in memory?
+:::
+
+::: {.fragment}
+Create *blocks* — group related rows and read multiple rows at a time, loading only what's needed (skip what we dont want). 
+
+Optimal block size depends on the task and the storage medium.
+:::
+
+
+## Linear vs Binary Search
+
+Blocks reduce I/O, but any query still requires scanning all of them — a linear search requiring $\mathcal{O}(N)$ reads.
+
+. . .
+
+<br/>
+
+We can do better if we are careful about how we structure our data, specifically sorting some (or all) of the columns.
+
+* Sorting is expensive, $\mathcal{O}(N \log N)$, but it only needs to be done once. 
+
+* After sorting, we can use a binary search for any subsetting tasks, $\mathcal{O}(\log N)$
+
+* In databases these "sorted" columns are referred to as *indexes*.
+
+* Indexes require additional storage, but are usually small enough to be kept in memory even when the blocks need to stay on disk.
+
+
+## So why databases?
+
+Implementing blocks, indexes, and query optimization correctly is hard:
+
+* The optimal strategy depends on your queries — and they change
+
+* Data is modified (inserts, updates, deletes) — structures must stay consistent
+
+* Multiple users may access data simultaneously — concurrency must be managed
+
+* Failures happen — data must remain correct and recoverable
+
+::: {.fragment}
+A database management system (DBMS) handles all of this for you, plus provides a standard query language (SQL) to express what you want, not how to get it.
+:::
+
+
+# Flights
+
+## The data
+
+`nycflights13`: 336,776 flights departing NYC in 2013.
+
+```{r}
+nycflights13::flights |>
+  select(month, day, origin, dest, carrier, dep_delay) |>
+  glimpse()
+```
+
+How did October departure delays differ across airlines and airports?
+
+`dep_delay` is in minutes; negative values indicate early departures.
+
+## October departure delays
+
+```{r}
+nycflights13::flights |>
+  filter(month == 10, !is.na(dep_delay)) |>
+  group_by(origin, carrier) |>
+  summarise(
+    n_flights = n(),
+    mean_delay = mean(dep_delay, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+## SQLite and DBI 
+
+| Tool | Role |
+|---|---|
+| SQLite | Database engine, running inside our process |
+| RSQLite | R driver for SQLite |
+| DBI | Common interface for connections and SQL |
+| dbplyr | Translates supported dplyr operations to SQL |
+
+- **SQLite** needs no separate server. It acts as the actual storage container for your data. Unlike major databases like PostgreSQL or MySQL, SQLite stores the entire database as a single file on your local computer, (fast and easy for local projects / small applications).
+
+- **DBI** acts as the translator or "bridge" between your programming environment (specifically R) and the database. It provides a standardized set of commands (like connecting, disconnecting, or sending raw SQL queries) so that you don't have to learn a completely new programming syntax every time you switch from SQLite to PostgreSQL
+
+
+## Set up a database
+
+```{r}
+library(DBI)
+library(RSQLite)
+library(dplyr)
+library(dbplyr)
+
+db = dbConnect(SQLite(), "flights.sqlite")
+
+dbWriteTable(
+  db, "flights", nycflights13::flights,
+  overwrite = TRUE
+)
+dbWriteTable(
+  db, "airlines", nycflights13::airlines,
+  overwrite = TRUE
+)
+
+dbListTables(db)
+```
+
+- "flights.sqlite" is the database file in the current working directory. SQLite creates it if it does not exist; otherwise, it opens the existing file.
+- `overwrite = TRUE` replaces these tables when rerunning the example.
+
+<!-- ## dbConnect() -->
+
+<!-- ```{r} -->
+<!-- db = DBI::dbConnect(RSQLite::SQLite(), db_path) -->
+<!-- DBI::dbListTables(db) -->
+<!-- ``` -->
+
+<!-- The setup chunk creates a small demonstration database once per render. -->
+
+<!-- For a prepared database, the connection would be: -->
+<!-- ```{r} -->
+<!-- #| eval: false -->
+<!-- db = DBI::dbConnect( -->
+<!--   RSQLite::SQLite(), "flights.sqlite" -->
+<!-- ) -->
+<!-- ``` -->
+
+## tbl()
+
+```{r}
+flight_tbl = tbl(db, "flights")
+airlines_tbl = tbl(db, "airlines")
+
+flight_tbl |>
+  select(origin, carrier, dep_delay)
+```
+
+- tbl() creates an R reference to the "flights" table in the database
+- `flight_tbl` describes a database table. It is not a local copy of every row. We can send queries using `dplyr` functions.
+
+## Filter and select
+
+```{r}
+oct_21 = flight_tbl |>
+  filter(month == 10, day == 21) |>
+  select(origin, dest, carrier, tailnum, dep_delay)
+
+oct_21
+```
+
+## dplyr to SQL
+
+```{r}
+oct_21 |> show_query()
+```
+Read `SELECT`, `FROM`, and `WHERE` as: columns, source, and row conditions.
+
+## dbGetQuery()
+
+```{r}
+DBI::dbGetQuery(db, "
+  SELECT origin, dest, carrier, dep_delay
+  FROM flights
+  WHERE month = 10 AND day = 21
+  LIMIT 6
+")
+```
+
+## Laziness
+
+Building a pipeline records work to do.
+
+* `show_query()` displays SQL.
+* Printing a lazy table retrieves a preview.
+* `collect()` executes and brings the result into R.
+* `compute()` executes and stores a result table in the database.
+* `collapse()` restructures SQL without executing it.
+
+. . .
+
+A preview with few rows can still require substantial database work.
+
+## Summarize October delays
+
+```{r}
+october_summary = flight_tbl |>
+  filter(month == 10, !is.na(dep_delay)) |>
+  group_by(origin, carrier) |>
+  summarise(
+    n_flights = n(),
+    mean_delay = mean(dep_delay, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+october_summary
+```
+
+## Exercise: when does work happen?
+
+For each expression, predict what happens in R and in the database.
+
+```r
+q = flight_tbl |> filter(month == 10)
+show_query(q)
+q
+collect(q)
+```
+
+Which expression brings **all matching rows** into R?
+
+## Collect early or late?
+
+:::: {.columns}
+::: {.column width="50%"}
+**Collect early**
+```r
+flight_tbl |>
+  collect() |>
+  count(origin)
+```
+:::
+::: {.column width="50%"}
+**Collect late**
+```r
+flight_tbl |>
+  count(origin) |>
+  collect()
+```
+:::
+::::
+
+Same counts. Very different amounts of data enter R.
+
+## Result sizes
+
+```{r}
+all_flights = collect(flight_tbl)
+small_result = flight_tbl |> count(origin) |> collect()
+
+tibble(
+  result = c("All flights", "Airport counts"),
+  rows = c(nrow(all_flights), nrow(small_result)),
+  bytes_in_R = c(as.numeric(object.size(all_flights)),
+                 as.numeric(object.size(small_result)))
+)
+```
+Object sizes describe these R results, not peak memory or database memory.
+
+## Timing collect()
+
+```{r}
+early = function() {
+  flight_tbl |> collect() |> count(origin) |> arrange(origin)
+}
+late = function() {
+  flight_tbl |> count(origin) |> arrange(origin) |> collect()
+}
+stopifnot(isTRUE(all.equal(early(), late())))
+system.time(early())
+system.time(late())
+```
+Compare completed results; repeat timings and consider caching.
+
+## Join airline names
+
+```{r}
+named_summary = october_summary |>
+  left_join(airlines_tbl, by = "carrier") |>
+  select(origin, carrier, name, n_flights, mean_delay) |>
+  arrange(origin, desc(mean_delay))
+
+named_summary
+```
+
+## Join keys
+
+```{r}
+airlines_tbl |>
+  count(carrier) |>
+  filter(n != 1) |>
+  collect()
+```
+A lookup should have one row per `carrier`.
+
+Join by meaning, not by row position.
+
+## Joins across sources
+
+```{r}
+local_df = data.frame(origin = c("JFK", "LGA"))
+```
+
+```{r}
+#| error: true
+flight_tbl |> inner_join(local_df, by = "origin")
+```
+
+The local data frame and database table have different sources.
+
+## A local lookup table
+
+```{r}
+flight_tbl |>
+  inner_join(local_df, by = "origin", copy = TRUE) |>
+  count(origin) |>
+  collect()
+```
+
+`copy = TRUE` copies the small lookup into the database.
+
+## EXPLAIN QUERY PLAN
+
+```{r}
+lookup_sql = "
+  SELECT origin, dest, dep_delay
+  FROM flights
+  WHERE month = 10 AND day = 21
+"
+DBI::dbGetQuery(
+  db, paste("EXPLAIN QUERY PLAN", lookup_sql)
+)
+```
+
+## CREATE INDEX
+
+```{r}
+DBI::dbExecute(db, "
+  CREATE INDEX IF NOT EXISTS flights_date_idx
+  ON flights(month, day)
+")
+DBI::dbGetQuery(
+  db, paste("EXPLAIN QUERY PLAN", lookup_sql)
+)
+```
+Compare `SCAN` with `SEARCH ... USING INDEX` in the plan.
+
+## Exercise: will an index help?
+
+Which query is most likely to benefit from the date index?
+
+1. Retrieve flights on one specified date.
+2. Compute the average delay over all flights.
+
+Explain your answer in terms of how many rows are needed.
+
+. . .
+
+What are the costs of keeping the index?
+
+## Ranking delays
+
+```{r}
+extreme_delays = flight_tbl |>
+  filter(month == 10, !is.na(dep_delay)) |>
+  group_by(origin) |>
+  mutate(delay_rank = min_rank(desc(dep_delay))) |>
+  filter(delay_rank <= 3) |>
+  ungroup() |>
+  select(origin, carrier, dep_delay, delay_rank) |>
+  arrange(origin, delay_rank)
+
+extreme_delays
+```
+
+## Window functions
+
+```{r}
+extreme_delays |> show_query()
+```
+Look for `OVER` and `PARTITION BY`: calculate within each airport while retaining rows.
+
+## SQL translation: grepl()
+
+The original example: test whether a tail number starts with `N`.
+
+```{r}
+#| error: true
+oct_21 |> mutate(tailnum_n_prefix = grepl("^N", tailnum))
+```
+
+```{r}
+#| error: true
+oct_21 |>
+  mutate(tailnum_n_prefix = grepl("^N", tailnum)) |>
+  show_query()
+```
+
+Translation and execution depend on the backend and package versions.
+
+## An R function inside a query
+
+```{r}
+starts_with_n = function(x) grepl("^N", x)
+```
+
+```{r}
+#| error: true
+custom_query = oct_21 |>
+  mutate(n_prefix = starts_with_n(tailnum))
+custom_query |> show_query()
+```
+
+```{r}
+#| error: true
+oct_21 |>
+  mutate(n_prefix = starts_with_n(tailnum)) |>
+  collect()
+```
+
+SQLite cannot call this function from the R session.
+
+## Collect, then use the R function
+
+```{r}
+oct_21 |>
+  select(tailnum) |>
+  collect() |>
+  mutate(n_prefix = starts_with_n(tailnum)) |>
+  head(6)
+```
+
+Filter and select in the database; apply the R-only function after collection.
+
+## Missing values in SQL
+
+```{r}
+#| warning: true
+dbplyr::translate_sql(mean(dep_delay), con = db)
+```
+
+```{r}
+dbplyr::translate_sql(mean(dep_delay, na.rm = TRUE), con = db)
+```
+
+SQL aggregates generally ignore `NULL`; local R's `mean()` defaults to `na.rm = FALSE`.
+
+## collect()
+
+```{r}
+delay_results = named_summary |> collect()
+
+delay_results |>
+  select(origin, name, n_flights, mean_delay) |>
+  head(8)
+```
+Now use R for plots or further analysis of the compact result.
+
+## compute()
+
+```{r}
+cached_summary = october_summary |> compute()
+
+cached_summary |>
+  left_join(airlines_tbl, by = "carrier") |>
+  collect()
+```
+`compute()` stores the summary in the database; it does not download it.
+
+## Loading data larger than RAM
+
+`copy_to(db, a_large_tibble)` requires that tibble to exist in R first.
+
+At scale:
+
+* Connect to an existing database, or ingest data in bounded batches.
+* Reuse the persistent database across analyses.
+* Filter and summarize before collecting.
+* Consider an analytical engine such as DuckDB for scan-heavy workloads.
+
+Our small setup teaches querying, not larger-than-memory ingestion.
+
+## Exercise: a compact route summary
+
+For October flights with observed departure delay:
+
+1. Keep flights departing from JFK.
+2. Calculate flight count and mean delay for each destination.
+3. Keep destinations with at least 50 such flights.
+4. Sort by decreasing mean delay and collect the result.
+
+Before running: where should `collect()` go, and why?
+
+## Exercise solution
+
+```{r}
+route_summary = flight_tbl |>
+  filter(month == 10, origin == "JFK", !is.na(dep_delay)) |>
+  group_by(dest) |>
+  summarise(
+    n_flights = n(),
+    mean_delay = mean(dep_delay, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  filter(n_flights >= 50) |>
+  arrange(desc(mean_delay), dest) |>
+  collect()
+head(route_summary)
+```
+
+## dbDisconnect()
+
+```{r}
+DBI::dbDisconnect(db)
+```
