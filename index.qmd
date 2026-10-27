@@ -76,7 +76,7 @@ schedule %>%
 |  | Thu Oct 15 | Markov chain Monte Carlo | [💻](/slides/lec-mcmc.html) |  |  |
 | 9 | Tue Oct 20 | MCMC example |  | [lab 5](/labs/lab5.html)  | mp presentations |
 |  | Thu Oct 22 | complexity and parallelization | [💻](/slides/lec10.html) |  |  |
-| 10 | Tue Oct 27 | databases and dplyr|  |  | |
+| 10 | Tue Oct 27 | databases and dplyr| [💻](/slides/lec-databases-1.html) |  | |
 |  | Thu Oct 29 | duckDB and SQL |  |  |  |
 | 11 | Tue Nov 03 | biglm  |  | lab 6 |  | <!--project workday -->
 |  | Thu Nov 05 | R packages |  |  |  |

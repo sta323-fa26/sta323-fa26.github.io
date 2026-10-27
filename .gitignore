@@ -13,3 +13,6 @@ scripts/*Instructor.R
 quizzes/*
 /solutions/
 .positai
+admin-scripts/build_earthquake*
+admin-scripts/data/*
+docs/admin-scripts/data/*

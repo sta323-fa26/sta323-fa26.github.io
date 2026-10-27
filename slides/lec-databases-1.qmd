@@ -350,7 +350,6 @@ stopifnot(isTRUE(all.equal(early(), late())))
 system.time(early())
 system.time(late())
 ```
-Compare completed results; repeat timings and consider caching.
 
 ## Join airline names
 
@@ -455,28 +454,31 @@ extreme_delays
 
 ## Window functions
 
+Window functions compute a value for each row using values from a surrounding partition.
+Within a `group_by()` + `mutate()`, dplyr translates these to `SQL OVER()` clauses:
+
 ```{r}
 extreme_delays |> show_query()
 ```
 Look for `OVER` and `PARTITION BY`: calculate within each airport while retaining rows.
 
-## SQL translation: grepl()
+<!-- ## SQL translation: grepl() -->
 
-The original example: test whether a tail number starts with `N`.
+<!-- The original example: test whether a tail number starts with `N`. -->
 
-```{r}
-#| error: true
-oct_21 |> mutate(tailnum_n_prefix = grepl("^N", tailnum))
-```
+<!-- ```{r} -->
+<!-- #| error: true -->
+<!-- oct_21 |> mutate(tailnum_n_prefix = grepl("^N", tailnum)) -->
+<!-- ``` -->
 
-```{r}
-#| error: true
-oct_21 |>
-  mutate(tailnum_n_prefix = grepl("^N", tailnum)) |>
-  show_query()
-```
+<!-- ```{r} -->
+<!-- #| error: true -->
+<!-- oct_21 |> -->
+<!--   mutate(tailnum_n_prefix = grepl("^N", tailnum)) |> -->
+<!--   show_query() -->
+<!-- ``` -->
 
-Translation and execution depend on the backend and package versions.
+<!-- Translation and execution depend on the backend and package versions. -->
 
 ## An R function inside a query
 
@@ -553,12 +555,10 @@ cached_summary |>
 
 At scale:
 
-* Connect to an existing database, or ingest data in bounded batches.
+* Connect to an existing database, or load data in bounded batches.
 * Reuse the persistent database across analyses.
 * Filter and summarize before collecting.
-* Consider an analytical engine such as DuckDB for scan-heavy workloads.
-
-Our small setup teaches querying, not larger-than-memory ingestion.
+* Consider an analytical engine such as DuckDB for scan-heavy workloads (next time)
 
 ## Exercise: a compact route summary
 
@@ -593,3 +593,8 @@ head(route_summary)
 ```{r}
 DBI::dbDisconnect(db)
 ```
+
+- closes the connection to the database
+- deletes temporary tables (such as those created by default result of compute)
+  - persistence with argument `temporary = FALSE`
+- collected results remain available in R after connection closes

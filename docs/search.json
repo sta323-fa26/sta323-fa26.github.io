@@ -451,36 +451,36 @@
     "objectID": "slides/lec10.html#measuring-efficiency",
     "href": "slides/lec10.html#measuring-efficiency",
     "title": "Complexity and parallelization",
-    "section": "",
-    "text": "flops or floating point operations measure the efficiency of an algorithm. flops consist of the binary floating point operations: addition, subtraction, multiplication, division and comparison. Individual floating point operations are performed by a single “core” of your computer’s CPU or GPU.\nWe use “big O” \\(\\mathcal{O}(n)\\) notation to denote the complexity of an algorithm. For example,\n\nmatrix-vector multiplication A %*% b, where \\(A\\) is \\(m \\times n\\) and \\(b\\) is \\(n \\times 1\\) takes \\(2mn\\) or \\(\\mathcal{O}(mn)\\) flops.\nmatrix-matrix multiplication A %*% B, where \\(A\\) is \\(m \\times n\\) and \\(B\\) is \\(n \\times p\\) takes \\(2mnp\\) or \\(\\mathcal{O}(mnp)\\) flops.\n\nNotice that in reporting complexity of each example we drop the leading constant “2”.\nA hierarchy of computational complexity (let \\(n\\) be the problem size):\n\n\n\n\n\nexponential order: \\(\\mathcal{O}(b^n)\\)\nNP-hard (horrible)\n\n\npolynomial order: \\(\\mathcal{O}(n^q)\\)\ndoable\n\n\n\\(\\mathcal{O}(n \\log n)\\)\nfast\n\n\nlinear order: \\(\\mathcal{O}(n)\\)\nfast\n\n\nlog order: \\(\\mathcal{O}(\\log n)\\)\nsuper fast\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nSome references count multiplication followed by an addition (fused multiply-add, FMA) as one flop.\n\n\n{This slide adapted from notes by Dr. Hua Zhou}"
+    "section": "Measuring efficiency",
+    "text": "Measuring efficiency\nflops or floating point operations measure the efficiency of an algorithm. flops consist of the binary floating point operations: addition, subtraction, multiplication, division and comparison. Individual floating point operations are performed by a single “core” of your computer’s CPU or GPU.\nWe use “big O” \\(\\mathcal{O}(n)\\) notation to denote the complexity of an algorithm. For example,\n\nmatrix-vector multiplication A %*% b, where \\(A\\) is \\(m \\times n\\) and \\(b\\) is \\(n \\times 1\\) takes \\(2mn\\) or \\(\\mathcal{O}(mn)\\) flops.\nmatrix-matrix multiplication A %*% B, where \\(A\\) is \\(m \\times n\\) and \\(B\\) is \\(n \\times p\\) takes \\(2mnp\\) or \\(\\mathcal{O}(mnp)\\) flops.\n\nNotice that in reporting complexity of each example we drop the leading constant “2”.\nA hierarchy of computational complexity (let \\(n\\) be the problem size):\n\n\n\n\n\nexponential order: \\(\\mathcal{O}(b^n)\\)\nNP-hard (horrible)\n\n\npolynomial order: \\(\\mathcal{O}(n^q)\\)\ndoable\n\n\n\\(\\mathcal{O}(n \\log n)\\)\nfast\n\n\nlinear order: \\(\\mathcal{O}(n)\\)\nfast\n\n\nlog order: \\(\\mathcal{O}(\\log n)\\)\nsuper fast\n\n\n\n\n\n\n\n\n\nNote\n\n\nSome references count multiplication followed by an addition (fused multiply-add, FMA) as one flop.\n\n\n\n{This slide adapted from notes by Dr. Hua Zhou}"
   },
   {
     "objectID": "slides/lec10.html#measuring-efficiency-example",
     "href": "slides/lec10.html#measuring-efficiency-example",
     "title": "Complexity and parallelization",
-    "section": "",
-    "text": "Suppose you wish to calculate a “likelihood”, (e.g. the likelihood of a message decryption) \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some probability of datum \\(x_i\\) given parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
+    "section": "Measuring efficiency (example)",
+    "text": "Measuring efficiency (example)\nSuppose you wish to calculate a “likelihood”, (e.g. the likelihood of a message decryption) \\(L(x|\\theta)\\) for \\(n\\) iid observations: \\(x = \\{x_i\\}; i \\in \\{1, \\ldots, n \\}\\). The likelihood looks like\n\\[\nL(x|\\theta) = \\prod_i^n f(x_i | \\theta)\n\\] where \\(f\\) is some probability of datum \\(x_i\\) given parameters \\(\\theta\\).\n\\(L(x|\\theta)\\) has \\(\\mathcal{O}(n)\\) complexity, i.e. scales linearly with the number of data points."
   },
   {
     "objectID": "slides/lec10.html#bench",
     "href": "slides/lec10.html#bench",
     "title": "Complexity and parallelization",
     "section": "bench",
-    "text": "bench\n\nd = tibble(\n  x = runif(10000),\n  y=runif(10000)\n)\n(b = bench::mark(\n  d[d$x &gt; 0.5, ],\n  d[which(d$x &gt; 0.5), ],\n  subset(d, x &gt; 0.5),\n  filter(d, x &gt; 0.5)\n))\n\n# A tibble: 4 × 6\n  expression                 min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]        115.44µs 166.62µs     4848.        NA    13.6 \n2 d[which(d$x &gt; 0.5), ] 181.22µs 306.82µs     2987.        NA    15.0 \n3 subset(d, x &gt; 0.5)    222.21µs 362.06µs     2448.        NA    13.0 \n4 filter(d, x &gt; 0.5)      1.08ms   1.67ms      548.        NA     8.40"
+    "text": "bench\n\nd = tibble(\n  x = runif(10000),\n  y=runif(10000)\n)\n(b = bench::mark(\n  d[d$x &gt; 0.5, ],\n  d[which(d$x &gt; 0.5), ],\n  subset(d, x &gt; 0.5),\n  filter(d, x &gt; 0.5)\n))\n\n# A tibble: 4 × 6\n  expression                 min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]          48.9µs   58.8µs    16573.  234.39KB     49.6\n2 d[which(d$x &gt; 0.5), ]   87.5µs  101.9µs     9772.  268.09KB     54.7\n3 subset(d, x &gt; 0.5)      85.8µs    107µs     9343.  286.94KB     52.4\n4 filter(d, x &gt; 0.5)     287.5µs  310.8µs     3161.    1.48MB     17.0"
   },
   {
     "objectID": "slides/lec10.html#bench---relative-results",
     "href": "slides/lec10.html#bench---relative-results",
     "title": "Complexity and parallelization",
     "section": "bench - relative results",
-    "text": "bench - relative results\n\nsummary(b, relative = TRUE)\n\n# A tibble: 4 × 6\n  expression              min median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]         1      1         8.85        NA     1.62\n2 d[which(d$x &gt; 0.5), ]  1.57   1.84      5.45        NA     1.78\n3 subset(d, x &gt; 0.5)     1.92   2.17      4.47        NA     1.55\n4 filter(d, x &gt; 0.5)     9.34  10.0       1           NA     1"
+    "text": "bench - relative results\n\nsummary(b, relative = TRUE)\n\n# A tibble: 4 × 6\n  expression              min median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt;            &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 d[d$x &gt; 0.5, ]         1      1         5.24      1        2.92\n2 d[which(d$x &gt; 0.5), ]  1.79   1.73      3.09      1.14     3.22\n3 subset(d, x &gt; 0.5)     1.76   1.82      2.96      1.22     3.09\n4 filter(d, x &gt; 0.5)     5.88   5.29      1         6.46     1"
   },
   {
     "objectID": "slides/lec10.html#what-is-parallelization",
     "href": "slides/lec10.html#what-is-parallelization",
     "title": "Complexity and parallelization",
     "section": "What is parallelization?",
-    "text": "What is parallelization?\n\n“parallelization” or “parallel computing” means deploying an algorithm’s calculations across several cores of a computer to perform computation at the same time\n\n\nTerminology\n\nCPU: central processing unit, primary component of a computer that processes instructions\nCore: an individual processor within a CPU, more cores can improve performance and efficiency\nForking: a copy of the current R session is moved to new cores.\n\nNot available on Windows\nLess overhead and easy to implement\n\nSockets: a new R session is launched on each core.\n\nAvailable on all systems\nEach process on each core is unique"
+    "text": "What is parallelization?\n\n“parallelization” or “parallel computing” means deploying an algorithm’s calculations across several cores of a computer to perform computation at the same time\n\nTerminology\n\nCPU: central processing unit, primary component of a computer that processes instructions\nCore: an individual processor within a CPU, more cores can improve performance and efficiency\nForking: a copy of the current R session is moved to new cores.\n\nNot available on Windows\nLess overhead and easy to implement\n\nSockets: a new R session is launched on each core.\n\nAvailable on all systems\nEach process on each core is unique"
   },
   {
     "objectID": "slides/lec10.html#package-parallel",
@@ -522,14 +522,14 @@
     "href": "slides/lec10.html#mcparallel",
     "title": "Complexity and parallelization",
     "section": "mcparallel",
-    "text": "mcparallel\nAsynchronously evaluation of an R expression in a separate process\n\nm = mcparallel(rnorm(1e6))\nn = mcparallel(rbeta(1e6,1,1))\no = mcparallel(rgamma(1e6,1,1))\n\nstr(m)\n\nList of 2\n $ pid: int 63949\n $ fd : int [1:2] 5 8\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\"\n\nstr(n)\n\nList of 2\n $ pid: int 63950\n $ fd : int [1:2] 6 10\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\""
+    "text": "mcparallel\nAsynchronously evaluation of an R expression in a separate process\n\nm = mcparallel(rnorm(1e6))\nn = mcparallel(rbeta(1e6,1,1))\no = mcparallel(rgamma(1e6,1,1))\n\nstr(m)\n\nList of 2\n $ pid: int 53685\n $ fd : int [1:2] 5 8\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\"\n\nstr(n)\n\nList of 2\n $ pid: int 53686\n $ fd : int [1:2] 6 10\n - attr(*, \"class\")= chr [1:3] \"parallelJob\" \"childProcess\" \"process\""
   },
   {
     "objectID": "slides/lec10.html#mccollect",
     "href": "slides/lec10.html#mccollect",
     "title": "Complexity and parallelization",
     "section": "mccollect",
-    "text": "mccollect\nChecks mcparallel objects for completion\n\nstr(mccollect(list(m,n,o)))\n\nList of 3\n $ 63949: num [1:1000000] 0.296 -0.38 0.603 -0.401 -0.682 ...\n $ 63950: num [1:1000000] 0.357 0.402 0.529 0.121 0.286 ...\n $ 63951: num [1:1000000] 0.109 2.091 2.617 1.22 2.584 ...\n\n\n. . .\n\nmccollect - waiting\n\np = mcparallel(mean(rnorm(1e5)))\nmccollect(p, wait = FALSE, 10) # will retrieve the result (since it's fast)\n\n$`63952`\n[1] -0.001729512\n\nmccollect(p, wait = FALSE) # will signal the job as terminating\n\nWarning in selectChildren(jobs, timeout): cannot wait for child 63952 as it\ndoes not exist\n\n\nNULL"
+    "text": "mccollect\nChecks mcparallel objects for completion\n\nstr(mccollect(list(m,n,o)))\n\nList of 3\n $ 53685: num [1:1000000] 1.997 -0.166 -1.375 -1.199 0.413 ...\n $ 53686: num [1:1000000] 0.0186 0.6493 0.4956 0.3396 0.2934 ...\n $ 53687: num [1:1000000] 1.4359 0.7276 0.1947 0.3905 0.0907 ...\n\n\n\nmccollect - waiting\n\np = mcparallel(mean(rnorm(1e5)))\nmccollect(p, wait = FALSE, 10) # will retrieve the result (since it's fast)\n\n$`53688`\n[1] -0.002598176\n\nmccollect(p, wait = FALSE) # will signal the job as terminating\n\nWarning in selectChildren(jobs, timeout): cannot wait for child 53688 as it\ndoes not exist\n\n\nNULL"
   },
   {
     "objectID": "slides/lec10.html#domc-foreach-1",
@@ -550,14 +550,14 @@
     "href": "slides/lec10.html#serial-and-parallel-with-foreach",
     "title": "Complexity and parallelization",
     "section": "Serial and parallel with foreach()",
-    "text": "Serial and parallel with foreach()\n\n\n\nSequential\n\n%do% single execution\n\n\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 4.167669e-08\n\n[[2]]\n[1] 1.816079e-08\n\n[[3]]\n[1] 3.46452e-07\n\n[[4]]\n[1] 7.357448e-08\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n\n[1] 8.847564e-09 3.515743e-08\n\n\n\n\n\nParallel\n\n%dopar% multicore execution\n\n\nforeach(i = 1:4) %dopar%\n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 1.832377e-07\n\n[[2]]\n[1] 1.769513e-08\n\n[[3]]\n[1] 6.349292e-07\n\n[[4]]\n[1] 9.313226e-09\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n\n[1] 3.376044e-08 1.839362e-08"
+    "text": "Serial and parallel with foreach()\n\n\nSequential\n\n%do% single execution\n\n\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 2.265442e-07\n\n[[2]]\n[1] 2.207235e-07\n\n[[3]]\n[1] 1.236331e-07\n\n[[4]]\n[1] 4.461035e-07\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n\n[1] 5.797483e-08 7.008202e-08\n\n\n\nParallel\n\n%dopar% multicore execution\n\n\nforeach(i = 1:4) %dopar%\n  sort(runif(n = 1e7, max = i))[1]\n\n[[1]]\n[1] 6.146729e-08\n\n[[2]]\n[1] 8.288771e-08\n\n[[3]]\n[1] 6.691553e-07\n\n[[4]]\n[1] 5.271286e-07\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n\n[1] 2.542511e-07 4.470348e-08"
   },
   {
     "objectID": "slides/lec10.html#time-comparison",
     "href": "slides/lec10.html#time-comparison",
     "title": "Complexity and parallelization",
     "section": "Time comparison",
-    "text": "Time comparison\n\n\n\nSequential\n\nsystem.time({\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n})\n\n##  user  system elapsed \n## 3.371   0.143   3.507 \n\n\n\n\nParallel\n\nsystem.time({\nforeach(i = 1:4) %dopar% \n  sort(runif(n = 1e7, max = i))[1]\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n})\n\n##  user  system elapsed \n## 2.917   0.603   1.376"
+    "text": "Time comparison\n\n\nSequential\n\nsystem.time({\nforeach(i = 1:4) %do% \n  sort(runif(n = 1e7, max = i))[1]\n\ntimes(2) %do%\n  sort(runif(n = 1e7))[1]\n})\n\n##  user  system elapsed \n## 3.371   0.143   3.507 \n\n\nParallel\n\nsystem.time({\nforeach(i = 1:4) %dopar% \n  sort(runif(n = 1e7, max = i))[1]\n\ntimes(2) %dopar%\n  sort(runif(n = 1e7))[1]\n})\n\n##  user  system elapsed \n## 2.917   0.603   1.376"
   },
   {
     "objectID": "slides/lec10.html#things-to-know-about-foreach",
@@ -578,7 +578,7 @@
     "href": "slides/lec10.html#nested-foreach",
     "title": "Complexity and parallelization",
     "section": "nested foreach",
-    "text": "nested foreach\n\nThe %:% operator is the nesting operator, used for creating nested foreach loops.\n\n\nforeach(i = 1:4, .combine = \"c\") %:% \n  foreach(j = 0:1, .combine = \"c\") %dopar% \n    {i ^ j}\n\n[1] 1 1 1 2 1 3 1 4\n\n\n. . .\n\nforeach(i = 1:4, .combine = \"data.frame\") %:% \n  foreach(j = 0:1, .combine = \"c\") %dopar% \n    {i ^ j}\n\n  result.1 result.2 result.3 result.4\n1        1        1        1        1\n2        1        2        3        4\n\n\n. . .\n\nforeach(i = 1:4, .combine = \"c\") %:% \n  foreach(j = 0:1, .combine = \"+\") %dopar% \n    {i ^ j}\n\n[1] 2 3 4 5"
+    "text": "nested foreach\n\nThe %:% operator is the nesting operator, used for creating nested foreach loops.\n\n\nforeach(i = 1:4, .combine = \"c\") %:% \n  foreach(j = 0:1, .combine = \"c\") %dopar% \n    {i ^ j}\n\n[1] 1 1 1 2 1 3 1 4\n\n\n\n\nforeach(i = 1:4, .combine = \"data.frame\") %:% \n  foreach(j = 0:1, .combine = \"c\") %dopar% \n    {i ^ j}\n\n  result.1 result.2 result.3 result.4\n1        1        1        1        1\n2        1        2        3        4\n\n\n\n\n\nforeach(i = 1:4, .combine = \"c\") %:% \n  foreach(j = 0:1, .combine = \"+\") %dopar% \n    {i ^ j}\n\n[1] 2 3 4 5"
   },
   {
     "objectID": "slides/lec10.html#future",
@@ -592,14 +592,14 @@
     "href": "slides/lec10.html#furrr-and-purrr",
     "title": "Complexity and parallelization",
     "section": "furrr and purrr",
-    "text": "furrr and purrr\n\nfurrr functions are just like purrr functions but begin with future_\n\n\nExample\n\nlibrary(furrr)\nlibrary(tidyverse)\n\n\nmap_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500"
+    "text": "furrr and purrr\n\nfurrr functions are just like purrr functions but begin with future_\n\nExample\n\nlibrary(furrr)\nlibrary(tidyverse)\n\n\nmap_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500"
   },
   {
     "objectID": "slides/lec10.html#section",
     "href": "slides/lec10.html#section",
     "title": "Complexity and parallelization",
     "section": "",
-    "text": "options(parallelly.localhost.hostname = \"127.0.0.1\")\n\nplan(multisession, workers = 2)\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\n\n. . .\nNot sure we are running in parallel?\n. . .\n\nsystem.time({map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.010   0.000   1.112 \n\n\n\nsystem.time({future_map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.121   0.000   0.692 \n\n\n. . .\n\nplan(sequential)"
+    "text": "options(parallelly.localhost.hostname = \"127.0.0.1\")\n\nplan(multisession, workers = 2)\nfuture_map_dbl(mtcars, mean)\n\n       mpg        cyl       disp         hp       drat         wt       qsec \n 20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 \n        vs         am       gear       carb \n  0.437500   0.406250   3.687500   2.812500 \n\n\n\nNot sure we are running in parallel?\n\n\n\nsystem.time({map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.004   0.000   1.154 \n\n\n\nsystem.time({future_map_dbl(mtcars, ~ {Sys.sleep(.1); mean(.x)})})\n\n   user  system elapsed \n  0.054   0.002   0.656 \n\n\n\n\n\nplan(sequential)"
   },
   {
     "objectID": "slides/lec10.html#example-1",
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n\n\n\n\n\n11\nTue Nov 03\nbiglm\n\nlab 6\n\n\n\n\nThu Nov 05\nR packages\n\n\n\n\n\n12\nTue Nov 10\ntestthat\n\n\n\n\n\n\nThu Nov 12\nAPIs\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nshiny I\n\n\n\n\n\n14\nTue Nov 24\nshiny II\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n💻\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n\n\n\n\n\n11\nTue Nov 03\nbiglm\n\nlab 6\n\n\n\n\nThu Nov 05\nR packages\n\n\n\n\n\n12\nTue Nov 10\ntestthat\n\n\n\n\n\n\nThu Nov 12\nAPIs\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nshiny I\n\n\n\n\n\n14\nTue Nov 24\nshiny II\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -6200,5 +6200,698 @@
     "title": "parallelize-mcmc",
     "section": "Solution: macOS / Linux (when forking is supported)",
     "text": "Solution: macOS / Linux (when forking is supported)\n\n                         &lt;!--   starting_values, --&gt;\n                         &lt;!--   function(starting_value) { --&gt;\n                             &lt;!--     mh_chain(n = 30000, start = starting_value) --&gt;\n                             &lt;!--   }, --&gt;\n                         &lt;!--   .options = furrr_options(seed = 323) --&gt;\n                         &lt;!-- ) --&gt;\nlibrary(future)\nlibrary(furrr)\nstarts &lt;- c(-5, 0, 5, 10)\n\nplan(multicore, workers = 2)\nchains &lt;- future_map(\nstarts,\n\\(s) mh_chain(n = 30000, start = s),\n.options = furrr_options(seed = 323)\n)\nsapply(chains, \\(x) mean(tail(x, 10000)))\nplan(sequential)\nmulticore uses process forking; check parallelly::supportsMulticore() first. In RStudio or other environments where forking is unsupported, use multisession instead.\nKey point: Each chain is sequential; the four chains are independent jobs."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#the-question",
+    "href": "slides/databases-scalability.html#the-question",
+    "title": "Databases and scalability",
+    "section": "The question",
+    "text": "The question\nDuring October, how did departure delays differ across airlines and NYC airports?\n\nStart with real flight records.\nSummarize delays and attach airline names.\nInvestigate unusually long delays.\n\n\nWhat changes when the archive becomes too large for R’s memory?"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#our-data",
+    "href": "slides/databases-scalability.html#our-data",
+    "title": "Databases and scalability",
+    "section": "Our data",
+    "text": "Our data\nnycflights13 contains 336,776 flights from NYC in 2013.\n\n\n\nTable\nOne row represents\nUseful columns\n\n\n\n\nflights\nA flight record\norigin, carrier, dep_delay\n\n\nairlines\nAn airline\ncarrier, name\n\n\n\nDeparture delay is measured in minutes; negative values mean early departures.\nData documentation"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#inspect-a-few-flights",
+    "href": "slides/databases-scalability.html#inspect-a-few-flights",
+    "title": "Databases and scalability",
+    "section": "Inspect a few flights",
+    "text": "Inspect a few flights\n\nnycflights13::flights |&gt;\n  select(month, day, origin, carrier, dep_delay) |&gt;\n  head(6)\n\n# A tibble: 6 × 5\n  month   day origin carrier dep_delay\n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n1     1     1 EWR    UA              2\n2     1     1 LGA    UA              4\n3     1     1 JFK    AA              2\n4     1     1 JFK    B6             -1\n5     1     1 LGA    DL             -6\n6     1     1 EWR    UA             -4"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#a-familiar-dplyr-calculation",
+    "href": "slides/databases-scalability.html#a-familiar-dplyr-calculation",
+    "title": "Databases and scalability",
+    "section": "A familiar dplyr calculation",
+    "text": "A familiar dplyr calculation\n\nnycflights13::flights |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  head(6)\n\n# A tibble: 6 × 4\n  origin carrier n_flights mean_delay\n  &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n1 EWR    9E            144      1.08 \n2 EWR    AA            290      5.88 \n3 EWR    AS             62      0.677\n4 EWR    B6            500      5.54 \n5 EWR    DL            440      8.13 \n6 EWR    EV           3516     12.4"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#when-the-data-grow",
+    "href": "slides/databases-scalability.html#when-the-data-grow",
+    "title": "Databases and scalability",
+    "section": "When the data grow",
+    "text": "When the data grow\nA small result can require processing a large input.\n\nR memory: can we hold the input and intermediate objects?\nStorage I/O: how much data must be read?\nData transfer: how much must enter the R session?\n\n\nGoal: perform filtering, joins, and summaries near the data; bring back the result."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#storage-and-memory",
+    "href": "slides/databases-scalability.html#storage-and-memory",
+    "title": "Databases and scalability",
+    "section": "Storage and memory",
+    "text": "Storage and memory\n\n\n\nResource\nUseful intuition\n\n\n\n\nRAM\nFast working space; limited capacity\n\n\nSSD / disk\nPersistent storage; larger capacity\n\n\nNetwork\nMoving data between machines adds cost\n\n\n\nDatabases organize data into pages and use memory for caches and intermediate work.\n\nKeeping a table on disk does not mean the database uses no memory."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#what-the-database-manages",
+    "href": "slides/databases-scalability.html#what-the-database-manages",
+    "title": "Databases and scalability",
+    "section": "What the database manages",
+    "text": "What the database manages\n\nPersistent tables and their schemas\nQuery planning and execution\nIndexes for suitable lookups\nTransactions and recovery\nCoordinating access by multiple processes\n\nSQL describes the result we want; the database chooses an execution plan."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#sqlite-dbi-and-dbplyr",
+    "href": "slides/databases-scalability.html#sqlite-dbi-and-dbplyr",
+    "title": "Databases and scalability",
+    "section": "SQLite, DBI, and dbplyr",
+    "text": "SQLite, DBI, and dbplyr\n\n\n\nTool\nRole\n\n\n\n\nSQLite\nDatabase engine, running inside our process\n\n\nRSQLite\nR driver for SQLite\n\n\nDBI\nCommon interface for connections and SQL\n\n\ndbplyr\nTranslates supported dplyr operations to SQL\n\n\n\nSQLite needs no separate server. It suits this local teaching example; concurrent writing is limited."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#connect-to-the-flights-database",
+    "href": "slides/databases-scalability.html#connect-to-the-flights-database",
+    "title": "Databases and scalability",
+    "section": "Connect to the flights database",
+    "text": "Connect to the flights database\n\ndb = DBI::dbConnect(RSQLite::SQLite(), db_path)\nDBI::dbListTables(db)\n\n[1] \"airlines\" \"flights\" \n\n\nThe setup chunk creates a small demonstration database once per render.\nFor a prepared database, the connection would be:\n\ndb = DBI::dbConnect(\n  RSQLite::SQLite(), \"flights.sqlite\"\n)"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#a-table-reference",
+    "href": "slides/databases-scalability.html#a-table-reference",
+    "title": "Databases and scalability",
+    "section": "A table reference",
+    "text": "A table reference\n\nflight_tbl = tbl(db, \"flights\")\nairlines_tbl = tbl(db, \"airlines\")\n\nflight_tbl |&gt;\n  select(origin, carrier, dep_delay)\n\n# Source:   SQL [?? x 3]\n# Database: sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/Rtmp5CoiKz/filed8ab5c2eb6f5.sqlite]\n   origin carrier dep_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    UA              2\n 2 LGA    UA              4\n 3 JFK    AA              2\n 4 JFK    B6             -1\n 5 LGA    DL             -6\n 6 EWR    UA             -4\n 7 EWR    B6             -5\n 8 LGA    EV             -3\n 9 JFK    B6             -3\n10 LGA    AA             -2\n# ℹ more rows\n\n\nflight_tbl describes a database table. It is not a local copy of every row."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#filter-and-select",
+    "href": "slides/databases-scalability.html#filter-and-select",
+    "title": "Databases and scalability",
+    "section": "Filter and select",
+    "text": "Filter and select\n\noct_21 = flight_tbl |&gt;\n  filter(month == 10, day == 21) |&gt;\n  select(origin, dest, carrier, tailnum, dep_delay)\n\noct_21\n\n# Source:   SQL [?? x 5]\n# Database: sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/RtmpLZE6Yw/fileda7f1d4af185.sqlite]\n   origin dest  carrier tailnum dep_delay\n   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    CLT   US      N152UW         -7\n 2 EWR    IAH   UA      N535UA         -7\n 3 JFK    MIA   AA      N5BSAA         -6\n 4 JFK    SJU   B6      N531JB         -6\n 5 JFK    BQN   B6      N827JB         -8\n 6 LGA    IAH   UA      N15710         -2\n 7 JFK    IAD   EV      N825AS        -10\n 8 EWR    TPA   UA      N802UA         -9\n 9 LGA    ATL   DL      N996DL         -9\n10 JFK    FLL   B6      N627JB         -9\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#dplyr-to-sql",
+    "href": "slides/databases-scalability.html#dplyr-to-sql",
+    "title": "Databases and scalability",
+    "section": "dplyr to SQL",
+    "text": "dplyr to SQL\n\noct_21 |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT `origin`, `dest`, `carrier`, `tailnum`, `dep_delay`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\nRead SELECT, FROM, and WHERE as: columns, source, and row conditions."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#the-same-query-with-dbi",
+    "href": "slides/databases-scalability.html#the-same-query-with-dbi",
+    "title": "Databases and scalability",
+    "section": "The same query with DBI",
+    "text": "The same query with DBI\n\nDBI::dbGetQuery(db, \"\n  SELECT origin, dest, carrier, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n  LIMIT 6\n\")\n\n  origin dest carrier dep_delay\n1    EWR  CLT      US        -7\n2    EWR  IAH      UA        -7\n3    JFK  MIA      AA        -6\n4    JFK  SJU      B6        -6\n5    JFK  BQN      B6        -8\n6    LGA  IAH      UA        -2"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#laziness",
+    "href": "slides/databases-scalability.html#laziness",
+    "title": "Databases and scalability",
+    "section": "Laziness",
+    "text": "Laziness\nBuilding a pipeline records work to do.\n\nshow_query() displays SQL.\nPrinting a lazy table retrieves a preview.\ncollect() executes and brings the result into R.\ncompute() executes and stores a result table in the database.\ncollapse() restructures SQL without executing it.\n\n\nA preview with few rows can still require substantial database work."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#summarize-october-delays",
+    "href": "slides/databases-scalability.html#summarize-october-delays",
+    "title": "Databases and scalability",
+    "section": "Summarize October delays",
+    "text": "Summarize October delays\n\noctober_summary = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\noctober_summary\n\n# Source:   SQL [?? x 4]\n# Database: sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/RtmpLZE6Yw/fileda7f1d4af185.sqlite]\n   origin carrier n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    9E            144      1.08 \n 2 EWR    AA            290      5.88 \n 3 EWR    AS             62      0.677\n 4 EWR    B6            500      5.54 \n 5 EWR    DL            440      8.13 \n 6 EWR    EV           3516     12.4  \n 7 EWR    MQ            135      8.94 \n 8 EWR    UA           3868      6.90 \n 9 EWR    US            364     -0.544\n10 EWR    VX            169      3.01 \n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#exercise-when-does-work-happen",
+    "href": "slides/databases-scalability.html#exercise-when-does-work-happen",
+    "title": "Databases and scalability",
+    "section": "Exercise: when does work happen?",
+    "text": "Exercise: when does work happen?\nFor each expression, predict what happens in R and in the database.\nq = flight_tbl |&gt; filter(month == 10)\nshow_query(q)\nq\ncollect(q)\nWhich expression brings all matching rows into R?"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#collect-early-or-late",
+    "href": "slides/databases-scalability.html#collect-early-or-late",
+    "title": "Databases and scalability",
+    "section": "Collect early or late?",
+    "text": "Collect early or late?\n\n\nCollect early\nflight_tbl |&gt;\n  collect() |&gt;\n  count(origin)\n\nCollect late\nflight_tbl |&gt;\n  count(origin) |&gt;\n  collect()\n\nSame counts. Very different amounts of data enter R."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#measure-data-movement",
+    "href": "slides/databases-scalability.html#measure-data-movement",
+    "title": "Databases and scalability",
+    "section": "Measure data movement",
+    "text": "Measure data movement\n\nall_flights = collect(flight_tbl)\nsmall_result = flight_tbl |&gt; count(origin) |&gt; collect()\n\ntibble(\n  result = c(\"All flights\", \"Airport counts\"),\n  rows = c(nrow(all_flights), nrow(small_result)),\n  bytes_in_R = c(as.numeric(object.size(all_flights)),\n                 as.numeric(object.size(small_result)))\n)\n\n# A tibble: 2 × 3\n  result           rows bytes_in_R\n  &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;\n1 All flights    336776   40649568\n2 Airport counts      3       1200\n\n\nObject sizes describe these R results, not peak memory or database memory."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#benchmark-completed-work",
+    "href": "slides/databases-scalability.html#benchmark-completed-work",
+    "title": "Databases and scalability",
+    "section": "Benchmark completed work",
+    "text": "Benchmark completed work\n\nearly = function() {\n  flight_tbl |&gt; collect() |&gt; count(origin) |&gt; arrange(origin)\n}\nlate = function() {\n  flight_tbl |&gt; count(origin) |&gt; arrange(origin) |&gt; collect()\n}\nstopifnot(isTRUE(all.equal(early(), late())))\nsystem.time(early())\n\n   user  system elapsed \n  0.709   0.016   0.727 \n\nsystem.time(late())\n\n   user  system elapsed \n  0.092   0.009   0.101 \n\n\nCompare completed results; repeat timings and consider caching."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#join-airline-names",
+    "href": "slides/databases-scalability.html#join-airline-names",
+    "title": "Databases and scalability",
+    "section": "Join airline names",
+    "text": "Join airline names\n\nnamed_summary = october_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  select(origin, carrier, name, n_flights, mean_delay) |&gt;\n  arrange(origin, desc(mean_delay))\n\nnamed_summary\n\n# Source:     SQL [?? x 5]\n# Database:   sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/RtmpLZE6Yw/fileda7f1d4af185.sqlite]\n# Ordered by: origin, desc(mean_delay)\n   origin carrier name                     n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    EV      ExpressJet Airlines Inc.      3516     12.4  \n 2 EWR    WN      Southwest Airlines Co.         524     12.0  \n 3 EWR    MQ      Envoy Air                      135      8.94 \n 4 EWR    DL      Delta Air Lines Inc.           440      8.13 \n 5 EWR    UA      United Air Lines Inc.         3868      6.90 \n 6 EWR    AA      American Airlines Inc.         290      5.88 \n 7 EWR    B6      JetBlue Airways                500      5.54 \n 8 EWR    VX      Virgin America                 169      3.01 \n 9 EWR    9E      Endeavor Air Inc.              144      1.08 \n10 EWR    AS      Alaska Airlines Inc.            62      0.677\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#two-tables-one-relationship",
+    "href": "slides/databases-scalability.html#two-tables-one-relationship",
+    "title": "Databases and scalability",
+    "section": "Two tables, one relationship",
+    "text": "Two tables, one relationship\n\nairlines_tbl |&gt;\n  count(carrier) |&gt;\n  filter(n != 1) |&gt;\n  collect()\n\n# A tibble: 0 × 2\n# ℹ 2 variables: carrier &lt;chr&gt;, n &lt;lgl&gt;\n\n\nA lookup should have one row per carrier.\nJoin by meaning, not by row position."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#a-local-lookup-table",
+    "href": "slides/databases-scalability.html#a-local-lookup-table",
+    "title": "Databases and scalability",
+    "section": "A local lookup table",
+    "text": "A local lookup table\n\nflight_tbl |&gt;\n  inner_join(local_df, by = \"origin\", copy = TRUE) |&gt;\n  count(origin) |&gt;\n  collect()\n\n# A tibble: 2 × 2\n  origin      n\n  &lt;chr&gt;   &lt;int&gt;\n1 JFK    111279\n2 LGA    104662\n\n\ncopy = TRUE copies the small lookup into the database."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#finding-flights-on-one-date",
+    "href": "slides/databases-scalability.html#finding-flights-on-one-date",
+    "title": "Databases and scalability",
+    "section": "Finding flights on one date",
+    "text": "Finding flights on one date\nWithout a suitable index, a date lookup may scan the table.\nAn index stores search keys with references to matching records.\n\nIt can reduce work for selective lookups.\nIt costs storage and maintenance.\nIt may not help a query that needs most rows.\n\nAn index is not a promise that every query takes \\(\\mathcal{O}(\\log n)\\) time."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#look-at-the-query-plan",
+    "href": "slides/databases-scalability.html#look-at-the-query-plan",
+    "title": "Databases and scalability",
+    "section": "Look at the query plan",
+    "text": "Look at the query plan\n\nlookup_sql = \"\n  SELECT origin, dest, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n\"\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused       detail\n1  2      0     216 SCAN flights"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#add-an-index",
+    "href": "slides/databases-scalability.html#add-an-index",
+    "title": "Databases and scalability",
+    "section": "Add an index",
+    "text": "Add an index\n\nDBI::dbExecute(db, \"\n  CREATE INDEX IF NOT EXISTS flights_date_idx\n  ON flights(month, day)\n\")\n\n[1] 0\n\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused\n1  3      0      60\n                                                           detail\n1 SEARCH flights USING INDEX flights_date_idx (month=? AND day=?)\n\n\nCompare SCAN with SEARCH ... USING INDEX in the plan."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#exercise-will-an-index-help",
+    "href": "slides/databases-scalability.html#exercise-will-an-index-help",
+    "title": "Databases and scalability",
+    "section": "Exercise: will an index help?",
+    "text": "Exercise: will an index help?\nWhich query is most likely to benefit from the date index?\n\nRetrieve flights on one specified date.\nCompute the average delay over all flights.\n\nExplain your answer in terms of how many rows are needed.\n\nWhat are the costs of keeping the index?"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#investigate-extreme-delays",
+    "href": "slides/databases-scalability.html#investigate-extreme-delays",
+    "title": "Databases and scalability",
+    "section": "Investigate extreme delays",
+    "text": "Investigate extreme delays\n\nextreme_delays = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin) |&gt;\n  mutate(delay_rank = min_rank(desc(dep_delay))) |&gt;\n  filter(delay_rank &lt;= 3) |&gt;\n  ungroup() |&gt;\n  select(origin, carrier, dep_delay, delay_rank) |&gt;\n  arrange(origin, delay_rank)\n\nextreme_delays\n\n# Source:     SQL [?? x 4]\n# Database:   sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/Rtmp5CoiKz/filed8ab5c2eb6f5.sqlite]\n# Ordered by: origin, delay_rank\n   origin carrier dep_delay delay_rank\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;\n 1 EWR    DL            702          1\n 2 EWR    B6            364          2\n 3 EWR    B6            352          3\n 4 JFK    MQ            342          1\n 5 JFK    9E            327          2\n 6 JFK    9E            324          3\n 7 LGA    DL            390          1\n 8 LGA    YV            387          2\n 9 LGA    WN            378          3\n10 LGA    DL            378          3"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#window-functions",
+    "href": "slides/databases-scalability.html#window-functions",
+    "title": "Databases and scalability",
+    "section": "Window functions",
+    "text": "Window functions\n\nextreme_delays |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT `origin`, `carrier`, `dep_delay`, `delay_rank`\nFROM (\n  SELECT\n    `flights`.*,\n    CASE\nWHEN (NOT((`dep_delay` IS NULL))) THEN RANK() OVER (PARTITION BY `origin`, (CASE WHEN ((`dep_delay` IS NULL)) THEN 1 ELSE 0 END) ORDER BY `dep_delay` DESC)\nEND AS `delay_rank`\n  FROM `flights`\n  WHERE (`month` = 10.0) AND (NOT((`dep_delay` IS NULL)))\n) AS `q01`\nWHERE (`delay_rank` &lt;= 3.0)\nORDER BY `origin`, `delay_rank`\n\n\nLook for OVER and PARTITION BY: calculate within each airport while retaining rows."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#sql-translation-has-limits",
+    "href": "slides/databases-scalability.html#sql-translation-has-limits",
+    "title": "Databases and scalability",
+    "section": "SQL translation has limits",
+    "text": "SQL translation has limits\nSupported R expressions become database expressions.\n\nSQL aggregates generally ignore NULL values.\nNot every R function has a SQL translation.\nTranslation and supported functions depend on the backend.\n\n\nReduce the data first; then collect() when you need an R-only operation."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#collect-the-analysis-result",
+    "href": "slides/databases-scalability.html#collect-the-analysis-result",
+    "title": "Databases and scalability",
+    "section": "Collect the analysis result",
+    "text": "Collect the analysis result\n\ndelay_results = named_summary |&gt; collect()\n\ndelay_results |&gt;\n  select(origin, name, n_flights, mean_delay) |&gt;\n  head(8)\n\n# A tibble: 8 × 4\n  origin name                     n_flights mean_delay\n  &lt;chr&gt;  &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n1 EWR    ExpressJet Airlines Inc.      3516      12.4 \n2 EWR    Southwest Airlines Co.         524      12.0 \n3 EWR    Envoy Air                      135       8.94\n4 EWR    Delta Air Lines Inc.           440       8.13\n5 EWR    United Air Lines Inc.         3868       6.90\n6 EWR    American Airlines Inc.         290       5.88\n7 EWR    JetBlue Airways                500       5.54\n8 EWR    Virgin America                 169       3.01\n\n\nNow use R for plots or further analysis of the compact result."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#materialize-a-reusable-result",
+    "href": "slides/databases-scalability.html#materialize-a-reusable-result",
+    "title": "Databases and scalability",
+    "section": "Materialize a reusable result",
+    "text": "Materialize a reusable result\n\ncached_summary = october_summary |&gt; compute()\n\ncached_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  collect()\n\n# A tibble: 33 × 5\n   origin carrier n_flights mean_delay name                    \n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt; &lt;chr&gt;                   \n 1 EWR    9E            144      1.08  Endeavor Air Inc.       \n 2 EWR    AA            290      5.88  American Airlines Inc.  \n 3 EWR    AS             62      0.677 Alaska Airlines Inc.    \n 4 EWR    B6            500      5.54  JetBlue Airways         \n 5 EWR    DL            440      8.13  Delta Air Lines Inc.    \n 6 EWR    EV           3516     12.4   ExpressJet Airlines Inc.\n 7 EWR    MQ            135      8.94  Envoy Air               \n 8 EWR    UA           3868      6.90  United Air Lines Inc.   \n 9 EWR    US            364     -0.544 US Airways Inc.         \n10 EWR    VX            169      3.01  Virgin America          \n# ℹ 23 more rows\n\n\ncompute() stores the summary in the database; it does not download it."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#what-if-the-input-exceeds-ram",
+    "href": "slides/databases-scalability.html#what-if-the-input-exceeds-ram",
+    "title": "Databases and scalability",
+    "section": "What if the input exceeds RAM?",
+    "text": "What if the input exceeds RAM?\ncopy_to(db, a_large_tibble) requires that tibble to exist in R first.\nAt scale:\n\nConnect to an existing database, or ingest data in bounded batches.\nReuse the persistent database across analyses.\nFilter and summarize before collecting.\nConsider an analytical engine such as DuckDB for scan-heavy workloads.\n\nOur small setup teaches querying, not larger-than-memory ingestion."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#databases-and-scalability",
+    "href": "slides/databases-scalability.html#databases-and-scalability",
+    "title": "Databases and scalability",
+    "section": "Databases and scalability",
+    "text": "Databases and scalability\n\n\n\nStrategy\nWhat it can reduce\n\n\n\n\nFilter and summarize before collect()\nRows entering R\n\n\nSelect needed columns\nWidth of the returned result\n\n\nSuitable index\nRecords/pages searched for a lookup\n\n\nReuse a materialized result\nRepeated computation\n\n\nBounded-batch ingestion\nR memory needed while loading\n\n\n\nLess data movement can matter even when the scan remains \\(\\mathcal{O}(n)\\)."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#exercise-a-compact-route-summary",
+    "href": "slides/databases-scalability.html#exercise-a-compact-route-summary",
+    "title": "Databases and scalability",
+    "section": "Exercise: a compact route summary",
+    "text": "Exercise: a compact route summary\nFor October flights with observed departure delay:\n\nKeep flights departing from JFK.\nCalculate flight count and mean delay for each destination.\nKeep destinations with at least 50 such flights.\nSort by decreasing mean delay and collect the result.\n\nBefore running: where should collect() go, and why?"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#exercise-solution",
+    "href": "slides/databases-scalability.html#exercise-solution",
+    "title": "Databases and scalability",
+    "section": "Exercise solution",
+    "text": "Exercise solution\n\nroute_summary = flight_tbl |&gt;\n  filter(month == 10, origin == \"JFK\", !is.na(dep_delay)) |&gt;\n  group_by(dest) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  filter(n_flights &gt;= 50) |&gt;\n  arrange(desc(mean_delay), dest) |&gt;\n  collect()\nhead(route_summary)\n\n# A tibble: 6 × 3\n  dest  n_flights mean_delay\n  &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;\n1 CVG          93       18.1\n2 CMH          61       16.1\n3 MSP          92       15.4\n4 DFW          62       15.1\n5 BNA          59       11.9\n6 ORF          61       11.4"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#finish-the-connection",
+    "href": "slides/databases-scalability.html#finish-the-connection",
+    "title": "Databases and scalability",
+    "section": "Finish the connection",
+    "text": "Finish the connection\n\nDBI::dbDisconnect(db)\n\n\nA database reference is not the full dataset.\nA lazy pipeline describes a query.\nA small result may require a large scan.\nCollect only the result you need in R."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#numbers-every-programmer-should-know",
+    "href": "slides/databases-scalability.html#numbers-every-programmer-should-know",
+    "title": "Databases and scalability",
+    "section": "Numbers every programmer should know",
+    "text": "Numbers every programmer should know\n\n\n\n\n\n\n\n\nTask\nTiming (ns)\nTiming (μs)\n\n\n\n\nL1 cache reference\n0.5\n0.0005\n\n\nL2 cache reference\n7\n0.007\n\n\nMain memory reference\n100\n0.1\n\n\nRandom seek SSD\n150,000\n150\n\n\nRead 1 MB sequentially from memory\n250,000\n250\n\n\nRead 1 MB sequentially from SSD\n1,000,000\n1,000\n\n\nDisk seek\n10,000,000\n10,000\n\n\nRead 1 MB sequentially from disk\n20,000,000\n20,000\n\n\nSend packet CA-&gt;Netherlands-&gt;CA\n150,000,000\n150,000\n\n\n\n\n\nFrom jboner/latency.txt & sirupsen/napkin-math  Jeff Dean’s original talk"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#implications-for-big-data",
+    "href": "slides/databases-scalability.html#implications-for-big-data",
+    "title": "Databases and scalability",
+    "section": "Implications for big data",
+    "text": "Implications for big data\nLet’s imagine we have a 10 GB flat data file and that we want to select certain rows based on a particular criterion (filtering).\nThis requires a sequential read across the entire data set.\n\n\n\nFile Location\nPerformance\nTime\n\n\n\n\nin memory\n\\(10~GB \\times (250~\\mu s / 1~MB)\\)\n2.5 seconds\n\n\non disk (SSD)\n\\(10~GB \\times (1~ms / 1~MB)\\)\n10 seconds\n\n\non disk (HD)\n\\(10~GB \\times (20~ms / 1~MB)\\)\n200 seconds\n\n\n\n\nThis is just for reading the sequential data, if we make any modifications (writing) or the data is fragmented things are much worse."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#blocks",
+    "href": "slides/databases-scalability.html#blocks",
+    "title": "Databases and scalability",
+    "section": "Blocks",
+    "text": "Blocks\nCost:\n\nDisk &lt;&lt; SSD &lt;&lt;&lt; Memory\n\nSpeed:\n\nDisk &lt;&lt;&lt; SSD &lt;&lt; Memory\n\n\n\nDisk is cheap but slow; memory is fast but limited.\nWhat do we do when our data doesn’t fit in memory?\n\n\nCreate blocks — group related rows and read multiple rows at a time, loading only what’s needed (skip what we do not want).\nOptimal block size depends on the task and the storage medium."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#linear-vs-binary-search",
+    "href": "slides/databases-scalability.html#linear-vs-binary-search",
+    "title": "Databases and scalability",
+    "section": "Linear vs Binary Search",
+    "text": "Linear vs Binary Search\nBlocks reduce I/O, but any query still requires scanning all of them — a linear search requiring \\(\\mathcal{O}(N)\\) reads.\n\n\nWe can do better if we are careful about how we structure our data, specifically sorting some (or all) of the columns.\n\nSorting is expensive, \\(\\mathcal{O}(N \\log N)\\), but it only needs to be done once.\nAfter sorting, we can use a binary search for any subsetting tasks, \\(\\mathcal{O}(\\log N)\\)\nIn databases these “sorted” columns are referred to as indexes.\nIndexes require additional storage, but are usually small enough to be kept in memory even when the blocks need to stay on disk."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#so-why-databases",
+    "href": "slides/databases-scalability.html#so-why-databases",
+    "title": "Databases and scalability",
+    "section": "So why databases?",
+    "text": "So why databases?\nImplementing blocks, indexes, and query optimization correctly is hard:\n\nThe optimal strategy depends on your queries — and they change\nData is modified (inserts, updates, deletes) — structures must stay consistent\nMultiple users may access data simultaneously — concurrency must be managed\nFailures happen — data must remain correct and recoverable\n\n\nA database management system (DBMS) handles all of this for you, plus provides a standard query language (SQL) to express what you want, not how to get it."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#the-data",
+    "href": "slides/databases-scalability.html#the-data",
+    "title": "Databases and scalability",
+    "section": "The data",
+    "text": "The data\nnycflights13: 336,776 flights departing NYC in 2013.\n\nnycflights13::flights |&gt;\n  select(month, day, origin, dest, carrier, dep_delay) |&gt;\n  glimpse()\n\nRows: 336,776\nColumns: 6\n$ month     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ day       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ origin    &lt;chr&gt; \"EWR\", \"LGA\", \"JFK\", \"JFK\", \"LGA\", \"EWR\", \"EWR\", \"…\n$ dest      &lt;chr&gt; \"IAH\", \"IAH\", \"MIA\", \"BQN\", \"ATL\", \"ORD\", \"FLL\", \"…\n$ carrier   &lt;chr&gt; \"UA\", \"UA\", \"AA\", \"B6\", \"DL\", \"UA\", \"B6\", \"EV\", \"B…\n$ dep_delay &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -…\n\n\nHow did October departure delays differ across airlines and airports?\ndep_delay is in minutes; negative values indicate early departures."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#october-departure-delays",
+    "href": "slides/databases-scalability.html#october-departure-delays",
+    "title": "Databases and scalability",
+    "section": "October departure delays",
+    "text": "October departure delays\n\nnycflights13::flights |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  head(6)\n\n# A tibble: 6 × 4\n  origin carrier n_flights mean_delay\n  &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n1 EWR    9E            144      1.08 \n2 EWR    AA            290      5.88 \n3 EWR    AS             62      0.677\n4 EWR    B6            500      5.54 \n5 EWR    DL            440      8.13 \n6 EWR    EV           3516     12.4"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#dbconnect",
+    "href": "slides/databases-scalability.html#dbconnect",
+    "title": "Databases and scalability",
+    "section": "dbConnect()",
+    "text": "dbConnect()\n\ndb = DBI::dbConnect(RSQLite::SQLite(), db_path)\nDBI::dbListTables(db)\n\n[1] \"airlines\" \"flights\" \n\n\nThe setup chunk creates a small demonstration database once per render.\nFor a prepared database, the connection would be:\n\ndb = DBI::dbConnect(\n  RSQLite::SQLite(), \"flights.sqlite\"\n)"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#tbl",
+    "href": "slides/databases-scalability.html#tbl",
+    "title": "Databases and scalability",
+    "section": "tbl()",
+    "text": "tbl()\n\nflight_tbl = tbl(db, \"flights\")\nairlines_tbl = tbl(db, \"airlines\")\n\nflight_tbl |&gt;\n  select(origin, carrier, dep_delay)\n\n# Source:   SQL [?? x 3]\n# Database: sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/RtmpLZE6Yw/fileda7f1d4af185.sqlite]\n   origin carrier dep_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    UA              2\n 2 LGA    UA              4\n 3 JFK    AA              2\n 4 JFK    B6             -1\n 5 LGA    DL             -6\n 6 EWR    UA             -4\n 7 EWR    B6             -5\n 8 LGA    EV             -3\n 9 JFK    B6             -3\n10 LGA    AA             -2\n# ℹ more rows\n\n\nflight_tbl describes a database table. It is not a local copy of every row."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#dbgetquery",
+    "href": "slides/databases-scalability.html#dbgetquery",
+    "title": "Databases and scalability",
+    "section": "dbGetQuery()",
+    "text": "dbGetQuery()\n\nDBI::dbGetQuery(db, \"\n  SELECT origin, dest, carrier, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n  LIMIT 6\n\")\n\n  origin dest carrier dep_delay\n1    EWR  CLT      US        -7\n2    EWR  IAH      UA        -7\n3    JFK  MIA      AA        -6\n4    JFK  SJU      B6        -6\n5    JFK  BQN      B6        -8\n6    LGA  IAH      UA        -2"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#result-sizes",
+    "href": "slides/databases-scalability.html#result-sizes",
+    "title": "Databases and scalability",
+    "section": "Result sizes",
+    "text": "Result sizes\n\nall_flights = collect(flight_tbl)\nsmall_result = flight_tbl |&gt; count(origin) |&gt; collect()\n\ntibble(\n  result = c(\"All flights\", \"Airport counts\"),\n  rows = c(nrow(all_flights), nrow(small_result)),\n  bytes_in_R = c(as.numeric(object.size(all_flights)),\n                 as.numeric(object.size(small_result)))\n)\n\n# A tibble: 2 × 3\n  result           rows bytes_in_R\n  &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;\n1 All flights    336776   40649568\n2 Airport counts      3       1200\n\n\nObject sizes describe these R results, not peak memory or database memory."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#timing-collect",
+    "href": "slides/databases-scalability.html#timing-collect",
+    "title": "Databases and scalability",
+    "section": "Timing collect()",
+    "text": "Timing collect()\n\nearly = function() {\n  flight_tbl |&gt; collect() |&gt; count(origin) |&gt; arrange(origin)\n}\nlate = function() {\n  flight_tbl |&gt; count(origin) |&gt; arrange(origin) |&gt; collect()\n}\nstopifnot(isTRUE(all.equal(early(), late())))\nsystem.time(early())\n\n   user  system elapsed \n  0.699   0.014   0.714 \n\nsystem.time(late())\n\n   user  system elapsed \n  0.091   0.007   0.098 \n\n\nCompare completed results; repeat timings and consider caching."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#join-keys",
+    "href": "slides/databases-scalability.html#join-keys",
+    "title": "Databases and scalability",
+    "section": "Join keys",
+    "text": "Join keys\n\nairlines_tbl |&gt;\n  count(carrier) |&gt;\n  filter(n != 1) |&gt;\n  collect()\n\n# A tibble: 0 × 2\n# ℹ 2 variables: carrier &lt;chr&gt;, n &lt;lgl&gt;\n\n\nA lookup should have one row per carrier.\nJoin by meaning, not by row position."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#joins-across-sources",
+    "href": "slides/databases-scalability.html#joins-across-sources",
+    "title": "Databases and scalability",
+    "section": "Joins across sources",
+    "text": "Joins across sources\n\nlocal_df = data.frame(origin = c(\"JFK\", \"LGA\"))\n\n\nflight_tbl |&gt; inner_join(local_df, by = \"origin\")\n\nError in `auto_copy()`:\n! `x` and `y` must share the same src.\nℹ `x` is a &lt;tbl_SQLiteConnection/tbl_dbi/tbl_sql/tbl_lazy/tbl&gt;\n  object.\nℹ `y` is a &lt;data.frame&gt; object.\nℹ Set `copy = TRUE` if `y` can be copied to the same source as `x`\n  (may be slow).\n\n\nThe local data frame and database table have different sources."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#explain-query-plan",
+    "href": "slides/databases-scalability.html#explain-query-plan",
+    "title": "Databases and scalability",
+    "section": "EXPLAIN QUERY PLAN",
+    "text": "EXPLAIN QUERY PLAN\n\nlookup_sql = \"\n  SELECT origin, dest, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n\"\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused       detail\n1  2      0     216 SCAN flights"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#create-index",
+    "href": "slides/databases-scalability.html#create-index",
+    "title": "Databases and scalability",
+    "section": "CREATE INDEX",
+    "text": "CREATE INDEX\n\nDBI::dbExecute(db, \"\n  CREATE INDEX IF NOT EXISTS flights_date_idx\n  ON flights(month, day)\n\")\n\n[1] 0\n\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused\n1  3      0      60\n                                                           detail\n1 SEARCH flights USING INDEX flights_date_idx (month=? AND day=?)\n\n\nCompare SCAN with SEARCH ... USING INDEX in the plan."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#ranking-delays",
+    "href": "slides/databases-scalability.html#ranking-delays",
+    "title": "Databases and scalability",
+    "section": "Ranking delays",
+    "text": "Ranking delays\n\nextreme_delays = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin) |&gt;\n  mutate(delay_rank = min_rank(desc(dep_delay))) |&gt;\n  filter(delay_rank &lt;= 3) |&gt;\n  ungroup() |&gt;\n  select(origin, carrier, dep_delay, delay_rank) |&gt;\n  arrange(origin, delay_rank)\n\nextreme_delays\n\n# Source:     SQL [?? x 4]\n# Database:   sqlite 3.50.4 [/private/var/folders/36/9fvw0zp94f7382yggl_jvx5w0000gn/T/RtmpLZE6Yw/fileda7f1d4af185.sqlite]\n# Ordered by: origin, delay_rank\n   origin carrier dep_delay delay_rank\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;\n 1 EWR    DL            702          1\n 2 EWR    B6            364          2\n 3 EWR    B6            352          3\n 4 JFK    MQ            342          1\n 5 JFK    9E            327          2\n 6 JFK    9E            324          3\n 7 LGA    DL            390          1\n 8 LGA    YV            387          2\n 9 LGA    WN            378          3\n10 LGA    DL            378          3"
+  },
+  {
+    "objectID": "slides/databases-scalability.html#sql-translation-grepl",
+    "href": "slides/databases-scalability.html#sql-translation-grepl",
+    "title": "Databases and scalability",
+    "section": "SQL translation: grepl()",
+    "text": "SQL translation: grepl()\nThe original example: test whether a tail number starts with N.\n\noct_21 |&gt; mutate(tailnum_n_prefix = grepl(\"^N\", tailnum))\n\nError in `collect()`:\n! Failed to collect lazy table.\nCaused by error:\n! no such function: grepl\n\n\n\noct_21 |&gt;\n  mutate(tailnum_n_prefix = grepl(\"^N\", tailnum)) |&gt;\n  show_query()\n\n&lt;SQL&gt;\nSELECT\n  `origin`,\n  `dest`,\n  `carrier`,\n  `tailnum`,\n  `dep_delay`,\n  grepl('^N', `tailnum`) AS `tailnum_n_prefix`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\nTranslation and execution depend on the backend and package versions."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#an-r-function-inside-a-query",
+    "href": "slides/databases-scalability.html#an-r-function-inside-a-query",
+    "title": "Databases and scalability",
+    "section": "An R function inside a query",
+    "text": "An R function inside a query\n\nstarts_with_n = function(x) grepl(\"^N\", x)\n\n\ncustom_query = oct_21 |&gt;\n  mutate(n_prefix = starts_with_n(tailnum))\ncustom_query |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT\n  `origin`,\n  `dest`,\n  `carrier`,\n  `tailnum`,\n  `dep_delay`,\n  starts_with_n(`tailnum`) AS `n_prefix`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\n\noct_21 |&gt;\n  mutate(n_prefix = starts_with_n(tailnum)) |&gt;\n  collect()\n\nError in `collect()`:\n! Failed to collect lazy table.\nCaused by error:\n! no such function: starts_with_n\n\n\nSQLite cannot call this function from the R session."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#collect-then-use-the-r-function",
+    "href": "slides/databases-scalability.html#collect-then-use-the-r-function",
+    "title": "Databases and scalability",
+    "section": "Collect, then use the R function",
+    "text": "Collect, then use the R function\n\noct_21 |&gt;\n  select(tailnum) |&gt;\n  collect() |&gt;\n  mutate(n_prefix = starts_with_n(tailnum)) |&gt;\n  head(6)\n\n# A tibble: 6 × 2\n  tailnum n_prefix\n  &lt;chr&gt;   &lt;lgl&gt;   \n1 N152UW  TRUE    \n2 N535UA  TRUE    \n3 N5BSAA  TRUE    \n4 N531JB  TRUE    \n5 N827JB  TRUE    \n6 N15710  TRUE    \n\n\nFilter and select in the database; apply the R-only function after collection."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#missing-values-in-sql",
+    "href": "slides/databases-scalability.html#missing-values-in-sql",
+    "title": "Databases and scalability",
+    "section": "Missing values in SQL",
+    "text": "Missing values in SQL\n\ndbplyr::translate_sql(mean(dep_delay), con = db)\n\nWarning: Missing values are always removed in SQL aggregation functions.\nUse `na.rm = TRUE` to silence this warning\nThis warning is displayed once every 8 hours.\n\n\n&lt;SQL&gt; AVG(`dep_delay`) OVER ()\n\n\n\ndbplyr::translate_sql(mean(dep_delay, na.rm = TRUE), con = db)\n\n&lt;SQL&gt; AVG(`dep_delay`) OVER ()\n\n\nSQL aggregates generally ignore NULL; local R’s mean() defaults to na.rm = FALSE."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#collect",
+    "href": "slides/databases-scalability.html#collect",
+    "title": "Databases and scalability",
+    "section": "collect()",
+    "text": "collect()\n\ndelay_results = named_summary |&gt; collect()\n\ndelay_results |&gt;\n  select(origin, name, n_flights, mean_delay) |&gt;\n  head(8)\n\n# A tibble: 8 × 4\n  origin name                     n_flights mean_delay\n  &lt;chr&gt;  &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n1 EWR    ExpressJet Airlines Inc.      3516      12.4 \n2 EWR    Southwest Airlines Co.         524      12.0 \n3 EWR    Envoy Air                      135       8.94\n4 EWR    Delta Air Lines Inc.           440       8.13\n5 EWR    United Air Lines Inc.         3868       6.90\n6 EWR    American Airlines Inc.         290       5.88\n7 EWR    JetBlue Airways                500       5.54\n8 EWR    Virgin America                 169       3.01\n\n\nNow use R for plots or further analysis of the compact result."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#compute",
+    "href": "slides/databases-scalability.html#compute",
+    "title": "Databases and scalability",
+    "section": "compute()",
+    "text": "compute()\n\ncached_summary = october_summary |&gt; compute()\n\ncached_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  collect()\n\n# A tibble: 33 × 5\n   origin carrier n_flights mean_delay name                    \n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt; &lt;chr&gt;                   \n 1 EWR    9E            144      1.08  Endeavor Air Inc.       \n 2 EWR    AA            290      5.88  American Airlines Inc.  \n 3 EWR    AS             62      0.677 Alaska Airlines Inc.    \n 4 EWR    B6            500      5.54  JetBlue Airways         \n 5 EWR    DL            440      8.13  Delta Air Lines Inc.    \n 6 EWR    EV           3516     12.4   ExpressJet Airlines Inc.\n 7 EWR    MQ            135      8.94  Envoy Air               \n 8 EWR    UA           3868      6.90  United Air Lines Inc.   \n 9 EWR    US            364     -0.544 US Airways Inc.         \n10 EWR    VX            169      3.01  Virgin America          \n# ℹ 23 more rows\n\n\ncompute() stores the summary in the database; it does not download it."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#loading-data-larger-than-ram",
+    "href": "slides/databases-scalability.html#loading-data-larger-than-ram",
+    "title": "Databases and scalability",
+    "section": "Loading data larger than RAM",
+    "text": "Loading data larger than RAM\ncopy_to(db, a_large_tibble) requires that tibble to exist in R first.\nAt scale:\n\nConnect to an existing database, or ingest data in bounded batches.\nReuse the persistent database across analyses.\nFilter and summarize before collecting.\nConsider an analytical engine such as DuckDB for scan-heavy workloads.\n\nOur small setup teaches querying, not larger-than-memory ingestion."
+  },
+  {
+    "objectID": "slides/databases-scalability.html#dbdisconnect",
+    "href": "slides/databases-scalability.html#dbdisconnect",
+    "title": "Databases and scalability",
+    "section": "dbDisconnect()",
+    "text": "dbDisconnect()\n\nDBI::dbDisconnect(db)"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#numbers-every-programmer-should-know",
+    "href": "slides/lec-databases-1.html#numbers-every-programmer-should-know",
+    "title": "Databases I",
+    "section": "Numbers every programmer should know",
+    "text": "Numbers every programmer should know\n\n\n\n\n\n\n\n\nTask\nTiming (ns)\nTiming (μs)\n\n\n\n\nL1 cache reference\n0.5\n0.0005\n\n\nL2 cache reference\n7\n0.007\n\n\nMain memory reference\n100\n0.1\n\n\nRandom seek SSD\n150,000\n150\n\n\nRead 1 MB sequentially from memory\n250,000\n250\n\n\nRead 1 MB sequentially from SSD\n1,000,000\n1,000\n\n\nDisk seek\n10,000,000\n10,000\n\n\nRead 1 MB sequentially from disk\n20,000,000\n20,000\n\n\nSend packet CA-&gt;Netherlands-&gt;CA\n150,000,000\n150,000\n\n\n\n\n\nFrom jboner/latency.txt & sirupsen/napkin-math  Jeff Dean’s original talk"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#implications-for-big-data",
+    "href": "slides/lec-databases-1.html#implications-for-big-data",
+    "title": "Databases I",
+    "section": "Implications for big data",
+    "text": "Implications for big data\nLet’s imagine we have a 10 GB flat data file and that we want to select certain rows based on a particular criterion (filtering).\nThis requires a sequential read across the entire data set.\n\n\n\nFile Location\nPerformance\nTime\n\n\n\n\nin memory\n\\(10~GB \\times (250~\\mu s / 1~MB)\\)\n2.5 seconds\n\n\non disk (SSD)\n\\(10~GB \\times (1~ms / 1~MB)\\)\n10 seconds\n\n\non disk (HD)\n\\(10~GB \\times (20~ms / 1~MB)\\)\n200 seconds\n\n\n\n\nThis is just for reading the sequential data, if we make any modifications (writing) or the data is fragmented things are much worse."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#blocks",
+    "href": "slides/lec-databases-1.html#blocks",
+    "title": "Databases I",
+    "section": "Blocks",
+    "text": "Blocks\nCost:\n\nDisk &lt;&lt; SSD &lt;&lt;&lt; Memory\n\nSpeed:\n\nDisk &lt;&lt;&lt; SSD &lt;&lt; Memory\n\n\n\nDisk is cheap but slow; memory is fast but limited.\nWhat do we do when our data doesn’t fit in memory?\n\n\nCreate blocks — group related rows and read multiple rows at a time, loading only what’s needed (skip what we dont want).\nOptimal block size depends on the task and the storage medium."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#linear-vs-binary-search",
+    "href": "slides/lec-databases-1.html#linear-vs-binary-search",
+    "title": "Databases I",
+    "section": "Linear vs Binary Search",
+    "text": "Linear vs Binary Search\nBlocks reduce I/O, but any query still requires scanning all of them — a linear search requiring \\(\\mathcal{O}(N)\\) reads.\n\n\nWe can do better if we are careful about how we structure our data, specifically sorting some (or all) of the columns.\n\nSorting is expensive, \\(\\mathcal{O}(N \\log N)\\), but it only needs to be done once.\nAfter sorting, we can use a binary search for any subsetting tasks, \\(\\mathcal{O}(\\log N)\\)\nIn databases these “sorted” columns are referred to as indexes.\nIndexes require additional storage, but are usually small enough to be kept in memory even when the blocks need to stay on disk."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#so-why-databases",
+    "href": "slides/lec-databases-1.html#so-why-databases",
+    "title": "Databases I",
+    "section": "So why databases?",
+    "text": "So why databases?\nImplementing blocks, indexes, and query optimization correctly is hard:\n\nThe optimal strategy depends on your queries — and they change\nData is modified (inserts, updates, deletes) — structures must stay consistent\nMultiple users may access data simultaneously — concurrency must be managed\nFailures happen — data must remain correct and recoverable\n\n\nA database management system (DBMS) handles all of this for you, plus provides a standard query language (SQL) to express what you want, not how to get it."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#the-data",
+    "href": "slides/lec-databases-1.html#the-data",
+    "title": "Databases I",
+    "section": "The data",
+    "text": "The data\nnycflights13: 336,776 flights departing NYC in 2013.\n\nnycflights13::flights |&gt;\n  select(month, day, origin, dest, carrier, dep_delay) |&gt;\n  glimpse()\n\nRows: 336,776\nColumns: 6\n$ month     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ day       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…\n$ origin    &lt;chr&gt; \"EWR\", \"LGA\", \"JFK\", \"JFK\", \"LGA\", \"EWR\", \"EWR\", \"…\n$ dest      &lt;chr&gt; \"IAH\", \"IAH\", \"MIA\", \"BQN\", \"ATL\", \"ORD\", \"FLL\", \"…\n$ carrier   &lt;chr&gt; \"UA\", \"UA\", \"AA\", \"B6\", \"DL\", \"UA\", \"B6\", \"EV\", \"B…\n$ dep_delay &lt;dbl&gt; 2, 4, 2, -1, -6, -4, -5, -3, -3, -2, -2, -2, -2, -…\n\n\nHow did October departure delays differ across airlines and airports?\ndep_delay is in minutes; negative values indicate early departures."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#october-departure-delays",
+    "href": "slides/lec-databases-1.html#october-departure-delays",
+    "title": "Databases I",
+    "section": "October departure delays",
+    "text": "October departure delays\n\nnycflights13::flights |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\n# A tibble: 33 × 4\n   origin carrier n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    9E            144      1.08 \n 2 EWR    AA            290      5.88 \n 3 EWR    AS             62      0.677\n 4 EWR    B6            500      5.54 \n 5 EWR    DL            440      8.13 \n 6 EWR    EV           3516     12.4  \n 7 EWR    MQ            135      8.94 \n 8 EWR    UA           3868      6.90 \n 9 EWR    US            364     -0.544\n10 EWR    VX            169      3.01 \n# ℹ 23 more rows"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#sqlite-and-dbi",
+    "href": "slides/lec-databases-1.html#sqlite-and-dbi",
+    "title": "Databases I",
+    "section": "SQLite and DBI",
+    "text": "SQLite and DBI\n\n\n\nTool\nRole\n\n\n\n\nSQLite\nDatabase engine, running inside our process\n\n\nRSQLite\nR driver for SQLite\n\n\nDBI\nCommon interface for connections and SQL\n\n\ndbplyr\nTranslates supported dplyr operations to SQL\n\n\n\n\nSQLite needs no separate server. It acts as the actual storage container for your data. Unlike major databases like PostgreSQL or MySQL, SQLite stores the entire database as a single file on your local computer, (fast and easy for local projects / small applications).\nDBI acts as the translator or “bridge” between your programming environment (specifically R) and the database. It provides a standardized set of commands (like connecting, disconnecting, or sending raw SQL queries) so that you don’t have to learn a completely new programming syntax every time you switch from SQLite to PostgreSQL"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#set-up-a-database",
+    "href": "slides/lec-databases-1.html#set-up-a-database",
+    "title": "Databases I",
+    "section": "Set up a database",
+    "text": "Set up a database\n\nlibrary(DBI)\nlibrary(RSQLite)\nlibrary(dplyr)\nlibrary(dbplyr)\n\ndb = dbConnect(SQLite(), \"flights.sqlite\")\n\ndbWriteTable(\n  db, \"flights\", nycflights13::flights,\n  overwrite = TRUE\n)\ndbWriteTable(\n  db, \"airlines\", nycflights13::airlines,\n  overwrite = TRUE\n)\n\ndbListTables(db)\n\n[1] \"airlines\"     \"flights\"      \"sqlite_stat1\" \"sqlite_stat4\"\n\n\n\n“flights.sqlite” is the database file in the current working directory. SQLite creates it if it does not exist; otherwise, it opens the existing file.\noverwrite = TRUE replaces these tables when rerunning the example."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#tbl",
+    "href": "slides/lec-databases-1.html#tbl",
+    "title": "Databases I",
+    "section": "tbl()",
+    "text": "tbl()\n\nflight_tbl = tbl(db, \"flights\")\nairlines_tbl = tbl(db, \"airlines\")\n\nflight_tbl |&gt;\n  select(origin, carrier, dep_delay)\n\n# Source:   SQL [?? x 3]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier dep_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    UA              2\n 2 LGA    UA              4\n 3 JFK    AA              2\n 4 JFK    B6             -1\n 5 LGA    DL             -6\n 6 EWR    UA             -4\n 7 EWR    B6             -5\n 8 LGA    EV             -3\n 9 JFK    B6             -3\n10 LGA    AA             -2\n# ℹ more rows\n\n\n\ntbl() creates an R reference to the “flights” table in the database\nflight_tbl describes a database table. It is not a local copy of every row. We can send queries using dplyr functions."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#filter-and-select",
+    "href": "slides/lec-databases-1.html#filter-and-select",
+    "title": "Databases I",
+    "section": "Filter and select",
+    "text": "Filter and select\n\noct_21 = flight_tbl |&gt;\n  filter(month == 10, day == 21) |&gt;\n  select(origin, dest, carrier, tailnum, dep_delay)\n\noct_21\n\n# Source:   SQL [?? x 5]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin dest  carrier tailnum dep_delay\n   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    CLT   US      N152UW         -7\n 2 EWR    IAH   UA      N535UA         -7\n 3 JFK    MIA   AA      N5BSAA         -6\n 4 JFK    SJU   B6      N531JB         -6\n 5 JFK    BQN   B6      N827JB         -8\n 6 LGA    IAH   UA      N15710         -2\n 7 JFK    IAD   EV      N825AS        -10\n 8 EWR    TPA   UA      N802UA         -9\n 9 LGA    ATL   DL      N996DL         -9\n10 JFK    FLL   B6      N627JB         -9\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#dplyr-to-sql",
+    "href": "slides/lec-databases-1.html#dplyr-to-sql",
+    "title": "Databases I",
+    "section": "dplyr to SQL",
+    "text": "dplyr to SQL\n\noct_21 |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT `origin`, `dest`, `carrier`, `tailnum`, `dep_delay`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\nRead SELECT, FROM, and WHERE as: columns, source, and row conditions."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#dbgetquery",
+    "href": "slides/lec-databases-1.html#dbgetquery",
+    "title": "Databases I",
+    "section": "dbGetQuery()",
+    "text": "dbGetQuery()\n\nDBI::dbGetQuery(db, \"\n  SELECT origin, dest, carrier, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n  LIMIT 6\n\")\n\n  origin dest carrier dep_delay\n1    EWR  CLT      US        -7\n2    EWR  IAH      UA        -7\n3    JFK  MIA      AA        -6\n4    JFK  SJU      B6        -6\n5    JFK  BQN      B6        -8\n6    LGA  IAH      UA        -2"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#laziness",
+    "href": "slides/lec-databases-1.html#laziness",
+    "title": "Databases I",
+    "section": "Laziness",
+    "text": "Laziness\nBuilding a pipeline records work to do.\n\nshow_query() displays SQL.\nPrinting a lazy table retrieves a preview.\ncollect() executes and brings the result into R.\ncompute() executes and stores a result table in the database.\ncollapse() restructures SQL without executing it.\n\n\nA preview with few rows can still require substantial database work."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#summarize-october-delays",
+    "href": "slides/lec-databases-1.html#summarize-october-delays",
+    "title": "Databases I",
+    "section": "Summarize October delays",
+    "text": "Summarize October delays\n\noctober_summary = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\noctober_summary\n\n# Source:   SQL [?? x 4]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    9E            144      1.08 \n 2 EWR    AA            290      5.88 \n 3 EWR    AS             62      0.677\n 4 EWR    B6            500      5.54 \n 5 EWR    DL            440      8.13 \n 6 EWR    EV           3516     12.4  \n 7 EWR    MQ            135      8.94 \n 8 EWR    UA           3868      6.90 \n 9 EWR    US            364     -0.544\n10 EWR    VX            169      3.01 \n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#exercise-when-does-work-happen",
+    "href": "slides/lec-databases-1.html#exercise-when-does-work-happen",
+    "title": "Databases I",
+    "section": "Exercise: when does work happen?",
+    "text": "Exercise: when does work happen?\nFor each expression, predict what happens in R and in the database.\nq = flight_tbl |&gt; filter(month == 10)\nshow_query(q)\nq\ncollect(q)\nWhich expression brings all matching rows into R?"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#collect-early-or-late",
+    "href": "slides/lec-databases-1.html#collect-early-or-late",
+    "title": "Databases I",
+    "section": "Collect early or late?",
+    "text": "Collect early or late?\n\n\nCollect early\nflight_tbl |&gt;\n  collect() |&gt;\n  count(origin)\n\nCollect late\nflight_tbl |&gt;\n  count(origin) |&gt;\n  collect()\n\nSame counts. Very different amounts of data enter R."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#result-sizes",
+    "href": "slides/lec-databases-1.html#result-sizes",
+    "title": "Databases I",
+    "section": "Result sizes",
+    "text": "Result sizes\n\nall_flights = collect(flight_tbl)\nsmall_result = flight_tbl |&gt; count(origin) |&gt; collect()\n\ntibble(\n  result = c(\"All flights\", \"Airport counts\"),\n  rows = c(nrow(all_flights), nrow(small_result)),\n  bytes_in_R = c(as.numeric(object.size(all_flights)),\n                 as.numeric(object.size(small_result)))\n)\n\n# A tibble: 2 × 3\n  result           rows bytes_in_R\n  &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;\n1 All flights    336776   40649568\n2 Airport counts      3       1200\n\n\nObject sizes describe these R results, not peak memory or database memory."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#timing-collect",
+    "href": "slides/lec-databases-1.html#timing-collect",
+    "title": "Databases I",
+    "section": "Timing collect()",
+    "text": "Timing collect()\n\nearly = function() {\n  flight_tbl |&gt; collect() |&gt; count(origin) |&gt; arrange(origin)\n}\nlate = function() {\n  flight_tbl |&gt; count(origin) |&gt; arrange(origin) |&gt; collect()\n}\nstopifnot(isTRUE(all.equal(early(), late())))\nsystem.time(early())\n\n   user  system elapsed \n  0.722   0.018   0.742 \n\nsystem.time(late())\n\n   user  system elapsed \n  0.094   0.009   0.104"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#join-airline-names",
+    "href": "slides/lec-databases-1.html#join-airline-names",
+    "title": "Databases I",
+    "section": "Join airline names",
+    "text": "Join airline names\n\nnamed_summary = october_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  select(origin, carrier, name, n_flights, mean_delay) |&gt;\n  arrange(origin, desc(mean_delay))\n\nnamed_summary\n\n# Source:     SQL [?? x 5]\n# Database:   sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, desc(mean_delay)\n   origin carrier name                     n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    EV      ExpressJet Airlines Inc.      3516     12.4  \n 2 EWR    WN      Southwest Airlines Co.         524     12.0  \n 3 EWR    MQ      Envoy Air                      135      8.94 \n 4 EWR    DL      Delta Air Lines Inc.           440      8.13 \n 5 EWR    UA      United Air Lines Inc.         3868      6.90 \n 6 EWR    AA      American Airlines Inc.         290      5.88 \n 7 EWR    B6      JetBlue Airways                500      5.54 \n 8 EWR    VX      Virgin America                 169      3.01 \n 9 EWR    9E      Endeavor Air Inc.              144      1.08 \n10 EWR    AS      Alaska Airlines Inc.            62      0.677\n# ℹ more rows"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#join-keys",
+    "href": "slides/lec-databases-1.html#join-keys",
+    "title": "Databases I",
+    "section": "Join keys",
+    "text": "Join keys\n\nairlines_tbl |&gt;\n  count(carrier) |&gt;\n  filter(n != 1) |&gt;\n  collect()\n\n# A tibble: 0 × 2\n# ℹ 2 variables: carrier &lt;chr&gt;, n &lt;lgl&gt;\n\n\nA lookup should have one row per carrier.\nJoin by meaning, not by row position."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#joins-across-sources",
+    "href": "slides/lec-databases-1.html#joins-across-sources",
+    "title": "Databases I",
+    "section": "Joins across sources",
+    "text": "Joins across sources\n\nlocal_df = data.frame(origin = c(\"JFK\", \"LGA\"))\n\n\nflight_tbl |&gt; inner_join(local_df, by = \"origin\")\n\nError in `auto_copy()`:\n! `x` and `y` must share the same src.\nℹ `x` is a &lt;tbl_SQLiteConnection/tbl_dbi/tbl_sql/tbl_lazy/tbl&gt;\n  object.\nℹ `y` is a &lt;data.frame&gt; object.\nℹ Set `copy = TRUE` if `y` can be copied to the same source as `x`\n  (may be slow).\n\n\nThe local data frame and database table have different sources."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#a-local-lookup-table",
+    "href": "slides/lec-databases-1.html#a-local-lookup-table",
+    "title": "Databases I",
+    "section": "A local lookup table",
+    "text": "A local lookup table\n\nflight_tbl |&gt;\n  inner_join(local_df, by = \"origin\", copy = TRUE) |&gt;\n  count(origin) |&gt;\n  collect()\n\n# A tibble: 2 × 2\n  origin      n\n  &lt;chr&gt;   &lt;int&gt;\n1 JFK    111279\n2 LGA    104662\n\n\ncopy = TRUE copies the small lookup into the database."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#explain-query-plan",
+    "href": "slides/lec-databases-1.html#explain-query-plan",
+    "title": "Databases I",
+    "section": "EXPLAIN QUERY PLAN",
+    "text": "EXPLAIN QUERY PLAN\n\nlookup_sql = \"\n  SELECT origin, dest, dep_delay\n  FROM flights\n  WHERE month = 10 AND day = 21\n\"\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused       detail\n1  2      0     216 SCAN flights"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#create-index",
+    "href": "slides/lec-databases-1.html#create-index",
+    "title": "Databases I",
+    "section": "CREATE INDEX",
+    "text": "CREATE INDEX\n\nDBI::dbExecute(db, \"\n  CREATE INDEX IF NOT EXISTS flights_date_idx\n  ON flights(month, day)\n\")\n\n[1] 0\n\nDBI::dbGetQuery(\n  db, paste(\"EXPLAIN QUERY PLAN\", lookup_sql)\n)\n\n  id parent notused\n1  3      0      60\n                                                           detail\n1 SEARCH flights USING INDEX flights_date_idx (month=? AND day=?)\n\n\nCompare SCAN with SEARCH ... USING INDEX in the plan."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#exercise-will-an-index-help",
+    "href": "slides/lec-databases-1.html#exercise-will-an-index-help",
+    "title": "Databases I",
+    "section": "Exercise: will an index help?",
+    "text": "Exercise: will an index help?\nWhich query is most likely to benefit from the date index?\n\nRetrieve flights on one specified date.\nCompute the average delay over all flights.\n\nExplain your answer in terms of how many rows are needed.\n\nWhat are the costs of keeping the index?"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#ranking-delays",
+    "href": "slides/lec-databases-1.html#ranking-delays",
+    "title": "Databases I",
+    "section": "Ranking delays",
+    "text": "Ranking delays\n\nextreme_delays = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin) |&gt;\n  mutate(delay_rank = min_rank(desc(dep_delay))) |&gt;\n  filter(delay_rank &lt;= 3) |&gt;\n  ungroup() |&gt;\n  select(origin, carrier, dep_delay, delay_rank) |&gt;\n  arrange(origin, delay_rank)\n\nextreme_delays\n\n# Source:     SQL [?? x 4]\n# Database:   sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, delay_rank\n   origin carrier dep_delay delay_rank\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;\n 1 EWR    DL            702          1\n 2 EWR    B6            364          2\n 3 EWR    B6            352          3\n 4 JFK    MQ            342          1\n 5 JFK    9E            327          2\n 6 JFK    9E            324          3\n 7 LGA    DL            390          1\n 8 LGA    YV            387          2\n 9 LGA    WN            378          3\n10 LGA    DL            378          3"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#window-functions",
+    "href": "slides/lec-databases-1.html#window-functions",
+    "title": "Databases I",
+    "section": "Window functions",
+    "text": "Window functions\nWindow functions compute a value for each row using values from a surrounding partition. Within a group_by() + mutate(), dplyr translates these to SQL OVER() clauses:\n\nextreme_delays |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT `origin`, `carrier`, `dep_delay`, `delay_rank`\nFROM (\n  SELECT\n    `flights`.*,\n    CASE\nWHEN (NOT((`dep_delay` IS NULL))) THEN RANK() OVER (PARTITION BY `origin`, (CASE WHEN ((`dep_delay` IS NULL)) THEN 1 ELSE 0 END) ORDER BY `dep_delay` DESC)\nEND AS `delay_rank`\n  FROM `flights`\n  WHERE (`month` = 10.0) AND (NOT((`dep_delay` IS NULL)))\n) AS `q01`\nWHERE (`delay_rank` &lt;= 3.0)\nORDER BY `origin`, `delay_rank`\n\n\nLook for OVER and PARTITION BY: calculate within each airport while retaining rows."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#sql-translation-grepl",
+    "href": "slides/lec-databases-1.html#sql-translation-grepl",
+    "title": "Databases I",
+    "section": "SQL translation: grepl()",
+    "text": "SQL translation: grepl()\nThe original example: test whether a tail number starts with N.\n\noct_21 |&gt; mutate(tailnum_n_prefix = grepl(\"^N\", tailnum))\n\nError in `collect()`:\n! Failed to collect lazy table.\nCaused by error:\n! no such function: grepl\n\n\n\noct_21 |&gt;\n  mutate(tailnum_n_prefix = grepl(\"^N\", tailnum)) |&gt;\n  show_query()\n\n&lt;SQL&gt;\nSELECT\n  `origin`,\n  `dest`,\n  `carrier`,\n  `tailnum`,\n  `dep_delay`,\n  grepl('^N', `tailnum`) AS `tailnum_n_prefix`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\nTranslation and execution depend on the backend and package versions."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#an-r-function-inside-a-query",
+    "href": "slides/lec-databases-1.html#an-r-function-inside-a-query",
+    "title": "Databases I",
+    "section": "An R function inside a query",
+    "text": "An R function inside a query\n\nstarts_with_n = function(x) grepl(\"^N\", x)\n\n\ncustom_query = oct_21 |&gt;\n  mutate(n_prefix = starts_with_n(tailnum))\ncustom_query |&gt; show_query()\n\n&lt;SQL&gt;\nSELECT\n  `origin`,\n  `dest`,\n  `carrier`,\n  `tailnum`,\n  `dep_delay`,\n  starts_with_n(`tailnum`) AS `n_prefix`\nFROM `flights`\nWHERE (`month` = 10.0) AND (`day` = 21.0)\n\n\n\noct_21 |&gt;\n  mutate(n_prefix = starts_with_n(tailnum)) |&gt;\n  collect()\n\nError in `collect()`:\n! Failed to collect lazy table.\nCaused by error:\n! no such function: starts_with_n\n\n\nSQLite cannot call this function from the R session."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#collect-then-use-the-r-function",
+    "href": "slides/lec-databases-1.html#collect-then-use-the-r-function",
+    "title": "Databases I",
+    "section": "Collect, then use the R function",
+    "text": "Collect, then use the R function\n\noct_21 |&gt;\n  select(tailnum) |&gt;\n  collect() |&gt;\n  mutate(n_prefix = starts_with_n(tailnum)) |&gt;\n  head(6)\n\n# A tibble: 6 × 2\n  tailnum n_prefix\n  &lt;chr&gt;   &lt;lgl&gt;   \n1 N152UW  TRUE    \n2 N535UA  TRUE    \n3 N5BSAA  TRUE    \n4 N531JB  TRUE    \n5 N827JB  TRUE    \n6 N15710  TRUE    \n\n\nFilter and select in the database; apply the R-only function after collection."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#missing-values-in-sql",
+    "href": "slides/lec-databases-1.html#missing-values-in-sql",
+    "title": "Databases I",
+    "section": "Missing values in SQL",
+    "text": "Missing values in SQL\n\ndbplyr::translate_sql(mean(dep_delay), con = db)\n\nWarning: Missing values are always removed in SQL aggregation functions.\nUse `na.rm = TRUE` to silence this warning\nThis warning is displayed once every 8 hours.\n\n\n&lt;SQL&gt; AVG(`dep_delay`) OVER ()\n\n\n\ndbplyr::translate_sql(mean(dep_delay, na.rm = TRUE), con = db)\n\n&lt;SQL&gt; AVG(`dep_delay`) OVER ()\n\n\nSQL aggregates generally ignore NULL; local R’s mean() defaults to na.rm = FALSE."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#collect",
+    "href": "slides/lec-databases-1.html#collect",
+    "title": "Databases I",
+    "section": "collect()",
+    "text": "collect()\n\ndelay_results = named_summary |&gt; collect()\n\ndelay_results |&gt;\n  select(origin, name, n_flights, mean_delay) |&gt;\n  head(8)\n\n# A tibble: 8 × 4\n  origin name                     n_flights mean_delay\n  &lt;chr&gt;  &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n1 EWR    ExpressJet Airlines Inc.      3516      12.4 \n2 EWR    Southwest Airlines Co.         524      12.0 \n3 EWR    Envoy Air                      135       8.94\n4 EWR    Delta Air Lines Inc.           440       8.13\n5 EWR    United Air Lines Inc.         3868       6.90\n6 EWR    American Airlines Inc.         290       5.88\n7 EWR    JetBlue Airways                500       5.54\n8 EWR    Virgin America                 169       3.01\n\n\nNow use R for plots or further analysis of the compact result."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#compute",
+    "href": "slides/lec-databases-1.html#compute",
+    "title": "Databases I",
+    "section": "compute()",
+    "text": "compute()\n\ncached_summary = october_summary |&gt; compute()\n\ncached_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  collect()\n\n# A tibble: 33 × 5\n   origin carrier n_flights mean_delay name                    \n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt; &lt;chr&gt;                   \n 1 EWR    9E            144      1.08  Endeavor Air Inc.       \n 2 EWR    AA            290      5.88  American Airlines Inc.  \n 3 EWR    AS             62      0.677 Alaska Airlines Inc.    \n 4 EWR    B6            500      5.54  JetBlue Airways         \n 5 EWR    DL            440      8.13  Delta Air Lines Inc.    \n 6 EWR    EV           3516     12.4   ExpressJet Airlines Inc.\n 7 EWR    MQ            135      8.94  Envoy Air               \n 8 EWR    UA           3868      6.90  United Air Lines Inc.   \n 9 EWR    US            364     -0.544 US Airways Inc.         \n10 EWR    VX            169      3.01  Virgin America          \n# ℹ 23 more rows\n\n\ncompute() stores the summary in the database; it does not download it."
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#loading-data-larger-than-ram",
+    "href": "slides/lec-databases-1.html#loading-data-larger-than-ram",
+    "title": "Databases I",
+    "section": "Loading data larger than RAM",
+    "text": "Loading data larger than RAM\ncopy_to(db, a_large_tibble) requires that tibble to exist in R first.\nAt scale:\n\nConnect to an existing database, or load data in bounded batches.\nReuse the persistent database across analyses.\nFilter and summarize before collecting.\nConsider an analytical engine such as DuckDB for scan-heavy workloads (next time)"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#exercise-a-compact-route-summary",
+    "href": "slides/lec-databases-1.html#exercise-a-compact-route-summary",
+    "title": "Databases I",
+    "section": "Exercise: a compact route summary",
+    "text": "Exercise: a compact route summary\nFor October flights with observed departure delay:\n\nKeep flights departing from JFK.\nCalculate flight count and mean delay for each destination.\nKeep destinations with at least 50 such flights.\nSort by decreasing mean delay and collect the result.\n\nBefore running: where should collect() go, and why?"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#exercise-solution",
+    "href": "slides/lec-databases-1.html#exercise-solution",
+    "title": "Databases I",
+    "section": "Exercise solution",
+    "text": "Exercise solution\n\nroute_summary = flight_tbl |&gt;\n  filter(month == 10, origin == \"JFK\", !is.na(dep_delay)) |&gt;\n  group_by(dest) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  ) |&gt;\n  filter(n_flights &gt;= 50) |&gt;\n  arrange(desc(mean_delay), dest) |&gt;\n  collect()\nhead(route_summary)\n\n# A tibble: 6 × 3\n  dest  n_flights mean_delay\n  &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;\n1 CVG          93       18.1\n2 CMH          61       16.1\n3 MSP          92       15.4\n4 DFW          62       15.1\n5 BNA          59       11.9\n6 ORF          61       11.4"
+  },
+  {
+    "objectID": "slides/lec-databases-1.html#dbdisconnect",
+    "href": "slides/lec-databases-1.html#dbdisconnect",
+    "title": "Databases I",
+    "section": "dbDisconnect()",
+    "text": "dbDisconnect()\n\nDBI::dbDisconnect(db)\n\n\ncloses the connection to the database\ndeletes temporary tables (such as those created by default result of compute)\n\npersistence with argument temporary = FALSE\n\ncollected results remain available in R after connection closes"
   }
 ]
