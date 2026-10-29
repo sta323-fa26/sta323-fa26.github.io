@@ -51,6 +51,7 @@ schedule %>%
 <!-- Unit 2: Data: wrangling, visualization & collection (APIs): [8] lectures; add functionals to this-->
 <!-- Unit 3: Software engineering & reproducibility: advanced git & unit tests testthat; R scripts & make; packages: 3 lectures-->
 <!-- Unit 4: Scalability: hardware, profiling and benchmarking; parallelization; SQL; duckDB; bigLM: 5 lectures -->
+<!-- Unit: Data science toolkit & software engineering --> 
 <!-- Unit 5: Computational statistics (mini unit): Newton-Raphson; MM; simulation; Monte Carlo: 3 lectures-->
 
 <!-- Idea: simulation unit // how to use simulation to validate models and claims. Could start with validation of inequalities (for use with MM later) -->
@@ -78,13 +79,13 @@ schedule %>%
 |  | Thu Oct 22 | complexity and parallelization | [💻](/slides/lec10.html) |  |  |
 | 10 | Tue Oct 27 | databases and dplyr| [💻](/slides/lec-databases-1.html) |  | |
 |  | Thu Oct 29 | duckDB and SQL | [💻](/slides/lec-databases-2.html) |  |  |
-| 11 | Tue Nov 03 | biglm  |  | lab 6 |  | <!--project workday -->
-|  | Thu Nov 05 | R packages |  |  |  |
-| 12 | Tue Nov 10 | testthat |  |  |  | <!-- lab 7 -->
-|  | Thu Nov 12 | APIs |  |  |  |
+| 11 | Tue Nov 03 | shiny I  |  | lab 6 |  | <!--project workday -->
+|  | Thu Nov 05 | shiny II |  |  |  |
+| 12 | Tue Nov 10 | R packages |  |  |  | <!-- lab 7 -->
+|  | Thu Nov 12 | APIs |  |  |  | <!--testthat; rm biglm -->
 | 13 | Tue Nov 17 | exam 2 |  | no lab |  |
-|  | Thu Nov 19 | shiny I |  |  |  |
-| 14 | Tue Nov 24 | shiny II |  | project workday |  |
+|  | Thu Nov 19 | intro to optimization |  |  |  |
+| 14 | Tue Nov 24 | |  | project workday |  |
 |  | Thu Nov 26 | NO CLASS |  |  |  |
 | 15 | Tue Dec 01 | project presentations |  |  | fp presentations |
 |  | Thu Dec 03 |  |  |  |  |
