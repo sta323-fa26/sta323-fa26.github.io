@@ -78,7 +78,7 @@ schedule %>%
 | 9 | Tue Oct 20 | MCMC example |  | [lab 5](/labs/lab5.html)  | mp presentations |
 |  | Thu Oct 22 | complexity and parallelization | [💻](/slides/lec10.html) |  |  |
 | 10 | Tue Oct 27 | databases and dplyr| [💻](/slides/lec-databases-1.html) |  | |
-|  | Thu Oct 29 | duckDB and SQL | [💻](/slides/lec-databases-2.html) |  |  |
+|  | Thu Oct 29 | duckDB and SQL | [💻](/slides/lec-databases-2.html) |  | [fp instructions](/project.html) |
 | 11 | Tue Nov 03 | shiny I  |  | lab 6 |  | <!--project workday -->
 |  | Thu Nov 05 | shiny II |  |  |  |
 | 12 | Tue Nov 10 | R packages |  |  |  | <!-- lab 7 -->

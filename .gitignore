@@ -19,3 +19,4 @@ docs/admin-scripts/data/*
 data/earthquakes.duckdb
 data/earthquakes-README.md
 admin-scripts/pilot_earthquake*
+docs/data/earthquakes*
