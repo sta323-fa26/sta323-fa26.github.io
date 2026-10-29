@@ -6632,36 +6632,36 @@
     "objectID": "slides/lec-databases-1.html#numbers-every-programmer-should-know",
     "href": "slides/lec-databases-1.html#numbers-every-programmer-should-know",
     "title": "Databases I",
-    "section": "",
-    "text": "Task\nTiming (ns)\nTiming (μs)\n\n\n\n\nL1 cache reference\n0.5\n0.0005\n\n\nL2 cache reference\n7\n0.007\n\n\nMain memory reference\n100\n0.1\n\n\nRandom seek SSD\n150,000\n150\n\n\nRead 1 MB sequentially from memory\n250,000\n250\n\n\nRead 1 MB sequentially from SSD\n1,000,000\n1,000\n\n\nDisk seek\n10,000,000\n10,000\n\n\nRead 1 MB sequentially from disk\n20,000,000\n20,000\n\n\nSend packet CA-&gt;Netherlands-&gt;CA\n150,000,000\n150,000\n\n\n\n\n\nFrom jboner/latency.txt & sirupsen/napkin-math  Jeff Dean’s original talk"
+    "section": "Numbers every programmer should know",
+    "text": "Numbers every programmer should know\n\n\n\n\n\n\n\n\nTask\nTiming (ns)\nTiming (μs)\n\n\n\n\nL1 cache reference\n0.5\n0.0005\n\n\nL2 cache reference\n7\n0.007\n\n\nMain memory reference\n100\n0.1\n\n\nRandom seek SSD\n150,000\n150\n\n\nRead 1 MB sequentially from memory\n250,000\n250\n\n\nRead 1 MB sequentially from SSD\n1,000,000\n1,000\n\n\nDisk seek\n10,000,000\n10,000\n\n\nRead 1 MB sequentially from disk\n20,000,000\n20,000\n\n\nSend packet CA-&gt;Netherlands-&gt;CA\n150,000,000\n150,000\n\n\n\n\n\nFrom jboner/latency.txt & sirupsen/napkin-math  Jeff Dean’s original talk"
   },
   {
     "objectID": "slides/lec-databases-1.html#implications-for-big-data",
     "href": "slides/lec-databases-1.html#implications-for-big-data",
     "title": "Databases I",
-    "section": "",
-    "text": "Let’s imagine we have a 10 GB flat data file and that we want to select certain rows based on a particular criterion (filtering).\nThis requires a sequential read across the entire data set.\n\n\n\nFile Location\nPerformance\nTime\n\n\n\n\nin memory\n\\(10~GB \\times (250~\\mu s / 1~MB)\\)\n2.5 seconds\n\n\non disk (SSD)\n\\(10~GB \\times (1~ms / 1~MB)\\)\n10 seconds\n\n\non disk (HD)\n\\(10~GB \\times (20~ms / 1~MB)\\)\n200 seconds\n\n\n\n\nThis is just for reading the sequential data, if we make any modifications (writing) or the data is fragmented things are much worse."
+    "section": "Implications for big data",
+    "text": "Implications for big data\nLet’s imagine we have a 10 GB flat data file and that we want to select certain rows based on a particular criterion (filtering).\nThis requires a sequential read across the entire data set.\n\n\n\nFile Location\nPerformance\nTime\n\n\n\n\nin memory\n\\(10~GB \\times (250~\\mu s / 1~MB)\\)\n2.5 seconds\n\n\non disk (SSD)\n\\(10~GB \\times (1~ms / 1~MB)\\)\n10 seconds\n\n\non disk (HD)\n\\(10~GB \\times (20~ms / 1~MB)\\)\n200 seconds\n\n\n\n\nThis is just for reading the sequential data, if we make any modifications (writing) or the data is fragmented things are much worse."
   },
   {
     "objectID": "slides/lec-databases-1.html#blocks",
     "href": "slides/lec-databases-1.html#blocks",
     "title": "Databases I",
-    "section": "",
-    "text": "Disk &lt;&lt; SSD &lt;&lt;&lt; Memory\n\n\n\n\n\nDisk &lt;&lt;&lt; SSD &lt;&lt; Memory\n\n\n\nDisk is cheap but slow; memory is fast but limited.\nWhat do we do when our data doesn’t fit in memory?\n\n\nCreate blocks — group related rows and read multiple rows at a time, loading only what’s needed (skip what we dont want).\nOptimal block size depends on the task and the storage medium."
+    "section": "Blocks",
+    "text": "Blocks\nCost:\n\nDisk &lt;&lt; SSD &lt;&lt;&lt; Memory\n\nSpeed:\n\nDisk &lt;&lt;&lt; SSD &lt;&lt; Memory\n\n\n\nDisk is cheap but slow; memory is fast but limited.\nWhat do we do when our data doesn’t fit in memory?\n\n\nCreate blocks — group related rows and read multiple rows at a time, loading only what’s needed (skip what we dont want).\nOptimal block size depends on the task and the storage medium."
   },
   {
     "objectID": "slides/lec-databases-1.html#linear-vs-binary-search",
     "href": "slides/lec-databases-1.html#linear-vs-binary-search",
     "title": "Databases I",
-    "section": "",
-    "text": "Blocks reduce I/O, but any query still requires scanning all of them — a linear search requiring \\(\\mathcal{O}(N)\\) reads.\n. . .\n\nWe can do better if we are careful about how we structure our data, specifically sorting some (or all) of the columns.\n\nSorting is expensive, \\(\\mathcal{O}(N \\log N)\\), but it only needs to be done once.\nAfter sorting, we can use a binary search for any subsetting tasks, \\(\\mathcal{O}(\\log N)\\)\nIn databases these “sorted” columns are referred to as indexes.\nIndexes require additional storage, but are usually small enough to be kept in memory even when the blocks need to stay on disk."
+    "section": "Linear vs Binary Search",
+    "text": "Linear vs Binary Search\nBlocks reduce I/O, but any query still requires scanning all of them — a linear search requiring \\(\\mathcal{O}(N)\\) reads.\n\n\nWe can do better if we are careful about how we structure our data, specifically sorting some (or all) of the columns.\n\nSorting is expensive, \\(\\mathcal{O}(N \\log N)\\), but it only needs to be done once.\nAfter sorting, we can use a binary search for any subsetting tasks, \\(\\mathcal{O}(\\log N)\\)\nIn databases these “sorted” columns are referred to as indexes.\nIndexes require additional storage, but are usually small enough to be kept in memory even when the blocks need to stay on disk."
   },
   {
     "objectID": "slides/lec-databases-1.html#so-why-databases",
     "href": "slides/lec-databases-1.html#so-why-databases",
     "title": "Databases I",
-    "section": "",
-    "text": "Implementing blocks, indexes, and query optimization correctly is hard:\n\nThe optimal strategy depends on your queries — and they change\nData is modified (inserts, updates, deletes) — structures must stay consistent\nMultiple users may access data simultaneously — concurrency must be managed\nFailures happen — data must remain correct and recoverable\n\n\nA database management system (DBMS) handles all of this for you, plus provides a standard query language (SQL) to express what you want, not how to get it."
+    "section": "So why databases?",
+    "text": "So why databases?\nImplementing blocks, indexes, and query optimization correctly is hard:\n\nThe optimal strategy depends on your queries — and they change\nData is modified (inserts, updates, deletes) — structures must stay consistent\nMultiple users may access data simultaneously — concurrency must be managed\nFailures happen — data must remain correct and recoverable\n\n\nA database management system (DBMS) handles all of this for you, plus provides a standard query language (SQL) to express what you want, not how to get it."
   },
   {
     "objectID": "slides/lec-databases-1.html#the-data",
@@ -6696,14 +6696,14 @@
     "href": "slides/lec-databases-1.html#tbl",
     "title": "Databases I",
     "section": "tbl()",
-    "text": "tbl()\n\nflight_tbl = tbl(db, \"flights\")\nairlines_tbl = tbl(db, \"airlines\")\n\nflight_tbl |&gt;\n  select(origin, carrier, dep_delay)\n\n# Source:   SQL [?? x 3]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier dep_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    UA              2\n 2 LGA    UA              4\n 3 JFK    AA              2\n 4 JFK    B6             -1\n 5 LGA    DL             -6\n 6 EWR    UA             -4\n 7 EWR    B6             -5\n 8 LGA    EV             -3\n 9 JFK    B6             -3\n10 LGA    AA             -2\n# ℹ more rows\n\n\n\ntbl() creates an R reference to the “flights” table in the database\nflight_tbl describes a database table. It is not a local copy of every row. We can send queries using dplyr functions."
+    "text": "tbl()\n\nflight_tbl = tbl(db, \"flights\")\nairlines_tbl = tbl(db, \"airlines\")\n\nflight_tbl |&gt;\n  select(origin, carrier, dep_delay)\n\n# Source:   SQL [?? x 3]\n# Database: sqlite 3.50.3 [/home/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier dep_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    UA              2\n 2 LGA    UA              4\n 3 JFK    AA              2\n 4 JFK    B6             -1\n 5 LGA    DL             -6\n 6 EWR    UA             -4\n 7 EWR    B6             -5\n 8 LGA    EV             -3\n 9 JFK    B6             -3\n10 LGA    AA             -2\n# ℹ more rows\n\n\n\ntbl() creates an R reference to the “flights” table in the database\nflight_tbl describes a database table. It is not a local copy of every row. We can send queries using dplyr functions."
   },
   {
     "objectID": "slides/lec-databases-1.html#filter-and-select",
     "href": "slides/lec-databases-1.html#filter-and-select",
     "title": "Databases I",
     "section": "Filter and select",
-    "text": "Filter and select\n\noct_21 = flight_tbl |&gt;\n  filter(month == 10, day == 21) |&gt;\n  select(origin, dest, carrier, tailnum, dep_delay)\n\noct_21\n\n# Source:   SQL [?? x 5]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin dest  carrier tailnum dep_delay\n   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    CLT   US      N152UW         -7\n 2 EWR    IAH   UA      N535UA         -7\n 3 JFK    MIA   AA      N5BSAA         -6\n 4 JFK    SJU   B6      N531JB         -6\n 5 JFK    BQN   B6      N827JB         -8\n 6 LGA    IAH   UA      N15710         -2\n 7 JFK    IAD   EV      N825AS        -10\n 8 EWR    TPA   UA      N802UA         -9\n 9 LGA    ATL   DL      N996DL         -9\n10 JFK    FLL   B6      N627JB         -9\n# ℹ more rows"
+    "text": "Filter and select\n\noct_21 = flight_tbl |&gt;\n  filter(month == 10, day == 21) |&gt;\n  select(origin, dest, carrier, tailnum, dep_delay)\n\noct_21\n\n# Source:   SQL [?? x 5]\n# Database: sqlite 3.50.3 [/home/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin dest  carrier tailnum dep_delay\n   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;\n 1 EWR    CLT   US      N152UW         -7\n 2 EWR    IAH   UA      N535UA         -7\n 3 JFK    MIA   AA      N5BSAA         -6\n 4 JFK    SJU   B6      N531JB         -6\n 5 JFK    BQN   B6      N827JB         -8\n 6 LGA    IAH   UA      N15710         -2\n 7 JFK    IAD   EV      N825AS        -10\n 8 EWR    TPA   UA      N802UA         -9\n 9 LGA    ATL   DL      N996DL         -9\n10 JFK    FLL   B6      N627JB         -9\n# ℹ more rows"
   },
   {
     "objectID": "slides/lec-databases-1.html#dplyr-to-sql",
@@ -6724,14 +6724,14 @@
     "href": "slides/lec-databases-1.html#laziness",
     "title": "Databases I",
     "section": "Laziness",
-    "text": "Laziness\nBuilding a pipeline records work to do.\n\nshow_query() displays SQL.\nPrinting a lazy table retrieves a preview.\ncollect() executes and brings the result into R.\ncompute() executes and stores a result table in the database.\ncollapse() restructures SQL without executing it.\n\n. . .\nA preview with few rows can still require substantial database work."
+    "text": "Laziness\nBuilding a pipeline records work to do.\n\nshow_query() displays SQL.\nPrinting a lazy table retrieves a preview.\ncollect() executes and brings the result into R.\ncompute() executes and stores a result table in the database.\ncollapse() restructures SQL without executing it.\n\n\nA preview with few rows can still require substantial database work."
   },
   {
     "objectID": "slides/lec-databases-1.html#summarize-october-delays",
     "href": "slides/lec-databases-1.html#summarize-october-delays",
     "title": "Databases I",
     "section": "Summarize October delays",
-    "text": "Summarize October delays\n\noctober_summary = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\noctober_summary\n\n# Source:   SQL [?? x 4]\n# Database: sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    9E            144      1.08 \n 2 EWR    AA            290      5.88 \n 3 EWR    AS             62      0.677\n 4 EWR    B6            500      5.54 \n 5 EWR    DL            440      8.13 \n 6 EWR    EV           3516     12.4  \n 7 EWR    MQ            135      8.94 \n 8 EWR    UA           3868      6.90 \n 9 EWR    US            364     -0.544\n10 EWR    VX            169      3.01 \n# ℹ more rows"
+    "text": "Summarize October delays\n\noctober_summary = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin, carrier) |&gt;\n  summarise(\n    n_flights = n(),\n    mean_delay = mean(dep_delay, na.rm = TRUE),\n    .groups = \"drop\"\n  )\n\noctober_summary\n\n# Source:   SQL [?? x 4]\n# Database: sqlite 3.50.3 [/home/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n   origin carrier n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    9E            144      1.08 \n 2 EWR    AA            290      5.88 \n 3 EWR    AS             62      0.677\n 4 EWR    B6            500      5.54 \n 5 EWR    DL            440      8.13 \n 6 EWR    EV           3516     12.4  \n 7 EWR    MQ            135      8.94 \n 8 EWR    UA           3868      6.90 \n 9 EWR    US            364     -0.544\n10 EWR    VX            169      3.01 \n# ℹ more rows"
   },
   {
     "objectID": "slides/lec-databases-1.html#exercise-when-does-work-happen",
@@ -6745,7 +6745,7 @@
     "href": "slides/lec-databases-1.html#collect-early-or-late",
     "title": "Databases I",
     "section": "Collect early or late?",
-    "text": "Collect early or late?\n\n\nCollect early\nflight_tbl |&gt;\n  collect() |&gt;\n  count(origin)\n\nCollect late\nflight_tbl |&gt;\n  count(origin) |&gt;\n  collect()\n\n\nSame counts. Very different amounts of data enter R."
+    "text": "Collect early or late?\n\n\nCollect early\nflight_tbl |&gt;\n  collect() |&gt;\n  count(origin)\n\nCollect late\nflight_tbl |&gt;\n  count(origin) |&gt;\n  collect()\n\nSame counts. Very different amounts of data enter R."
   },
   {
     "objectID": "slides/lec-databases-1.html#result-sizes",
@@ -6759,14 +6759,14 @@
     "href": "slides/lec-databases-1.html#timing-collect",
     "title": "Databases I",
     "section": "Timing collect()",
-    "text": "Timing collect()\n\nearly = function() {\n  flight_tbl |&gt; collect() |&gt; count(origin) |&gt; arrange(origin)\n}\nlate = function() {\n  flight_tbl |&gt; count(origin) |&gt; arrange(origin) |&gt; collect()\n}\nstopifnot(isTRUE(all.equal(early(), late())))\nsystem.time(early())\n\n   user  system elapsed \n  0.722   0.018   0.742 \n\nsystem.time(late())\n\n   user  system elapsed \n  0.094   0.009   0.104"
+    "text": "Timing collect()\n\nearly = function() {\n  flight_tbl |&gt; collect() |&gt; count(origin) |&gt; arrange(origin)\n}\nlate = function() {\n  flight_tbl |&gt; count(origin) |&gt; arrange(origin) |&gt; collect()\n}\nstopifnot(isTRUE(all.equal(early(), late())))\nsystem.time(early())\n\n   user  system elapsed \n  1.119   0.015   1.140 \n\nsystem.time(late())\n\n   user  system elapsed \n  0.150   0.001   0.152"
   },
   {
     "objectID": "slides/lec-databases-1.html#join-airline-names",
     "href": "slides/lec-databases-1.html#join-airline-names",
     "title": "Databases I",
     "section": "Join airline names",
-    "text": "Join airline names\n\nnamed_summary = october_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  select(origin, carrier, name, n_flights, mean_delay) |&gt;\n  arrange(origin, desc(mean_delay))\n\nnamed_summary\n\n# Source:     SQL [?? x 5]\n# Database:   sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, desc(mean_delay)\n   origin carrier name                     n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    EV      ExpressJet Airlines Inc.      3516     12.4  \n 2 EWR    WN      Southwest Airlines Co.         524     12.0  \n 3 EWR    MQ      Envoy Air                      135      8.94 \n 4 EWR    DL      Delta Air Lines Inc.           440      8.13 \n 5 EWR    UA      United Air Lines Inc.         3868      6.90 \n 6 EWR    AA      American Airlines Inc.         290      5.88 \n 7 EWR    B6      JetBlue Airways                500      5.54 \n 8 EWR    VX      Virgin America                 169      3.01 \n 9 EWR    9E      Endeavor Air Inc.              144      1.08 \n10 EWR    AS      Alaska Airlines Inc.            62      0.677\n# ℹ more rows"
+    "text": "Join airline names\n\nnamed_summary = october_summary |&gt;\n  left_join(airlines_tbl, by = \"carrier\") |&gt;\n  select(origin, carrier, name, n_flights, mean_delay) |&gt;\n  arrange(origin, desc(mean_delay))\n\nnamed_summary\n\n# Source:     SQL [?? x 5]\n# Database:   sqlite 3.50.3 [/home/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, desc(mean_delay)\n   origin carrier name                     n_flights mean_delay\n   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;                        &lt;int&gt;      &lt;dbl&gt;\n 1 EWR    EV      ExpressJet Airlines Inc.      3516     12.4  \n 2 EWR    WN      Southwest Airlines Co.         524     12.0  \n 3 EWR    MQ      Envoy Air                      135      8.94 \n 4 EWR    DL      Delta Air Lines Inc.           440      8.13 \n 5 EWR    UA      United Air Lines Inc.         3868      6.90 \n 6 EWR    AA      American Airlines Inc.         290      5.88 \n 7 EWR    B6      JetBlue Airways                500      5.54 \n 8 EWR    VX      Virgin America                 169      3.01 \n 9 EWR    9E      Endeavor Air Inc.              144      1.08 \n10 EWR    AS      Alaska Airlines Inc.            62      0.677\n# ℹ more rows"
   },
   {
     "objectID": "slides/lec-databases-1.html#join-keys",
@@ -6808,14 +6808,14 @@
     "href": "slides/lec-databases-1.html#exercise-will-an-index-help",
     "title": "Databases I",
     "section": "Exercise: will an index help?",
-    "text": "Exercise: will an index help?\nWhich query is most likely to benefit from the date index?\n\nRetrieve flights on one specified date.\nCompute the average delay over all flights.\n\nExplain your answer in terms of how many rows are needed.\n. . .\nWhat are the costs of keeping the index?"
+    "text": "Exercise: will an index help?\nWhich query is most likely to benefit from the date index?\n\nRetrieve flights on one specified date.\nCompute the average delay over all flights.\n\nExplain your answer in terms of how many rows are needed.\n\nWhat are the costs of keeping the index?"
   },
   {
     "objectID": "slides/lec-databases-1.html#ranking-delays",
     "href": "slides/lec-databases-1.html#ranking-delays",
     "title": "Databases I",
     "section": "Ranking delays",
-    "text": "Ranking delays\n\nextreme_delays = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin) |&gt;\n  mutate(delay_rank = min_rank(desc(dep_delay))) |&gt;\n  filter(delay_rank &lt;= 3) |&gt;\n  ungroup() |&gt;\n  select(origin, carrier, dep_delay, delay_rank) |&gt;\n  arrange(origin, delay_rank)\n\nextreme_delays\n\n# Source:     SQL [?? x 4]\n# Database:   sqlite 3.50.4 [/Users/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, delay_rank\n   origin carrier dep_delay delay_rank\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;\n 1 EWR    DL            702          1\n 2 EWR    B6            364          2\n 3 EWR    B6            352          3\n 4 JFK    MQ            342          1\n 5 JFK    9E            327          2\n 6 JFK    9E            324          3\n 7 LGA    DL            390          1\n 8 LGA    YV            387          2\n 9 LGA    WN            378          3\n10 LGA    DL            378          3"
+    "text": "Ranking delays\n\nextreme_delays = flight_tbl |&gt;\n  filter(month == 10, !is.na(dep_delay)) |&gt;\n  group_by(origin) |&gt;\n  mutate(delay_rank = min_rank(desc(dep_delay))) |&gt;\n  filter(delay_rank &lt;= 3) |&gt;\n  ungroup() |&gt;\n  select(origin, carrier, dep_delay, delay_rank) |&gt;\n  arrange(origin, delay_rank)\n\nextreme_delays\n\n# Source:     SQL [?? x 4]\n# Database:   sqlite 3.50.3 [/home/athos/Desktop/teaching/sta323-fa26.github.io/slides/flights.sqlite]\n# Ordered by: origin, delay_rank\n   origin carrier dep_delay delay_rank\n   &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;      &lt;int&gt;\n 1 EWR    DL            702          1\n 2 EWR    B6            364          2\n 3 EWR    B6            352          3\n 4 JFK    MQ            342          1\n 5 JFK    9E            327          2\n 6 JFK    9E            324          3\n 7 LGA    DL            390          1\n 8 LGA    YV            387          2\n 9 LGA    WN            378          3\n10 LGA    DL            378          3"
   },
   {
     "objectID": "slides/lec-databases-1.html#window-functions",
