@@ -307,6 +307,14 @@ HAVING avg_salary > 38000;
 
 ## Exercise 1
 
+Grab the file:
+
+```{r}
+#| eval: false
+download.file("https://sta323-fa26.github.io/data/employees.duckdb")
+```
+
+
 Using DuckDB calculate the following quantities for `employees.duckdb`,
 
 1. The total costs in payroll for this company
@@ -563,11 +571,9 @@ DROP TABLE IF EXISTS phone;
 DROP VIEW IF EXISTS phone_view;
 ```
 
-# Query plan
+# Re-examining the flights data
 
 ## Setup
-
-To give us a bit more variety (and data), we have created another DuckDB database `flights.duckdb` that contains both `nycflights13::flights` and `nycflights13::planes`, the latter of which has details on each plane identified by tail number.
 
 
 To create the database you can run,
@@ -582,7 +588,7 @@ DBI::dbDisconnect(db)
 ```
 :::
 
-Alternative you can use the copy provided in the `exercises` repo.
+
 
 
 ## Opening `flights.duckdb`

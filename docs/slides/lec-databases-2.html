@@ -267,7 +267,7 @@ pre.shell > code > span > a::after {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-2"><a></a>(<span class="at">con =</span> <span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection 4cab0 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection 6f540 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -333,9 +333,9 @@ pre.shell > code > span > a::after {
  4 JFK    SFO      23
  5 LGA    CLT      21
  6 EWR    ORD      18
- 7 EWR    SFO      16
+ 7 LGA    DCA      16
  8 LGA    BOS      16
- 9 LGA    DCA      16
+ 9 EWR    SFO      16
 10 JFK    BOS      16
 # ℹ more rows</code></pre>
 </div>
@@ -540,8 +540,8 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 │    dept    │
 │  varchar   │
 ├────────────┤
-│ Accounting │
 │ Sales      │
+│ Accounting │
 └────────────┘</code></pre>
 </div>
 </div>
@@ -593,8 +593,8 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 │    dept    │   n   │ avg_salary │
 │  varchar   │ int64 │   double   │
 ├────────────┼───────┼────────────┤
-│ Accounting │     3 │   41666.67 │
 │ Sales      │     3 │    37000.0 │
+│ Accounting │     3 │   41666.67 │
 └────────────┴───────┴────────────┘</code></pre>
 </div>
 </div>
@@ -619,6 +619,10 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </section>
 <section id="exercise-1" class="slide level2">
 <h2>Exercise 1</h2>
+<p>Grab the file:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">download.file</span>(<span class="st">"https://sta323-fa26.github.io/data/employees.duckdb"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Using DuckDB calculate the following quantities for <code>employees.duckdb</code>,</p>
 <ol type="1">
 <li><p>The total costs in payroll for this company</p></li>
@@ -635,7 +639,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <div class="columns xsmall">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb47-1"><a></a>SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb48-1"><a></a>SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬──────────────┐
 │  name   │    phone     │
@@ -650,8 +654,8 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb49-1"><a></a>SELECT * FROM</span>
-<span id="cb49-2"><a></a>  read_csv('data/phone.csv', delim = ',');</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb50-1"><a></a>SELECT * FROM</span>
+<span id="cb50-2"><a></a>  read_csv('data/phone.csv', delim = ',');</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬──────────────┐
 │  name   │    phone     │
@@ -672,7 +676,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <div class="columns mxsmall">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb51-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb52-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ── employees ─── 
  ───── main ───── 
@@ -690,9 +694,9 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb53-1"><a></a>CREATE TABLE phone AS</span>
-<span id="cb53-2"><a></a>  SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb54-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb54-1"><a></a>CREATE TABLE phone AS</span>
+<span id="cb54-2"><a></a>  SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb55-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ─────────── employees ─────────── 
  ───────────── main ────────────── 
@@ -712,7 +716,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <div class="fragment">
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb56-1"><a></a>SELECT * FROM phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb57-1"><a></a>SELECT * FROM phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬──────────────┐
 │  name   │    phone     │
@@ -734,11 +738,11 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <div class="columns mxsmall">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb58-1"><a></a>CREATE VIEW phone_view AS</span>
-<span id="cb58-2"><a></a>  SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb59-1"><a></a>CREATE VIEW phone_view AS</span>
+<span id="cb59-2"><a></a>  SELECT * FROM 'data/phone.csv';</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb59-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb60-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ─────────────────── employees ──────────────────── 
  ────────────────────── main ────────────────────── 
@@ -756,7 +760,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb61-1"><a></a>SELECT * FROM phone_view;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb62-1"><a></a>SELECT * FROM phone_view;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬──────────────┐
 │  name   │    phone     │
@@ -777,7 +781,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <div class="columns mxsmall">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb63-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb64-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ─────────────────── employees ──────────────────── 
  ────────────────────── main ────────────────────── 
@@ -795,14 +799,14 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb65-1"><a></a>DROP TABLE phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb66-1"><a></a>DROP VIEW phone_view;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb66-1"><a></a>DROP TABLE phone;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb67-1"><a></a>DROP VIEW phone_view;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div></div>
 <div class="fragment">
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb67-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb68-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ── employees ─── 
  ───── main ───── 
@@ -826,7 +830,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <p>DuckDB requires an <code>ON</code> or <code>USING</code> clause for joins - <code>JOIN</code> alone is a syntax error.</p>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb69-1"><a></a>SELECT * FROM employees JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb70-1"><a></a>SELECT * FROM employees JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬──────────────┐
 │  name   │       email       │ salary  │    dept    │    phone     │
@@ -851,7 +855,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb71-1"><a></a>SELECT * FROM employees LEFT JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb72-1"><a></a>SELECT * FROM employees LEFT JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬──────────────┐
 │  name   │       email       │ salary  │    dept    │    phone     │
@@ -867,7 +871,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb73-1"><a></a>SELECT * FROM employees FULL JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb74-1"><a></a>SELECT * FROM employees FULL JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬──────────────┐
 │  name   │       email       │ salary  │    dept    │    phone     │
@@ -888,7 +892,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <h2></h2>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb75-1"><a></a>SELECT * FROM employees RIGHT JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb76-1"><a></a>SELECT * FROM employees RIGHT JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬──────────────┐
 │  name   │       email       │ salary  │    dept    │    phone     │
@@ -902,7 +906,7 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb77-1"><a></a>SELECT * FROM employees ANTI JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb78-1"><a></a>SELECT * FROM employees ANTI JOIN phone USING(name);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┐
 │  name   │       email       │ salary  │    dept    │
@@ -920,9 +924,9 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <p>Tables can be nested within tables for the purpose of creating more complex queries,</p>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb79-1"><a></a>SELECT * FROM (</span>
-<span id="cb79-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
-<span id="cb79-3"><a></a>) combined WHERE phone IS NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb80-1"><a></a>SELECT * FROM (</span>
+<span id="cb80-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
+<span id="cb80-3"><a></a>) combined WHERE phone IS NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬─────────┐
 │  name   │       email       │ salary  │    dept    │  phone  │
@@ -934,9 +938,9 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb81-1"><a></a>SELECT * FROM (</span>
-<span id="cb81-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
-<span id="cb81-3"><a></a>) combined WHERE phone IS NOT NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb82-1"><a></a>SELECT * FROM (</span>
+<span id="cb82-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
+<span id="cb82-3"><a></a>) combined WHERE phone IS NOT NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬──────────────┐
 │  name   │       email       │ salary  │    dept    │    phone     │
@@ -956,10 +960,10 @@ INSERT INTO "table"("name",email,salary,dept) VALUES('Frank','frank@comany.com',
 <p>A CTE (defined with <code>WITH</code>) is a named subquery that can be referenced by name in the main query - useful for breaking complex queries into readable steps, or reusing a subquery multiple times.</p>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb83-1"><a></a>WITH combined AS (</span>
-<span id="cb83-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
-<span id="cb83-3"><a></a>)</span>
-<span id="cb83-4"><a></a>SELECT * FROM combined WHERE phone IS NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb84-1"><a></a>WITH combined AS (</span>
+<span id="cb84-2"><a></a>  SELECT * FROM employees NATURAL LEFT JOIN phone</span>
+<span id="cb84-3"><a></a>)</span>
+<span id="cb84-4"><a></a>SELECT * FROM combined WHERE phone IS NULL;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬─────────┬────────────┬─────────┐
 │  name   │       email       │ salary  │    dept    │  phone  │
@@ -1033,35 +1037,33 @@ ORDER BY dept, abv_avg;
 -->
 </section></section>
 <section>
-<section id="query-plan" class="title-slide slide level1 center">
-<h1>Query plan</h1>
+<section id="re-examining-the-flights-data" class="title-slide slide level1 center">
+<h1>Re-examining the flights data</h1>
 
 </section>
 <section id="setup" class="slide level2">
 <h2>Setup</h2>
-<p>To give us a bit more variety (and data), we have created another DuckDB database <code>flights.duckdb</code> that contains both <code>nycflights13::flights</code> and <code>nycflights13::planes</code>, the latter of which has details on each plane identified by tail number.</p>
 <p>To create the database you can run,</p>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a></a>db <span class="ot">=</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="st">"flights.duckdb"</span>)</span>
-<span id="cb85-2"><a></a>dplyr<span class="sc">::</span><span class="fu">copy_to</span>(db, nycflights13<span class="sc">::</span>flights, <span class="at">name =</span> <span class="st">"flights"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb85-3"><a></a>dplyr<span class="sc">::</span><span class="fu">copy_to</span>(db, nycflights13<span class="sc">::</span>planes, <span class="at">name =</span> <span class="st">"planes"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb85-4"><a></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a></a>db <span class="ot">=</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>(), <span class="st">"flights.duckdb"</span>)</span>
+<span id="cb86-2"><a></a>dplyr<span class="sc">::</span><span class="fu">copy_to</span>(db, nycflights13<span class="sc">::</span>flights, <span class="at">name =</span> <span class="st">"flights"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb86-3"><a></a>dplyr<span class="sc">::</span><span class="fu">copy_to</span>(db, nycflights13<span class="sc">::</span>planes, <span class="at">name =</span> <span class="st">"planes"</span>, <span class="at">temporary =</span> <span class="cn">FALSE</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb86-4"><a></a>DBI<span class="sc">::</span><span class="fu">dbDisconnect</span>(db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Alternative you can use the copy provided in the <code>exercises</code> repo.</p>
 </section>
 <section id="opening-flights.duckdb" class="slide level2">
 <h2>Opening <code>flights.duckdb</code></h2>
 <p>The database can then be opened from the terminal tab using,</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb86-1"><a></a>duckdb flights.duckdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb87-1"><a></a>duckdb flights.duckdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Before we start we will set a couple of configuration options so that our output is readable.</p>
 <p>We also include <code>.timer on</code> so that we get timings for our queries.</p>
 <div class="small">
 <div class="cell" data-layout-align="center" data-db="data/flights.duckdb" data-session="flights">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb87-1"><a></a>.maxrows 20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb88-1"><a></a>.maxwidth 80</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb89-1"><a></a>.timer on</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb88-1"><a></a>.maxrows 20</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb89-1"><a></a>.maxwidth 80</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb90-1"><a></a>.timer on</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1069,7 +1071,7 @@ ORDER BY dept, abv_avg;
 <h2><code>flights</code></h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb90-1"><a></a>SELECT * FROM flights LIMIT 10;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb91-1"><a></a>SELECT * FROM flights LIMIT 10;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌───────┬───────┬───────┬───┬──────────┬────────┬────────┬─────────────────────┐
 │ year  │ month │  day  │ … │ distance │  hour  │ minute │      time_hour      │
@@ -1087,7 +1089,7 @@ ORDER BY dept, abv_avg;
 │  2013 │     1 │     1 │ … │    733.0 │    6.0 │    0.0 │ 2013-01-01 11:00:00 │
 └───────┴───────┴───────┴───┴──────────┴────────┴────────┴─────────────────────┘
   10 rows         use .last to show entire result         19 columns (7 shown)
-Run Time (s): real 0.007 user 0.007497 sys 0.005715</code></pre>
+Run Time (s): real 0.004 user 0.000000 sys 0.004795</code></pre>
 </div>
 </div>
 </div>
@@ -1096,7 +1098,7 @@ Run Time (s): real 0.007 user 0.007497 sys 0.005715</code></pre>
 <h2><code>planes</code></h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb92-1"><a></a>SELECT * FROM planes LIMIT 10;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb93-1"><a></a>SELECT * FROM planes LIMIT 10;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────┬─────────────────────────┬───┬───────┬───────┬───────────┐
 │ tailnum │ year  │          type           │ … │ seats │ speed │  engine   │
@@ -1114,7 +1116,7 @@ Run Time (s): real 0.007 user 0.007497 sys 0.005715</code></pre>
 │ N110UW  │  1999 │ Fixed wing multi engine │ … │   182 │  NULL │ Turbo-fan │
 └─────────┴───────┴─────────────────────────┴───┴───────┴───────┴───────────┘
   10 rows        use .last to show entire result        9 columns (6 shown)
-Run Time (s): real 0.002 user 0.001085 sys 0.001067</code></pre>
+Run Time (s): real 0.002 user 0.001613 sys 0.000000</code></pre>
 </div>
 </div>
 </div>
@@ -1123,7 +1125,7 @@ Run Time (s): real 0.002 user 0.001085 sys 0.001067</code></pre>
 <h2>tables</h2>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb94-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb95-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ──────────────────── flights ───────────────────── 
  ────────────────────── main ────────────────────── 
@@ -1165,7 +1167,7 @@ Run Time (s): real 0.002 user 0.001085 sys 0.001067</code></pre>
 <p>Does the following seem correct?</p>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb96-1"><a></a>SELECT sum(seats) FROM flights NATURAL LEFT JOIN planes;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb97-1"><a></a>SELECT sum(seats) FROM flights NATURAL LEFT JOIN planes;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌────────────┐
 │ sum(seats) │
@@ -1173,7 +1175,7 @@ Run Time (s): real 0.002 user 0.001085 sys 0.001067</code></pre>
 ├────────────┤
 │     614366 │
 └────────────┘
-Run Time (s): real 0.017 user 0.036364 sys 0.002197</code></pre>
+Run Time (s): real 0.016 user 0.034762 sys 0.002412</code></pre>
 </div>
 </div>
 </div>
@@ -1187,7 +1189,7 @@ Run Time (s): real 0.017 user 0.036364 sys 0.002197</code></pre>
 <p><strong>Join and select</strong>:</p>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb98-1"><a></a>SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb99-1"><a></a>SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌────────────┐
 │ sum(seats) │
@@ -1195,7 +1197,7 @@ Run Time (s): real 0.017 user 0.036364 sys 0.002197</code></pre>
 ├────────────┤
 │   38851317 │
 └────────────┘
-Run Time (s): real 0.016 user 0.037202 sys 0.000027</code></pre>
+Run Time (s): real 0.022 user 0.055279 sys 0.000703</code></pre>
 </div>
 </div>
 </div>
@@ -1204,7 +1206,7 @@ Run Time (s): real 0.016 user 0.037202 sys 0.000027</code></pre>
 <h2><code>EXPLAIN</code></h2>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb100-1"><a></a>EXPLAIN SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb101-1"><a></a>EXPLAIN SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ┌─────────────────────────────┐
@@ -1248,7 +1250,7 @@ Run Time (s): real 0.016 user 0.037202 sys 0.000027</code></pre>
 │                           ││                           │
 │       ~336,776 rows       ││        ~3,322 rows        │
 └───────────────────────────┘└───────────────────────────┘
-Run Time (s): real 0.001 user 0.001554 sys 0.000000</code></pre>
+Run Time (s): real 0.002 user 0.001892 sys 0.000000</code></pre>
 </div>
 </div>
 </div>
@@ -1312,7 +1314,7 @@ Run Time (s): real 0.001 user 0.001554 sys 0.000000</code></pre>
 <h2><code>EXPLAIN ANALYZE</code></h2>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb102-1"><a></a>EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb103-1"><a></a>EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────────────────────────────────┐
 │┌───────────────────────────────────┐│
@@ -1322,7 +1324,7 @@ Run Time (s): real 0.001 user 0.001554 sys 0.000000</code></pre>
 EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 ┌────────────────────────────────────────────────┐
 │┌──────────────────────────────────────────────┐│
-││              Total Time: 0.0177s             ││
+││              Total Time: 0.0207s             ││
 │└──────────────────────────────────────────────┘│
 └────────────────────────────────────────────────┘
 ┌───────────────────────────┐
@@ -1366,7 +1368,7 @@ EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 │                           │              │
 │                           │              │
 │        336,776 rows       │              │
-│           0.02s           │              │
+│           0.03s           │              │
 └─────────────┬─────────────┘              │
 ┌─────────────┴─────────────┐┌─────────────┴─────────────┐
 │         TABLE_SCAN        ││         TABLE_SCAN        │
@@ -1385,7 +1387,7 @@ EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 │        336,776 rows       ││         3,322 rows        │
 │          (0.01s)          ││           0.00s           │
 └───────────────────────────┘└───────────────────────────┘
-Run Time (s): real 0.019 user 0.043145 sys 0.000000</code></pre>
+Run Time (s): real 0.021 user 0.049814 sys 0.000197</code></pre>
 </div>
 </div>
 </div>
@@ -1394,18 +1396,18 @@ Run Time (s): real 0.019 user 0.043145 sys 0.000000</code></pre>
 <h2>dplyr</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb104-2"><a></a>flights <span class="ot">=</span> nycflights13<span class="sc">::</span>flights</span>
-<span id="cb104-3"><a></a>planes <span class="ot">=</span> nycflights13<span class="sc">::</span>planes</span>
-<span id="cb104-4"><a></a></span>
-<span id="cb104-5"><a></a><span class="fu">system.time</span>({</span>
-<span id="cb104-6"><a></a>  flights <span class="sc">|&gt;</span></span>
-<span id="cb104-7"><a></a>    <span class="fu">left_join</span>(planes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"tailnum"</span> <span class="ot">=</span> <span class="st">"tailnum"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb104-8"><a></a>    <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(seats, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb104-9"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb105-2"><a></a>flights <span class="ot">=</span> nycflights13<span class="sc">::</span>flights</span>
+<span id="cb105-3"><a></a>planes <span class="ot">=</span> nycflights13<span class="sc">::</span>planes</span>
+<span id="cb105-4"><a></a></span>
+<span id="cb105-5"><a></a><span class="fu">system.time</span>({</span>
+<span id="cb105-6"><a></a>  flights <span class="sc">|&gt;</span></span>
+<span id="cb105-7"><a></a>    <span class="fu">left_join</span>(planes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"tailnum"</span> <span class="ot">=</span> <span class="st">"tailnum"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb105-8"><a></a>    <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(seats, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb105-9"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.071   0.024   0.096 </code></pre>
+  0.065   0.022   0.088 </code></pre>
 </div>
 </div>
 </div>
@@ -1417,17 +1419,17 @@ Run Time (s): real 0.019 user 0.043145 sys 0.000000</code></pre>
 <div class="mxsmall">
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb106-1"><a></a>WITH overall AS (</span>
-<span id="cb106-2"><a></a>  SELECT AVG(dep_delay) AS avg_delay FROM flights</span>
-<span id="cb106-3"><a></a>)</span>
-<span id="cb106-4"><a></a>SELECT carrier,</span>
-<span id="cb106-5"><a></a>       ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,</span>
-<span id="cb106-6"><a></a>       ROUND((AVG(dep_delay) - avg_delay) </span>
-<span id="cb106-7"><a></a>             / avg_delay, 3) </span>
-<span id="cb106-8"><a></a>       AS pct_vs_overall</span>
-<span id="cb106-9"><a></a>FROM flights CROSS JOIN overall</span>
-<span id="cb106-10"><a></a>GROUP BY carrier, avg_delay</span>
-<span id="cb106-11"><a></a>ORDER BY pct_vs_overall;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb107-1"><a></a>WITH overall AS (</span>
+<span id="cb107-2"><a></a>  SELECT AVG(dep_delay) AS avg_delay FROM flights</span>
+<span id="cb107-3"><a></a>)</span>
+<span id="cb107-4"><a></a>SELECT carrier,</span>
+<span id="cb107-5"><a></a>       ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,</span>
+<span id="cb107-6"><a></a>       ROUND((AVG(dep_delay) - avg_delay) </span>
+<span id="cb107-7"><a></a>             / avg_delay, 3) </span>
+<span id="cb107-8"><a></a>       AS pct_vs_overall</span>
+<span id="cb107-9"><a></a>FROM flights CROSS JOIN overall</span>
+<span id="cb107-10"><a></a>GROUP BY carrier, avg_delay</span>
+<span id="cb107-11"><a></a>ORDER BY pct_vs_overall;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────┬───────────────────┬────────────────┐
@@ -1452,7 +1454,7 @@ Run Time (s): real 0.019 user 0.043145 sys 0.000000</code></pre>
 │ F9      │             20.22 │          0.599 │
 └─────────┴───────────────────┴────────────────┘
   16 rows                            3 columns
-Run Time (s): real 0.013 user 0.031997 sys 0.003590</code></pre>
+Run Time (s): real 0.012 user 0.031316 sys 0.002270</code></pre>
 </div>
 </div></div>
 </div>
@@ -1463,18 +1465,18 @@ Run Time (s): real 0.013 user 0.031997 sys 0.003590</code></pre>
 <div class="xxsmall">
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb108-1"><a></a>EXPLAIN ANALYZE</span>
-<span id="cb108-2"><a></a>WITH overall AS (</span>
-<span id="cb108-3"><a></a>  SELECT AVG(dep_delay) AS avg_delay FROM flights</span>
-<span id="cb108-4"><a></a>)</span>
-<span id="cb108-5"><a></a>SELECT carrier,</span>
-<span id="cb108-6"><a></a>       ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,</span>
-<span id="cb108-7"><a></a>       ROUND((AVG(dep_delay) - avg_delay) </span>
-<span id="cb108-8"><a></a>             / avg_delay, 3) </span>
-<span id="cb108-9"><a></a>       AS pct_vs_overall</span>
-<span id="cb108-10"><a></a>FROM flights CROSS JOIN overall</span>
-<span id="cb108-11"><a></a>GROUP BY carrier, avg_delay</span>
-<span id="cb108-12"><a></a>ORDER BY pct_vs_overall;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb109-1"><a></a>EXPLAIN ANALYZE</span>
+<span id="cb109-2"><a></a>WITH overall AS (</span>
+<span id="cb109-3"><a></a>  SELECT AVG(dep_delay) AS avg_delay FROM flights</span>
+<span id="cb109-4"><a></a>)</span>
+<span id="cb109-5"><a></a>SELECT carrier,</span>
+<span id="cb109-6"><a></a>       ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,</span>
+<span id="cb109-7"><a></a>       ROUND((AVG(dep_delay) - avg_delay) </span>
+<span id="cb109-8"><a></a>             / avg_delay, 3) </span>
+<span id="cb109-9"><a></a>       AS pct_vs_overall</span>
+<span id="cb109-10"><a></a>FROM flights CROSS JOIN overall</span>
+<span id="cb109-11"><a></a>GROUP BY carrier, avg_delay</span>
+<span id="cb109-12"><a></a>ORDER BY pct_vs_overall;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────────────────────────────────┐
@@ -1485,7 +1487,7 @@ Run Time (s): real 0.013 user 0.031997 sys 0.003590</code></pre>
 EXPLAIN ANALYZE WITH overall AS (   SELECT AVG(dep_delay) AS avg_delay FROM flights ) SELECT carrier,        ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,        ROUND((AVG(dep_delay) - avg_delay)               / avg_delay, 3)         AS pct_vs_overall FROM flights CROSS JOIN overall GROUP BY carrier, avg_delay ORDER BY pct_vs_overall;
 ┌────────────────────────────────────────────────┐
 │┌──────────────────────────────────────────────┐│
-││              Total Time: 0.0107s             ││
+││              Total Time: 0.0097s             ││
 │└──────────────────────────────────────────────┘│
 └────────────────────────────────────────────────┘
 ┌───────────────────────────┐
@@ -1651,7 +1653,7 @@ EXPLAIN ANALYZE WITH overall AS (   SELECT AVG(dep_delay) AS avg_delay FROM flig
                              │        336,776 rows       │
                              │           0.00s           │
                              └───────────────────────────┘
-Run Time (s): real 0.011 user 0.032671 sys 0.000000</code></pre>
+Run Time (s): real 0.010 user 0.029056 sys 0.000836</code></pre>
 </div>
 </div></div>
 </div>
@@ -1660,20 +1662,20 @@ Run Time (s): real 0.011 user 0.032671 sys 0.000000</code></pre>
 <h2>dplyr</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a></a><span class="fu">system.time</span>({</span>
-<span id="cb110-2"><a></a>  overall_avg <span class="ot">=</span> nycflights13<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
-<span id="cb110-3"><a></a>    <span class="fu">summarise</span>(<span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb110-4"><a></a>    <span class="fu">pull</span>(avg_delay)</span>
-<span id="cb110-5"><a></a></span>
-<span id="cb110-6"><a></a>  nycflights13<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
-<span id="cb110-7"><a></a>    <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span></span>
-<span id="cb110-8"><a></a>    <span class="fu">summarise</span>(<span class="at">carrier_avg_delay =</span> <span class="fu">round</span>(<span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb110-9"><a></a>    <span class="fu">mutate</span>(<span class="at">pct_vs_overall =</span> <span class="fu">round</span>((carrier_avg_delay <span class="sc">-</span> overall_avg) <span class="sc">/</span> overall_avg, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb110-10"><a></a>    <span class="fu">arrange</span>(pct_vs_overall)</span>
-<span id="cb110-11"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a></a><span class="fu">system.time</span>({</span>
+<span id="cb111-2"><a></a>  overall_avg <span class="ot">=</span> nycflights13<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
+<span id="cb111-3"><a></a>    <span class="fu">summarise</span>(<span class="at">avg_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb111-4"><a></a>    <span class="fu">pull</span>(avg_delay)</span>
+<span id="cb111-5"><a></a></span>
+<span id="cb111-6"><a></a>  nycflights13<span class="sc">::</span>flights <span class="sc">|&gt;</span></span>
+<span id="cb111-7"><a></a>    <span class="fu">group_by</span>(carrier) <span class="sc">|&gt;</span></span>
+<span id="cb111-8"><a></a>    <span class="fu">summarise</span>(<span class="at">carrier_avg_delay =</span> <span class="fu">round</span>(<span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb111-9"><a></a>    <span class="fu">mutate</span>(<span class="at">pct_vs_overall =</span> <span class="fu">round</span>((carrier_avg_delay <span class="sc">-</span> overall_avg) <span class="sc">/</span> overall_avg, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb111-10"><a></a>    <span class="fu">arrange</span>(pct_vs_overall)</span>
+<span id="cb111-11"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.023   0.006   0.033 </code></pre>
+  0.021   0.001   0.023 </code></pre>
 </div>
 </div>
 </div>
@@ -1733,8 +1735,8 @@ Run Time (s): real 0.011 user 0.032671 sys 0.000000</code></pre>
 <h2>Taxi data</h2>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a></a>(<span class="at">d =</span> fs<span class="sc">::</span><span class="fu">dir_info</span>(<span class="st">"~/Scratch/nyctaxi/"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb112-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">transmute</span>(<span class="at">path =</span> fs<span class="sc">::</span><span class="fu">path_file</span>(path), size))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a></a>(<span class="at">d =</span> fs<span class="sc">::</span><span class="fu">dir_info</span>(<span class="st">"~/Scratch/nyctaxi/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb113-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">transmute</span>(<span class="at">path =</span> fs<span class="sc">::</span><span class="fu">path_file</span>(path), size))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 2
    path                                   size
@@ -1753,7 +1755,7 @@ Run Time (s): real 0.011 user 0.032671 sys 0.000000</code></pre>
 12 yellow_tripdata_2024-11.parquet       57.9M
 13 yellow_tripdata_2024-12.parquet       58.7M</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a></a><span class="fu">sum</span>(d<span class="sc">$</span>size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a></a><span class="fu">sum</span>(d<span class="sc">$</span>size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>661M</code></pre>
 </div>
@@ -1788,20 +1790,20 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 <p>DuckDB can query Parquet files directly - no explicit import step needed.</p>
 <div class="columns xxsmall">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb118"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb118-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> </span>
-<span id="cb118-2"><a></a>  <span class="st">'~/Scratch/nyctaxi/yellow_tripdata_2024-01.parquet'</span> </span>
-<span id="cb118-3"><a></a>  <span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb119"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb119-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> </span>
-<span id="cb119-2"><a></a>  <span class="st">'~/Scratch/nyctaxi/yellow_tripdata_*.parquet'</span> </span>
+<span id="cb119-2"><a></a>  <span class="st">'~/Scratch/nyctaxi/yellow_tripdata_2024-01.parquet'</span> </span>
 <span id="cb119-3"><a></a>  <span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb120"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb120-1"><a></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> </span>
+<span id="cb120-2"><a></a>  <span class="st">'~/Scratch/nyctaxi/yellow_tripdata_*.parquet'</span> </span>
+<span id="cb120-3"><a></a>  <span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <p>Glob patterns let you query multiple files as a single table - useful for partitioned datasets.</p>
 <div class="fragment">
 <p>The same <code>CREATE TABLE</code> / <code>CREATE VIEW</code> pattern from CSV works with Parquet:</p>
 <div class="xsmall">
-<div class="sourceCode" id="cb120"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb120-1"><a></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> taxi <span class="kw">AS</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> </span>
-<span id="cb120-2"><a></a>  read_parquet(<span class="st">'~/Scratch/nyctaxi/yellow_tripdata_*.parquet'</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb121-1"><a></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> taxi <span class="kw">AS</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> </span>
+<span id="cb121-2"><a></a>  read_parquet(<span class="st">'~/Scratch/nyctaxi/yellow_tripdata_*.parquet'</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </div>
@@ -1813,11 +1815,11 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 <p>Enable timings and create a view over all monthly Parquet files:</p>
 <div class="xsmall">
 <div class="cell" data-layout-align="center" data-session="taxi">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb121-1"><a></a>.timer on</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb122-1"><a></a>CREATE VIEW taxi AS SELECT * FROM </span>
-<span id="cb122-2"><a></a>  read_parquet('~/Scratch/nyctaxi/yellow_*.parquet');</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb122-1"><a></a>.timer on</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb123-1"><a></a>CREATE VIEW taxi AS SELECT * FROM </span>
+<span id="cb123-2"><a></a>  read_parquet('~/Scratch/nyctaxi/yellow_*.parquet');</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Run Time (s): real 0.001 user 0.001139 sys 0.000173</code></pre>
+<pre><code>Run Time (s): real 0.002 user 0.001234 sys 0.000149</code></pre>
 </div>
 </div>
 </div>
@@ -1826,7 +1828,7 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 <p>How many rows?</p>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb124-1"><a></a>SELECT count(*) FROM taxi;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb125-1"><a></a>SELECT count(*) FROM taxi;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌──────────────┐
 │ count_star() │
@@ -1834,7 +1836,7 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 ├──────────────┤
 │     41169720 │
 └──────────────┘
-Run Time (s): real 0.012 user 0.068044 sys 0.012509</code></pre>
+Run Time (s): real 0.010 user 0.070645 sys 0.008740</code></pre>
 </div>
 </div>
 </div>
@@ -1845,7 +1847,7 @@ Run Time (s): real 0.012 user 0.068044 sys 0.012509</code></pre>
 <div class="columns xsmall">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb126-1"><a></a>DESCRIBE SELECT * FROM taxi;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb127-1"><a></a>DESCRIBE SELECT * FROM taxi;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────────────────────────────┐
 │              taxi               │
@@ -1870,12 +1872,12 @@ Run Time (s): real 0.012 user 0.068044 sys 0.012509</code></pre>
 │ congestion_surcharge  double    │
 │ Airport_fee           double    │
 └─────────────────────────────────┘
-Run Time (s): real 0.003 user 0.002594 sys 0.000192</code></pre>
+Run Time (s): real 0.002 user 0.001964 sys 0.000001</code></pre>
 </div>
 </div>
 </div><div class="column">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb128-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb129-1"><a></a>.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> ──────────── memory ───────────── 
  ───────────── main ────────────── 
@@ -1912,22 +1914,22 @@ Run Time (s): real 0.003 user 0.002594 sys 0.000192</code></pre>
 <div class="xsmall">
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb130-1"><a></a>CREATE TABLE payment_types AS</span>
-<span id="cb130-2"><a></a>SELECT * FROM (</span>
-<span id="cb130-3"><a></a>  VALUES</span>
-<span id="cb130-4"><a></a>    (0, 'Flex Fare trip'),</span>
-<span id="cb130-5"><a></a>    (1, 'Credit card'),</span>
-<span id="cb130-6"><a></a>    (2, 'Cash'),</span>
-<span id="cb130-7"><a></a>    (3, 'No charge'),</span>
-<span id="cb130-8"><a></a>    (4, 'Dispute'),</span>
-<span id="cb130-9"><a></a>    (5, 'Unknown'),</span>
-<span id="cb130-10"><a></a>    (6, 'Voided trip')</span>
-<span id="cb130-11"><a></a>) AS t(payment_type, payment_type_desc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb131-1"><a></a>CREATE TABLE payment_types AS</span>
+<span id="cb131-2"><a></a>SELECT * FROM (</span>
+<span id="cb131-3"><a></a>  VALUES</span>
+<span id="cb131-4"><a></a>    (0, 'Flex Fare trip'),</span>
+<span id="cb131-5"><a></a>    (1, 'Credit card'),</span>
+<span id="cb131-6"><a></a>    (2, 'Cash'),</span>
+<span id="cb131-7"><a></a>    (3, 'No charge'),</span>
+<span id="cb131-8"><a></a>    (4, 'Dispute'),</span>
+<span id="cb131-9"><a></a>    (5, 'Unknown'),</span>
+<span id="cb131-10"><a></a>    (6, 'Voided trip')</span>
+<span id="cb131-11"><a></a>) AS t(payment_type, payment_type_desc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
-<pre><code>Run Time (s): real 0.002 user 0.002446 sys 0.000125</code></pre>
+<pre><code>Run Time (s): real 0.002 user 0.001424 sys 0.000099</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb132-1"><a></a>SELECT * FROM payment_types;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb133-1"><a></a>SELECT * FROM payment_types;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌──────────────┬───────────────────┐
 │ payment_type │ payment_type_desc │
@@ -1941,7 +1943,7 @@ Run Time (s): real 0.003 user 0.002594 sys 0.000192</code></pre>
 │            5 │ Unknown           │
 │            6 │ Voided trip       │
 └──────────────┴───────────────────┘
-Run Time (s): real 0.001 user 0.001364 sys 0.000106</code></pre>
+Run Time (s): real 0.000 user 0.000787 sys 0.000000</code></pre>
 </div>
 </div></div>
 </div>
@@ -1951,14 +1953,14 @@ Run Time (s): real 0.001 user 0.001364 sys 0.000106</code></pre>
 <p>What fraction of the fare is tipped on average, by payment type?</p>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb134-1"><a></a>SELECT payment_type_desc,</span>
-<span id="cb134-2"><a></a>       round(avg(tip_amount / fare_amount), 4) AS mean_tip_frac,</span>
-<span id="cb134-3"><a></a>       count(*) AS n</span>
-<span id="cb134-4"><a></a>FROM taxi</span>
-<span id="cb134-5"><a></a>JOIN payment_types USING (payment_type)</span>
-<span id="cb134-6"><a></a>WHERE tip_amount &gt;= 0 AND fare_amount &gt; 0</span>
-<span id="cb134-7"><a></a>GROUP BY payment_type, payment_type_desc</span>
-<span id="cb134-8"><a></a>ORDER BY payment_type;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb135-1"><a></a>SELECT payment_type_desc,</span>
+<span id="cb135-2"><a></a>       round(avg(tip_amount / fare_amount), 4) AS mean_tip_frac,</span>
+<span id="cb135-3"><a></a>       count(*) AS n</span>
+<span id="cb135-4"><a></a>FROM taxi</span>
+<span id="cb135-5"><a></a>JOIN payment_types USING (payment_type)</span>
+<span id="cb135-6"><a></a>WHERE tip_amount &gt;= 0 AND fare_amount &gt; 0</span>
+<span id="cb135-7"><a></a>GROUP BY payment_type, payment_type_desc</span>
+<span id="cb135-8"><a></a>ORDER BY payment_type;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌───────────────────┬───────────────┬──────────┐
 │ payment_type_desc │ mean_tip_frac │    n     │
@@ -1971,7 +1973,7 @@ Run Time (s): real 0.001 user 0.001364 sys 0.000106</code></pre>
 │ Dispute           │        0.0009 │   422816 │
 │ Unknown           │           0.0 │        1 │
 └───────────────────┴───────────────┴──────────┘
-Run Time (s): real 0.750 user 6.961134 sys 0.125308</code></pre>
+Run Time (s): real 0.605 user 5.896994 sys 0.092841</code></pre>
 </div>
 </div>
 </div>
@@ -1981,21 +1983,21 @@ Run Time (s): real 0.750 user 6.961134 sys 0.125308</code></pre>
 <p>Average fare per mile for each pickup zone, joined with zone names:</p>
 <div class="mxsmall">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb136-1"><a></a>SELECT * FROM (</span>
-<span id="cb136-2"><a></a>  SELECT</span>
-<span id="cb136-3"><a></a>    PULocationID AS pickup_zone,</span>
-<span id="cb136-4"><a></a>    ROUND(AVG(fare_amount), 2) AS fare_amount,</span>
-<span id="cb136-5"><a></a>    ROUND(AVG(trip_distance), 2) AS trip_distance,</span>
-<span id="cb136-6"><a></a>    ROUND(AVG(fare_amount / trip_distance), 2) AS fare_per_mile,</span>
-<span id="cb136-7"><a></a>    COUNT(*) AS num_rides</span>
-<span id="cb136-8"><a></a>  FROM taxi</span>
-<span id="cb136-9"><a></a>  WHERE trip_distance &gt; 0 AND fare_amount &gt; 0</span>
-<span id="cb136-10"><a></a>  GROUP BY PULocationID</span>
-<span id="cb136-11"><a></a>) NATURAL LEFT JOIN (</span>
-<span id="cb136-12"><a></a>  SELECT LocationID AS pickup_zone, *</span>
-<span id="cb136-13"><a></a>  FROM read_csv('~/Scratch/nyctaxi/taxi_zone_lookup.csv')</span>
-<span id="cb136-14"><a></a>)</span>
-<span id="cb136-15"><a></a>ORDER BY fare_per_mile DESC;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb137-1"><a></a>SELECT * FROM (</span>
+<span id="cb137-2"><a></a>  SELECT</span>
+<span id="cb137-3"><a></a>    PULocationID AS pickup_zone,</span>
+<span id="cb137-4"><a></a>    ROUND(AVG(fare_amount), 2) AS fare_amount,</span>
+<span id="cb137-5"><a></a>    ROUND(AVG(trip_distance), 2) AS trip_distance,</span>
+<span id="cb137-6"><a></a>    ROUND(AVG(fare_amount / trip_distance), 2) AS fare_per_mile,</span>
+<span id="cb137-7"><a></a>    COUNT(*) AS num_rides</span>
+<span id="cb137-8"><a></a>  FROM taxi</span>
+<span id="cb137-9"><a></a>  WHERE trip_distance &gt; 0 AND fare_amount &gt; 0</span>
+<span id="cb137-10"><a></a>  GROUP BY PULocationID</span>
+<span id="cb137-11"><a></a>) NATURAL LEFT JOIN (</span>
+<span id="cb137-12"><a></a>  SELECT LocationID AS pickup_zone, *</span>
+<span id="cb137-13"><a></a>  FROM read_csv('~/Scratch/nyctaxi/taxi_zone_lookup.csv')</span>
+<span id="cb137-14"><a></a>)</span>
+<span id="cb137-15"><a></a>ORDER BY fare_per_mile DESC;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>┌─────────────┬─────────────┬───────────────┬───────────────┬───────────┬────────────┬───────────────┬───────────────────────────────────────────────┬──────────────┐
 │ pickup_zone │ fare_amount │ trip_distance │ fare_per_mile │ num_rides │ LocationID │    Borough    │                     Zone                      │ service_zone │
@@ -2046,7 +2048,7 @@ Run Time (s): real 0.750 user 6.961134 sys 0.125308</code></pre>
 │           6 │       10.04 │          7.28 │          1.98 │       558 │          6 │ Staten Island │ Arrochar/Fort Wadsworth                       │ Boro Zone    │
 └─────────────┴─────────────┴───────────────┴───────────────┴───────────┴────────────┴───────────────┴───────────────────────────────────────────────┴──────────────┘
   263 rows (40 shown)                                                   use .last to show entire result                                                   9 columns
-Run Time (s): real 0.272 user 2.557269 sys 0.080638</code></pre>
+Run Time (s): real 0.248 user 2.351105 sys 0.058893</code></pre>
 </div>
 </div>
 </div>
