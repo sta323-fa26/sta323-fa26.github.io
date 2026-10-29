@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 6: ascend the likelihood mountain – STA323</title>
+<title>Lab 6: earthquakes – STA323</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -60,15 +61,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-8939b62ea91c207ece33b39593cb218e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3a7496e16ab04b12cdcc792e4a95e250.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -118,7 +120,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -135,21 +137,55 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../schedule.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">schedule</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../syllabus.html"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../project.html"> 
-<span class="menu-text">project</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../mini_project.html">
+ <span class="dropdown-text">mini project</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../links.html"> 
-<span class="menu-text">links</span></a>
+        <li>
+    <a class="dropdown-item" href="../project.html">
+ <span class="dropdown-text">final project</span></a>
   </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-links" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">links</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-links">    
+        <li>
+    <a class="dropdown-item" href="https://cmgr.oit.duke.edu/containers">
+ <span class="dropdown-text">Rstudio containers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://edstem.org/us/courses/103562/">
+ <span class="dropdown-text">Ed discussion</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/sta323-fa26">
+ <span class="dropdown-text">GitHub organization</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../git-cheatsheet.html">
+ <span class="dropdown-text">git FAQ</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../links.html">
+ <span class="dropdown-text">all links</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -168,10 +204,37 @@ window.Quarto = {
   <ul>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting started</a>
   <ul class="collapse">
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
-  <li><a href="#rank-nba-teams" id="toc-rank-nba-teams" class="nav-link" data-scroll-target="#rank-nba-teams">1. rank NBA teams</a></li>
-  <li><a href="#text-classifier" id="toc-text-classifier" class="nav-link" data-scroll-target="#text-classifier">2. text classifier</a></li>
+  <li><a href="#data-and-setup" id="toc-data-and-setup" class="nav-link" data-scroll-target="#data-and-setup">Data and setup</a></li>
+  </ul></li>
+  <li><a href="#exercise-1-define-and-inspect-the-study-catalog" id="toc-exercise-1-define-and-inspect-the-study-catalog" class="nav-link" data-scroll-target="#exercise-1-define-and-inspect-the-study-catalog">Exercise 1 — Define and inspect the study catalog</a>
+  <ul class="collapse">
+  <li><a href="#a-check-the-source-table" id="toc-a-check-the-source-table" class="nav-link" data-scroll-target="#a-check-the-source-table">(a) Check the source table</a></li>
+  <li><a href="#b-compare-global-and-regional-activity-with-sql" id="toc-b-compare-global-and-regional-activity-with-sql" class="nav-link" data-scroll-target="#b-compare-global-and-regional-activity-with-sql">(b) Compare global and regional activity with SQL</a></li>
+  <li><a href="#c-build-and-describe-the-annual-study-catalogs" id="toc-c-build-and-describe-the-annual-study-catalogs" class="nav-link" data-scroll-target="#c-build-and-describe-the-annual-study-catalogs">(c) Build and describe the annual study catalogs</a></li>
+  <li><a href="#d-map-the-catalog" id="toc-d-map-the-catalog" class="nav-link" data-scroll-target="#d-map-the-catalog">(d) Map the catalog</a></li>
+  </ul></li>
+  <li><a href="#exercise-2-turn-spatial-proximity-into-a-relational-table" id="toc-exercise-2-turn-spatial-proximity-into-a-relational-table" class="nav-link" data-scroll-target="#exercise-2-turn-spatial-proximity-into-a-relational-table">Exercise 2 — Turn spatial proximity into a relational table</a>
+  <ul class="collapse">
+  <li><a href="#a-find-nearby-events" id="toc-a-find-nearby-events" class="nav-link" data-scroll-target="#a-find-nearby-events">(a) Find nearby events</a></li>
+  <li><a href="#b-calculate-pair-distances" id="toc-b-calculate-pair-distances" class="nav-link" data-scroll-target="#b-calculate-pair-distances">(b) Calculate pair distances</a></li>
+  <li><a href="#c-join-event-times-onto-the-pair-table-using-sql" id="toc-c-join-event-times-onto-the-pair-table-using-sql" class="nav-link" data-scroll-target="#c-join-event-times-onto-the-pair-table-using-sql">(c) Join event times onto the pair table using SQL</a></li>
+  <li><a href="#d-inspect-the-result" id="toc-d-inspect-the-result" class="nav-link" data-scroll-target="#d-inspect-the-result">(d) Inspect the result</a></li>
+  </ul></li>
+  <li><a href="#exercise-3-construct-a-permutation-reference-distribution" id="toc-exercise-3-construct-a-permutation-reference-distribution" class="nav-link" data-scroll-target="#exercise-3-construct-a-permutation-reference-distribution">Exercise 3 — Construct a permutation reference distribution</a>
+  <ul class="collapse">
+  <li><a href="#a-write-and-check-the-statistic-function" id="toc-a-write-and-check-the-statistic-function" class="nav-link" data-scroll-target="#a-write-and-check-the-statistic-function">(a) Write and check the statistic function</a></li>
+  <li><a href="#b-perform-one-permutation" id="toc-b-perform-one-permutation" class="nav-link" data-scroll-target="#b-perform-one-permutation">(b) Perform one permutation</a></li>
+  <li><a href="#c-build-a-reusable-batch-function" id="toc-c-build-a-reusable-batch-function" class="nav-link" data-scroll-target="#c-build-a-reusable-batch-function">(c) Build a reusable batch function</a></li>
+  <li><a href="#d-answer-the-primary-question" id="toc-d-answer-the-primary-question" class="nav-link" data-scroll-target="#d-answer-the-primary-question">(d) Answer the primary question</a></li>
+  </ul></li>
+  <li><a href="#exercise-4-scale-the-computation-and-check-the-spatial-scale" id="toc-exercise-4-scale-the-computation-and-check-the-spatial-scale" class="nav-link" data-scroll-target="#exercise-4-scale-the-computation-and-check-the-spatial-scale">Exercise 4 — Scale the computation and check the spatial scale</a>
+  <ul class="collapse">
+  <li><a href="#a-compare-sequential-and-parallel-execution" id="toc-a-compare-sequential-and-parallel-execution" class="nav-link" data-scroll-target="#a-compare-sequential-and-parallel-execution">(a) Compare sequential and parallel execution</a></li>
+  <li><a href="#b-investigate-the-definition-of-close" id="toc-b-investigate-the-definition-of-close" class="nav-link" data-scroll-target="#b-investigate-the-definition-of-close">(b) Investigate the definition of “close”</a></li>
+  <li><a href="#c-compare-the-scientific-results" id="toc-c-compare-the-scientific-results" class="nav-link" data-scroll-target="#c-compare-the-scientific-results">(c) Compare the scientific results</a></li>
+  <li><a href="#d-conclude-and-clean-up" id="toc-d-conclude-and-clean-up" class="nav-link" data-scroll-target="#d-conclude-and-clean-up">(d) Conclude and clean up</a></li>
   </ul></li>
   <li><a href="#style-guidelines" id="toc-style-guidelines" class="nav-link" data-scroll-target="#style-guidelines">Style guidelines</a></li>
   <li><a href="#submitting-your-lab" id="toc-submitting-your-lab" class="nav-link" data-scroll-target="#submitting-your-lab">Submitting your lab</a></li>
@@ -184,8 +247,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 6: ascend the likelihood mountain</h1>
-<p class="subtitle lead">Due Monday November 3 5:00pm</p>
+<h1 class="title">Lab 6: earthquakes</h1>
+<p class="subtitle lead">Due Monday November 16 5:00pm</p>
 </div>
 
 
@@ -203,12 +266,14 @@ window.Quarto = {
 
 
 <blockquote class="blockquote">
-<p>“There are two kinds of climbers: those who climb because their heart sings when they’re in the mountains, and all the rest.” - Alex Lowe</p>
+<p>“The noblest pleasure is the joy of understanding geology and geophysics.” - Leonardo da Vinci (probably)</p>
 </blockquote>
 <p>By the end of the lab, you will</p>
 <ul>
-<li>implement an MM algorithm to rank sports teams</li>
-<li>construct an MM algorithm from scratch for text document classification</li>
+<li>Query a global earthquake archive with SQL before collecting a regional subset.</li>
+<li>Use projected coordinates, spatial predicates, distances, and spatial joins.</li>
+<li>Construct and interpret a permutation reference distribution.</li>
+<li>Compare reproducible sequential and parallel computations and assess sensitivity to spatial and temporal thresholds.</li>
 </ul>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -226,142 +291,287 @@ Warning
 <section id="getting-started" class="level1">
 <h1>Getting started</h1>
 <ul>
-<li><p>In the <em>terminal</em> tab, type <code>cd ~</code> to navigate to your home directory. Next <code>git clone git@github.com:sta323-fa25/lab-6-team_name.git</code> where <code>team_name</code> is replaced with your team name (see the excel signup sheet in box or your github).</p></li>
+<li><p>In the <em>terminal</em> tab, type <code>cd ~</code> to navigate to your home directory. Next <code>git clone git@github.com:sta323-fa26/lab-6-team_name.git</code> where <code>team_name</code> is replaced with your team name (see the excel signup sheet in box or your github).</p></li>
 <li><p>Navigate to your <code>lab-6</code> folder and open the <code>.Rproj</code> file.</p></li>
 <li><p>Open the Quarto (<code>.qmd</code>) file, change the author name to your team name followed by a colon and then the names of the team members.</p></li>
 </ul>
-<section id="exercises" class="level2">
-<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
-<p>For all exercises, you should respond in the space provided in the template <code>lab-6.qmd</code> and show all your work. In all answers of type <code>double</code>, three significant figures suffices.</p>
-<section id="rank-nba-teams" class="level3">
-<h3 class="anchored" data-anchor-id="rank-nba-teams">1. rank NBA teams</h3>
-<p>For this question, we will use the data set <code>NBA</code> that contains all 1230 regular season NBA games, from 2015-2016 and their outcome.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>NBA <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://sta323-fa25.github.io/data/NBA_1516.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>team_id <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://sta323-fa25.github.io/data/teams.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(NBA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Code book:</p>
-<ul>
-<li><code>Home</code>: unique id for home team</li>
-<li><code>Away</code>: unique id for away team</li>
-<li><code>Y</code>: whether the home team won (1) or lost (0)</li>
-</ul>
-<p>The <code>team_id</code> data set contains a dictionary to map between the unique ids from <code>NBA</code> and the actual team name.</p>
-<p>Assuming the outcome of each game is independent, we can rank teams and jointly model a home-court advantage in the 2015-2016 season using <a href="https://sta323-fa25.github.io/slides/lec14.html#/bradley-terry-with-home-court-advantage">the Bradley-Terry model described in class</a>.</p>
-<section id="ex-1-part-a" class="level4">
-<h4 class="anchored" data-anchor-id="ex-1-part-a">Ex 1 part a</h4>
-<ul>
-<li>Implement the MM algorithm, <a href="https://sta323-fa25.github.io/slides/lec14.html#/iterate">as described on this slide</a> to estimate <span class="math inline">\(\hat{\mathbf{p}}_{MLE}\)</span> and <span class="math inline">\(\hat{\theta}_{MLE}\)</span>. Your implementation should be able to be adapted to another data set of identical construction (i.e.&nbsp;don’t hard-code data values into your functions). Start your algorithm with <span class="math inline">\(\theta_0 = 0.5\)</span> and <span class="math inline">\(\mathbf{p} = \mathbf{1}\)</span> where <span class="math inline">\(\mathbf{1}\)</span> is a vector of 30 1s. Run the MM updates for 100 steps (i.e.&nbsp;update each element of <span class="math inline">\(\mathbf{p}\)</span> and <span class="math inline">\(\theta\)</span> 100 times).</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Using your <code>NBA</code> data frame, create matrix <span class="math inline">\(A = \{a_{ij}\}\)</span> and matrix <span class="math inline">\(B = \{b_{ij}\}\)</span>, as defined on <a href="https://sta323-fa25.github.io/slides/lec14.html#/bradley-terry-likelihood">this slide</a> from lecture.</li>
-</ul>
-</div>
-</div>
-<ul>
-<li><p>What are the ten highest ranked teams (in order) from the 2015-2016 season according to the Bradley Terry model? Report your estimates <span class="math inline">\(\hat{\mathbf{p}}_{MLE}\)</span> together with the team name and id number for the top ten teams in a table.</p></li>
-<li><p>Is there a home-court advantage? What are the odds of winning at home vs away? What are the log-odds?</p></li>
-</ul>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In Lab 2, you turned nested earthquake records into a rectangular data set. Now we will query a larger, frozen USGS archive to investigate two scientific questions:</p>
+<ol type="1">
+<li><strong>Across 2010–2024, do nearby earthquakes occur close together in time more often than expected if times were exchangeable among locations within each calendar year?</strong></li>
+<li><strong>How sensitive is that conclusion to the distances and time intervals we use to define “close”?</strong></li>
+</ol>
+<p>We will use SQL to select and summarize records, <code>sf</code> to identify spatial relationships, and parallel simulation to construct a reference distribution.</p>
+<section id="data-and-setup" class="level3">
+<h3 class="anchored" data-anchor-id="data-and-setup">Data and setup</h3>
+<p>The supplied archive contains <strong>397,964 unique earthquakes</strong> worldwide, with magnitude at least 2.5, from January 1, 2010 through December 31, 2024 (UTC). It was compiled from cached USGS downloads retrieved on October 23, 2026. Five source records with magnitudes below 2.5 were excluded from the main table and retained in an audit table. Detection varies across regions and years; this is not a complete worldwide census of all earthquakes of magnitude 2.5.</p>
+<p>Download <code>earthquakes.duckdb</code> file from <a href="">Duke box link</a> and save it as <code>data/earthquakes.duckdb</code> in your team’s project. Download it once per working environment; do not track the file with git nor add it to GitHub.</p>
+<p>The database is about 58 MiB. Commit your analysis and download instructions, but keep the database out of your team’s Git history. Your report should use the local file and should not download it again on every render.</p>
+<p>The main table is <code>earthquakes</code>. The variables needed here are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>Unique earthquake identifier</td>
+</tr>
+<tr class="even">
+<td><code>time_utc</code></td>
+<td>Event timestamp in UTC</td>
+</tr>
+<tr class="odd">
+<td><code>time_s</code></td>
+<td>Event time, in seconds since January 1, 1970, UTC</td>
+</tr>
+<tr class="even">
+<td><code>longitude</code>, <code>latitude</code></td>
+<td>Epicenter coordinates, in degrees</td>
+</tr>
+<tr class="odd">
+<td><code>mag</code></td>
+<td>Reported magnitude</td>
+</tr>
+<tr class="even">
+<td><code>depth</code></td>
+<td>Reported depth, in kilometers</td>
+</tr>
+<tr class="odd">
+<td><code>place</code></td>
+<td>Location description</td>
+</tr>
+<tr class="even">
+<td><code>type</code></td>
+<td>Event type</td>
+</tr>
+</tbody>
+</table>
+<p>The study region is the rectangle from 125°W to 114°W and 32°N to 42°N. Retain offshore events inside this rectangle. Use magnitude 2.5 or greater and <code>type = 'earthquake'</code> throughout. Use the entire observation period: <strong>January 1, 2010 inclusive through January 1, 2025 exclusive, in UTC</strong>. Organize the regional events into 15 annual catalogs. Only compare pairs of events in the <strong>same UTC calendar year</strong>, and shuffle times within years. This allows activity and geographic patterns to differ between years.</p>
+<p>The primary statistic pools qualifying pairs across all 15 years. We do not select a year based on its earthquake count or its p-value. Our boundary rule excludes pairs spanning December 31, even if they are less than 24 hours apart; state this restriction when describing the population of pairs studied.</p>
+<p>Use <code>DBI</code>, <code>duckdb</code>, <code>sf</code>, <code>tidyverse</code>, <code>future</code>, and <code>furrr</code>. Connect directly to the existing archive; do not import a CSV or load the full archive into R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(duckdb)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(furrr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">file.exists</span>(<span class="st">"data/earthquakes.duckdb"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">duckdb</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbdir =</span> <span class="st">"data/earthquakes.duckdb"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">read_only =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dbExecute</span>(con, <span class="st">"SET TimeZone = 'UTC'"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(con)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use SQL through <code>dbGetQuery()</code> or <code>dbExecute()</code> for tasks explicitly labeled SQL. Do not collect the entire catalog into R and then perform those tasks with <code>dplyr</code>. Use ordinary R tables for the repeated simulations.</p>
+<p>The archive also includes <code>archive_metadata</code> (definition and build details), <code>download_manifest</code> (source chunks and checksums), <code>excluded_events</code> (audited exclusions), and <code>candidate_windows</code> (monthly counts in the study box). Your connection protects these permanent tables. DuckDB still permits <strong>temporary tables</strong> on this read-only connection; these disappear when it closes. Use temporary tables for all intermediate work.</p>
 </section>
-<section id="ex-1-part-b" class="level4">
-<h4 class="anchored" data-anchor-id="ex-1-part-b">Ex 1 part b</h4>
+</section>
+<section id="exercise-1-define-and-inspect-the-study-catalog" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-define-and-inspect-the-study-catalog">Exercise 1 — Define and inspect the study catalog</h2>
+<p><strong>Goal:</strong> Establish exactly which events the analysis describes.</p>
+<section id="a-check-the-source-table" class="level3">
+<h3 class="anchored" data-anchor-id="a-check-the-source-table">(a) Check the source table</h3>
+<p>Inspect <code>archive_metadata</code> with SQL and report the archive’s observation interval, magnitude threshold, and number of excluded source records. Check <code>download_manifest</code> for the number of chunks and retrieval-date range. Explain why the observation period differs from the retrieval dates.</p>
+<p>For <code>earthquakes</code>, use SQL to report the number of rows, number of distinct IDs, and number of rows with missing IDs, times, coordinates, or magnitudes. Check whether IDs are unique. Stop and investigate duplicate IDs rather than silently keeping an arbitrary record.</p>
+</section>
+<section id="b-compare-global-and-regional-activity-with-sql" class="level3">
+<h3 class="anchored" data-anchor-id="b-compare-global-and-regional-activity-with-sql">(b) Compare global and regional activity with SQL</h3>
+<p>Create a temporary table <code>annual_activity</code> with one row per UTC year. Report:</p>
 <ul>
-<li>Fix <span class="math inline">\(p_1 = 1\)</span> in your algorithm. Construct 100 bootstrap data sets (re-sample from the original <code>NBA</code> data set with replacement to create a new data set of equal size) and re-compute <span class="math inline">\(\hat{\mathbf{p}}_{MLE}\)</span> and <span class="math inline">\(\hat{\theta}_{MLE}\)</span> for each. Here we choose <code>100</code> for low-computational demand.</li>
+<li>The global number of events.</li>
+<li>The number inside the study box, using conditional aggregation.</li>
+<li>The regional share of the global count.</li>
+<li>The number of possible within-year regional pairs, <code>n * (n - 1) / 2</code>.</li>
 </ul>
-<p>Report the maximum likelihood estimates (based on the actual, original data set) together with a 95% bootstrap confidence interval associated with each parameter in a 31 row table. Your table should label each row (except the row associated with <span class="math inline">\(\theta\)</span>) by the team’s actual name (not just the ID).</p>
+<p>Hint: use <code>EXTRACT(YEAR FROM time_utc)</code> for the year and <code>COUNT(*) FILTER (WHERE ...)</code> for conditional counts. Cast to <code>DOUBLE</code> when calculating proportions if needed. Do not collect the global event records.</p>
+<p>Compare the sum of the annual possible-pair counts with the number of pairs from treating the entire regional catalog as one group. Explain how grouping by year changes both the scientific comparison and the computational workload. A larger regional share need not indicate a change in physical earthquake risk: recording practices and global activity can also vary.</p>
+</section>
+<section id="c-build-and-describe-the-annual-study-catalogs" class="level3">
+<h3 class="anchored" data-anchor-id="c-build-and-describe-the-annual-study-catalogs">(c) Build and describe the annual study catalogs</h3>
+<p>Use <code>CREATE TEMP TABLE study_events AS ...</code> to select the study region, observation period, magnitude threshold, and event type in DuckDB. Exclude records missing an ID, time, coordinate, or magnitude. Keep <code>id</code>, <code>time_utc</code>, <code>time_s</code>, <code>longitude</code>, <code>latitude</code>, <code>mag</code>, <code>depth</code>, and an integer <code>year</code>. Missing depths do not require exclusion because this analysis uses epicenters. Check that you retain <strong>24,896 events</strong> and that counts by year agree with <code>annual_activity</code>.</p>
+<p>Use SQL to report each year’s event count, first and last event times, and magnitude range. Then construct a monthly summary with each month’s count, its share of its year’s total, and its rank by count within that year. Use a common table expression (a <code>WITH</code> clause) to calculate monthly counts, then use window functions such as:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SUM</span>(n_events) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> <span class="dt">year</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> <span class="dt">year</span> <span class="kw">ORDER</span> <span class="kw">BY</span> n_events <span class="kw">DESC</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Include zero-event months if any occur; a calendar table built with <code>generate_series()</code> and a <code>LEFT JOIN</code> is one approach. Check that there are 180 months and that their counts sum to the regional event count. Plot the monthly counts and identify the highest-count month(s) in each year. Explain why preserving differences between annual catalogs is useful for the permutation analysis. Do not select or discard years based on these summaries.</p>
+<p>All dates must be UTC. Keep fractional seconds for time differences. Explain which aggregations and filters happened in DuckDB before collection into R.</p>
+</section>
+<section id="d-map-the-catalog" class="level3">
+<h3 class="anchored" data-anchor-id="d-map-the-catalog">(d) Map the catalog</h3>
+<p>Collect only the filtered <code>study_events</code>, ordered by <code>year, id</code>, into <code>events</code>. Add <code>event_index = row_number()</code> and preserve this order for the rest of the lab. Convert longitude and latitude to an <code>sf</code> object using CRS 4326, then transform it to EPSG:3310 for regional distance calculations in meters. Call the projected object <code>events_sf</code>.</p>
+<p>Construct a grid of 100 km squares covering the projected event locations. The grid provides a spatial summary without an additional basemap download:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grid_geometry <span class="ot">&lt;-</span> <span class="fu">st_make_grid</span>(events_sf, <span class="at">cellsize =</span> <span class="dv">100000</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>study_grid <span class="ot">&lt;-</span> <span class="fu">st_sf</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_id =</span> <span class="fu">seq_along</span>(grid_geometry),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> grid_geometry</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>st_join()</code> with <code>st_intersects</code> to attach <code>cell_id</code> to each event. Keep every event. If an event on a grid boundary matches multiple cells, keep the smallest <code>cell_id</code> for that event. Check that each event is represented once and that none has a missing cell ID. Count events per cell and map the counts, including zero-event cells. Overlay the earthquakes with magnitude represented by point size.</p>
+<p>Do this join in a separate object: preserve the original row order of <code>events</code> and <code>events_sf</code> for pair construction. The grid summarizes locations; it does not change which events are in the study catalog. Identify one visible pattern, then explain why a spatial map alone cannot answer whether locations and times are associated.</p>
 </section>
 </section>
-<section id="text-classifier" class="level3">
-<h3 class="anchored" data-anchor-id="text-classifier">2. text classifier</h3>
-<p>In this exercise we will work towards re-creating the classifier of <a href="https://www.hindawi.com/journals/isrn/2013/829630/">Ogura, Amano and Kondo (2013)</a> by using a gamma-Poisson distribution to model the frequency of words in a document. Read section 3.1 of the article for relevant background about this model.</p>
-<!-- **The data** -->
-<!-- To begin, we'll use a slightly more processed version of the data set from lab 4 that has undergone additional cleaning and been formed as a *document term matrix*. -->
-<!-- ```{r} -->
-<!-- # load data -->
-<!-- ``` -->
-<p><strong>The model</strong></p>
-<p>Let <span class="math inline">\(N_d\)</span> be the total number of documents and let <span class="math inline">\(N_v\)</span> be the total number of unique words in all documents under study. In our model, we assert that the number of occurrences, <span class="math inline">\(X_{ij}\)</span> of word <span class="math inline">\(j\)</span> in document <span class="math inline">\(i\)</span> is Poisson with mean <span class="math inline">\(\lambda_j w_i\)</span> where <span class="math inline">\(w_i\)</span> is the number of words in document <span class="math inline">\(i\)</span>. Furthermore, we assert <span class="math inline">\(\lambda_j \sim gamma(\alpha_{jc}, \beta_{jc})\)</span>, where <span class="math inline">\(\alpha_{jc}\)</span> and <span class="math inline">\(\beta_{jc}\)</span> are parameters specific to word <span class="math inline">\(j\)</span> in a document of class <span class="math inline">\(c\)</span>.</p>
-<p>Assuming each document is independent, we write the likelihood</p>
+<section id="exercise-2-turn-spatial-proximity-into-a-relational-table" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-turn-spatial-proximity-into-a-relational-table">Exercise 2 — Turn spatial proximity into a relational table</h2>
+<p><strong>Goal:</strong> Build the reusable spatial relationships and calculate observed space–time clustering.</p>
+<section id="a-find-nearby-events" class="level3">
+<h3 class="anchored" data-anchor-id="a-find-nearby-events">(a) Find nearby events</h3>
+<p>Split the row indices of <code>events</code> by <code>year</code>. For each annual catalog, use <code>st_is_within_distance()</code> to find events within <strong>100 km</strong>, the largest distance needed later. Build neighbors separately by year rather than constructing all cross-year spatial pairs and discarding them afterward.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>year_indices <span class="ot">&lt;-</span> <span class="fu">split</span>(events<span class="sc">$</span>event_index, events<span class="sc">$</span>year)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">&lt;-</span> year_indices[[<span class="dv">1</span>]]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>near <span class="ot">&lt;-</span> <span class="fu">st_is_within_distance</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  events_sf[idx, ], events_sf[idx, ], <span class="at">dist =</span> <span class="dv">100000</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The sparse list uses positions <strong>within this year’s subset</strong>. Convert each local pair back to the global row indices with <code>idx[local_i]</code> and <code>idx[local_j]</code>. Combine the annual results into a table <code>pairs</code> with columns <code>year</code>, <code>i</code>, and <code>j</code>. Keep only <code>i &lt; j</code>. Explain how this removes self-pairs and duplicate unordered pairs. Check that pair keys are unique and that <code>events$year[i]</code>, <code>events$year[j]</code>, and the pair’s <code>year</code> agree.</p>
+</section>
+<section id="b-calculate-pair-distances" class="level3">
+<h3 class="anchored" data-anchor-id="b-calculate-pair-distances">(b) Calculate pair distances</h3>
+<p>Add the distance between each retained pair in kilometers. Calculate only the listed distances, rather than creating a full distance matrix:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pair_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  events_sf[pairs<span class="sc">$</span>i, ],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  events_sf[pairs<span class="sc">$</span>j, ],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">by_element =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>pairs<span class="sc">$</span>distance_km <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pair_distances) <span class="sc">/</span> <span class="dv">1000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Report pair counts by year and in total; compare them with the possible-pair counts from Exercise 1. Explain why the latter grow quickly as catalogs grow. If no pairs remain, check your filtering, CRS, and units before proceeding. For a large annual table, calculate distances in blocks (for example 50,000 pairs at a time), using <code>by_element = TRUE</code> in each block. Do not construct a full distance matrix or millions of duplicated geometries at once.</p>
+</section>
+<section id="c-join-event-times-onto-the-pair-table-using-sql" class="level3">
+<h3 class="anchored" data-anchor-id="c-join-event-times-onto-the-pair-table-using-sql">(c) Join event times onto the pair table using SQL</h3>
+<p>Write the nonspatial tables <code>pairs</code> and <code>events</code> to DuckDB as temporary <code>nearby_pairs</code> and <code>event_lookup</code> tables. For example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"nearby_pairs"</span>, pairs, <span class="at">temporary =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbWriteTable</span>(con, <span class="st">"event_lookup"</span>, events, <span class="at">temporary =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If rerunning this chunk, use <code>overwrite = TRUE</code> as well as <code>temporary = TRUE</code>. Join <code>nearby_pairs</code> to <code>event_lookup</code> twice: once to look up the time at <code>i</code>, and once to look up the time at <code>j</code>.</p>
+<p>Use aliases to distinguish the two copies of the event table:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> nearby_pairs <span class="kw">AS</span> p</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_lookup <span class="kw">AS</span> a <span class="kw">ON</span> p.i <span class="op">=</span> a.event_index</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> event_lookup <span class="kw">AS</span> b <span class="kw">ON</span> p.j <span class="op">=</span> b.event_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Calculate each pair’s absolute time difference in hours. Use SQL to report:</p>
+<ul>
+<li>Each year’s number of pairs within <strong>50 km</strong>.</li>
+<li>Each year’s number also within <strong>24 hours</strong>, and their proportion.</li>
+<li>Each year’s share of the total qualifying count.</li>
+</ul>
+<p>Use a <code>LEFT JOIN</code> to <code>annual_activity</code> so years with no qualifying pairs still appear. Use <code>NULLIF()</code> to avoid division by zero. Retain zero counts; report proportions with a zero denominator as undefined. Which years contribute most? Explain why a year with many events or spatial pairs may contribute more.</p>
+<p>Sum the annual qualifying counts to obtain the pooled statistic <code>T_obs</code>. This is a count of pairs, not an equally weighted average of annual effects. For this primary analysis,</p>
 <p><span class="math display">\[
-L(\mathbf{\alpha}, \beta) = \prod_{i = 1}^{N_d} \prod_{j = 1}^{N_{v}}
-\frac{\beta_{cj}^{\alpha_{cj}} \Gamma(x_{ij} + \alpha_{cj})w_i^{x_{ij}}}{
-\Gamma(\alpha_{cj}) (w_i + \beta_{cj})^{x_{ij} + \alpha_{cj}} \cdot x_{ij}!
-}.
+T = \sum_{y=2010}^{2024} \sum_{i&lt;j:\,Y_i=Y_j=y}
+  \mathbf{1}\{d_{ij} \leq 50\text{ km}\}
+  \mathbf{1}\{|t_i-t_j| \leq 24\text{ hours}\}.
 \]</span></p>
-<p>Note that each document <span class="math inline">\(i \in \{1, \ldots, N_d \}\)</span> has one of five class labels (e.g.&nbsp;<code>comp.sci</code>) and so <span class="math inline">\(c \in \{1, \ldots 5 \}\)</span>. Effectively, this is the same as fitting five different models of the following form to five sets of data (1 data set for each class):</p>
-<p><span class="math display">\[
-L(\mathbf{\alpha}, \beta) = \prod_{i = 1}^{N_d} \prod_{j = 1}^{N_{v}}
-\frac{\beta_{j}^{\alpha_{j}} \Gamma(x_{ij} + \alpha_{j})w_i^{x_{ij}}}{
-\Gamma(\alpha_{j}) (w_i + \beta_{j})^{x_{ij} + \alpha_{j}} \cdot x_{ij}!
-}.
-\]</span></p>
-<p>Note that <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are vectors. Since we wish to compute the maximum likelihood estimates <span class="math inline">\(\hat{\alpha}_{MLE}\)</span> and <span class="math inline">\(\hat{\beta}_{MLE}\)</span>, we need to find a function <span class="math inline">\(g\)</span> that minorizes <span class="math inline">\(L(\alpha, \beta)\)</span>.</p>
-<section id="part-1" class="level4">
-<h4 class="anchored" data-anchor-id="part-1">part 1</h4>
-<ul>
-<li>To begin, expand the <span class="math inline">\(\Gamma\)</span> function using the property: <span class="math inline">\(\Gamma(x) = (x-1)!\)</span>. Next, write the log-likelihood.</li>
-</ul>
+<p>Here, <code>Y_i</code> is event <code>i</code>’s UTC year. An indicator is 1 when its condition is true and 0 otherwise.</p>
 </section>
-<section id="part-2" class="level4">
-<h4 class="anchored" data-anchor-id="part-2">part 2</h4>
-<ul>
-<li>Use <a href="https://sta323-fa25.github.io/slides/lec13.html#/jensens-inequality">Jensen’s inequality</a> and the <a href="https://sta323-fa25.github.io/slides/lec13.html#/supporting-line-minorization">supporting line minorization</a> to construct <span class="math inline">\(g\)</span>. Write down <span class="math inline">\(g(\alpha, \beta | \alpha_n, \beta_n)\)</span>.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Hint
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In the slides above on Jensen’s inequality and the supporting line minorization, <span class="math inline">\(f(x) = -\log x\)</span></p>
-</div>
-</div>
+<section id="d-inspect-the-result" class="level3">
+<h3 class="anchored" data-anchor-id="d-inspect-the-result">(d) Inspect the result</h3>
+<p>Display five qualifying pairs with IDs, magnitudes, distances, and time differences, ordered by time difference and then IDs. If fewer than five qualify, display all of them.</p>
+<p>Explain why <code>T_obs</code> alone does not tell us whether there is unusually strong space–time clustering. Also explain why a single event may contribute to more than one pair without those rows being accidental duplicates.</p>
 </section>
-<section id="part-3" class="level4">
-<h4 class="anchored" data-anchor-id="part-3">part 3</h4>
-<p>Show that the MM update of <span class="math inline">\(\beta_j\)</span> is</p>
-<p><span class="math display">\[
-\beta_{n+1, j} = \frac{N_d \cdot \alpha_{nj}}{
-\sum_{i=1}^{N_d} \frac{x_{ij} + \alpha_{nj}}{w_i + \beta_{nj}}
-}
-\]</span></p>
-<p>and that the MM update of <span class="math inline">\(\alpha_j\)</span> is</p>
-<p><span class="math display">\[
-\alpha_{n+1, j} = \frac{\sum_{i=1}^{N_d} \sum_{k = 0}^{x_{ij} - 1} \frac{\alpha_{nj}}{\alpha_{nj} + k}}{
-\sum_{i = 1}^{N_d} \log \left(\frac{w_i + \beta_{nj}}{\beta_{nj}}\right)
-}
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This exercise ends just shy of implementation. If you were to proceed from here, you would compute the MLEs <span class="math inline">\(\hat{\alpha}, \hat{\beta}\)</span> for each class of documents. Next, when observing a new document <span class="math inline">\(d\)</span>, you would compute the probability document <span class="math inline">\(d\)</span> is of class <span class="math inline">\(c\)</span>: <span class="math inline">\(p(c | d) \propto p(c) \cdot p(d | \alpha_c, \beta_c)\)</span>. Repeat this for each class <span class="math inline">\(c\)</span> and subsequently label document <span class="math inline">\(d\)</span> as the most probable class.</p>
-</div>
-</div>
 </section>
+<section id="exercise-3-construct-a-permutation-reference-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-construct-a-permutation-reference-distribution">Exercise 3 — Construct a permutation reference distribution</h2>
+<p><strong>Goal:</strong> Answer the primary scientific question using simulation.</p>
+<p>Our reference model is that observed times are exchangeable among event locations <strong>within each year</strong>. Keep locations and annual membership fixed. In each permutation, independently shuffle each year’s entire observed time vector without replacement, then sum qualifying pair counts across years. This preserves every year’s spatial pattern, event count, and complete set of event times (including seasonal variation and temporal bursts), while breaking the within-year association of times with locations. It does not assume uniform geographic occurrence or a constant earthquake rate.</p>
+<section id="a-write-and-check-the-statistic-function" class="level3">
+<h3 class="anchored" data-anchor-id="a-write-and-check-the-statistic-function">(a) Write and check the statistic function</h3>
+<p>Write a function with this interface:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>count_close <span class="ot">&lt;-</span> <span class="cf">function</span>(times, pairs, <span class="at">radius_km =</span> <span class="dv">50</span>, <span class="at">window_h =</span> <span class="dv">24</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select pairs within radius_km.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Look up their two times using the i and j indices.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Count pairs whose absolute time difference is &lt;= window_h * 3600.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The vector <code>times</code> must follow the fixed row order in <code>events</code>. The function returns one number and returns zero if no pairs qualify. Verify that using the actual event times reproduces <code>T_obs</code> from SQL.</p>
+<p>As a small check, use times <code>c(0, 3600, 172800)</code> and three pairs <code>(1, 2)</code>, <code>(1, 3)</code>, <code>(2, 3)</code>, all 10 km apart. For a 24-hour window the count should be 1. Explain the result.</p>
+</section>
+<section id="b-perform-one-permutation" class="level3">
+<h3 class="anchored" data-anchor-id="b-perform-one-permutation">(b) Perform one permutation</h3>
+<p>Write <code>shuffle_within_year(times, year_indices)</code>. Copy <code>times</code>, then replace each annual slice with a permutation of that slice. Use <code>sample.int(length(idx))</code> to permute positions, including for a one-event year. Set a seed in the caller, perform one stratified shuffle, and pass it to <code>count_close()</code>.</p>
+<p>Check that each year’s sorted time vector is unchanged after shuffling. Explain why shuffling across years or shuffling the two time columns of the pair table separately would implement a different reference model. Explain why the spatial pairs and distances do not need to be recalculated.</p>
+</section>
+<section id="c-build-a-reusable-batch-function" class="level3">
+<h3 class="anchored" data-anchor-id="c-build-a-reusable-batch-function">(c) Build a reusable batch function</h3>
+<p>Write <code>permute_batch(n_perm, times, pairs, year_indices)</code> that returns a vector containing <code>n_perm</code> permuted values of the statistic. Use a readable <code>for</code> loop, a preallocated numeric vector, and one call to <code>shuffle_within_year()</code> per permutation. Do not set a seed inside the loop or the batch function; the caller will manage reproducible randomness.</p>
+<p>For the primary analysis, prepare the indices of pairs within 50 km <strong>once</strong> outside the permutation loop. Avoid repeatedly filtering a large pair table. Keep the complete time vector, including events without any nearby pairs.</p>
+<p>Use <strong>999 permutations</strong>, divided into 20 batches. The following creates the batch sizes and gives each batch a reproducible random-number stream:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">999</span>L</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>batch_sizes <span class="ot">&lt;-</span> <span class="fu">rep</span>(B <span class="sc">%/%</span> <span class="dv">20</span>L, <span class="dv">20</span>L)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>batch_sizes[<span class="fu">seq_len</span>(B <span class="sc">%%</span> <span class="dv">20</span>L)] <span class="ot">&lt;-</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  batch_sizes[<span class="fu">seq_len</span>(B <span class="sc">%%</span> <span class="dv">20</span>L)] <span class="sc">+</span> <span class="dv">1</span>L</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> events<span class="sc">$</span>time_s</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(sequential)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>serial_batches <span class="ot">&lt;-</span> <span class="fu">future_map</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  batch_sizes,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(n_perm) {</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">permute_batch</span>(n_perm, times, pairs, year_indices)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">.options =</span> <span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="dv">323</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>null_counts <span class="ot">&lt;-</span> <span class="fu">unlist</span>(serial_batches, <span class="at">use.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="d-answer-the-primary-question" class="level3">
+<h3 class="anchored" data-anchor-id="d-answer-the-primary-question">(d) Answer the primary question</h3>
+<p>Plot the permutation distribution and mark <code>T_obs</code> with a vertical line. Calculate the one-sided Monte Carlo p-value:</p>
+<p><span class="math display">\[
+p = \frac{1 + \#\{T_b \geq T_{\mathrm{obs}}\}}{B+1}.
+\]</span></p>
+<p>Also report the observed count, mean permutation count, and their ratio. If the mean permutation count is zero, report the ratio as undefined and report the two counts directly. With 999 permutations, the smallest possible reported p-value is 0.001; do not report a p-value of zero.</p>
+<p>Write a short answer to scientific question 1. State what was randomized, what was held fixed, and whether the observed count is unusually large under this reference model. Do not use a binomial test on the pair indicators: different pairs can share earthquakes.</p>
+</section>
+</section>
+<section id="exercise-4-scale-the-computation-and-check-the-spatial-scale" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-scale-the-computation-and-check-the-spatial-scale">Exercise 4 — Scale the computation and check the spatial scale</h2>
+<p><strong>Goal:</strong> Evaluate parallel computing and answer the second scientific question without rebuilding the expensive spatial relationships.</p>
+<section id="a-compare-sequential-and-parallel-execution" class="level3">
+<h3 class="anchored" data-anchor-id="a-compare-sequential-and-parallel-execution">(a) Compare sequential and parallel execution</h3>
+<p>Time the same 20-batch calculation using <code>plan(sequential)</code> and <code>plan(multisession, workers = 2)</code>. Keep the data, batch sizes, function, permutation count, and <code>furrr_options(seed = 323)</code> identical.</p>
+<p>Use elapsed time, for example <code>system.time(...)[["elapsed"]]</code>. For each plan, run the workload once as a warm-up, then time three repetitions and report the median elapsed time. These timings measure an already-started worker session; say explicitly that worker startup is excluded. Do not include database queries, mapping, or pair-table construction in these times.</p>
+<p>Check that the sequential and parallel vectors agree using <code>all.equal()</code>. Report speedup as sequential median time divided by parallel median time. You receive full credit for a correct parallel implementation even if it is slower. Explain the result in terms of task size, worker overhead, and data transfer. Do not add artificial delays to create a speedup.</p>
+<p>Only ordinary vectors and tables should enter the workers. Do not pass <code>con</code> or perform concurrent database writes.</p>
+</section>
+<section id="b-investigate-the-definition-of-close" class="level3">
+<h3 class="anchored" data-anchor-id="b-investigate-the-definition-of-close">(b) Investigate the definition of “close”</h3>
+<p>Repeat the analysis for all six prespecified combinations:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Spatial distance</th>
+<th>Time windows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>25 km</td>
+<td>6 hours, 24 hours</td>
+</tr>
+<tr class="even">
+<td>50 km</td>
+<td>6 hours, 24 hours</td>
+</tr>
+<tr class="odd">
+<td>100 km</td>
+<td>6 hours, 24 hours</td>
+</tr>
+</tbody>
+</table>
+<p>Extend your batch function to return the statistic for all six combinations. Within each permutation, shuffle times <strong>once within every year</strong>, then evaluate all six combinations on that same complete stratified shuffle. Use the existing 100 km pair table throughout. Run the batches in parallel, with reproducible randomness.</p>
+<p>Precompute spatial pair selections outside the loops and calculate absolute time differences once per permutation for reuse across settings. Hint: <code>tidyr::crossing()</code> can construct the six settings. Your outer loop can iterate over permutations and an inner loop over settings. Parallelize only the outer batches; do not create workers inside workers.</p>
+</section>
+<section id="c-compare-the-scientific-results" class="level3">
+<h3 class="anchored" data-anchor-id="c-compare-the-scientific-results">(c) Compare the scientific results</h3>
+<p>Create one compact table containing distance, time window, observed count, mean permutation count, observed-to-expected ratio, and Monte Carlo p-value. Include the number of spatial pairs available at each distance; when it is zero, label that setting uninformative.</p>
+<p>Produce one plot comparing observed-to-expected ratios across the six settings. Answer scientific question 2 in a paragraph. Explain why larger raw counts at larger thresholds do not by themselves demonstrate stronger clustering. Treat these six results as a sensitivity analysis, not six independent discoveries or an opportunity to select the smallest p-value.</p>
+</section>
+<section id="d-conclude-and-clean-up" class="level3">
+<h3 class="anchored" data-anchor-id="d-conclude-and-clean-up">(d) Conclude and clean up</h3>
+<p>Write a final paragraph connecting both scientific questions. Include one limitation of the reference model: within each year, it assumes that event times can be reassigned throughout the study region. Distinct local temporal trends or changes in detection could also produce a space–time association. Explain why rejecting this null does not uniquely identify an aftershock mechanism. Discuss the exclusion of cross-year pairs and the fact that a pooled pair count gives greater influence to years with more qualifying pairs. Distinguish evidence of association from a claim that the effect is identical in every year.</p>
+<p>Finally, explain why keeping only nearby pairs and computing geometry once may matter more for scalability than adding workers. Restore sequential execution and disconnect from DuckDB at the end of the report:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plan</span>(sequential)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(con, <span class="at">shutdown =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="style-guidelines" class="level2">
@@ -390,236 +600,242 @@ Note
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
         }
-        return container.innerHTML
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -627,185 +843,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 </div> <!-- /content -->
 
 
