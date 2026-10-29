@@ -267,7 +267,7 @@ pre.shell > code > span > a::after {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-2"><a></a>(<span class="at">con =</span> <span class="fu">dbConnect</span>(duckdb<span class="sc">::</span><span class="fu">duckdb</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>&lt;duckdb_connection 6f540 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
+<pre><code>&lt;duckdb_connection 12a00 driver=&lt;duckdb_driver dbdir=':memory:' read_only=FALSE bigint=numeric&gt;&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -333,10 +333,10 @@ pre.shell > code > span > a::after {
  4 JFK    SFO      23
  5 LGA    CLT      21
  6 EWR    ORD      18
- 7 LGA    DCA      16
- 8 LGA    BOS      16
- 9 EWR    SFO      16
-10 JFK    BOS      16
+ 7 JFK    BOS      16
+ 8 LGA    DCA      16
+ 9 LGA    BOS      16
+10 EWR    SFO      16
 # ℹ more rows</code></pre>
 </div>
 </div>
@@ -1089,7 +1089,7 @@ ORDER BY dept, abv_avg;
 │  2013 │     1 │     1 │ … │    733.0 │    6.0 │    0.0 │ 2013-01-01 11:00:00 │
 └───────┴───────┴───────┴───┴──────────┴────────┴────────┴─────────────────────┘
   10 rows         use .last to show entire result         19 columns (7 shown)
-Run Time (s): real 0.004 user 0.000000 sys 0.004795</code></pre>
+Run Time (s): real 0.003 user 0.002190 sys 0.001115</code></pre>
 </div>
 </div>
 </div>
@@ -1116,7 +1116,7 @@ Run Time (s): real 0.004 user 0.000000 sys 0.004795</code></pre>
 │ N110UW  │  1999 │ Fixed wing multi engine │ … │   182 │  NULL │ Turbo-fan │
 └─────────┴───────┴─────────────────────────┴───┴───────┴───────┴───────────┘
   10 rows        use .last to show entire result        9 columns (6 shown)
-Run Time (s): real 0.002 user 0.001613 sys 0.000000</code></pre>
+Run Time (s): real 0.001 user 0.000000 sys 0.000955</code></pre>
 </div>
 </div>
 </div>
@@ -1175,7 +1175,7 @@ Run Time (s): real 0.002 user 0.001613 sys 0.000000</code></pre>
 ├────────────┤
 │     614366 │
 └────────────┘
-Run Time (s): real 0.016 user 0.034762 sys 0.002412</code></pre>
+Run Time (s): real 0.006 user 0.014681 sys 0.000008</code></pre>
 </div>
 </div>
 </div>
@@ -1197,7 +1197,7 @@ Run Time (s): real 0.016 user 0.034762 sys 0.002412</code></pre>
 ├────────────┤
 │   38851317 │
 └────────────┘
-Run Time (s): real 0.022 user 0.055279 sys 0.000703</code></pre>
+Run Time (s): real 0.007 user 0.017814 sys 0.000759</code></pre>
 </div>
 </div>
 </div>
@@ -1250,7 +1250,7 @@ Run Time (s): real 0.022 user 0.055279 sys 0.000703</code></pre>
 │                           ││                           │
 │       ~336,776 rows       ││        ~3,322 rows        │
 └───────────────────────────┘└───────────────────────────┘
-Run Time (s): real 0.002 user 0.001892 sys 0.000000</code></pre>
+Run Time (s): real 0.001 user 0.000605 sys 0.000170</code></pre>
 </div>
 </div>
 </div>
@@ -1324,7 +1324,7 @@ Run Time (s): real 0.002 user 0.001892 sys 0.000000</code></pre>
 EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 ┌────────────────────────────────────────────────┐
 │┌──────────────────────────────────────────────┐│
-││              Total Time: 0.0207s             ││
+││              Total Time: 0.0080s             ││
 │└──────────────────────────────────────────────┘│
 └────────────────────────────────────────────────┘
 ┌───────────────────────────┐
@@ -1368,7 +1368,7 @@ EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 │                           │              │
 │                           │              │
 │        336,776 rows       │              │
-│           0.03s           │              │
+│           0.01s           │              │
 └─────────────┬─────────────┘              │
 ┌─────────────┴─────────────┐┌─────────────┴─────────────┐
 │         TABLE_SCAN        ││         TABLE_SCAN        │
@@ -1382,12 +1382,12 @@ EXPLAIN ANALYZE SELECT sum(seats) FROM flights LEFT JOIN planes USING (tailnum);
 │                           ││          tailnum          │
 │                           ││           seats           │
 │                           ││                           │
-│           0.01s           ││                           │
+│           0.00s           ││                           │
 │                           ││                           │
 │        336,776 rows       ││         3,322 rows        │
-│          (0.01s)          ││           0.00s           │
+│          (0.00s)          ││           0.00s           │
 └───────────────────────────┘└───────────────────────────┘
-Run Time (s): real 0.021 user 0.049814 sys 0.000197</code></pre>
+Run Time (s): real 0.008 user 0.019174 sys 0.000000</code></pre>
 </div>
 </div>
 </div>
@@ -1407,7 +1407,7 @@ Run Time (s): real 0.021 user 0.049814 sys 0.000197</code></pre>
 <span id="cb105-9"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.065   0.022   0.088 </code></pre>
+  0.059   0.016   0.076 </code></pre>
 </div>
 </div>
 </div>
@@ -1454,7 +1454,7 @@ Run Time (s): real 0.021 user 0.049814 sys 0.000197</code></pre>
 │ F9      │             20.22 │          0.599 │
 └─────────┴───────────────────┴────────────────┘
   16 rows                            3 columns
-Run Time (s): real 0.012 user 0.031316 sys 0.002270</code></pre>
+Run Time (s): real 0.010 user 0.024574 sys 0.001659</code></pre>
 </div>
 </div></div>
 </div>
@@ -1487,7 +1487,7 @@ Run Time (s): real 0.012 user 0.031316 sys 0.002270</code></pre>
 EXPLAIN ANALYZE WITH overall AS (   SELECT AVG(dep_delay) AS avg_delay FROM flights ) SELECT carrier,        ROUND(AVG(dep_delay), 2) AS carrier_avg_delay,        ROUND((AVG(dep_delay) - avg_delay)               / avg_delay, 3)         AS pct_vs_overall FROM flights CROSS JOIN overall GROUP BY carrier, avg_delay ORDER BY pct_vs_overall;
 ┌────────────────────────────────────────────────┐
 │┌──────────────────────────────────────────────┐│
-││              Total Time: 0.0097s             ││
+││              Total Time: 0.0078s             ││
 │└──────────────────────────────────────────────┘│
 └────────────────────────────────────────────────┘
 ┌───────────────────────────┐
@@ -1576,7 +1576,7 @@ EXPLAIN ANALYZE WITH overall AS (   SELECT AVG(dep_delay) AS avg_delay FROM flig
 │                           │
 │                           │
 │          16 rows          │
-│           0.02s           │
+│           0.01s           │
 └─────────────┬─────────────┘
 ┌─────────────┴─────────────┐
 │         PROJECTION        │
@@ -1653,7 +1653,7 @@ EXPLAIN ANALYZE WITH overall AS (   SELECT AVG(dep_delay) AS avg_delay FROM flig
                              │        336,776 rows       │
                              │           0.00s           │
                              └───────────────────────────┘
-Run Time (s): real 0.010 user 0.029056 sys 0.000836</code></pre>
+Run Time (s): real 0.008 user 0.020917 sys 0.002650</code></pre>
 </div>
 </div></div>
 </div>
@@ -1675,7 +1675,7 @@ Run Time (s): real 0.010 user 0.029056 sys 0.000836</code></pre>
 <span id="cb111-11"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.021   0.001   0.023 </code></pre>
+  0.019   0.003   0.021 </code></pre>
 </div>
 </div>
 </div>
@@ -1687,7 +1687,7 @@ Run Time (s): real 0.010 user 0.029056 sys 0.000836</code></pre>
 </section>
 <section id="nyc-taxi-data" class="slide level2">
 <h2>NYC Taxi Data</h2>
-<!-- The [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) is a large public dataset of taxi and for-hire vehicle trips in New York City, published monthly since 2009. -->
+<p>The <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page">NYC TLC Trip Record Data</a> is a large public dataset of taxi and for-hire vehicle trips in New York City, published monthly since 2009.</p>
 <p>Each row is one trip and includes:</p>
 <div class="medium">
 <table class="caption-top">
@@ -1761,10 +1761,10 @@ Run Time (s): real 0.010 user 0.029056 sys 0.000836</code></pre>
 </div>
 </div>
 </div>
-
-<aside><div>
-<p>If you want to try this out the files are available on the departmental servers in <code>/data/nyctaxi/</code>.</p>
-</div></aside></section>
+<!-- ::: {.aside} -->
+<!-- If you want to try this out the files are available on the departmental servers in `/data/nyctaxi/`. -->
+<!-- ::: -->
+</section>
 <section id="parquet" class="slide level2">
 <h2>Parquet</h2>
 <p>Parquet is a binary, columnar file format widely used in data science and analytics.</p>
@@ -1819,7 +1819,7 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb123-1"><a></a>CREATE VIEW taxi AS SELECT * FROM </span>
 <span id="cb123-2"><a></a>  read_parquet('~/Scratch/nyctaxi/yellow_*.parquet');</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Run Time (s): real 0.002 user 0.001234 sys 0.000149</code></pre>
+<pre><code>Run Time (s): real 0.001 user 0.000000 sys 0.000962</code></pre>
 </div>
 </div>
 </div>
@@ -1836,7 +1836,7 @@ dept:   [Accounting, Accounting, Sales, ...]</code></pre>
 ├──────────────┤
 │     41169720 │
 └──────────────┘
-Run Time (s): real 0.010 user 0.070645 sys 0.008740</code></pre>
+Run Time (s): real 0.005 user 0.024352 sys 0.012840</code></pre>
 </div>
 </div>
 </div>
@@ -1872,7 +1872,7 @@ Run Time (s): real 0.010 user 0.070645 sys 0.008740</code></pre>
 │ congestion_surcharge  double    │
 │ Airport_fee           double    │
 └─────────────────────────────────┘
-Run Time (s): real 0.002 user 0.001964 sys 0.000001</code></pre>
+Run Time (s): real 0.001 user 0.001040 sys 0.000000</code></pre>
 </div>
 </div>
 </div><div class="column">
@@ -1927,7 +1927,7 @@ Run Time (s): real 0.002 user 0.001964 sys 0.000001</code></pre>
 <span id="cb131-11"><a></a>) AS t(payment_type, payment_type_desc);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
-<pre><code>Run Time (s): real 0.002 user 0.001424 sys 0.000099</code></pre>
+<pre><code>Run Time (s): real 0.001 user 0.000980 sys 0.000000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode numberSource duckdb number-lines code-with-copy"><code class="sourceCode"><span id="cb133-1"><a></a>SELECT * FROM payment_types;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1943,7 +1943,7 @@ Run Time (s): real 0.002 user 0.001964 sys 0.000001</code></pre>
 │            5 │ Unknown           │
 │            6 │ Voided trip       │
 └──────────────┴───────────────────┘
-Run Time (s): real 0.000 user 0.000787 sys 0.000000</code></pre>
+Run Time (s): real 0.000 user 0.000332 sys 0.000159</code></pre>
 </div>
 </div></div>
 </div>
@@ -1973,7 +1973,7 @@ Run Time (s): real 0.000 user 0.000787 sys 0.000000</code></pre>
 │ Dispute           │        0.0009 │   422816 │
 │ Unknown           │           0.0 │        1 │
 └───────────────────┴───────────────┴──────────┘
-Run Time (s): real 0.605 user 5.896994 sys 0.092841</code></pre>
+Run Time (s): real 0.527 user 5.068498 sys 0.084651</code></pre>
 </div>
 </div>
 </div>
@@ -2033,7 +2033,7 @@ Run Time (s): real 0.605 user 5.896994 sys 0.092841</code></pre>
 │         248 │        31.3 │         48.36 │          7.99 │      2456 │        248 │ Bronx         │ West Farms/Bronx River                        │ Boro Zone    │
 │          81 │       37.76 │         10.18 │          7.45 │      2038 │         81 │ Bronx         │ Eastchester                                   │ Boro Zone    │
 │          58 │       34.61 │           8.8 │          6.82 │       149 │         58 │ Bronx         │ Country Club                                  │ Boro Zone    │
-│         105 │       20.68 │          3.83 │          5.88 │         4 │        105 │ Manhattan     │ Governor's Island/Ellis Island/Liberty Island │ Yellow Zone  │
+│         105 │       20.67 │          3.83 │          5.88 │         4 │        105 │ Manhattan     │ Governor's Island/Ellis Island/Liberty Island │ Yellow Zone  │
 │          46 │       44.32 │         12.23 │          5.81 │       300 │         46 │ Bronx         │ City Island                                   │ Boro Zone    │
 │          59 │       32.57 │          8.39 │          5.61 │        90 │         59 │ Bronx         │ Crotona Park                                  │ Boro Zone    │
 │         110 │        10.0 │           1.8 │          5.56 │         1 │        110 │ Staten Island │ Great Kills Park                              │ Boro Zone    │
@@ -2048,7 +2048,7 @@ Run Time (s): real 0.605 user 5.896994 sys 0.092841</code></pre>
 │           6 │       10.04 │          7.28 │          1.98 │       558 │          6 │ Staten Island │ Arrochar/Fort Wadsworth                       │ Boro Zone    │
 └─────────────┴─────────────┴───────────────┴───────────────┴───────────┴────────────┴───────────────┴───────────────────────────────────────────────┴──────────────┘
   263 rows (40 shown)                                                   use .last to show entire result                                                   9 columns
-Run Time (s): real 0.248 user 2.351105 sys 0.058893</code></pre>
+Run Time (s): real 0.261 user 2.226231 sys 0.070692</code></pre>
 </div>
 </div>
 </div>

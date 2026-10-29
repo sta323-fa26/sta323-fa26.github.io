@@ -788,7 +788,7 @@ system.time({
 
 ## NYC Taxi Data
 
-<!-- The [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) is a large public dataset of taxi and for-hire vehicle trips in New York City, published monthly since 2009. -->
+The [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) is a large public dataset of taxi and for-hire vehicle trips in New York City, published monthly since 2009.
 
 Each row is one trip and includes:
 
@@ -815,9 +815,9 @@ sum(d$size)
 ```
 :::
 
-::: {.aside}
-If you want to try this out the files are available on the departmental servers in `/data/nyctaxi/`.
-:::
+<!-- ::: {.aside} -->
+<!-- If you want to try this out the files are available on the departmental servers in `/data/nyctaxi/`. -->
+<!-- ::: -->
 
 ## Parquet
 
