@@ -79,7 +79,7 @@ schedule %>%
 |  | Thu Oct 22 | complexity and parallelization | [💻](/slides/lec10.html) |  |  |
 | 10 | Tue Oct 27 | databases and dplyr| [💻](/slides/lec-databases-1.html) |  | |
 |  | Thu Oct 29 | duckDB and SQL | [💻](/slides/lec-databases-2.html) |  | [fp instructions](/project.html) |
-| 11 | Tue Nov 03 | shiny I  | [💻](/slides/lec18.html) | lab 6 |  | <!--project workday -->
+| 11 | Tue Nov 03 | shiny I  | [💻](/slides/lec18.html) | [lab 6](https://github.com/orgs/sta323-fa26/repositories) |  | <!--project workday -->
 |  | Thu Nov 05 | shiny II |  |  |  |
 | 12 | Tue Nov 10 | R packages |  |  |  | <!-- lab 7 -->
 |  | Thu Nov 12 | APIs |  |  |  | <!--testthat; rm biglm -->
