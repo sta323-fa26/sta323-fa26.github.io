@@ -179,7 +179,7 @@
     "href": "slides/lec18.html#ui-render-an-output",
     "title": "Shiny I",
     "section": "UI render an output",
-    "text": "UI render an output\n\n\n\n\n\nThe first argument for each output function is outputId. This argument is where you specify a name for the output not seen by the user. This name will serve as reference for code in function server()."
+    "text": "UI render an output\n\nThe first argument for each output function is outputId. This argument is where you specify a name for the output not seen by the user. This name will serve as reference for code in function server()."
   },
   {
     "objectID": "slides/lec18.html#code-from-the-in-class-example",
