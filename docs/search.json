@@ -186,7 +186,7 @@
     "href": "slides/lec18.html#code-from-the-in-class-example",
     "title": "Shiny I",
     "section": "Code from the in-class example",
-    "text": "Code from the in-class example\nBelow you can download the example we built in-class 11/11 (w/ a couple minor additions).\n\ndownload.file(\"https://sta323-fa25.github.io/scripts/BetaBinomialShinyApp.R\",\ndestfile = \"BetaBinomialShinyApp.R\")\n\nBelow you can download the example we built in-class 11/13.\n\ndownload.file(\"https://sta323-fa25.github.io/scripts/ABCShinyApp.R\",\ndestfile = \"ABCShinyApp.R\")"
+    "text": "Code from the in-class example\nBelow you can download the example we built in-class 11/05 (w/ a couple minor additions).\n\n\n\n\n\n\n\ndownload.file(\"https://sta323-fa26.github.io/scripts/shinyScript-11-5-2026.R\",\ndestfile = \"ABCShinyApp.R\")"
   },
   {
     "objectID": "slides/lec18.html#further-reading",

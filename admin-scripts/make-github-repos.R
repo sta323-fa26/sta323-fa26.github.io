@@ -35,7 +35,7 @@ org_create_assignment(
 roster = readxl::read_xlsx("~/Downloads/teams_public_sta323_fa26.xlsx")
 
 this_org <- "sta323-fa26"
-assignment <- "finalProject"
+assignment <- "lab-6"
 
 org_create_assignment(
   org = this_org,
