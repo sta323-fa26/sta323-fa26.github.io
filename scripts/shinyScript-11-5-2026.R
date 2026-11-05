@@ -52,6 +52,10 @@ server <- function(input, output) {
     bindEvent(input$run)
   
   abc_post_dens <- reactive({
+    validate(
+      need(length(abc_post()) >= input$n_min, 
+           "Insufficient number of posterior samples. Increase the # of simulations.")
+    )
     abc_dens <- density(abc_post())
     tibble(
       theta = abc_dens$x,
