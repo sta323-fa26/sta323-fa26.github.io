@@ -62,8 +62,19 @@ If you do not want to attach a package you can directly use package functions vi
 -   `requireNamespace()` returns `TRUE` or `FALSE` depending on if it succeeds - can be useful to test if a package is available.
 
 ```{r}
-loadedNamespaces()
+loadedNamespaces() |>
+  head(n = 20)
 ```
+
+. . .
+
+```{r}
+#| error: true
+if (!requireNamespace("pkg", quietly = TRUE)) {
+  stop("Package 'pkg' is needed for this function to work.", call. = FALSE)
+}
+```
+
 
 ## Where do R packages come from?
 
