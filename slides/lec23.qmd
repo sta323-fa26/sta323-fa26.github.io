@@ -339,7 +339,7 @@ Run `devtools::document()`.
 
 Check out `?newton`
 
-# Package vigenette(s)
+# Package vignettes
 
 ## Vignette
 
