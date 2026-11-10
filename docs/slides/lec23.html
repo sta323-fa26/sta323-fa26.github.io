@@ -225,198 +225,199 @@ Dr.&nbsp;Alexander Fisher
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">dir</span>(<span class="fu">.libPaths</span>()) <span class="co"># shows directories where individual packages live</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] "abind"                "ade4"                 "adegenet"            
-  [4] "adephylo"             "airports"             "animation"           
-  [7] "AnnotationDbi"        "ape"                  "AsioHeaders"         
- [10] "askpass"              "backports"            "base"                
- [13] "base64enc"            "bayesm"               "bayesplot"           
- [16] "bench"                "bestridge"            "BH"                  
- [19] "bigD"                 "Biobase"              "BiocGenerics"        
- [22] "BiocManager"          "BiocVersion"          "Biostrings"          
- [25] "bit"                  "bit64"                "bitops"              
- [28] "blob"                 "boot"                 "brew"                
- [31] "brio"                 "broom"                "bslib"               
- [34] "cachem"               "callr"                "car"                 
- [37] "carData"              "cards"                "cardx"               
- [40] "caret"                "castor"               "cellranger"          
- [43] "checkmate"            "cherryblossom"        "chromote"            
- [46] "chron"                "circlize"             "class"               
- [49] "classInt"             "cli"                  "clipr"               
- [52] "clock"                "clue"                 "cluster"             
- [55] "clusterGeneration"    "coda"                 "codetools"           
- [58] "colorspace"           "colourpicker"         "combinat"            
- [61] "commonmark"           "compiler"             "compositions"        
- [64] "conflicted"           "corrplot"             "countdown"           
- [67] "cowplot"              "cpp11"                "crayon"              
- [70] "credentials"          "crosstalk"            "curl"                
- [73] "data.table"           "dataRetrieval"        "datasets"            
- [76] "datawizard"           "DBI"                  "dbplyr"              
- [79] "DelayedArray"         "dendextend"           "DEoptim"             
- [82] "DEoptimR"             "Deriv"                "desc"                
- [85] "deSolve"              "devEMF"               "devtools"            
- [88] "diagram"              "DiagrammeR"           "dials"               
- [91] "DiceDesign"           "diffmatchpatch"       "diffobj"             
- [94] "digest"               "dirmult"              "distr"               
- [97] "distributional"       "doBy"                 "doMC"                
-[100] "doParallel"           "dotCall64"            "downlit"             
-[103] "dplyr"                "DSA.CountData"        "DT"                  
-[106] "dtplyr"               "duckdb"               "dygraphs"            
-[109] "e1071"                "editData"             "ellipse"             
-[112] "ellipsis"             "emmeans"              "estimability"        
-[115] "evaluate"             "expm"                 "eyedata"             
-[118] "factoextra"           "FactoMineR"           "fansi"               
-[121] "faraway"              "farver"               "fastmap"             
-[124] "fastmatch"            "FedData"              "fftwtools"           
-[127] "fields"               "flare"                "flashClust"          
-[130] "flextable"            "fontawesome"          "fontBitstreamVera"   
-[133] "fontLiberation"       "fontquiver"           "forcats"             
-[136] "foreach"              "foreign"              "Formula"             
-[139] "fs"                   "furrr"                "future"              
-[142] "future.apply"         "gapminder"            "gargle"              
-[145] "gdtools"              "geiger"               "gender"              
-[148] "generics"             "GenomeInfoDb"         "GenomeInfoDbData"    
-[151] "GenomicRanges"        "GEOquery"             "gert"                
-[154] "GGally"               "gganimate"            "ggfittext"           
-[157] "ggforce"              "ggfun"                "ggimage"             
-[160] "gginnards"            "ggiraph"              "ggokabeito"          
-[163] "ggplot2"              "ggplotify"            "ggpubr"              
-[166] "ggrepel"              "ggridges"             "ggsci"               
-[169] "ggsignif"             "ggstats"              "gh"                  
-[172] "ghclass"              "gifski"               "gitcreds"            
-[175] "glmnet"               "GlobalOptions"        "globals"             
-[178] "glue"                 "googledrive"          "googlesheets4"       
-[181] "gower"                "GPArotation"          "GPBayes"             
-[184] "GPfit"                "graphics"             "grDevices"           
-[187] "grid"                 "gridExtra"            "gridGraphics"        
-[190] "gridtext"             "gsubfn"               "gt"                  
-[193] "gtable"               "gtools"               "gtsummary"           
-[196] "hardhat"              "haven"                "here"                
-[199] "hexbin"               "hexSticker"           "hgu133a.db"          
-[202] "hgu95av2.db"          "highr"                "Hmisc"               
-[205] "hms"                  "htmlTable"            "htmltools"           
-[208] "htmlwidgets"          "httpuv"               "httr"                
-[211] "httr2"                "ids"                  "igraph"              
-[214] "infer"                "ini"                  "inline"              
-[217] "insight"              "invgamma"             "ipred"               
-[220] "IRanges"              "isoband"              "iterators"           
-[223] "janeaustenr"          "janitor"              "jpeg"                
-[226] "jquerylib"            "jsonlite"             "juicyjuice"          
-[229] "kableExtra"           "keep"                 "KEGGREST"            
-[232] "KernSmooth"           "KFAS"                 "knitr"               
-[235] "labeling"             "lars"                 "later"               
-[238] "latex2exp"            "lattice"              "lava"                
-[241] "lazyeval"             "leaflet"              "leaflet.providers"   
-[244] "leaps"                "lhs"                  "lifecycle"           
-[247] "limma"                "listenv"              "litedown"            
-[250] "lme4"                 "lmtest"               "lobstr"              
-[253] "loo"                  "lpSolve"              "lubridate"           
-[256] "lutz"                 "magick"               "magrittr"            
-[259] "maps"                 "markdown"             "MASS"                
-[262] "Matrix"               "MatrixGenerics"       "MatrixModels"        
-[265] "matrixsampling"       "matrixStats"          "MCMCprecision"       
-[268] "mcmcse"               "mdbr"                 "memoise"             
-[271] "methods"              "mgcv"                 "microbenchmark"      
-[274] "mime"                 "miniUI"               "minqa"               
-[277] "misc3d"               "mitools"              "mlbench"             
-[280] "mnormt"               "modeldata"            "modelenv"            
-[283] "ModelMetrics"         "modelr"               "monomvn"             
-[286] "moonBook"             "multcomp"             "multcompView"        
-[289] "mvtnorm"              "naturalsort"          "ncaahoopR"           
-[292] "ncbit"                "nlme"                 "nloptr"              
-[295] "NLP"                  "nnet"                 "nortest"             
-[298] "numDeriv"             "nycflights13"         "officer"             
-[301] "openintro"            "openNLP"              "openNLPdata"         
-[304] "openssl"              "openxlsx"             "optimParallel"       
-[307] "ordinal"              "org.Hs.eg.db"         "org.Rn.eg.db"        
-[310] "otel"                 "ouch"                 "pacman"              
-[313] "palmerpenguins"       "parallel"             "parallelly"          
-[316] "Pareto"               "parsnip"              "patchwork"           
-[319] "pbkrtest"             "pcaPP"                "permute"             
-[322] "phangorn"             "pheatmap"             "phylobase"           
-[325] "phytools"             "pillar"               "pixmap"              
-[328] "pkgbuild"             "pkgconfig"            "pkgdown"             
-[331] "pkgload"              "plogr"                "plot3D"              
-[334] "plotly"               "plotrix"              "pls"                 
-[337] "plsgenomics"          "plyr"                 "png"                 
-[340] "polspline"            "polyclip"             "polynom"             
-[343] "pomp"                 "posterior"            "praise"              
-[346] "prettyunits"          "prismatic"            "pROC"                
-[349] "processx"             "prodlim"              "profmem"             
-[352] "profvis"              "progress"             "progressr"           
-[355] "promises"             "proto"                "proxy"               
-[358] "pryr"                 "ps"                   "psych"               
-[361] "purrr"                "qdap"                 "qdapDictionaries"    
-[364] "qdapRegex"            "qdapTools"            "quadprog"            
-[367] "quantreg"             "queryparser"          "QuickJSR"            
-[370] "R.methodsS3"          "R.oo"                 "R.utils"             
-[373] "R6"                   "ragg"                 "randomForest"        
-[376] "rappdirs"             "raster"               "rat2302.db"          
-[379] "rbibutils"            "rcmdcheck"            "RColorBrewer"        
-[382] "Rcpp"                 "RcppArmadillo"        "RcppEigen"           
-[385] "RcppParallel"         "RcppProgress"         "RcppTOML"            
-[388] "RCurl"                "Rdpack"               "reactable"           
-[391] "reactablefmtr"        "reactR"               "readr"               
-[394] "readxl"               "recipes"              "reformulas"          
-[397] "rematch"              "rematch2"             "remotes"             
-[400] "rentrez"              "reprex"               "repurrrsive"         
-[403] "reshape2"             "reticulate"           "rgl"                 
-[406] "RhpcBLASctl"          "ridge"                "rio"                 
-[409] "rJava"                "rjson"                "rlang"               
-[412] "rmarkdown"            "rms"                  "rnaturalearth"       
-[415] "rncl"                 "RNeXML"               "robustbase"          
-[418] "roxygen2"             "rpart"                "rprojroot"           
-[421] "rrcov"                "RRphylo"              "rrtable"             
-[424] "rsample"              "RSpectra"             "RSQLite"             
-[427] "rstan"                "rstanarm"             "rstantools"          
-[430] "rstatix"              "rstudioapi"           "rversions"           
-[433] "rvest"                "rvg"                  "s2"                  
-[436] "S4Arrays"             "S4Vectors"            "S7"                  
-[439] "sandwich"             "sass"                 "sbgcop"              
-[442] "scales"               "scatterplot3d"        "segmented"           
-[445] "selectr"              "seqinr"               "sessioninfo"         
-[448] "sf"                   "sfd"                  "sfsmisc"             
-[451] "shades"               "shape"                "shiny"               
-[454] "shinycssloaders"      "shinyjs"              "shinystan"           
-[457] "shinythemes"          "shinyWidgets"         "showtext"            
-[460] "showtextdb"           "sjlabelled"           "sjmisc"              
-[463] "slam"                 "slider"               "sloop"               
-[466] "snakecase"            "SnowballC"            "sourcetools"         
-[469] "sp"                   "spam"                 "SparseArray"         
-[472] "SparseM"              "sparsevctrs"          "spatial"             
-[475] "splines"              "sportyR"              "sqldf"               
-[478] "SQUAREM"              "srvyr"                "srvyrexploR"         
-[481] "StanHeaders"          "startupmsg"           "statmod"             
-[484] "stats"                "stats4"               "stringdist"          
-[487] "stringi"              "stringr"              "subplex"             
-[490] "SummarizedExperiment" "survey"               "survival"            
-[493] "svglite"              "sys"                  "sysfonts"            
-[496] "systemfonts"          "tailor"               "tcltk"               
-[499] "TeachingDemos"        "tensorA"              "terra"               
-[502] "testthat"             "textshaping"          "TH.data"             
-[505] "threejs"              "tibble"               "tidycensus"          
-[508] "tidymodels"           "tidyquery"            "tidyr"               
-[511] "tidyselect"           "tidytext"             "tidyverse"           
-[514] "tigris"               "timechange"           "timeDate"            
-[517] "tinytex"              "tippy"                "TiPS"                
-[520] "tm"                   "tokenizers"           "tools"               
-[523] "transformr"           "translations"         "TreeSim"             
-[526] "truncnorm"            "tune"                 "tweenr"              
-[529] "tzdb"                 "ucminf"               "UCSC.utils"          
-[532] "umap"                 "units"                "urlchecker"          
-[535] "usa"                  "usdata"               "usethis"             
-[538] "utf8"                 "utils"                "uuid"                
-[541] "V8"                   "vcd"                  "vctrs"               
-[544] "vegan"                "venneuler"            "viridis"             
-[547] "viridisLite"          "visNetwork"           "vroom"               
-[550] "waldo"                "warp"                 "webr"                
-[553] "webshot"              "webshot2"             "websocket"           
-[556] "wesanderson"          "whisker"              "withr"               
-[559] "wk"                   "wordcloud"            "workflows"           
-[562] "workflowsets"         "writexl"              "xfun"                
-[565] "XML"                  "xml2"                 "xopen"               
-[568] "xtable"               "xts"                  "XVector"             
-[571] "yaml"                 "yardstick"            "yulab.utils"         
-[574] "zip"                  "zoo"                  "ztable"              </code></pre>
+<pre><code>  [1] "_build"               "abind"                "ade4"                
+  [4] "adegenet"             "adephylo"             "airports"            
+  [7] "animation"            "AnnotationDbi"        "ape"                 
+ [10] "AsioHeaders"          "askpass"              "backports"           
+ [13] "base"                 "base64enc"            "bayesm"              
+ [16] "bayesplot"            "bench"                "bestridge"           
+ [19] "BH"                   "bigD"                 "Biobase"             
+ [22] "BiocGenerics"         "BiocManager"          "BiocVersion"         
+ [25] "Biostrings"           "bit"                  "bit64"               
+ [28] "bitops"               "blob"                 "boot"                
+ [31] "brew"                 "brio"                 "broom"               
+ [34] "bslib"                "cachem"               "callr"               
+ [37] "car"                  "carData"              "cards"               
+ [40] "cardx"                "caret"                "castor"              
+ [43] "cellranger"           "checkmate"            "cherryblossom"       
+ [46] "chromote"             "chron"                "circlize"            
+ [49] "class"                "classInt"             "cli"                 
+ [52] "clipr"                "clock"                "clue"                
+ [55] "cluster"              "clusterGeneration"    "coda"                
+ [58] "codetools"            "colorspace"           "colourpicker"        
+ [61] "combinat"             "commonmark"           "compiler"            
+ [64] "compositions"         "conflicted"           "corrplot"            
+ [67] "countdown"            "cowplot"              "cpp11"               
+ [70] "crayon"               "credentials"          "crosstalk"           
+ [73] "curl"                 "data.table"           "dataRetrieval"       
+ [76] "datasets"             "datawizard"           "DBI"                 
+ [79] "dbplyr"               "DelayedArray"         "dendextend"          
+ [82] "DEoptim"              "DEoptimR"             "Deriv"               
+ [85] "desc"                 "deSolve"              "devEMF"              
+ [88] "devtools"             "diagram"              "DiagrammeR"          
+ [91] "dials"                "DiceDesign"           "diffmatchpatch"      
+ [94] "diffobj"              "digest"               "dirmult"             
+ [97] "distr"                "distributional"       "doBy"                
+[100] "doMC"                 "doParallel"           "dotCall64"           
+[103] "downlit"              "dplyr"                "DSA.CountData"       
+[106] "DT"                   "dtplyr"               "duckdb"              
+[109] "dygraphs"             "e1071"                "editData"            
+[112] "ellipse"              "ellipsis"             "emmeans"             
+[115] "estimability"         "evaluate"             "expm"                
+[118] "eyedata"              "factoextra"           "FactoMineR"          
+[121] "fansi"                "faraway"              "farver"              
+[124] "fastmap"              "fastmatch"            "FedData"             
+[127] "fftwtools"            "fields"               "flare"               
+[130] "flashClust"           "flextable"            "fontawesome"         
+[133] "fontBitstreamVera"    "fontLiberation"       "fontquiver"          
+[136] "forcats"              "foreach"              "foreign"             
+[139] "Formula"              "fs"                   "furrr"               
+[142] "future"               "future.apply"         "gapminder"           
+[145] "gargle"               "gdtools"              "geiger"              
+[148] "gender"               "generics"             "GenomeInfoDb"        
+[151] "GenomeInfoDbData"     "GenomicRanges"        "GEOquery"            
+[154] "gert"                 "GGally"               "gganimate"           
+[157] "ggfittext"            "ggforce"              "ggfun"               
+[160] "ggimage"              "gginnards"            "ggiraph"             
+[163] "ggokabeito"           "ggplot2"              "ggplotify"           
+[166] "ggpubr"               "ggrepel"              "ggridges"            
+[169] "ggsci"                "ggsignif"             "ggstats"             
+[172] "gh"                   "ghclass"              "gifski"              
+[175] "gitcreds"             "glmnet"               "GlobalOptions"       
+[178] "globals"              "glue"                 "googledrive"         
+[181] "googlesheets4"        "gower"                "GPArotation"         
+[184] "GPBayes"              "GPfit"                "graphics"            
+[187] "grDevices"            "grid"                 "gridExtra"           
+[190] "gridGraphics"         "gridtext"             "gsubfn"              
+[193] "gt"                   "gtable"               "gtools"              
+[196] "gtsummary"            "hardhat"              "haven"               
+[199] "here"                 "hexbin"               "hexSticker"          
+[202] "hgu133a.db"           "hgu95av2.db"          "highr"               
+[205] "Hmisc"                "hms"                  "htmlTable"           
+[208] "htmltools"            "htmlwidgets"          "httpuv"              
+[211] "httr"                 "httr2"                "ids"                 
+[214] "igraph"               "infer"                "ini"                 
+[217] "inline"               "insight"              "invgamma"            
+[220] "ipred"                "IRanges"              "isoband"             
+[223] "iterators"            "janeaustenr"          "janitor"             
+[226] "jpeg"                 "jquerylib"            "jsonlite"            
+[229] "juicyjuice"           "kableExtra"           "keep"                
+[232] "KEGGREST"             "KernSmooth"           "KFAS"                
+[235] "knitr"                "labeling"             "lars"                
+[238] "later"                "latex2exp"            "lattice"             
+[241] "lava"                 "lazyeval"             "leaflet"             
+[244] "leaflet.providers"    "leaps"                "lhs"                 
+[247] "lifecycle"            "limma"                "listenv"             
+[250] "litedown"             "lme4"                 "lmtest"              
+[253] "lobstr"               "loo"                  "lpSolve"             
+[256] "lubridate"            "lutz"                 "magick"              
+[259] "magrittr"             "maps"                 "markdown"            
+[262] "MASS"                 "Matrix"               "MatrixGenerics"      
+[265] "MatrixModels"         "matrixsampling"       "matrixStats"         
+[268] "MCMCprecision"        "mcmcse"               "mdbr"                
+[271] "memoise"              "methods"              "mgcv"                
+[274] "microbenchmark"       "mime"                 "miniUI"              
+[277] "minqa"                "misc3d"               "mitools"             
+[280] "mlbench"              "mnormt"               "modeldata"           
+[283] "modelenv"             "ModelMetrics"         "modelr"              
+[286] "monomvn"              "moonBook"             "multcomp"            
+[289] "multcompView"         "mvtnorm"              "naturalsort"         
+[292] "ncaahoopR"            "ncbit"                "nlme"                
+[295] "nloptr"               "NLP"                  "nnet"                
+[298] "nortest"              "numDeriv"             "nycflights13"        
+[301] "officer"              "openintro"            "openNLP"             
+[304] "openNLPdata"          "openssl"              "openxlsx"            
+[307] "optimParallel"        "ordinal"              "org.Hs.eg.db"        
+[310] "org.Rn.eg.db"         "otel"                 "ouch"                
+[313] "pacman"               "palmerpenguins"       "parallel"            
+[316] "parallelly"           "Pareto"               "parsnip"             
+[319] "patchwork"            "pbkrtest"             "pcaPP"               
+[322] "permute"              "phangorn"             "pheatmap"            
+[325] "phylobase"            "phytools"             "pillar"              
+[328] "pixmap"               "pkgbuild"             "pkgconfig"           
+[331] "pkgdown"              "pkgload"              "plogr"               
+[334] "plot3D"               "plotly"               "plotrix"             
+[337] "pls"                  "plsgenomics"          "plyr"                
+[340] "png"                  "polspline"            "polyclip"            
+[343] "polynom"              "pomp"                 "posterior"           
+[346] "praise"               "prettyunits"          "prismatic"           
+[349] "pROC"                 "processx"             "prodlim"             
+[352] "profmem"              "profvis"              "progress"            
+[355] "progressr"            "promises"             "proto"               
+[358] "proxy"                "pryr"                 "ps"                  
+[361] "psych"                "purrr"                "qdap"                
+[364] "qdapDictionaries"     "qdapRegex"            "qdapTools"           
+[367] "quadprog"             "quantreg"             "queryparser"         
+[370] "QuickJSR"             "R.methodsS3"          "R.oo"                
+[373] "R.utils"              "R6"                   "ragg"                
+[376] "randomForest"         "rappdirs"             "raster"              
+[379] "rat2302.db"           "rbibutils"            "rcmdcheck"           
+[382] "RColorBrewer"         "Rcpp"                 "RcppArmadillo"       
+[385] "RcppEigen"            "RcppParallel"         "RcppProgress"        
+[388] "RcppTOML"             "RCurl"                "Rdpack"              
+[391] "reactable"            "reactablefmtr"        "reactR"              
+[394] "readr"                "readxl"               "recipes"             
+[397] "reformulas"           "rematch"              "rematch2"            
+[400] "remotes"              "rentrez"              "reprex"              
+[403] "repurrrsive"          "reshape2"             "reticulate"          
+[406] "rgl"                  "RhpcBLASctl"          "ridge"               
+[409] "rio"                  "rJava"                "rjson"               
+[412] "rlang"                "rmarkdown"            "rms"                 
+[415] "rnaturalearth"        "rncl"                 "RNeXML"              
+[418] "robustbase"           "roxygen2"             "rpart"               
+[421] "rprojroot"            "rrcov"                "RRphylo"             
+[424] "rrtable"              "rsample"              "RSpectra"            
+[427] "RSQLite"              "rstan"                "rstanarm"            
+[430] "rstantools"           "rstatix"              "rstudioapi"          
+[433] "rversions"            "rvest"                "rvg"                 
+[436] "s2"                   "S4Arrays"             "S4Vectors"           
+[439] "S7"                   "sandwich"             "sass"                
+[442] "sbgcop"               "scales"               "scatterplot3d"       
+[445] "segmented"            "selectr"              "seqinr"              
+[448] "sessioninfo"          "sf"                   "sfd"                 
+[451] "sfsmisc"              "shades"               "shape"               
+[454] "shiny"                "shinycssloaders"      "shinyjs"             
+[457] "shinystan"            "shinythemes"          "shinyWidgets"        
+[460] "showtext"             "showtextdb"           "sjlabelled"          
+[463] "sjmisc"               "slam"                 "slider"              
+[466] "sloop"                "snakecase"            "SnowballC"           
+[469] "sourcetools"          "sp"                   "spam"                
+[472] "SparseArray"          "SparseM"              "sparsevctrs"         
+[475] "spatial"              "splines"              "sportyR"             
+[478] "sqldf"                "SQUAREM"              "srvyr"               
+[481] "srvyrexploR"          "StanHeaders"          "startupmsg"          
+[484] "statmod"              "stats"                "stats4"              
+[487] "stringdist"           "stringi"              "stringr"             
+[490] "subplex"              "SummarizedExperiment" "survey"              
+[493] "survival"             "svglite"              "sys"                 
+[496] "sysfonts"             "systemfonts"          "tailor"              
+[499] "tcltk"                "TeachingDemos"        "tensorA"             
+[502] "terra"                "testthat"             "textshaping"         
+[505] "TH.data"              "threejs"              "tibble"              
+[508] "tidycensus"           "tidymodels"           "tidyquery"           
+[511] "tidyr"                "tidyselect"           "tidytext"            
+[514] "tidyverse"            "tigris"               "timechange"          
+[517] "timeDate"             "tinytex"              "tippy"               
+[520] "TiPS"                 "tm"                   "tokenizers"          
+[523] "tools"                "transformr"           "translations"        
+[526] "TreeSim"              "truncnorm"            "tune"                
+[529] "tweenr"               "tzdb"                 "ucminf"              
+[532] "UCSC.utils"           "umap"                 "units"               
+[535] "urlchecker"           "usa"                  "usdata"              
+[538] "usethis"              "utf8"                 "utils"               
+[541] "uuid"                 "V8"                   "vcd"                 
+[544] "vctrs"                "vegan"                "venneuler"           
+[547] "viridis"              "viridisLite"          "visNetwork"          
+[550] "vroom"                "waldo"                "warp"                
+[553] "webr"                 "webshot"              "webshot2"            
+[556] "websocket"            "wesanderson"          "whisker"             
+[559] "withr"                "wk"                   "wordcloud"           
+[562] "workflows"            "workflowsets"         "writexl"             
+[565] "xfun"                 "XML"                  "xml2"                
+[568] "xopen"                "xtable"               "xts"                 
+[571] "XVector"              "yaml"                 "yardstick"           
+[574] "yulab.utils"          "zip"                  "zoo"                 
+[577] "ztable"              </code></pre>
 </div>
 </div>
 </section>
@@ -826,12 +827,115 @@ Dr.&nbsp;Alexander Fisher
 <h1>Package checking</h1>
 
 </section>
-<section id="r-cmd-check" class="slide level2">
-<h2><code>R CMD check</code></h2>
+<section id="r-cmd-check---what-it-does" class="slide level2">
+<h2><code>R CMD check</code> - What it does</h2>
 <p>Last time we saw the usage of <code>R CMD check</code>, or rather <code>Build &gt; Check Package</code> from within RStudio.</p>
-<p>This is a good idea to run regularly to make sure nothing is broken and you are meeting the important package quality standards, but this only in the context of your machine, your version of R, your OS, and so on.</p>
-<p>If using GitHub it is highly recommended that you run <code>usethis::use_github_action_check_standard()</code> to enable GitHub actions checks of the package each time it is pushed.</p>
-<p>On each push this runs R CMD check on: * Latest R on MacOS, Windows, Linux (Ubuntu) * Previous and development version of R on Linux (Ubuntu)</p>
+<p><code>R CMD check</code> is CRAN’s comprehensive quality control system that runs dozens of checks:</p>
+<div>
+<ul>
+<li class="fragment"><strong>Package structure</strong> - Correct directories, required files (DESCRIPTION, NAMESPACE)</li>
+<li class="fragment"><strong>Code syntax</strong> - All R code parses without errors<br>
+</li>
+<li class="fragment"><strong>Documentation</strong> - All functions documented, all examples run</li>
+<li class="fragment"><strong>Dependencies</strong> - All used packages exist and in DESCRIPTION</li>
+<li class="fragment"><strong>Tests</strong> - All test files execute without errors</li>
+<li class="fragment"><strong>CRAN policy compliance</strong> - Follows all submission guidelines (written and unwritten)</li>
+</ul>
+</div>
+</section>
+<section id="devtoolscheck-vs-r-cmd-check" class="slide level2">
+<h2>devtools::check() vs R CMD check</h2>
+<p><code>devtools::check()</code> is a convenient wrapper around <code>R CMD check</code>:</p>
+<div class="columns small">
+<div class="column">
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource shell number-lines code-with-copy"><code class="sourceCode"><span id="cb31-1"><a></a>R CMD build .</span>
+<span id="cb31-2"><a></a>R CMD check packagename_1.0.0.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<p><br></p>
+<p>Benefits of <code>devtools::check()</code>:</p>
+<ul>
+<li>Automatically handles building and checking</li>
+<li>Better integrated with RStudio workflow</li>
+<li>Cleaner output formatting</li>
+<li>Automatically installs package first</li>
+</ul>
+</section>
+<section id="interpreting-check-output" class="slide level2">
+<h2>Interpreting check output</h2>
+<p><code>R CMD check</code> produces three levels of issues:</p>
+<ul>
+<li><strong>ERROR</strong> 🔴 - Must be fixed before CRAN submission</li>
+<li><strong>WARNING</strong> 🟡 - Should be fixed (CRAN may reject)</li>
+<li><strong>NOTE</strong> 📝 - Optional improvements (CRAN usually accepts)</li>
+</ul>
+<p>Anything flagged must be addressed in the CRAN submission process.</p>
+<p>While the check is running issues are shown inline, <em>and</em> summarized at the end.</p>
+</section>
+<section id="github-actions-for-continuous-checking" class="slide level2">
+<h2>GitHub Actions for continuous checking</h2>
+<p>Set up automated checking with:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>usethis<span class="sc">::</span><span class="fu">use_github_action</span>(<span class="st">"check-standard"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This creates <code>.github/workflows/R-CMD-check.yaml</code> that runs checks on:</p>
+<ul>
+<li>Latest R on macOS, Windows, Linux (Ubuntu)<br>
+</li>
+<li>Previous R and R-devel on Linux (Ubuntu)</li>
+</ul>
+</section>
+<section id="the-devtools-workflow" class="slide level2">
+<h2>The devtools workflow</h2>
+<p>The typical package development cycle:</p>
+<div class="small">
+<table class="caption-top">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>devtools::load_all()</code></td>
+<td>Load all package code (simulates installing and attaching)</td>
+</tr>
+<tr class="even">
+<td><code>devtools::document()</code></td>
+<td>Run roxygen2 to update <code>man/</code> and <code>NAMESPACE</code></td>
+</tr>
+<tr class="odd">
+<td><code>devtools::test()</code></td>
+<td>Run tests in <code>tests/</code></td>
+</tr>
+<tr class="even">
+<td><code>devtools::check()</code></td>
+<td>Run <code>R CMD check</code> on your package</td>
+</tr>
+<tr class="odd">
+<td><code>devtools::build()</code></td>
+<td>Build a source tarball (<code>.tar.gz</code>)</td>
+</tr>
+<tr class="even">
+<td><code>devtools::install()</code></td>
+<td>Install the package locally</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p>The most common workflow during development is:</p>
+<ol type="1">
+<li>Edit code in <code>R/</code></li>
+<li><code>load_all()</code> to test changes interactively</li>
+<li><code>document()</code> after updating roxygen comments</li>
+<li><code>check()</code> before committing or submitting</li>
+</ol>
+</div>
 </section></section>
 <section>
 <section id="package-testing" class="title-slide slide level1 center">
@@ -867,16 +971,16 @@ Dr.&nbsp;Alexander Fisher
 <div class="callout-content">
 <p>Build &gt; Test Package to run the package tests. Example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>f1 <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
-<span id="cb30-2"><a></a>  x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb30-3"><a></a>}</span>
-<span id="cb30-4"><a></a>fp1 <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
-<span id="cb30-5"><a></a>  <span class="dv">2</span> <span class="sc">*</span> x</span>
-<span id="cb30-6"><a></a>}</span>
-<span id="cb30-7"><a></a></span>
-<span id="cb30-8"><a></a><span class="fu">stopifnot</span>(</span>
-<span id="cb30-9"><a></a><span class="fu">newton</span>(f1, fp1, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">tol =</span> <span class="fl">0.00001</span>) <span class="sc">==</span> <span class="fl">0.001953125</span></span>
-<span id="cb30-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>f1 <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
+<span id="cb33-2"><a></a>  x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb33-3"><a></a>}</span>
+<span id="cb33-4"><a></a>fp1 <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
+<span id="cb33-5"><a></a>  <span class="dv">2</span> <span class="sc">*</span> x</span>
+<span id="cb33-6"><a></a>}</span>
+<span id="cb33-7"><a></a></span>
+<span id="cb33-8"><a></a><span class="fu">stopifnot</span>(</span>
+<span id="cb33-9"><a></a><span class="fu">newton</span>(f1, fp1, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">tol =</span> <span class="fl">0.00001</span>) <span class="sc">==</span> <span class="fl">0.001953125</span></span>
+<span id="cb33-10"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -908,7 +1012,7 @@ Dr.&nbsp;Alexander Fisher
 <p>After building, you will see <code>package_name_version.tar.gz</code> appear in the parent directory.</p>
 <p>We can install with</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">install.packages</span>(<span class="st">"pkg_name_and_version.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">install.packages</span>(<span class="st">"pkg_name_and_version.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

@@ -448,15 +448,108 @@ If you want to include raw data files (e.g `.csv`, shapefiles, etc.) there are g
 
 # Package checking
 
-## `R CMD check`
+
+## `R CMD check` - What it does
 
 Last time we saw the usage of `R CMD check`, or rather `Build > Check Package` from within RStudio.
 
-This is a good idea to run regularly to make sure nothing is broken and you are meeting the important package quality standards, but this only in the context of your machine, your version of R, your OS, and so on.
+`R CMD check` is CRAN's comprehensive quality control system that runs dozens of checks:
 
-If using GitHub it is highly recommended that you run `usethis::use_github_action_check_standard()` to enable GitHub actions checks of the package each time it is pushed.
+::: {.incremental}
+* **Package structure** - Correct directories, required files (DESCRIPTION, NAMESPACE)
+* **Code syntax** - All R code parses without errors  
+* **Documentation** - All functions documented, all examples run
+* **Dependencies** - All used packages exist and in DESCRIPTION
+* **Tests** - All test files execute without errors
+* **CRAN policy compliance** - Follows all submission guidelines (written and unwritten)
+:::
 
-On each push this runs R CMD check on: \* Latest R on MacOS, Windows, Linux (Ubuntu) \* Previous and development version of R on Linux (Ubuntu)
+
+## devtools::check() vs R CMD check
+
+`devtools::check()` is a convenient wrapper around `R CMD check`:
+
+::: {.columns .small}
+::: {.column}
+```r
+devtools::check()
+```
+:::
+::: {.column}
+```shell
+R CMD build .
+R CMD check packagename_1.0.0.tar.gz
+```
+:::
+:::
+
+<br/>
+
+Benefits of `devtools::check()`:
+
+* Automatically handles building and checking
+* Better integrated with RStudio workflow
+* Cleaner output formatting
+* Automatically installs package first
+
+
+
+
+
+
+## Interpreting check output
+
+`R CMD check` produces three levels of issues:
+
+* **ERROR** 🔴 - Must be fixed before CRAN submission
+* **WARNING** 🟡 - Should be fixed (CRAN may reject)
+* **NOTE** 📝 - Optional improvements (CRAN usually accepts)
+
+Anything flagged must be addressed in the CRAN submission process.
+
+While the check is running issues are shown inline, *and* summarized at the end.
+
+
+
+## GitHub Actions for continuous checking
+
+Set up automated checking with:
+```r
+usethis::use_github_action("check-standard")
+```
+
+This creates `.github/workflows/R-CMD-check.yaml` that runs checks on:
+
+* Latest R on macOS, Windows, Linux (Ubuntu)  
+* Previous R and R-devel on Linux (Ubuntu)
+
+
+
+
+## The devtools workflow
+
+The typical package development cycle:
+
+::: {.small}
+| Function | Description |
+|----------|-------------|
+| `devtools::load_all()` | Load all package code (simulates installing and attaching) |
+| `devtools::document()` | Run roxygen2 to update `man/` and `NAMESPACE` |
+| `devtools::test()` | Run tests in `tests/` |
+| `devtools::check()` | Run `R CMD check` on your package |
+| `devtools::build()` | Build a source tarball (`.tar.gz`) |
+| `devtools::install()` | Install the package locally |
+:::
+
+. . .
+
+The most common workflow during development is:
+
+1. Edit code in `R/`
+2. `load_all()` to test changes interactively
+3. `document()` after updating roxygen comments
+4. `check()` before committing or submitting
+
 
 # Package testing
 
