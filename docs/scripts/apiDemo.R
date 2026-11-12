@@ -70,12 +70,15 @@ resp %>%
 
 # write a helper function to do the processing of figuring out
 # next pg URL
-get_links = function(resp) {
-resp %>%
-  resp_headers("link") %>%
-  str_match_all("<(.*?)>; rel=\"(.*?)\"") %>%
-  .[[1]] %>%
-    {setNames(as.list(.[,2]), .[,3])}
+get_links <- function(resp) {
+  link <- resp |> httr2::resp_header("link")
+  if (is.null(link)) return(list())
+  
+  matches <- link |>
+    stringr::str_match_all('<(.*?)>; rel="(.*?)"') |>
+    (\(x) x[[1]])()
+  
+  setNames(as.list(matches[, 2]), matches[, 3])
 }
 
 # now I will automate this using the links machinery we just setup

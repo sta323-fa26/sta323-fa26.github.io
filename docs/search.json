@@ -46,7 +46,7 @@
     "href": "slides/lec20.html#what-is-an-api",
     "title": "APIs",
     "section": "What is an API?",
-    "text": "What is an API?\nAn API is a messenger that takes requests and returns responses. It allows for interaction between applications, databases, and devices.\n. . .\nIf you want to\n\nembed a map on your website, you’ll probably use Google’s API\nembed a tweet on your website, you’ll use Twitter’s API\ntrade stocks in Python or R, you’ll probably use your broker’s API\npull genetic sequence data from GenBank, you’ll use GenBank’s API\ncreate 40 repositories named lab07-[github_team_name], you’ll probably use GitHub’s API"
+    "text": "What is an API?\nAn API is a messenger that takes requests and returns responses. It allows for interaction between applications, databases, and devices.\n\nIf you want to\n\nembed a map on your website, you’ll probably use Google’s API\nembed a tweet on your website, you’ll use Twitter’s API\ntrade stocks in Python or R, you’ll probably use your broker’s API\npull genetic sequence data from GenBank, you’ll use GenBank’s API\ncreate 40 repositories named lab07-[github_team_name], you’ll probably use GitHub’s API"
   },
   {
     "objectID": "slides/lec20.html#client-server-framework-with-an-api",
@@ -60,7 +60,7 @@
     "href": "slides/lec20.html#protocols",
     "title": "APIs",
     "section": "Protocols",
-    "text": "Protocols\nA computer protocol is a set of rules that govern how multiple computers communicate.\n\nIP: Internet Protocol\nFTP: File Transfer Protocol\nHTTP: Hyper Text Transfer Protocol The key protocol that governs data transfer over the internet Allows HTML, CSS, JS to be transferred from a server to your browser\nHTTPS: Hyper Text Transfer Protocol Secure\n\n. . .\nWhy do we care?\nWeb APIs are built on HTTP. Since so much of what we do is built over the web it is natural for web APIs to follow this protocol."
+    "text": "Protocols\nA computer protocol is a set of rules that govern how multiple computers communicate.\n\nIP: Internet Protocol\nFTP: File Transfer Protocol\nHTTP: Hyper Text Transfer Protocol The key protocol that governs data transfer over the internet Allows HTML, CSS, JS to be transferred from a server to your browser\nHTTPS: Hyper Text Transfer Protocol Secure\n\n\nWhy do we care?\nWeb APIs are built on HTTP. Since so much of what we do is built over the web it is natural for web APIs to follow this protocol."
   },
   {
     "objectID": "slides/lec20.html#urls",
@@ -74,7 +74,7 @@
     "href": "slides/lec20.html#query-strings",
     "title": "APIs",
     "section": "Query strings",
-    "text": "Query strings\nProvides named parameter(s) and value(s) that modify the behavior of the resulting page.\nFormat generally follows:\nfield1=value1&field2=value2&field3=value3\n\nnote the = and &\n\n. . .\nSome quick examples,\n\nhttp://lmgtfy.com/?q=hello%20world\nhttp://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=1600+Amphitheatre+Parkway\nhttps://nomnom-prod-api.dennys.com/mapbox/geocoding/v5/mapbox.places/raleigh,%20nc.json?types=country,region,postcode,place&country=us,pr,vi,gu,mp,ca"
+    "text": "Query strings\nProvides named parameter(s) and value(s) that modify the behavior of the resulting page.\nFormat generally follows:\nfield1=value1&field2=value2&field3=value3\n\nnote the = and &\n\n\nSome quick examples,\n\nhttp://lmgtfy.com/?q=hello%20world\nhttp://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=1600+Amphitheatre+Parkway\nhttps://nomnom-prod-api.dennys.com/mapbox/geocoding/v5/mapbox.places/raleigh,%20nc.json?types=country,region,postcode,place&country=us,pr,vi,gu,mp,ca"
   },
   {
     "objectID": "slides/lec20.html#url-encoding",
@@ -109,7 +109,7 @@
     "href": "slides/lec20.html#documentation",
     "title": "APIs",
     "section": "Documentation",
-    "text": "Documentation\nWhile there is a lot of standardization, every API is different and you will need to review the documentation of each.\nSee documentation here for AAOIF.\n. . .\nResources/endpoints\n\nRoot - https://www.anapioficeandfire.com/api\nList books - https://www.anapioficeandfire.com/api/books\nSpecific book - https://www.anapioficeandfire.com/api/books/1"
+    "text": "Documentation\nWhile there is a lot of standardization, every API is different and you will need to review the documentation of each.\nSee documentation here for AAOIF.\n\nResources/endpoints\n\nRoot - https://www.anapioficeandfire.com/api\nList books - https://www.anapioficeandfire.com/api/books\nSpecific book - https://www.anapioficeandfire.com/api/books/1"
   },
   {
     "objectID": "slides/lec20.html#pagination",
@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n💻\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n💻\n\nfp instructions\n\n\n11\nTue Nov 03\nshiny I\n💻\nlab 6\n\n\n\n\nThu Nov 05\nshiny II\n\n\n\n\n\n12\nTue Nov 10\nR packages\n💻\n\n\n\n\n\nThu Nov 12\nAPIs\n\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nintro to optimization\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n💻\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n💻\n\nfp instructions\n\n\n11\nTue Nov 03\nshiny I\n💻\nlab 6\n\n\n\n\nThu Nov 05\nshiny II\n\n\n\n\n\n12\nTue Nov 10\nR packages\n💻\n\n\n\n\n\nThu Nov 12\nAPIs\n💻\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nintro to optimization\n\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",

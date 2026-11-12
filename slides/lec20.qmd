@@ -8,11 +8,6 @@ format:
       smaller: true
 ---
 
-# Announcements
-
-
--   Final project presentations during class and lab next Tuesday, December 2.
-
 # Application Programming Interfaces (APIs)
 
 ## What *is* an API?
@@ -140,7 +135,7 @@ Less common verbs: *HEAD*, *TRACE*, *OPTIONS*
 
 While there is a lot of standardization, every API is different and you will need to review the documentation of each.
 
-See documentation [here](https://anapioficeandfire.com/documentation) for AAOIF.
+See documentation [here](https://github.com/joakimskoog/AnApiOfIceAndFire/wiki) for AAOIF.
 
 . . .
 
@@ -189,6 +184,8 @@ Hint: use `jsonlite::read_json()`
 # Another example
 
 pokeapi: [https://pokeapi.co/docs/v2](https://pokeapi.co/docs/v2)
+
+fireballs: [https://ssd-api.jpl.nasa.gov/doc/fireball.html](https://ssd-api.jpl.nasa.gov/doc/fireball.html)
 
 ## Further reading
 
