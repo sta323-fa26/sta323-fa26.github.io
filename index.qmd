@@ -84,7 +84,7 @@ schedule %>%
 | 12 | Tue Nov 10 | R packages | [💻](/slides/lec23.html) |  |  | <!-- lab 7 -->
 |  | Thu Nov 12 | APIs | [💻](/slides/lec20.html) |  |  | <!--testthat; rm biglm -->
 | 13 | Tue Nov 17 | exam 2 |  | no lab |  |
-|  | Thu Nov 19 | intro to optimization |  |  |  |
+|  | Thu Nov 19 | intro to optimization | [💻](/slides/lec11.html) |  |  |
 | 14 | Tue Nov 24 | |  | project workday |  |
 |  | Thu Nov 26 | NO CLASS |  |  |  |
 | 15 | Tue Dec 01 | project presentations |  |  | fp presentations |
