@@ -21,6 +21,7 @@ library(latex2exp)
 library(wesanderson)
 ```
 
+- The MM algorithm is **not** an algorithm, but a prescription for constructing optimization algorithms.
 
 - MM stands for "majorize-minimize" and "minorize-maximize".
 
@@ -56,7 +57,8 @@ $$
 g(x | x_n) = cos(x_n) - sin(x_n)(x - x_n) + 
 \frac{1}{2}(x - x_n)^2
 $$
-. . . 
+
+. . .
 
 We can minimize $g$ easily, $\frac{d}{dx}g(x | x_n) = -sin(x_n) + (x - x_n)$. 
 
@@ -71,11 +73,11 @@ Next, set equal to zero and set $x_{n+1} = x$, $x_{n+1} = x_n + sin(x_n)$.
 pal = wes_palette("FantasticFox1")
 colors <- c("f" = "black", "g0" = pal[5], "g1" = pal[4])
 
+pal = wes_palette("FantasticFox1")
+colors = c(f = "black", g0 = pal[5], g1 = pal[4])
 
-# surrogate
 g = function(x, xn) {
-  cos(xn) - (sin(xn) * (x - xn)) +
-    (.5 * ((x - xn)^2))
+  cos(xn) - sin(xn) * (x - xn) + 0.5 * (x - xn)^2
 }
 
 nextPoint = function(xn) {
@@ -86,28 +88,31 @@ x0 = 1
 x1 = nextPoint(x0)
 x2 = nextPoint(x1)
 
+points = tibble(
+  x = c(x0, x1, x1, x2),
+  y = c(cos(x0), g(x1, x0), cos(x1), g(x2, x1)),
+  label = c("x[0]", "x[1]", "x[1]", "x[2]")
+)
 
-# plot
 ggplot() +
-  xlim(0, 2*pi) +
-  ylim(-1, 1) +
-  geom_function(fun = cos, aes(color = "f")) +
-  geom_function(fun = g, args = list(xn = x0), aes(color = "g0"),
-                linetype = 'dashed') + 
-  theme_bw() +
+  geom_function(aes(color = "f"), fun = cos) +
+  geom_function(aes(color = "g0"), fun = g, args = list(xn = x0),
+                linetype = "dashed") +
+  geom_function(aes(color = "g1"), fun = g, args = list(xn = x1),
+                linetype = "dashed") +
+  geom_point(data = points, aes(x = x, y = y), color = "steelblue") +
+  geom_text(data = points, aes(x = x, y = y, label = label),
+            nudge_y = -0.1, parse = TRUE) +
+  xlim(0, 2 * pi) +
+  coord_cartesian(ylim = c(-1, 1)) +
+  scale_color_manual(
+    name = "function",
+    values = colors,
+    breaks = c("f", "g0", "g1"),
+    labels = expression(f(x), g(x ~ "|" ~ x[0]), g(x ~ "|" ~ x[1]))
+  ) +
   labs(x = "x", y = "") +
-  annotate(geom = "point", x = 1, y = cos(1), col = 'steelblue') +
-  annotate(geom = "text", x = 1, y = cos(1)-.1, label = TeX("$x_0$")) +
-  annotate(geom = "point", x = x1, y = g(x1, x0), col = 'steelblue') +
-  annotate(geom = "text", x = x1, y = g(x1, x0)-.1, label = TeX("$x_1$")) +
-  geom_function(fun = g, args = list(xn = x1), aes(color = "g1"),
-                linetype = 'dashed') +
-  annotate(geom = "point", x = x1, y = cos(x1), col = 'steelblue') +
-  annotate(geom = "text", x = x1, y = cos(x1)-.1, label = TeX("$x_1$")) +
-  annotate(geom = "point", x = x2, y = g(x2, x1), col = 'steelblue') +
-  annotate(geom = "text", x = x2, y = g(x2, x1)-.1, label = TeX("$x_2$")) +
-   scale_color_manual(name="function",
-      values=c(f = "black", g0= pal[5], g1 = pal[4]), labels = c(TeX("$f(x)$"), TeX("$g(x|x_0)$"), TeX("$g(x|x_1)$")))
+  theme_bw()
 ```
 
 ## How did we find $g$?

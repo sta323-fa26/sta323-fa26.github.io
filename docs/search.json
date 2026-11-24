@@ -1565,7 +1565,7 @@
     "href": "index.html",
     "title": "Statistical Computing",
     "section": "",
-    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n💻\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n💻\n\nfp instructions\n\n\n11\nTue Nov 03\nshiny I\n💻\nlab 6\n\n\n\n\nThu Nov 05\nshiny II\n\n\n\n\n\n12\nTue Nov 10\nR packages\n💻\n\n\n\n\n\nThu Nov 12\nAPIs\n💻\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nintro to optimization\n💻\n\n\n\n\n14\nTue Nov 24\n\n\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
+    "text": "Schedule\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nNotes\nLab\nProject\n\n\n\n\n1\nTue Aug 25\nwelcome & types\n💻\nlab 0\n\n\n\n\nThu Aug 27\ncontrol flow, loops and functions\n💻\n\n\n\n\n2\nTue Sep 01\nNAs, lists, NULL and attributes\n💻\nlab 1\n\n\n\n\nThu Sep 03\nobject oriented programming\n💻\n\n\n\n\n3\nTue Sep 08\nsubsetting\n💻\nlab 2\n\n\n\n\nThu Sep 10\ntidy data & dplyr\n💻\n\nmini project\n\n\n4\nTue Sep 15\nregular expressions\n🗒\nlab 3\n\n\n\n\nThu Sep 17\nvisualization with ggplot2\n💻\n\n\n\n\n5\nTue Sep 22\ndimension reduction: PCA\n💻\nlab 4\n\n\n\n\nThu Sep 24\nspatial data\n💻\n\n\n\n\n6\nTue Sep 29\nfunctionals & purrr\n💻\n\n\n\n\n\nThu Oct 01\nexam 1\n\n\n\n\n\n7\nTue Oct 06\nintro to simulation\n💻\nproject workday\n\n\n\n\nThu Oct 08\nMarkov chains\n💻\n\n\n\n\n8\nTue Oct 13\nNO CLASS\n\n\n\n\n\n\nThu Oct 15\nMarkov chain Monte Carlo\n💻\n\n\n\n\n9\nTue Oct 20\nMCMC example\n\nlab 5\nmp presentations\n\n\n\nThu Oct 22\ncomplexity and parallelization\n💻\n\n\n\n\n10\nTue Oct 27\ndatabases and dplyr\n💻\n\n\n\n\n\nThu Oct 29\nduckDB and SQL\n💻\n\nfp instructions\n\n\n11\nTue Nov 03\nshiny I\n💻\nlab 6\n\n\n\n\nThu Nov 05\nshiny II\n\n\n\n\n\n12\nTue Nov 10\nR packages\n💻\n\n\n\n\n\nThu Nov 12\nAPIs\n💻\n\n\n\n\n13\nTue Nov 17\nexam 2\n\nno lab\n\n\n\n\nThu Nov 19\nintro to optimization\n💻\n\n\n\n\n14\nTue Nov 24\nMM principles\n💻\nproject workday\n\n\n\n\nThu Nov 26\nNO CLASS\n\n\n\n\n\n15\nTue Dec 01\nproject presentations\n\n\nfp presentations\n\n\n\nThu Dec 03"
   },
   {
     "objectID": "labs/lab1.html",
@@ -2593,57 +2593,57 @@
     "objectID": "slides/lec13.html#definition",
     "href": "slides/lec13.html#definition",
     "title": "MM Algorithm Principles",
-    "section": "",
-    "text": "MM stands for “majorize-minimize” and “minorize-maximize”.\nKey idea: it’s easier to optimize a surrogate function than the true objective.\n\n. . .\nLet \\(f(\\theta)\\) be a function we wish to maximize. \\(g(\\theta | \\theta_n)\\) is a surrogate function for \\(f\\), anchored at current iterate \\(\\theta_n\\), if\n\n\\(g\\) “minorizes” \\(f\\): \\(g(\\theta | \\theta_n) \\leq f(\\theta) \\ \\  \\forall \\ \\theta\\)\n\\(g(\\theta_n | \\theta_n) = f(\\theta_n)\\) (“tangency”).\n\n. . .\nEquivalently, if we wish to minimize \\(f(\\theta)\\), \\(g(\\theta | \\theta_n)\\) is a surrogate function for \\(f\\), anchored at current iterate \\(\\theta_n\\), if\n\n\\(g\\) “majorizes” \\(f\\): \\(g(\\theta | \\theta_n) \\geq f(\\theta) \\ \\  \\forall \\ \\theta\\)\n\\(g(\\theta_n | \\theta_n) = f(\\theta_n)\\) (“tangency”)."
+    "section": "Definition",
+    "text": "Definition\n\nThe MM algorithm is not an algorithm, but a prescription for constructing optimization algorithms.\nMM stands for “majorize-minimize” and “minorize-maximize”.\nKey idea: it’s easier to optimize a surrogate function than the true objective.\n\n\nLet \\(f(\\theta)\\) be a function we wish to maximize. \\(g(\\theta | \\theta_n)\\) is a surrogate function for \\(f\\), anchored at current iterate \\(\\theta_n\\), if\n\n\\(g\\) “minorizes” \\(f\\): \\(g(\\theta | \\theta_n) \\leq f(\\theta) \\ \\  \\forall \\ \\theta\\)\n\\(g(\\theta_n | \\theta_n) = f(\\theta_n)\\) (“tangency”).\n\n\n\nEquivalently, if we wish to minimize \\(f(\\theta)\\), \\(g(\\theta | \\theta_n)\\) is a surrogate function for \\(f\\), anchored at current iterate \\(\\theta_n\\), if\n\n\\(g\\) “majorizes” \\(f\\): \\(g(\\theta | \\theta_n) \\geq f(\\theta) \\ \\  \\forall \\ \\theta\\)\n\\(g(\\theta_n | \\theta_n) = f(\\theta_n)\\) (“tangency”)."
   },
   {
     "objectID": "slides/lec13.html#toy-conceptual-example",
     "href": "slides/lec13.html#toy-conceptual-example",
     "title": "MM Algorithm Principles",
-    "section": "",
-    "text": "We wish to minimize \\(f(x) = cos(x)\\).\n. . .\nWe need a surrogate \\(g\\) that majorizes \\(f\\).\n. . .\n\\[\ng(x | x_n) = cos(x_n) - sin(x_n)(x - x_n) +\n\\frac{1}{2}(x - x_n)^2\n\\]\n. . .\nWe can minimize \\(g\\) easily, \\(\\frac{d}{dx}g(x | x_n) = -sin(x_n) + (x - x_n)\\).\nNext, set equal to zero and set \\(x_{n+1} = x\\), \\(x_{n+1} = x_n + sin(x_n)\\)."
+    "section": "Toy (conceptual) example",
+    "text": "Toy (conceptual) example\nWe wish to minimize \\(f(x) = cos(x)\\).\n\nWe need a surrogate \\(g\\) that majorizes \\(f\\).\n\n\n\\[\ng(x | x_n) = cos(x_n) - sin(x_n)(x - x_n) +\n\\frac{1}{2}(x - x_n)^2\n\\]\n\n\nWe can minimize \\(g\\) easily, \\(\\frac{d}{dx}g(x | x_n) = -sin(x_n) + (x - x_n)\\).\nNext, set equal to zero and set \\(x_{n+1} = x\\), \\(x_{n+1} = x_n + sin(x_n)\\)."
   },
   {
     "objectID": "slides/lec13.html#how-did-we-find-g",
     "href": "slides/lec13.html#how-did-we-find-g",
     "title": "MM Algorithm Principles",
-    "section": "",
-    "text": "Finding \\(g\\) is an art. Still, there are widely applicable and powerful tools everyone should have in their toolkit."
+    "section": "How did we find \\(g\\)?",
+    "text": "How did we find \\(g\\)?\nFinding \\(g\\) is an art. Still, there are widely applicable and powerful tools everyone should have in their toolkit."
   },
   {
     "objectID": "slides/lec13.html#quadratic-upper-bound-principle",
     "href": "slides/lec13.html#quadratic-upper-bound-principle",
     "title": "MM Algorithm Principles",
     "section": "Quadratic upper bound principle",
-    "text": "Quadratic upper bound principle\nObjective function: \\(f(x)\\)\n. . .\nsecond order Taylor expansion of \\(f\\) around \\(x_n\\):\n\\[\nf(x) = f(x_n) + f'(x_n) (x-x_n) + \\frac{1}{2} f''(y) (x - x_n)^2\n\\]\nHere, \\(y\\) lies between \\(x\\) and \\(x_n\\). If \\(f''(y) \\leq B\\) where \\(B\\) is a positive constant, then\n\\[\ng(x|x_n) = f(x_n) + f'(x_n) (x - x_n) + \\frac{1}{2} B (x - x_n)^2\n\\]\nThis is the “quadratic upper bound”.\n. . .\n\nCheck your understanding\n\nQuestionsAnswers\n\n\n\ndoes \\(g\\) satisfy the tangency condition?\ndoes \\(g\\) majorize or minorize \\(f\\)?\nwhat is \\(B\\) in the previous (\\(f = cos(x)\\)) example?\nwhat is the general update \\(x_{n+1} =\\) to under the quadratic upper bound principle?\n\n\n\n\nyes\nmajorize\n1\n\\(x_{n+1} = x_n - f'(x_n) / B\\)"
+    "text": "Quadratic upper bound principle\nObjective function: \\(f(x)\\)\n\nsecond order Taylor expansion of \\(f\\) around \\(x_n\\):\n\\[\nf(x) = f(x_n) + f'(x_n) (x-x_n) + \\frac{1}{2} f''(y) (x - x_n)^2\n\\]\nHere, \\(y\\) lies between \\(x\\) and \\(x_n\\). If \\(f''(y) \\leq B\\) where \\(B\\) is a positive constant, then\n\\[\ng(x|x_n) = f(x_n) + f'(x_n) (x - x_n) + \\frac{1}{2} B (x - x_n)^2\n\\]\nThis is the “quadratic upper bound”.\n\n\nCheck your understanding\n\nQuestionsAnswers\n\n\n\ndoes \\(g\\) satisfy the tangency condition?\ndoes \\(g\\) majorize or minorize \\(f\\)?\nwhat is \\(B\\) in the previous (\\(f = cos(x)\\)) example?\nwhat is the general update \\(x_{n+1} =\\) to under the quadratic upper bound principle?\n\n\n\n\nyes\nmajorize\n1\n\\(x_{n+1} = x_n - f'(x_n) / B\\)"
   },
   {
     "objectID": "slides/lec13.html#convex-functions",
     "href": "slides/lec13.html#convex-functions",
     "title": "MM Algorithm Principles",
     "section": "Convex functions",
-    "text": "Convex functions\n\nA twice-differentiable function is convex iff \\(f''(x) \\geq 0\\). Common examples include \\(f(x) = x^2\\), \\(f(x) = e^x\\) and \\(f(x) = -\\ln(x)\\).\n\n. . .\nEquivalently, a function is convex if its epigraph (the points in the region above the graph of the function) form a convex set. For example, \\(f(x) = |x|\\) is convex by the epigraph test.\n\n\n\n\n\n\n\n\n\n. . .\nA function is concave iff its negative is convex."
+    "text": "Convex functions\n\nA twice-differentiable function is convex iff \\(f''(x) \\geq 0\\). Common examples include \\(f(x) = x^2\\), \\(f(x) = e^x\\) and \\(f(x) = -\\ln(x)\\).\n\n\nEquivalently, a function is convex if its epigraph (the points in the region above the graph of the function) form a convex set. For example, \\(f(x) = |x|\\) is convex by the epigraph test.\n\n\n\n\n\n\n\n\n\n\n\nA function is concave iff its negative is convex."
   },
   {
     "objectID": "slides/lec13.html#supporting-line-minorization",
     "href": "slides/lec13.html#supporting-line-minorization",
     "title": "MM Algorithm Principles",
     "section": "Supporting line minorization",
-    "text": "Supporting line minorization\n\n\n\n\n\n\n\n\n\n. . .\n\\(f(x) \\geq f(x_n) + f'(x_n) (x - x_n)\\) because \\(f''(x_n) \\geq 0\\)\n. . .\n\nCheck your understanding\n\nWrite the equation of the line in this example"
+    "text": "Supporting line minorization\n\n\n\\(f(x) \\geq f(x_n) + f'(x_n) (x - x_n)\\) because \\(f''(x_n) \\geq 0\\)\n\n\nCheck your understanding\n\nWrite the equation of the line in this example"
   },
   {
     "objectID": "slides/lec13.html#jensens-inequality",
     "href": "slides/lec13.html#jensens-inequality",
     "title": "MM Algorithm Principles",
     "section": "Jensen’s inequality",
-    "text": "Jensen’s inequality\nFor a convex function \\(f\\), Jensen’s inequality states\n\\[\nf(\\alpha x + (1 - \\alpha) y) \\leq \\alpha f(x) + (1-\\alpha) f(y), \\ \\  \\alpha \\in [0, 1]\n\\]\n\n\n\n\n\n\n\n\n\n. . .\n\nBig use: majorizing functions of the form \\(f(u(x) + v(x))\\) where \\(u\\) and \\(v\\) are positive functions of parameter \\(x\\).\n\n\\[\nf(u + v) \\leq \\frac{u_n}{u_n + v_n} f\\left(\\frac{u_n + v_n}{u_n} u\\right) +\n\\frac{v_n}{u_n + v_n} f\\left(\\frac{u_n + v_n}{v_n}v\\right)\n\\]"
+    "text": "Jensen’s inequality\nFor a convex function \\(f\\), Jensen’s inequality states\n\\[\nf(\\alpha x + (1 - \\alpha) y) \\leq \\alpha f(x) + (1-\\alpha) f(y), \\ \\  \\alpha \\in [0, 1]\n\\]\n\n\n\nBig use: majorizing functions of the form \\(f(u(x) + v(x))\\) where \\(u\\) and \\(v\\) are positive functions of parameter \\(x\\).\n\n\\[\nf(u + v) \\leq \\frac{u_n}{u_n + v_n} f\\left(\\frac{u_n + v_n}{u_n} u\\right) +\n\\frac{v_n}{u_n + v_n} f\\left(\\frac{u_n + v_n}{v_n}v\\right)\n\\]"
   },
   {
     "objectID": "slides/lec13.html#exercise",
     "href": "slides/lec13.html#exercise",
     "title": "MM Algorithm Principles",
     "section": "Exercise",
-    "text": "Exercise\n\npart 1\n\nUsing \\(f(x) = -\\ln(x)\\) show that Jensen’s inequality let’s us derive a minorization that splits the log of a sum.\nNote: this minorization will be useful in maximum likelihood estimation under a mixture model\n\n\n\npart 2\nTo see why this will be useful, recall: in a mixture model we have a convex combination of density functions:\n\\[\nh(x | \\mathbf{w}, \\boldsymbol{\\theta}) = \\sum_{i = 1}^n w_i~f_i(x | \\theta_i).\n\\]\nwhere \\(w_i &gt; 0\\) and \\(\\sum_i w_i = 1\\).\n\nAssume you observe \\(\\{x_1, \\ldots x_m\\}\\) where each \\(X_i\\) is iid from \\(h(\\mathbf{x})\\). Write down the log-likelihood of the data."
+    "text": "Exercise\npart 1\n\nUsing \\(f(x) = -\\ln(x)\\) show that Jensen’s inequality let’s us derive a minorization that splits the log of a sum.\nNote: this minorization will be useful in maximum likelihood estimation under a mixture model\n\npart 2\nTo see why this will be useful, recall: in a mixture model we have a convex combination of density functions:\n\\[\nh(x | \\mathbf{w}, \\boldsymbol{\\theta}) = \\sum_{i = 1}^n w_i~f_i(x | \\theta_i).\n\\]\nwhere \\(w_i &gt; 0\\) and \\(\\sum_i w_i = 1\\).\n\nAssume you observe \\(\\{x_1, \\ldots x_m\\}\\) where each \\(X_i\\) is iid from \\(h(\\mathbf{x})\\). Write down the log-likelihood of the data."
   },
   {
     "objectID": "slides/lec13.html#acknowledgements",
